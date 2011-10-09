@@ -6,6 +6,9 @@
 	<version>0.1-SNAPSHOT</version>
 	<name>TIMETABLE</name>
 	<description>tool to track time</description>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.eclipse.persistence</groupId>
