@@ -27,13 +27,13 @@ public class EntityTest {
 
     @After
     public void tearDown() throws Exception {
-        Collection<Project> projects = controller.findAll(Project.class);
-        for (Project project : projects) {
-            controller.delete(project);
-        }
         Collection<Entry> entries = controller.findAll(Entry.class);
         for (Entry entry : entries) {
             controller.delete(entry);
+        }
+        Collection<Project> projects = controller.findAll(Project.class);
+        for (Project project : projects) {
+            controller.delete(project);
         }
     }
 
@@ -41,7 +41,7 @@ public class EntityTest {
     public void testCreateProject() {
         Project p1 = new Project();
         p1.setName("Testprojekt");
-        p1.setDescription("Das ist die Beschreibung für das Testprojekt");
+        p1.setDescription("Das ist die Beschreibung f√ºr das Testprojekt");
 
         controller.create(p1);
 
@@ -54,13 +54,10 @@ public class EntityTest {
         LOG.info("P2: " + p2);
 
         Entry entry = new Entry();
-        entry.setDuration(2.2F);
+        entry.setDuration("2.2");
         entry.setDescription("Testbeschreibung");
-        entry.setProject(p1);
 
         p1.addEntry(entry);
-
-        controller.update(p1);
 
         p2 = controller.findById(Project.class, p1.getUuid());
         Assert.assertFalse(p2.getEntries().isEmpty());
@@ -73,13 +70,13 @@ public class EntityTest {
     public void testUniqueConstraint() {
         Project p1 = new Project();
         p1.setName("Testprojekt");
-        p1.setDescription("Das ist die Beschreibung für das Testprojekt");
+        p1.setDescription("Das ist die Beschreibung f√ºr das Testprojekt");
 
         controller.create(p1);
 
         Project p2 = new Project();
         p2.setName("Testprojekt");
-        p2.setDescription("Das ist die Beschreibung für ein weiteres Testprojekt mit gleichem Namen");
+        p2.setDescription("Das ist die Beschreibung f√ºr ein weiteres Testprojekt mit gleichem Namen");
 
         try {
             controller.create(p2);

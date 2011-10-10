@@ -1,10 +1,13 @@
 package de.ronnyfriedland.time.logic;
 
 import java.util.Collection;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -29,30 +32,83 @@ public class EntityController {
         em = emf.createEntityManager();
     }
 
-    public <T> T findById(Class<T> clazz, String uuid) {
+    /**
+     * Ermittelt einen Datensatz anhand der übergebenen UUID.
+     * 
+     * @param clazz
+     *            Typ
+     * @param uuid
+     *            eindeutige ID des Datensatz
+     * @return Datensatz
+     */
+    public <T> T findById(final Class<T> clazz, final String uuid) {
         return em.find(clazz, uuid);
     }
 
-    public <T> Collection<T> findAll(Class<T> clazz) {
+    public <T> Collection<T> findAll(final Class<T> clazz) {
         TypedQuery<T> query = em.createQuery("SELECT e FROM " + clazz.getSimpleName() + " e", clazz);
         return query.getResultList();
     }
 
-    public <T> void create(T entity) {
-        em.getTransaction().begin();
-        em.persist(entity);
-        em.getTransaction().commit();
+    @SuppressWarnings("unchecked")
+    public <T> Collection<T> findResultlistByParameter(final Class<T> clazz, final String namedQuery,
+            final Map<String, Object> parameters) {
+        Query query = em.createNamedQuery(namedQuery);
+        if (null != parameters) {
+            for (Entry<String, Object> parameter : parameters.entrySet()) {
+                query.setParameter(parameter.getKey(), parameter.getValue());
+            }
+        }
+        return query.getResultList();
     }
 
-    public <T> void update(T entity) {
-        em.getTransaction().begin();
-        em.merge(entity);
-        em.getTransaction().commit();
+    @SuppressWarnings("unchecked")
+    public <T> T findSingleResultByParameter(final Class<T> clazz, final String namedQuery,
+            final Map<String, Object> parameters) {
+        Query query = em.createNamedQuery(namedQuery);
+        if (null != parameters) {
+            for (Entry<String, Object> parameter : parameters.entrySet()) {
+                query.setParameter(parameter.getKey(), parameter.getValue());
+            }
+        }
+        return (T) query.getSingleResult();
     }
 
-    public <T> void delete(T entity) {
-        em.getTransaction().begin();
-        em.remove(entity);
-        em.getTransaction().commit();
+    public <T> void create(final T entity) {
+        try {
+            em.getTransaction().begin();
+            em.persist(entity);
+            em.getTransaction().commit();
+        } finally {
+            if (em.getTransaction().isActive() && em.getTransaction().getRollbackOnly()) {
+                em.getTransaction().rollback();
+            }
+        }
     }
+
+    public <T> void update(final T entity) {
+        try {
+            em.getTransaction().begin();
+            em.merge(entity);
+            em.getTransaction().commit();
+        } finally {
+            if (em.getTransaction().isActive() && em.getTransaction().getRollbackOnly()) {
+                em.getTransaction().rollback();
+            }
+        }
+    }
+
+    public <T> void delete(final T entity) {
+        try {
+            em.getTransaction().begin();
+            em.remove(entity);
+            em.getTransaction().commit();
+        } finally {
+            if (em.getTransaction().isActive() && em.getTransaction().getRollbackOnly()) {
+                em.getTransaction().rollback();
+            }
+        }
+
+    }
+
 }

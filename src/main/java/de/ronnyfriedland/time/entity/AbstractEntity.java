@@ -1,11 +1,17 @@
 package de.ronnyfriedland.time.entity;
 
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.UUID;
 
+import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import de.ronnyfriedland.time.entity.validation.NotBlank;
 
 /**
  * @author ronnyfriedland
@@ -14,16 +20,29 @@ import javax.validation.constraints.NotNull;
 public abstract class AbstractEntity implements Serializable {
     private static final long serialVersionUID = 3220515724286916541L;
 
-    @NotNull
+    @NotBlank
     @Id
+    @Column(name = "UUID", nullable = false)
     private final String uuid;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date creationDate;
 
     public AbstractEntity() {
         uuid = UUID.randomUUID().toString();
+        creationDate = Calendar.getInstance().getTime();
     }
 
     public String getUuid() {
         return uuid;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(final Date creationDate) {
+        this.creationDate = creationDate;
     }
 
     /**
@@ -32,8 +51,8 @@ public abstract class AbstractEntity implements Serializable {
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
-    public boolean equals(Object obj) {
-        if (null != obj && obj instanceof AbstractEntity) {
+    public boolean equals(final Object obj) {
+        if ((null != obj) && (obj instanceof AbstractEntity)) {
             return getUuid().equals(((AbstractEntity) obj).getUuid());
         } else {
             return false;
@@ -58,7 +77,8 @@ public abstract class AbstractEntity implements Serializable {
     @Override
     public String toString() {
         StringBuilder sbuild = new StringBuilder(super.toString());
-        sbuild.append(String.format("[uuid: %s]", getUuid()));
+        sbuild.append(String.format("[uuid: %s, ", getUuid()));
+        sbuild.append(String.format("creationDate: %s]", getCreationDate()));
         return sbuild.toString();
     }
 }
