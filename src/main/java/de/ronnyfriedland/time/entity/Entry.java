@@ -20,6 +20,8 @@ public class Entry extends AbstractEntity {
 
     public static final String QUERY_FIND_TODAY = "Entry.findToday";
 
+    public static final String PARAM_DATE = "date";
+
     private static final long serialVersionUID = -6406081124935463200L;
     @NotBlank
     @Pattern(regexp = "(\\+?((([0-9]+(\\.)?)|([0-9]*\\.[0-9]+))([eE][+-]?[0-9]+)?))")

@@ -11,18 +11,26 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
 import javax.swing.SwingUtilities;
 
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+
 import de.ronnyfriedland.time.entity.Entry;
 import de.ronnyfriedland.time.logic.EntityController;
+import de.ronnyfriedland.time.logic.ImportExportController;
 import de.ronnyfriedland.time.ui.dialog.NewEntryFrame;
 import de.ronnyfriedland.time.ui.dialog.NewProjectFrame;
 
@@ -60,6 +68,7 @@ public class TimeTableUI {
             final MenuItem newProject = new MenuItem("Neues Projekt");
             final MenuItem newItem = new MenuItem("Neuer Eintrag");
             final Menu todayItems = new Menu("Heute erstellt");
+            final MenuItem exportItem = new MenuItem("Heute exportieren");
             final MenuItem exitItem = new MenuItem("Beenden");
 
             // Add components to popup menu
@@ -67,6 +76,7 @@ public class TimeTableUI {
             popup.add(newItem);
             popup.addSeparator();
             popup.add(todayItems);
+            popup.add(exportItem);
             popup.addSeparator();
             popup.add(exitItem);
 
@@ -88,7 +98,7 @@ public class TimeTableUI {
                     cal.set(Calendar.SECOND, 0);
                     cal.set(Calendar.MILLISECOND, 0);
 
-                    params.put("date", cal.getTime());
+                    params.put(Entry.PARAM_DATE, cal.getTime());
 
                     Collection<Entry> todayEntries = EntityController.getInstance().findResultlistByParameter(
                             Entry.class, Entry.QUERY_FIND_TODAY, params);
@@ -96,8 +106,8 @@ public class TimeTableUI {
                     todayItems.removeAll();
 
                     for (Entry entry : todayEntries) {
-                        todayItems.add(new MenuItem(entry.getDescription() + " (" + entry.getDuration() + "h) / "
-                                + entry.getProject().getName()));
+                        todayItems.add(new MenuItem(String.format("%1$s %2$sh (%3$s)", entry.getDescription(),
+                                entry.getDuration(), entry.getProject().getName())));
                     }
                 }
 
@@ -132,6 +142,36 @@ public class TimeTableUI {
                 @Override
                 public void actionPerformed(final ActionEvent e) {
                     new NewEntryFrame().setVisible(true);
+                }
+            });
+
+            exportItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(final ActionEvent e) {
+                    try {
+                        Map<String, Object> params = new HashMap<String, Object>();
+
+                        Calendar cal = Calendar.getInstance();
+                        cal.set(Calendar.HOUR_OF_DAY, 0);
+                        cal.set(Calendar.MINUTE, 0);
+                        cal.set(Calendar.SECOND, 0);
+                        cal.set(Calendar.MILLISECOND, 0);
+
+                        params.put(Entry.PARAM_DATE, cal.getTime());
+
+                        Collection<Entry> todayEntries = EntityController.getInstance().findResultlistByParameter(
+                                Entry.class, Entry.QUERY_FIND_TODAY, params);
+
+                        ImportExportController controller = new ImportExportController();
+                        Workbook wb = controller.loadOrCreateWorkbook("/Users/ronnyfriedland/Desktop",
+                                "timetable-export.xlsx");
+                        Sheet sheet = controller.loadOrCreateSheet(wb,
+                                SimpleDateFormat.getDateInstance(DateFormat.SHORT).format(cal.getTime()), todayEntries);
+                        controller.addSheetToOverview(wb, sheet.getSheetName());
+                        controller.persistWorkbook(wb, "/Users/ronnyfriedland/Desktop", "timetable-export.xlsx");
+                    } catch (IOException ex) {
+                        LOG.log(Level.SEVERE, "Error exporting data", ex);
+                    }
                 }
             });
 

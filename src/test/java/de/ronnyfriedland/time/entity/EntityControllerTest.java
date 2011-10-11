@@ -14,9 +14,9 @@ import de.ronnyfriedland.time.logic.EntityController;
  * @author ronnyfriedland
  * 
  */
-public class EntityTest {
+public class EntityControllerTest {
 
-    private static Logger LOG = Logger.getLogger(EntityTest.class.getName());
+    private static Logger LOG = Logger.getLogger(EntityControllerTest.class.getName());
 
     private EntityController controller;
 

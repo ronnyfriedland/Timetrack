@@ -191,7 +191,7 @@ public class NewEntryFrame extends JFrame {
                 String projectName = (String) projects.getSelectedValue();
                 if (!StringUtils.isBlank(projectName)) {
                     Map<String, Object> parameters = new HashMap<String, Object>();
-                    parameters.put("name", projectName);
+                    parameters.put(Project.PARAM_NAME, projectName);
                     Project selectedProject = EntityController.getInstance().findSingleResultByParameter(Project.class,
                             Project.QUERY_FINDBYNAME, parameters);
                     entry.setProject(selectedProject);

@@ -23,6 +23,8 @@ import de.ronnyfriedland.time.entity.validation.NotBlank;
 public class Project extends AbstractEntity {
     public static final String QUERY_FINDBYNAME = "Project.findByName";
 
+    public static final String PARAM_NAME = "name";
+
     private static final long serialVersionUID = -6146948125332405909L;
 
     @NotBlank
