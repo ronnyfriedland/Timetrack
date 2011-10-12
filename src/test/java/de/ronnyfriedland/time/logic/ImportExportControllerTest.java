@@ -13,6 +13,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.ronnyfriedland.time.config.Configurator;
+import de.ronnyfriedland.time.config.Configurator.ConfiguratorKeys;
 import de.ronnyfriedland.time.entity.Entry;
 import de.ronnyfriedland.time.entity.Project;
 
@@ -21,8 +23,8 @@ public class ImportExportControllerTest {
     private ImportExportController controller;
     private Collection<Entry> entries;
 
-    private final String path = "target";
-    private final String file = "test-export.xlsx";
+    private final String path = Configurator.CONFIG.getString(ConfiguratorKeys.EXPORT_PATH.getKey());
+    private final String file = Configurator.CONFIG.getString(ConfiguratorKeys.EXPORT_FILE.getKey());
 
     @Before
     public void setUp() {

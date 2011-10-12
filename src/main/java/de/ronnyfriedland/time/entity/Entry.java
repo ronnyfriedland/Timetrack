@@ -15,12 +15,13 @@ import de.ronnyfriedland.time.entity.validation.NotBlank;
  * @author ronnyfriedland
  */
 @Entity
-@NamedQuery(name = Entry.QUERY_FIND_TODAY, query = "SELECT e FROM Entry e WHERE e.creationDate >= :date")
+@NamedQuery(name = Entry.QUERY_FIND_FROM_TO, query = "SELECT e FROM Entry e WHERE e.creationDate >= :from AND e.creationDate < :to")
 public class Entry extends AbstractEntity {
 
-    public static final String QUERY_FIND_TODAY = "Entry.findToday";
+    public static final String QUERY_FIND_FROM_TO = "Entry.findFromTo";
 
-    public static final String PARAM_DATE = "date";
+    public static final String PARAM_DATE_FROM = "from";
+    public static final String PARAM_DATE_TO = "to";
 
     private static final long serialVersionUID = -6406081124935463200L;
     @NotBlank

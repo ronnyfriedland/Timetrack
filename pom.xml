@@ -8,7 +8,7 @@
     <description>tool to track time</description>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <export.path>D:\</export.path>
+        <export.path>/Users/ronnyfriedland/Dekstop</export.path>
         <export.file>timetable-export.xlsx</export.file>
     </properties>
     <build>
@@ -87,6 +87,11 @@
             <groupId>commons-configuration</groupId>
             <artifactId>commons-configuration</artifactId>
             <version>1.7</version>
+        </dependency>
+        <dependency>
+        	<groupId>jcommon</groupId>
+        	<artifactId>jcommon</artifactId>
+        	<version>0.9.5</version>
         </dependency>
     </dependencies>
     <repositories>
