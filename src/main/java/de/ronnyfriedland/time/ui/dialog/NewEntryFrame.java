@@ -74,7 +74,7 @@ public class NewEntryFrame extends JFrame {
             public boolean verify(final JComponent arg0) {
                 ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
                 Validator validator = factory.getValidator();
-                Set<ConstraintViolation<Entry>> violations = validator.validateValue(Entry.class, "date",
+                Set<ConstraintViolation<Entry>> violations = validator.validateValue(Entry.class, "dateString",
                         ((JTextField) arg0).getText());
                 boolean valid = violations.isEmpty();
                 if (valid) {
@@ -180,7 +180,7 @@ public class NewEntryFrame extends JFrame {
             public void actionPerformed(final ActionEvent e) {
                 Entry entry = new Entry();
                 if (!StringUtils.isBlank(date.getText())) {
-                    entry.setDate(date.getText());
+                    entry.setDateString(date.getText());
                 }
                 if (!StringUtils.isBlank(description.getText())) {
                     entry.setDescription(description.getText());

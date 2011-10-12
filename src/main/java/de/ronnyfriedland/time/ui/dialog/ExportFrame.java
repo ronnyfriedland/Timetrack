@@ -118,6 +118,8 @@ public class ExportFrame extends JFrame {
                     controller.persistWorkbook(wb,
                             Configurator.CONFIG.getString(ConfiguratorKeys.EXPORT_PATH.getKey()),
                             Configurator.CONFIG.getString(ConfiguratorKeys.EXPORT_FILE.getKey()));
+
+                    setVisible(false);
                 } catch (IOException ex) {
                     LOG.log(Level.SEVERE, "Error exporting data", ex);
                 }

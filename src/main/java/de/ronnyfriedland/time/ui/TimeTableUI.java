@@ -91,18 +91,10 @@ public class TimeTableUI {
                     from.set(Calendar.SECOND, 0);
                     from.set(Calendar.MILLISECOND, 0);
 
-                    Calendar to = Calendar.getInstance();
-                    to.add(Calendar.DAY_OF_MONTH, 1);
-                    to.set(Calendar.HOUR_OF_DAY, 0);
-                    to.set(Calendar.MINUTE, 0);
-                    to.set(Calendar.SECOND, 0);
-                    to.set(Calendar.MILLISECOND, 0);
-
                     params.put(Entry.PARAM_DATE_FROM, from.getTime());
-                    params.put(Entry.PARAM_DATE_TO, to.getTime());
 
                     Collection<Entry> todayEntries = EntityController.getInstance().findResultlistByParameter(
-                            Entry.class, Entry.QUERY_FIND_FROM_TO, params);
+                            Entry.class, Entry.QUERY_FIND_TODAY_BY_CREATIONDATE, params);
 
                     todayItems.removeAll();
 
