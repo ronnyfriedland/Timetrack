@@ -96,7 +96,7 @@ public class ExportFrame extends JFrame {
                     from.set(Calendar.MILLISECOND, 0);
 
                     Calendar to = Calendar.getInstance();
-                    to.add(Calendar.DAY_OF_MONTH, days.getValue());
+                    to.add(Calendar.DAY_OF_YEAR, days.getValue());
                     to.set(Calendar.HOUR_OF_DAY, 0);
                     to.set(Calendar.MINUTE, 0);
                     to.set(Calendar.SECOND, 0);

@@ -8,7 +8,7 @@
     <description>tool to track time</description>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <export.path>/Users/ronnyfriedland/Dekstop</export.path>
+        <export.path>/Users/ronnyfriedland/Desktop</export.path>
         <export.file>timetable-export.xlsx</export.file>
     </properties>
     <build>

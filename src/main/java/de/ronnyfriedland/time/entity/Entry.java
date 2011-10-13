@@ -23,7 +23,7 @@ import de.ronnyfriedland.time.entity.validation.NotBlank;
  */
 @Entity
 @NamedQueries({
-        @NamedQuery(name = Entry.QUERY_FIND_FROM_TO, query = "SELECT e FROM Entry e WHERE e.date >= :from AND e.date < :to"),
+        @NamedQuery(name = Entry.QUERY_FIND_FROM_TO, query = "SELECT e FROM Entry e WHERE e.date >= :from AND e.date < :to ORDER BY e.date"),
         @NamedQuery(name = Entry.QUERY_FIND_TODAY_BY_CREATIONDATE, query = "SELECT e FROM Entry e WHERE e.creationDate >= :from") })
 public class Entry extends AbstractEntity {
 
@@ -82,6 +82,8 @@ public class Entry extends AbstractEntity {
 
     public void setDate(Date date) {
         this.date = date;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        dateString = sdf.format(date);
     }
 
     public String getDateString() {

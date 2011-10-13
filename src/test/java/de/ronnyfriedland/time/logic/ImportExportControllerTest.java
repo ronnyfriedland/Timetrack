@@ -39,6 +39,7 @@ public class ImportExportControllerTest {
             e.setDescription("lalala" + i);
             e.setDuration(String.valueOf(i));
             e.setProject(p);
+            e.setDateString("01.01.2011");
             p.addEntry(e);
             entries.add(e);
         }
