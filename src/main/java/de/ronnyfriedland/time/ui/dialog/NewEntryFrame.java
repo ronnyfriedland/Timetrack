@@ -7,6 +7,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
 import javax.swing.InputVerifier;
@@ -26,6 +28,7 @@ import javax.validation.ValidatorFactory;
 
 import org.apache.commons.lang.StringUtils;
 
+import de.ronnyfriedland.time.config.Messages;
 import de.ronnyfriedland.time.entity.Entry;
 import de.ronnyfriedland.time.entity.Project;
 import de.ronnyfriedland.time.logic.EntityController;
@@ -34,6 +37,8 @@ import de.ronnyfriedland.time.logic.EntityController;
  * @author ronnyfriedland
  */
 public class NewEntryFrame extends JFrame {
+    private static final Logger LOG = Logger.getLogger(NewEntryFrame.class.getName());
+
     private static final long serialVersionUID = -8738367859388084898L;
 
     public NewEntryFrame() {
@@ -43,21 +48,21 @@ public class NewEntryFrame extends JFrame {
     private void createUI() {
         setLayout(null);
         setBounds(0, 0, 280, 250);
-        setTitle("Neues Projekt anlegen");
+        setTitle(Messages.CREATE_NEW_ENTRY.getText());
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
 
         // init
-        final JLabel labelDate = new JLabel("Datum: ");
+        final JLabel labelDate = new JLabel(Messages.DATE.getText());
         final JTextField date = new JTextField();
-        final JLabel labelDescription = new JLabel("Beschreibung: ");
+        final JLabel labelDescription = new JLabel(Messages.DESCRIPTION.getText());
         final JTextField description = new JTextField();
-        final JLabel labelDuration = new JLabel("Dauer (in h): ");
+        final JLabel labelDuration = new JLabel(Messages.DURATION.getText());
         final JTextField duration = new JTextField();
         final JScrollPane scrollPaneProjects = new JScrollPane(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         final JList projects = new JList();
-        final JButton save = new JButton("Speichern");
+        final JButton save = new JButton(Messages.EXPORT.getText());
 
         // configure
         labelDate.setBounds(10, 10, 100, 24);
@@ -200,6 +205,7 @@ public class NewEntryFrame extends JFrame {
                     EntityController.getInstance().create(entry);
                     setVisible(false);
                 } catch (ConstraintViolationException ex) {
+                    LOG.log(Level.SEVERE, "Error saving new entry", ex);
                     save.setBorder(BorderFactory.createLineBorder(Color.RED));
                 }
 

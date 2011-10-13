@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
 import javax.swing.InputVerifier;
@@ -20,6 +22,7 @@ import javax.validation.ValidatorFactory;
 
 import org.apache.commons.lang.StringUtils;
 
+import de.ronnyfriedland.time.config.Messages;
 import de.ronnyfriedland.time.entity.Project;
 import de.ronnyfriedland.time.logic.EntityController;
 
@@ -27,6 +30,7 @@ import de.ronnyfriedland.time.logic.EntityController;
  * @author ronnyfriedland
  */
 public class NewProjectFrame extends JFrame {
+    private static final Logger LOG = Logger.getLogger(NewProjectFrame.class.getName());
 
     private static final long serialVersionUID = -8738367859388084898L;
 
@@ -37,16 +41,16 @@ public class NewProjectFrame extends JFrame {
     private void createUI() {
         setLayout(null);
         setBounds(0, 0, 280, 150);
-        setTitle("Neues Projekt anlegen");
+        setTitle(Messages.CREATE_NEW_PROJECT.getText());
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
 
         // init
-        final JLabel labelName = new JLabel("Projektname: ");
+        final JLabel labelName = new JLabel(Messages.PROJECT_NAME.getText());
         final JTextField name = new JTextField();
-        final JLabel labelDescription = new JLabel("Beschreibung: ");
+        final JLabel labelDescription = new JLabel(Messages.DESCRIPTION.getText());
         final JTextField description = new JTextField();
-        final JButton save = new JButton("Speichern");
+        final JButton save = new JButton(Messages.SAVE.getText());
 
         // configure
         labelName.setBounds(10, 10, 100, 24);
@@ -96,6 +100,7 @@ public class NewProjectFrame extends JFrame {
                     EntityController.getInstance().create(project);
                     setVisible(false);
                 } catch (ConstraintViolationException ex) {
+                    LOG.log(Level.SEVERE, "Error saving new project", ex);
                     save.setBorder(BorderFactory.createLineBorder(Color.RED));
                 }
             }

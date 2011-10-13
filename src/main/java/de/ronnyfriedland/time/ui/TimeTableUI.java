@@ -1,7 +1,6 @@
 package de.ronnyfriedland.time.ui;
 
 import java.awt.AWTException;
-import java.awt.Image;
 import java.awt.Menu;
 import java.awt.MenuItem;
 import java.awt.PopupMenu;
@@ -11,7 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.net.URL;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
@@ -21,6 +19,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.SwingUtilities;
 
+import de.ronnyfriedland.time.config.Messages;
 import de.ronnyfriedland.time.entity.Entry;
 import de.ronnyfriedland.time.logic.EntityController;
 import de.ronnyfriedland.time.ui.dialog.ExportFrame;
@@ -54,15 +53,16 @@ public class TimeTableUI {
             LOG.severe("SystemTray not supported!");
         } else {
             final PopupMenu popup = new PopupMenu();
-            final TrayIcon trayIcon = new TrayIcon(createImage("images/icon.gif", "Timetable"));
+            final TrayIcon trayIcon = new TrayIcon((new ImageIcon(Thread.currentThread().getContextClassLoader()
+                    .getResource("images/icon.gif"))).getImage());
             final SystemTray tray = SystemTray.getSystemTray();
 
             // Create a popup menu components
-            final MenuItem newProject = new MenuItem("Neues Projekt");
-            final MenuItem newItem = new MenuItem("Neuer Eintrag");
-            final Menu todayItems = new Menu("Heute erstellt");
-            final MenuItem exportItem = new MenuItem("Daten exportieren");
-            final MenuItem exitItem = new MenuItem("Beenden");
+            final MenuItem newProject = new MenuItem(Messages.NEW_PROJECT.getText());
+            final MenuItem newItem = new MenuItem(Messages.NEW_ENTRY.getText());
+            final Menu todayItems = new Menu(Messages.TODAY_ENTRIES.getText());
+            final MenuItem exportItem = new MenuItem(Messages.EXPORT_DATA.getText());
+            final MenuItem exitItem = new MenuItem(Messages.EXIT.getText());
 
             // Add components to popup menu
             popup.add(newProject);
@@ -154,17 +154,5 @@ public class TimeTableUI {
             });
 
         }
-    }
-
-    private static Image createImage(final String path, final String description) {
-        Image result = null;
-        URL imageURL = Thread.currentThread().getContextClassLoader().getResource(path);
-
-        if (imageURL == null) {
-            LOG.severe(String.format("Resource %1$s not found!", path));
-        } else {
-            result = (new ImageIcon(imageURL, description)).getImage();
-        }
-        return result;
     }
 }

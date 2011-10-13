@@ -27,6 +27,7 @@ import org.jfree.ui.DateChooserPanel;
 
 import de.ronnyfriedland.time.config.Configurator;
 import de.ronnyfriedland.time.config.Configurator.ConfiguratorKeys;
+import de.ronnyfriedland.time.config.Messages;
 import de.ronnyfriedland.time.entity.Entry;
 import de.ronnyfriedland.time.logic.EntityController;
 import de.ronnyfriedland.time.logic.ImportExportController;
@@ -46,17 +47,17 @@ public class ExportFrame extends JFrame {
     private void createUI() {
         setLayout(null);
         setBounds(0, 0, 280, 280);
-        setTitle("Bericht erstellen");
+        setTitle(Messages.NEW_EXPORT.getText());
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
 
         // init
-        final JLabel labelDate = new JLabel("Startdatum: ");
+        final JLabel labelDate = new JLabel(Messages.START_DATE.getText());
         final DateChooserPanel dateChooser = new DateChooserPanel();
-        final JLabel labelDays = new JLabel("Zeitspanne: ");
+        final JLabel labelDays = new JLabel(Messages.PERIOD_OF_TIME.getText());
         final JSlider days = new JSlider(JSlider.HORIZONTAL, 1, 365, 7);
-        final JLabel labelSelectedDays = new JLabel("1 Tag(e)");
-        final JButton export = new JButton("Daten exportieren");
+        final JLabel labelSelectedDays = new JLabel("");
+        final JButton export = new JButton(Messages.EXPORT.getText());
 
         // configure
         labelDate.setBounds(10, 10, 100, 24);
@@ -122,6 +123,7 @@ public class ExportFrame extends JFrame {
                     setVisible(false);
                 } catch (IOException ex) {
                     LOG.log(Level.SEVERE, "Error exporting data", ex);
+                    export.setBorder(BorderFactory.createLineBorder(Color.RED));
                 }
 
             }
