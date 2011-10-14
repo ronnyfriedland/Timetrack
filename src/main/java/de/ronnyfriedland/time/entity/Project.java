@@ -41,6 +41,11 @@ public class Project extends AbstractEntity {
         entries = new HashSet<Entry>();
     }
 
+    public Project(String uuid) {
+        super(uuid);
+        entries = new HashSet<Entry>();
+    }
+
     public String getName() {
         return name;
     }

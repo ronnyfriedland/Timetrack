@@ -26,23 +26,24 @@ public abstract class AbstractEntity implements Serializable {
     private final String uuid;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date creationDate;
+    @Column(name = "LASTMODIFIEDDATE", nullable = false)
+    private final Date lastModifiedDate;
 
     public AbstractEntity() {
-        uuid = UUID.randomUUID().toString();
-        creationDate = Calendar.getInstance().getTime();
+        this(UUID.randomUUID().toString());
+    }
+
+    public AbstractEntity(String uuid) {
+        this.uuid = uuid;
+        lastModifiedDate = Calendar.getInstance().getTime();
     }
 
     public String getUuid() {
         return uuid;
     }
 
-    public Date getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(final Date creationDate) {
-        this.creationDate = creationDate;
+    public Date getLastModifiedDate() {
+        return lastModifiedDate;
     }
 
     /**
@@ -78,7 +79,7 @@ public abstract class AbstractEntity implements Serializable {
     public String toString() {
         StringBuilder sbuild = new StringBuilder(super.toString());
         sbuild.append(String.format("[uuid: %s, ", getUuid()));
-        sbuild.append(String.format("creationDate: %s]", getCreationDate()));
+        sbuild.append(String.format("lastModifiedDate: %s]", getLastModifiedDate()));
         return sbuild.toString();
     }
 }

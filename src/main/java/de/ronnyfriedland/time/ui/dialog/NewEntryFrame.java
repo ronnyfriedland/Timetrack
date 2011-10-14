@@ -19,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ListModel;
 import javax.swing.ScrollPaneConstants;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -41,8 +42,37 @@ public class NewEntryFrame extends JFrame {
 
     private static final long serialVersionUID = -8738367859388084898L;
 
+    private final JLabel labelDate = new JLabel(Messages.DATE.getText());
+    private final JTextField date = new JTextField();
+    private final JLabel labelDescription = new JLabel(Messages.DESCRIPTION.getText());
+    private final JTextField description = new JTextField();
+    private final JLabel labelDuration = new JLabel(Messages.DURATION.getText());
+    private final JTextField duration = new JTextField();
+    private final JScrollPane scrollPaneProjects = new JScrollPane(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+    private final JList projects = new JList();
+    private final JButton save = new JButton(Messages.SAVE.getText());
+
+    private String uuid = null;
+
     public NewEntryFrame() {
         createUI();
+    }
+
+    public NewEntryFrame(final Entry entry) {
+        createUI();
+        uuid = entry.getUuid();
+
+        date.setText(entry.getDateString());
+        description.setText(entry.getDescription());
+        duration.setText(entry.getDuration());
+        ListModel model = projects.getModel();
+        for (int i = 0; i < model.getSize(); i++) {
+            String item = (String) model.getElementAt(i);
+            if (entry.getProject().getName().equals(item)) {
+                projects.setSelectedIndex(i);
+            }
+        }
     }
 
     private void createUI() {
@@ -51,18 +81,6 @@ public class NewEntryFrame extends JFrame {
         setTitle(Messages.CREATE_NEW_ENTRY.getText());
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
-
-        // init
-        final JLabel labelDate = new JLabel(Messages.DATE.getText());
-        final JTextField date = new JTextField();
-        final JLabel labelDescription = new JLabel(Messages.DESCRIPTION.getText());
-        final JTextField description = new JTextField();
-        final JLabel labelDuration = new JLabel(Messages.DURATION.getText());
-        final JTextField duration = new JTextField();
-        final JScrollPane scrollPaneProjects = new JScrollPane(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
-                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        final JList projects = new JList();
-        final JButton save = new JButton(Messages.EXPORT.getText());
 
         // configure
         labelDate.setBounds(10, 10, 100, 24);
@@ -183,7 +201,7 @@ public class NewEntryFrame extends JFrame {
         save.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                Entry entry = new Entry();
+                Entry entry = new Entry(uuid);
                 if (!StringUtils.isBlank(date.getText())) {
                     entry.setDateString(date.getText());
                 }
@@ -202,7 +220,11 @@ public class NewEntryFrame extends JFrame {
                     entry.setProject(selectedProject);
                 }
                 try {
-                    EntityController.getInstance().create(entry);
+                    if (null != uuid) {
+                        EntityController.getInstance().update(entry);
+                    } else {
+                        EntityController.getInstance().create(entry);
+                    }
                     setVisible(false);
                 } catch (ConstraintViolationException ex) {
                     LOG.log(Level.SEVERE, "Error saving new entry", ex);

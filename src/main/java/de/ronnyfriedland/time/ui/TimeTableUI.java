@@ -94,13 +94,20 @@ public class TimeTableUI {
                     params.put(Entry.PARAM_DATE_FROM, from.getTime());
 
                     Collection<Entry> todayEntries = EntityController.getInstance().findResultlistByParameter(
-                            Entry.class, Entry.QUERY_FIND_TODAY_BY_CREATIONDATE, params);
+                            Entry.class, Entry.QUERY_FIND_BY_LASTMODIFIEDDATE, params);
 
                     todayItems.removeAll();
 
-                    for (Entry entry : todayEntries) {
-                        todayItems.add(new MenuItem(String.format("%1$s %2$sh (%3$s)", entry.getDescription(),
-                                entry.getDuration(), entry.getProject().getName())));
+                    for (final Entry entry : todayEntries) {
+                        MenuItem menuItem = new MenuItem(String.format("%1$s %2$sh (%3$s)", entry.getDescription(),
+                                entry.getDuration(), entry.getProject().getName()));
+                        menuItem.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                new NewEntryFrame(entry).setVisible(true);
+                            }
+                        });
+                        todayItems.add(menuItem);
                     }
                 }
 

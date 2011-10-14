@@ -34,6 +34,12 @@ public class NewProjectFrame extends JFrame {
 
     private static final long serialVersionUID = -8738367859388084898L;
 
+    private final JLabel labelName = new JLabel(Messages.PROJECT_NAME.getText());
+    private final JTextField name = new JTextField();
+    private final JLabel labelDescription = new JLabel(Messages.DESCRIPTION.getText());
+    private final JTextField description = new JTextField();
+    private final JButton save = new JButton(Messages.SAVE.getText());
+
     public NewProjectFrame() {
         createUI();
     }
@@ -44,13 +50,6 @@ public class NewProjectFrame extends JFrame {
         setTitle(Messages.CREATE_NEW_PROJECT.getText());
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
-
-        // init
-        final JLabel labelName = new JLabel(Messages.PROJECT_NAME.getText());
-        final JTextField name = new JTextField();
-        final JLabel labelDescription = new JLabel(Messages.DESCRIPTION.getText());
-        final JTextField description = new JTextField();
-        final JButton save = new JButton(Messages.SAVE.getText());
 
         // configure
         labelName.setBounds(10, 10, 100, 24);

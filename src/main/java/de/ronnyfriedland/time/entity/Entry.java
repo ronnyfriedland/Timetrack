@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.PostLoad;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -24,10 +25,10 @@ import de.ronnyfriedland.time.entity.validation.NotBlank;
 @Entity
 @NamedQueries({
         @NamedQuery(name = Entry.QUERY_FIND_FROM_TO, query = "SELECT e FROM Entry e WHERE e.date >= :from AND e.date < :to ORDER BY e.date"),
-        @NamedQuery(name = Entry.QUERY_FIND_TODAY_BY_CREATIONDATE, query = "SELECT e FROM Entry e WHERE e.creationDate >= :from") })
+        @NamedQuery(name = Entry.QUERY_FIND_BY_LASTMODIFIEDDATE, query = "SELECT e FROM Entry e WHERE e.lastModifiedDate >= :from") })
 public class Entry extends AbstractEntity {
 
-    public static final String QUERY_FIND_TODAY_BY_CREATIONDATE = "Entry.findTodayByCreationdate";
+    public static final String QUERY_FIND_BY_LASTMODIFIEDDATE = "Entry.findTodayByLastModifieddate";
     public static final String QUERY_FIND_FROM_TO = "Entry.findFromTo";
 
     public static final String PARAM_DATE_FROM = "from";
@@ -51,6 +52,14 @@ public class Entry extends AbstractEntity {
     @ManyToOne(cascade = CascadeType.PERSIST, optional = false)
     @JoinColumn(name = "PROJECT_UUID", nullable = false)
     private Project project;
+
+    public Entry() {
+        super();
+    }
+
+    public Entry(String uuid) {
+        super(uuid);
+    }
 
     public String getDuration() {
         return duration;
@@ -98,6 +107,11 @@ public class Entry extends AbstractEntity {
         } catch (ParseException e) {
             date = new Date();
         }
+    }
+
+    @PostLoad
+    public void updateDateString() {
+        setDate(getDate());
     }
 
     /**
