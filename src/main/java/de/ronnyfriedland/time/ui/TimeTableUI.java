@@ -52,6 +52,10 @@ public class TimeTableUI {
         if (!SystemTray.isSupported()) {
             LOG.severe("SystemTray not supported!");
         } else {
+
+            // initialize EntityController ...
+            EntityController.getInstance();
+
             final PopupMenu popup = new PopupMenu();
             final TrayIcon trayIcon = new TrayIcon((new ImageIcon(Thread.currentThread().getContextClassLoader()
                     .getResource("images/icon.gif"))).getImage());
