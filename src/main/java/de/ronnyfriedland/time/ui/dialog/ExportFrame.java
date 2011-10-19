@@ -47,7 +47,7 @@ public class ExportFrame extends AbstractFrame {
     private final JButton export = new JButton(Messages.EXPORT.getText());
 
     public ExportFrame() {
-        super(Messages.NEW_EXPORT.getText(), 280, 280);
+        super(Messages.NEW_EXPORT.getText(), 320, 280);
         createUI();
     }
 
@@ -61,12 +61,12 @@ public class ExportFrame extends AbstractFrame {
         // configure
         labelDate.setBounds(10, 10, 100, 24);
 
-        dateChooser.setBounds(110, 10, 150, 150);
+        dateChooser.setBounds(110, 10, 200, 150);
         dateChooser.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
         labelDays.setBounds(10, 170, 100, 24);
 
-        days.setBounds(110, 170, 150, 24);
+        days.setBounds(110, 170, 200, 24);
         days.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         days.addChangeListener(new ChangeListener() {
 
@@ -78,9 +78,9 @@ public class ExportFrame extends AbstractFrame {
             }
         });
 
-        labelSelectedDays.setBounds(110, 200, 150, 24);
+        labelSelectedDays.setBounds(110, 200, 200, 24);
 
-        export.setBounds(10, 225, 250, 24);
+        export.setBounds(10, 225, 300, 24);
 
         export.addActionListener(new ActionListener() {
             @Override

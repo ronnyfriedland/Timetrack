@@ -40,7 +40,7 @@ public class NewProjectFrame extends AbstractFrame {
     private final JButton save = new JButton(Messages.SAVE.getText());
 
     public NewProjectFrame() {
-        super(Messages.CREATE_NEW_PROJECT.getText(), 280, 150);
+        super(Messages.CREATE_NEW_PROJECT.getText(), 320, 150);
         createUI();
     }
 
@@ -54,7 +54,7 @@ public class NewProjectFrame extends AbstractFrame {
         // configure
         labelName.setBounds(10, 10, 100, 24);
 
-        name.setBounds(110, 10, 150, 24);
+        name.setBounds(110, 10, 200, 24);
         name.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         name.setInputVerifier(new InputVerifier() {
             /**
@@ -80,10 +80,10 @@ public class NewProjectFrame extends AbstractFrame {
 
         labelDescription.setBounds(10, 35, 100, 24);
 
-        description.setBounds(110, 35, 150, 24);
+        description.setBounds(110, 35, 200, 24);
         description.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
-        save.setBounds(10, 70, 250, 24);
+        save.setBounds(10, 70, 300, 24);
 
         save.addActionListener(new ActionListener() {
             @Override

@@ -55,7 +55,7 @@ public class NewEntryFrame extends AbstractFrame {
     private String uuid = null;
 
     public NewEntryFrame() {
-        super(Messages.CREATE_NEW_ENTRY.getText(), 280, 250);
+        super(Messages.CREATE_NEW_ENTRY.getText(), 320, 250);
         createUI();
     }
 
@@ -85,7 +85,7 @@ public class NewEntryFrame extends AbstractFrame {
         // configure
         labelDate.setBounds(10, 10, 100, 24);
 
-        date.setBounds(110, 10, 150, 24);
+        date.setBounds(110, 10, 200, 24);
         date.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         date.setInputVerifier(new InputVerifier() {
             /**
@@ -111,7 +111,7 @@ public class NewEntryFrame extends AbstractFrame {
 
         labelDescription.setBounds(10, 35, 100, 24);
 
-        description.setBounds(110, 35, 150, 24);
+        description.setBounds(110, 35, 200, 24);
         description.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         description.setInputVerifier(new InputVerifier() {
             /**
@@ -137,7 +137,7 @@ public class NewEntryFrame extends AbstractFrame {
 
         labelDuration.setBounds(10, 60, 100, 24);
 
-        duration.setBounds(110, 60, 150, 24);
+        duration.setBounds(110, 60, 200, 24);
         duration.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         duration.setInputVerifier(new InputVerifier() {
             /**
@@ -193,10 +193,10 @@ public class NewEntryFrame extends AbstractFrame {
         });
 
         scrollPaneProjects.setViewportView(projects);
-        scrollPaneProjects.setBounds(10, 85, 250, 100);
+        scrollPaneProjects.setBounds(10, 85, 300, 100);
         scrollPaneProjects.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
-        save.setBounds(10, 190, 250, 24);
+        save.setBounds(10, 190, 300, 24);
 
         save.addActionListener(new ActionListener() {
             @Override
