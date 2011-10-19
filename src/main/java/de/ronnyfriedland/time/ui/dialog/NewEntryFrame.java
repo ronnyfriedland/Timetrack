@@ -14,7 +14,6 @@ import javax.swing.BorderFactory;
 import javax.swing.InputVerifier;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
@@ -37,7 +36,7 @@ import de.ronnyfriedland.time.logic.EntityController;
 /**
  * @author ronnyfriedland
  */
-public class NewEntryFrame extends JFrame {
+public class NewEntryFrame extends AbstractFrame {
     private static final Logger LOG = Logger.getLogger(NewEntryFrame.class.getName());
 
     private static final long serialVersionUID = -8738367859388084898L;
@@ -56,11 +55,12 @@ public class NewEntryFrame extends JFrame {
     private String uuid = null;
 
     public NewEntryFrame() {
+        super(Messages.CREATE_NEW_ENTRY.getText(), 280, 250);
         createUI();
     }
 
     public NewEntryFrame(final Entry entry) {
-        createUI();
+        this();
         uuid = entry.getUuid();
 
         date.setText(entry.getDateString());
@@ -75,13 +75,13 @@ public class NewEntryFrame extends JFrame {
         }
     }
 
-    private void createUI() {
-        setLayout(null);
-        setBounds(0, 0, 280, 250);
-        setTitle(Messages.CREATE_NEW_ENTRY.getText());
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setResizable(false);
-
+    /**
+     * (non-Javadoc)
+     * 
+     * @see de.ronnyfriedland.time.ui.dialog.AbstractFrame#createUI()
+     */
+    @Override
+    protected void createUI() {
         // configure
         labelDate.setBounds(10, 10, 100, 24);
 

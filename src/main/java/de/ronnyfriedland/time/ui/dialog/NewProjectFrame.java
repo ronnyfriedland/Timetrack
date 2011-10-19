@@ -11,7 +11,6 @@ import javax.swing.BorderFactory;
 import javax.swing.InputVerifier;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.validation.ConstraintViolation;
@@ -29,7 +28,7 @@ import de.ronnyfriedland.time.logic.EntityController;
 /**
  * @author ronnyfriedland
  */
-public class NewProjectFrame extends JFrame {
+public class NewProjectFrame extends AbstractFrame {
     private static final Logger LOG = Logger.getLogger(NewProjectFrame.class.getName());
 
     private static final long serialVersionUID = -8738367859388084898L;
@@ -41,16 +40,17 @@ public class NewProjectFrame extends JFrame {
     private final JButton save = new JButton(Messages.SAVE.getText());
 
     public NewProjectFrame() {
+        super(Messages.CREATE_NEW_PROJECT.getText(), 280, 150);
         createUI();
     }
 
-    private void createUI() {
-        setLayout(null);
-        setBounds(0, 0, 280, 150);
-        setTitle(Messages.CREATE_NEW_PROJECT.getText());
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setResizable(false);
-
+    /**
+     * (non-Javadoc)
+     * 
+     * @see de.ronnyfriedland.time.ui.dialog.AbstractFrame#createUI()
+     */
+    @Override
+    protected void createUI() {
         // configure
         labelName.setBounds(10, 10, 100, 24);
 

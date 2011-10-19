@@ -15,7 +15,6 @@ import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
@@ -35,30 +34,30 @@ import de.ronnyfriedland.time.logic.ImportExportController;
 /**
  * @author ronnyfriedland
  */
-public class ExportFrame extends JFrame {
+public class ExportFrame extends AbstractFrame {
     private static final Logger LOG = Logger.getLogger(ExportFrame.class.getName());
 
     private static final long serialVersionUID = -8738367859388084898L;
 
+    private final JLabel labelDate = new JLabel(Messages.START_DATE.getText());
+    private final DateChooserPanel dateChooser = new DateChooserPanel();
+    private final JLabel labelDays = new JLabel(Messages.PERIOD_OF_TIME.getText());
+    private final JSlider days = new JSlider(JSlider.HORIZONTAL, 1, 365, 7);
+    private final JLabel labelSelectedDays = new JLabel("");
+    private final JButton export = new JButton(Messages.EXPORT.getText());
+
     public ExportFrame() {
+        super(Messages.NEW_EXPORT.getText(), 280, 280);
         createUI();
     }
 
-    private void createUI() {
-        setLayout(null);
-        setBounds(0, 0, 280, 280);
-        setTitle(Messages.NEW_EXPORT.getText());
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setResizable(false);
-
-        // init
-        final JLabel labelDate = new JLabel(Messages.START_DATE.getText());
-        final DateChooserPanel dateChooser = new DateChooserPanel();
-        final JLabel labelDays = new JLabel(Messages.PERIOD_OF_TIME.getText());
-        final JSlider days = new JSlider(JSlider.HORIZONTAL, 1, 365, 7);
-        final JLabel labelSelectedDays = new JLabel("");
-        final JButton export = new JButton(Messages.EXPORT.getText());
-
+    /**
+     * (non-Javadoc)
+     * 
+     * @see de.ronnyfriedland.time.ui.dialog.AbstractFrame#createUI()
+     */
+    @Override
+    protected void createUI() {
         // configure
         labelDate.setBounds(10, 10, 100, 24);
 
