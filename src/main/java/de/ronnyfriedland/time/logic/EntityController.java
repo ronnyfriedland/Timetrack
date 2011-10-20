@@ -111,4 +111,7 @@ public class EntityController {
 
     }
 
+    public <T> void deleteDetached(final T entity) {
+        delete(em.merge(entity));
+    }
 }

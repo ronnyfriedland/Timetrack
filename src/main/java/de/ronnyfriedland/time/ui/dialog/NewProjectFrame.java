@@ -54,6 +54,7 @@ public class NewProjectFrame extends AbstractFrame {
         // configure
         labelName.setBounds(10, 10, 100, 24);
 
+        name.setName("name");
         name.setBounds(110, 10, 200, 24);
         name.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         name.setInputVerifier(new InputVerifier() {
@@ -80,6 +81,7 @@ public class NewProjectFrame extends AbstractFrame {
 
         labelDescription.setBounds(10, 35, 100, 24);
 
+        description.setName("description");
         description.setBounds(110, 35, 200, 24);
         description.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
@@ -110,5 +112,9 @@ public class NewProjectFrame extends AbstractFrame {
         getContentPane().add(labelDescription);
         getContentPane().add(description);
         getContentPane().add(save);
+    }
+
+    public static void main(String[] args) {
+        new NewProjectFrame().setVisible(true);
     }
 }

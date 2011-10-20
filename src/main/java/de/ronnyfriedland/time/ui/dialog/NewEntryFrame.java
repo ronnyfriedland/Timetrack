@@ -85,6 +85,7 @@ public class NewEntryFrame extends AbstractFrame {
         // configure
         labelDate.setBounds(10, 10, 100, 24);
 
+        date.setName("date");
         date.setBounds(110, 10, 200, 24);
         date.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         date.setInputVerifier(new InputVerifier() {
@@ -111,6 +112,7 @@ public class NewEntryFrame extends AbstractFrame {
 
         labelDescription.setBounds(10, 35, 100, 24);
 
+        description.setName("description");
         description.setBounds(110, 35, 200, 24);
         description.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         description.setInputVerifier(new InputVerifier() {
@@ -137,6 +139,7 @@ public class NewEntryFrame extends AbstractFrame {
 
         labelDuration.setBounds(10, 60, 100, 24);
 
+        duration.setName("duration");
         duration.setBounds(110, 60, 200, 24);
         duration.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         duration.setInputVerifier(new InputVerifier() {
@@ -169,6 +172,7 @@ public class NewEntryFrame extends AbstractFrame {
             i++;
         }
 
+        projects.setName("projects");
         projects.setListData(projectNameList);
         projects.setInputVerifier(new InputVerifier() {
             /**
