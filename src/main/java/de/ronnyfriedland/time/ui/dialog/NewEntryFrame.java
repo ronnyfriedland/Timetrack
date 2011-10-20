@@ -201,7 +201,12 @@ public class NewEntryFrame extends AbstractFrame {
         save.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                Entry entry = new Entry(uuid);
+                Entry entry;
+                if (null == uuid) {
+                    entry = new Entry();
+                } else {
+                    entry = new Entry(uuid);
+                }
                 if (!StringUtils.isBlank(date.getText())) {
                     entry.setDateString(date.getText());
                 }
@@ -242,5 +247,9 @@ public class NewEntryFrame extends AbstractFrame {
         getContentPane().add(duration);
         getContentPane().add(scrollPaneProjects);
         getContentPane().add(save);
+    }
+
+    public static void main(String[] args) {
+        new NewEntryFrame().setVisible(true);
     }
 }
