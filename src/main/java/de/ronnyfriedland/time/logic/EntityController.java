@@ -10,6 +10,8 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import de.ronnyfriedland.time.sort.SortParam;
+
 /**
  * @author ronnyfriedland
  */
@@ -47,6 +49,13 @@ public class EntityController {
 
     public <T> Collection<T> findAll(final Class<T> clazz) {
         TypedQuery<T> query = em.createQuery("SELECT e FROM " + clazz.getSimpleName() + " e", clazz);
+        return query.getResultList();
+    }
+
+    public <T> Collection<T> findAll(final Class<T> clazz, final SortParam sortParam) {
+        String queryString = String.format("SELECT e FROM %1$s e ORDER BY e.%2$s %3$s", clazz.getSimpleName(),
+                sortParam.getAttribute(), sortParam.getOrder());
+        TypedQuery<T> query = em.createQuery(queryString, clazz);
         return query.getResultList();
     }
 

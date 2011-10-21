@@ -9,6 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.ronnyfriedland.time.logic.EntityController;
+import de.ronnyfriedland.time.sort.SortParam;
+import de.ronnyfriedland.time.sort.SortParam.SortOrder;
 
 /**
  * @author ronnyfriedland
@@ -83,6 +85,35 @@ public class EntityControllerTest {
             Assert.fail("Exception expected");
         } catch (Exception e) {
             // ok
+        }
+    }
+
+    @Test
+    public void testProjectsOrder() {
+        Project p1 = new Project();
+        p1.setName("Zum Anfang ein Projekt");
+        p1.setDescription("Testbeschreibung");
+        controller.create(p1);
+
+        Project p2 = new Project();
+        p2.setName("Alles nur ein Test");
+        p2.setDescription("Testbeschreibung");
+        controller.create(p2);
+
+        SortParam sortParam = new SortParam(Project.PARAM_NAME, SortOrder.ASC);
+        Collection<Project> projects = controller.findAll(Project.class, sortParam);
+
+        Assert.assertEquals(2, projects.size());
+
+        int i = 0;
+        for (Project project : projects) {
+            if (i == 0) {
+                Assert.assertEquals(p2.getName(), project.getName());
+            }
+            if (i == 1) {
+                Assert.assertEquals(p1.getName(), project.getName());
+            }
+            i++;
         }
     }
 }

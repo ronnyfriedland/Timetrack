@@ -32,6 +32,8 @@ import de.ronnyfriedland.time.config.Messages;
 import de.ronnyfriedland.time.entity.Entry;
 import de.ronnyfriedland.time.entity.Project;
 import de.ronnyfriedland.time.logic.EntityController;
+import de.ronnyfriedland.time.sort.SortParam;
+import de.ronnyfriedland.time.sort.SortParam.SortOrder;
 
 /**
  * @author ronnyfriedland
@@ -164,7 +166,8 @@ public class NewEntryFrame extends AbstractFrame {
             }
         });
 
-        Collection<Project> projectList = EntityController.getInstance().findAll(Project.class);
+        Collection<Project> projectList = EntityController.getInstance().findAll(Project.class,
+                new SortParam(Project.PARAM_NAME, SortOrder.ASC));
         String[] projectNameList = new String[projectList.size()];
         int i = 0;
         for (Project project : projectList) {
