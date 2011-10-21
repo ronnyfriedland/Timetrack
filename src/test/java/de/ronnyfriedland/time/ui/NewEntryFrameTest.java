@@ -1,4 +1,4 @@
-package de.ronnyfriedland.timetable.ui;
+package de.ronnyfriedland.time.ui;
 
 import java.util.Collection;
 

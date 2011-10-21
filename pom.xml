@@ -33,13 +33,20 @@
 	</build>
 	<profiles>
 		<profile>
-			<id>launch4j</id>
+			<id>release</id>
 			<properties>
 				<export.path>${user.home}/.timetable</export.path>
 				<export.file>timetable-export.xlsx</export.file>
 			</properties>
 			<build>
 				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<configuration>
+							<skipTests>true</skipTests>
+						</configuration>
+					</plugin>
 					<plugin>
 						<groupId>org.bluestemsoftware.open.maven.plugin</groupId>
 						<artifactId>launch4j-plugin</artifactId>
@@ -63,6 +70,20 @@
 								</configuration>
 							</execution>
 						</executions>
+					</plugin>
+					<plugin>
+						<artifactId>maven-assembly-plugin</artifactId>
+						<configuration>
+							<descriptorRefs>
+								<descriptorRef>jar-with-dependencies</descriptorRef>
+							</descriptorRefs>
+							<archive>
+								<manifest>
+									<addClasspath>true</addClasspath>
+									<mainClass>de.ronnyfriedland.time.ui.TimeTableUI</mainClass>
+								</manifest>
+							</archive>
+						</configuration>
 					</plugin>
 				</plugins>
 			</build>

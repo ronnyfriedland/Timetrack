@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.persistence.PersistenceException;
 import javax.swing.BorderFactory;
 import javax.swing.InputVerifier;
 import javax.swing.JButton;
@@ -100,6 +101,9 @@ public class NewProjectFrame extends AbstractFrame {
                 try {
                     EntityController.getInstance().create(project);
                     setVisible(false);
+                } catch (PersistenceException ex) {
+                    LOG.log(Level.SEVERE, "Error saving new project", ex);
+                    save.setBorder(BorderFactory.createLineBorder(Color.RED));
                 } catch (ConstraintViolationException ex) {
                     LOG.log(Level.SEVERE, "Error saving new project", ex);
                     save.setBorder(BorderFactory.createLineBorder(Color.RED));

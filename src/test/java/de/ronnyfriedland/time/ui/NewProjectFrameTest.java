@@ -1,4 +1,4 @@
-package de.ronnyfriedland.timetable.ui;
+package de.ronnyfriedland.time.ui;
 
 import java.util.Collection;
 
@@ -19,8 +19,6 @@ import de.ronnyfriedland.time.logic.EntityController;
 import de.ronnyfriedland.time.ui.dialog.NewProjectFrame;
 
 public class NewProjectFrameTest extends UISpecTestCase {
-
-    private Project project;
 
     @Override
     @Before
