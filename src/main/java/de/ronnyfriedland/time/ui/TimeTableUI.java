@@ -10,10 +10,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
@@ -55,6 +57,14 @@ public class TimeTableUI {
 
             // initialize EntityController ...
             EntityController.getInstance();
+
+            try {
+                LogManager.getLogManager().readConfiguration(
+                        Thread.currentThread().getContextClassLoader().getResourceAsStream("logging.properties"));
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
 
             final PopupMenu popup = new PopupMenu();
             final TrayIcon trayIcon = new TrayIcon((new ImageIcon(Thread.currentThread().getContextClassLoader()
