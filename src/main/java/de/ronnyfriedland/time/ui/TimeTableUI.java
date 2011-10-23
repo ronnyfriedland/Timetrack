@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
@@ -58,12 +59,12 @@ public class TimeTableUI {
             // initialize EntityController ...
             EntityController.getInstance();
 
+            LogManager logManager = LogManager.getLogManager();
             try {
-                LogManager.getLogManager().readConfiguration(
-                        Thread.currentThread().getContextClassLoader().getResourceAsStream("logging.properties"));
-            } catch (IOException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
+                logManager.readConfiguration(Thread.currentThread().getContextClassLoader()
+                        .getResourceAsStream("logging.properties"));
+            } catch (IOException e) {
+                LOG.log(Level.SEVERE, "Error reading logging.properties to configure logger.", e);
             }
 
             final PopupMenu popup = new PopupMenu();
