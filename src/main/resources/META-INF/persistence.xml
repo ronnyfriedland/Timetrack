@@ -7,7 +7,7 @@
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver" />
-            <property name="javax.persistence.jdbc.url" value="jdbc:derby:${export.path}/database/timetable-database;create=true" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:derby:${timetable.path}/database/timetable-database;create=true" />
             <property name="eclipselink.ddl-generation" value="create-tables" />
             <property name="eclipselink.logging.level" value="OFF" />
         </properties>

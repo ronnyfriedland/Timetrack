@@ -8,8 +8,8 @@
 	<description>tool to track time</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<export.path>target</export.path>
-		<export.file>timetable-export.xlsx</export.file>
+		<timetable.path>target</timetable.path>
+		<timetable.export.file>timetable-export.xlsx</timetable.export.file>
 	</properties>
 	<build>
 		<resources>
@@ -35,8 +35,8 @@
 		<profile>
 			<id>release</id>
 			<properties>
-				<export.path>${user.home}/.timetable</export.path>
-				<export.file>timetable-export.xlsx</export.file>
+				<timetable.path>${user.home}/.timetable</timetable.path>
+				<timetable.export.file>timetable-export.xlsx</timetable.export.file>
 			</properties>
 			<build>
 				<plugins>
