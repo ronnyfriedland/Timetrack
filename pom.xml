@@ -61,9 +61,10 @@
 								<configuration>
 									<dontWrapJar>false</dontWrapJar>
 									<headerType>gui</headerType>
-									<outfile>target/timetable-${project.version}.exe</outfile>
-									<jar>target/${project.artifactId}-${project.version}.jar</jar>
-									<errTitle>Timetable</errTitle>
+									<outfile>${project.build.directory}/${project.artifactId}-${project.version}.exe</outfile>
+									<jar>${project.build.directory}/${project.artifactId}-${project.version}.jar</jar>
+									<errTitle>Timetable start failed.</errTitle>
+								    <icon>src/main/resources/images/icon.ico</icon>
 									<jre>
 										<minVersion>1.6.0</minVersion>
 									</jre>
