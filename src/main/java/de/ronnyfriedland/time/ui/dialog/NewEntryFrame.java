@@ -3,6 +3,8 @@ package de.ronnyfriedland.time.ui.dialog;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -197,6 +199,20 @@ public class NewEntryFrame extends AbstractFrame {
                     arg0.setBorder(BorderFactory.createLineBorder(Color.RED));
                 }
                 return valid;
+            }
+        });
+        projects.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    Map<String, Object> parameters = new HashMap<String, Object>();
+                    parameters.put(Project.PARAM_NAME, projects.getSelectedValue());
+                    Project project = EntityController.getInstance().findSingleResultByParameter(Project.class,
+                            Project.QUERY_FINDBYNAME, parameters);
+
+                    new NewProjectFrame(project).setVisible(true);
+                    setVisible(false);
+                }
             }
         });
 

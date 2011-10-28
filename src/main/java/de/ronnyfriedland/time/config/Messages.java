@@ -35,7 +35,9 @@ public enum Messages {
     /** Exportieren */
     EXPORT("Exportieren"),
     /** Speichern */
-    SAVE("Speichern");
+    SAVE("Speichern"),
+    /** Löschen */
+    DELETE("Löschen");
 
     public String getText() {
         return text;

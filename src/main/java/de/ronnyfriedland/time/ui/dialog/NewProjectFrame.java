@@ -39,10 +39,23 @@ public class NewProjectFrame extends AbstractFrame {
     private final JLabel labelDescription = new JLabel(Messages.DESCRIPTION.getText());
     private final JTextField description = new JTextField();
     private final JButton save = new JButton(Messages.SAVE.getText());
+    private final JButton delete = new JButton(Messages.DELETE.getText());
+
+    private String uuid = null;
 
     public NewProjectFrame() {
-        super(Messages.CREATE_NEW_PROJECT.getText(), 320, 150);
+        super(Messages.CREATE_NEW_ENTRY.getText(), 320, 150);
         createUI();
+    }
+
+    public NewProjectFrame(final Project project) {
+        this();
+        uuid = project.getUuid();
+        name.setText(project.getName());
+        description.setText(project.getDescription());
+
+        name.setEnabled(false);
+        delete.setEnabled(true);
     }
 
     /**
@@ -86,12 +99,30 @@ public class NewProjectFrame extends AbstractFrame {
         description.setBounds(110, 35, 200, 24);
         description.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
-        save.setBounds(10, 70, 300, 24);
+        delete.setBounds(10, 95, 300, 24);
+        delete.setEnabled(false);
+        delete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                if (null != uuid) {
+                    Project project = new Project(uuid);
+                    project.setName(name.getText());
+                    EntityController.getInstance().deleteDetached(project);
+                }
+                setVisible(false);
+            }
+        });
 
+        save.setBounds(10, 70, 300, 24);
         save.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                Project project = new Project();
+                Project project;
+                if (null == uuid) {
+                    project = new Project();
+                } else {
+                    project = new Project(uuid);
+                }
                 if (!StringUtils.isBlank(name.getText())) {
                     project.setName(name.getText());
                 }
@@ -99,7 +130,11 @@ public class NewProjectFrame extends AbstractFrame {
                     project.setDescription(description.getText());
                 }
                 try {
-                    EntityController.getInstance().create(project);
+                    if (null != uuid) {
+                        EntityController.getInstance().update(project);
+                    } else {
+                        EntityController.getInstance().create(project);
+                    }
                     setVisible(false);
                 } catch (PersistenceException ex) {
                     LOG.log(Level.SEVERE, "Error saving new project", ex);
@@ -116,6 +151,7 @@ public class NewProjectFrame extends AbstractFrame {
         getContentPane().add(labelDescription);
         getContentPane().add(description);
         getContentPane().add(save);
+        getContentPane().add(delete);
     }
 
     public static void main(String[] args) {
