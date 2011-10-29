@@ -1,6 +1,5 @@
 package de.ronnyfriedland.time.ui;
 
-import java.awt.AWTException;
 import java.awt.Menu;
 import java.awt.MenuItem;
 import java.awt.PopupMenu;
@@ -21,6 +20,7 @@ import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 import de.ronnyfriedland.time.config.Messages;
 import de.ronnyfriedland.time.entity.Entry;
@@ -139,6 +139,8 @@ public class TimeTableUI {
             });
 
             try {
+                UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+
                 tray.add(trayIcon);
 
                 newProject.addActionListener(new ActionListener() {
@@ -169,8 +171,8 @@ public class TimeTableUI {
                         System.exit(0);
                     }
                 });
-            } catch (AWTException e) {
-                LOG.log(Level.SEVERE, "Unable to add tray icon", e);
+            } catch (Exception e) {
+                LOG.log(Level.SEVERE, "Unable to set look and feel or add tray icon", e);
             }
         }
     }
