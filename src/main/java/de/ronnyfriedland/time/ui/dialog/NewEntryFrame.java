@@ -199,7 +199,7 @@ public class NewEntryFrame extends AbstractFrame {
         projects.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2) {
+                if (e.getClickCount() == 2 && null != projects.getSelectedValue()) {
                     Map<String, Object> parameters = new HashMap<String, Object>();
                     parameters.put(Project.PARAM_NAME, projects.getSelectedValue());
                     Project project = EntityController.getInstance().findSingleResultByParameter(Project.class,
