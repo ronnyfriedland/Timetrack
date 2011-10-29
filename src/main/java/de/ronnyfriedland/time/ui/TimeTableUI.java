@@ -55,7 +55,6 @@ public class TimeTableUI {
         if (!SystemTray.isSupported()) {
             LOG.severe("SystemTray not supported!");
         } else {
-
             // initialize EntityController ...
             EntityController.getInstance();
 
@@ -141,40 +140,38 @@ public class TimeTableUI {
 
             try {
                 tray.add(trayIcon);
+
+                newProject.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(final ActionEvent e) {
+                        new NewProjectFrame().setVisible(true);
+                    }
+                });
+
+                newItem.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(final ActionEvent e) {
+                        new NewEntryFrame().setVisible(true);
+                    }
+                });
+
+                exportItem.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(final ActionEvent e) {
+                        new ExportFrame().setVisible(true);
+                    }
+                });
+
+                exitItem.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(final ActionEvent e) {
+                        tray.remove(trayIcon);
+                        System.exit(0);
+                    }
+                });
             } catch (AWTException e) {
-                System.out.println("TrayIcon could not be added.");
-                return;
+                LOG.log(Level.SEVERE, "Unable to add tray icon", e);
             }
-
-            newProject.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(final ActionEvent e) {
-                    new NewProjectFrame().setVisible(true);
-                }
-            });
-
-            newItem.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(final ActionEvent e) {
-                    new NewEntryFrame().setVisible(true);
-                }
-            });
-
-            exportItem.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(final ActionEvent e) {
-                    new ExportFrame().setVisible(true);
-                }
-            });
-
-            exitItem.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(final ActionEvent e) {
-                    tray.remove(trayIcon);
-                    System.exit(0);
-                }
-            });
-
         }
     }
 }

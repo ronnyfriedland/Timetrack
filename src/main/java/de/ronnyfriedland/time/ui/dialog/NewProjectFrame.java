@@ -1,6 +1,5 @@
 package de.ronnyfriedland.time.ui.dialog;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Set;
@@ -8,7 +7,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.persistence.PersistenceException;
-import javax.swing.BorderFactory;
 import javax.swing.InputVerifier;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -70,7 +68,6 @@ public class NewProjectFrame extends AbstractFrame {
 
         name.setName("name");
         name.setBounds(110, 10, 200, 24);
-        name.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         name.setInputVerifier(new InputVerifier() {
             /**
              * (non-Javadoc)
@@ -85,9 +82,9 @@ public class NewProjectFrame extends AbstractFrame {
                         ((JTextField) arg0).getText());
                 boolean valid = violations.isEmpty();
                 if (valid) {
-                    arg0.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                    formatOk(arg0);
                 } else {
-                    arg0.setBorder(BorderFactory.createLineBorder(Color.RED));
+                    formatError(arg0);
                 }
                 return valid;
             }
@@ -97,7 +94,6 @@ public class NewProjectFrame extends AbstractFrame {
 
         description.setName("description");
         description.setBounds(110, 35, 200, 24);
-        description.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
         delete.setBounds(10, 95, 300, 24);
         delete.setEnabled(false);
@@ -138,13 +134,15 @@ public class NewProjectFrame extends AbstractFrame {
                     setVisible(false);
                 } catch (PersistenceException ex) {
                     LOG.log(Level.SEVERE, "Error saving new project", ex);
-                    save.setBorder(BorderFactory.createLineBorder(Color.RED));
+                    formatError(save);
                 } catch (ConstraintViolationException ex) {
                     LOG.log(Level.SEVERE, "Error saving new project", ex);
-                    save.setBorder(BorderFactory.createLineBorder(Color.RED));
+                    formatError(save);
                 }
             }
         });
+
+        formatOk(name, description);
 
         getContentPane().add(labelName);
         getContentPane().add(name);

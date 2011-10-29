@@ -1,6 +1,5 @@
 package de.ronnyfriedland.time.ui.dialog;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -13,7 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.persistence.PersistenceException;
-import javax.swing.BorderFactory;
 import javax.swing.InputVerifier;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -92,7 +90,6 @@ public class NewEntryFrame extends AbstractFrame {
 
         date.setName("date");
         date.setBounds(110, 10, 200, 24);
-        date.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         date.setInputVerifier(new InputVerifier() {
             /**
              * (non-Jsdoc)
@@ -107,9 +104,9 @@ public class NewEntryFrame extends AbstractFrame {
                         ((JTextField) arg0).getText());
                 boolean valid = violations.isEmpty();
                 if (valid) {
-                    arg0.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                    formatOk(arg0);
                 } else {
-                    arg0.setBorder(BorderFactory.createLineBorder(Color.RED));
+                    formatError(arg0);
                 }
                 return valid;
             }
@@ -119,7 +116,6 @@ public class NewEntryFrame extends AbstractFrame {
 
         description.setName("description");
         description.setBounds(110, 35, 200, 24);
-        description.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         description.setInputVerifier(new InputVerifier() {
             /**
              * (non-Javadoc)
@@ -134,9 +130,9 @@ public class NewEntryFrame extends AbstractFrame {
                         ((JTextField) arg0).getText());
                 boolean valid = violations.isEmpty();
                 if (valid) {
-                    arg0.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                    formatOk(arg0);
                 } else {
-                    arg0.setBorder(BorderFactory.createLineBorder(Color.RED));
+                    formatError(arg0);
                 }
                 return valid;
             }
@@ -146,7 +142,6 @@ public class NewEntryFrame extends AbstractFrame {
 
         duration.setName("duration");
         duration.setBounds(110, 60, 200, 24);
-        duration.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         duration.setInputVerifier(new InputVerifier() {
             /**
              * (non-Javadoc)
@@ -161,9 +156,9 @@ public class NewEntryFrame extends AbstractFrame {
                         ((JTextField) arg0).getText());
                 boolean valid = violations.isEmpty();
                 if (valid) {
-                    arg0.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                    formatOk(arg0);
                 } else {
-                    arg0.setBorder(BorderFactory.createLineBorder(Color.RED));
+                    formatError(arg0);
                 }
                 return valid;
             }
@@ -194,9 +189,9 @@ public class NewEntryFrame extends AbstractFrame {
                         ((JList) arg0).getSelectedValue());
                 boolean valid = violations.isEmpty();
                 if (valid) {
-                    arg0.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                    formatOk(arg0);
                 } else {
-                    arg0.setBorder(BorderFactory.createLineBorder(Color.RED));
+                    formatError(arg0);
                 }
                 return valid;
             }
@@ -218,7 +213,6 @@ public class NewEntryFrame extends AbstractFrame {
 
         scrollPaneProjects.setViewportView(projects);
         scrollPaneProjects.setBounds(10, 85, 300, 100);
-        scrollPaneProjects.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
         save.setBounds(10, 190, 300, 24);
 
@@ -257,13 +251,15 @@ public class NewEntryFrame extends AbstractFrame {
                     setVisible(false);
                 } catch (PersistenceException ex) {
                     LOG.log(Level.SEVERE, "Error saving new entry", ex);
-                    save.setBorder(BorderFactory.createLineBorder(Color.RED));
+                    formatOk(save);
                 } catch (ConstraintViolationException ex) {
                     LOG.log(Level.SEVERE, "Error saving new entry", ex);
-                    save.setBorder(BorderFactory.createLineBorder(Color.RED));
+                    formatError(save);
                 }
             }
         });
+
+        formatOk(date, description, duration, scrollPaneProjects);
 
         getContentPane().add(labelDate);
         getContentPane().add(date);

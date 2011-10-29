@@ -1,8 +1,11 @@
 package de.ronnyfriedland.time.ui.dialog;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 
 /**
@@ -24,6 +27,16 @@ public abstract class AbstractFrame extends JFrame {
         setTitle(title);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
+    }
+
+    protected void formatError(JComponent component) {
+        component.setBorder(BorderFactory.createLineBorder(Color.RED));
+    }
+
+    protected void formatOk(JComponent... components) {
+        for (JComponent component : components) {
+            component.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        }
     }
 
     /**

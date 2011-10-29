@@ -1,6 +1,5 @@
 package de.ronnyfriedland.time.ui.dialog;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -13,7 +12,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
@@ -62,12 +60,10 @@ public class ExportFrame extends AbstractFrame {
         labelDate.setBounds(10, 10, 100, 24);
 
         dateChooser.setBounds(110, 10, 200, 150);
-        dateChooser.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
         labelDays.setBounds(10, 170, 100, 24);
 
         days.setBounds(110, 170, 200, 24);
-        days.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         days.addChangeListener(new ChangeListener() {
 
             @Override
@@ -122,11 +118,13 @@ public class ExportFrame extends AbstractFrame {
                     setVisible(false);
                 } catch (IOException ex) {
                     LOG.log(Level.SEVERE, "Error exporting data", ex);
-                    export.setBorder(BorderFactory.createLineBorder(Color.RED));
+                    formatError(export);
                 }
 
             }
         });
+
+        formatOk(dateChooser, days);
 
         getContentPane().add(labelDate);
         getContentPane().add(dateChooser);
