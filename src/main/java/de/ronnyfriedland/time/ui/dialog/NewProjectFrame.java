@@ -42,7 +42,7 @@ public class NewProjectFrame extends AbstractFrame {
     private String uuid = null;
 
     public NewProjectFrame() {
-        super(Messages.CREATE_NEW_ENTRY.getText(), 320, 150);
+        super(Messages.CREATE_NEW_PROJECT.getText(), 320, 150);
         createUI();
     }
 
