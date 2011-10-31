@@ -106,13 +106,12 @@ public class ExportFrame extends AbstractFrame {
 
                     ImportExportController controller = new ImportExportController();
                     Workbook wb = controller.loadOrCreateWorkbook(
-                            Configurator.CONFIG.getString(ConfiguratorKeys.EXPORT_PATH.getKey()),
+                            Configurator.CONFIG.getString(ConfiguratorKeys.PATH.getKey()),
                             Configurator.CONFIG.getString(ConfiguratorKeys.EXPORT_FILE.getKey()));
                     Sheet sheet = controller.loadOrCreateSheet(wb, SimpleDateFormat.getDateInstance(DateFormat.SHORT)
                             .format(from.getTime()), todayEntries);
                     controller.addSheetToOverview(wb, sheet.getSheetName());
-                    controller.persistWorkbook(wb,
-                            Configurator.CONFIG.getString(ConfiguratorKeys.EXPORT_PATH.getKey()),
+                    controller.persistWorkbook(wb, Configurator.CONFIG.getString(ConfiguratorKeys.PATH.getKey()),
                             Configurator.CONFIG.getString(ConfiguratorKeys.EXPORT_FILE.getKey()));
 
                     setVisible(false);

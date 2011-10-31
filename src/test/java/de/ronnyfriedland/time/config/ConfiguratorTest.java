@@ -10,7 +10,7 @@ public class ConfiguratorTest {
 
     @Test
     public void testExportPath() {
-        String path = Configurator.CONFIG.getString(ConfiguratorKeys.EXPORT_PATH.getKey());
+        String path = Configurator.CONFIG.getString(ConfiguratorKeys.PATH.getKey());
         Assert.assertNotNull(path);
         Assert.assertEquals("target", path);
     }

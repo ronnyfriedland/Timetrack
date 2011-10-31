@@ -23,7 +23,7 @@ public class ImportExportControllerTest {
     private ImportExportController controller;
     private Collection<Entry> entries;
 
-    private final String path = Configurator.CONFIG.getString(ConfiguratorKeys.EXPORT_PATH.getKey());
+    private final String path = Configurator.CONFIG.getString(ConfiguratorKeys.PATH.getKey());
     private final String file = Configurator.CONFIG.getString(ConfiguratorKeys.EXPORT_FILE.getKey());
 
     @Before

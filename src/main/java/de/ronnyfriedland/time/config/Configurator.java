@@ -22,9 +22,9 @@ public class Configurator {
 
     public enum ConfiguratorKeys {
         /** Pfad zur Export-Datei */
-        EXPORT_PATH("export.path"),
+        PATH("timetable.path"),
         /** Name der Export-Datei */
-        EXPORT_FILE("export.file");
+        EXPORT_FILE("timetable.export.file");
 
         private final String key;
 
