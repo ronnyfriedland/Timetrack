@@ -1,0 +1,1 @@
+java -Duser.home=$HOME -jar timetable-${project.version}.jar

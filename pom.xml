@@ -17,6 +17,11 @@
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
 			</resource>
+            <resource>
+                <targetPath>${project.build.directory}</targetPath>
+                <directory>src/main/application</directory>
+                <filtering>true</filtering>
+            </resource>
 		</resources>
 		<plugins>
 			<plugin>
