@@ -1,1 +1,1 @@
-java -jar timetable-${project.version}.jar
+java -cp lib -jar timetable-${project.version}.jar
