@@ -88,6 +88,7 @@ public class TimeTableUI {
             popup.add(exitItem);
 
             trayIcon.setPopupMenu(popup);
+            trayIcon.setToolTip(Messages.TITLE.getText());
 
             trayIcon.addMouseListener(new MouseListener() {
 

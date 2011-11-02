@@ -4,6 +4,8 @@ package de.ronnyfriedland.time.config;
  * @author ronnyfriedland
  */
 public enum Messages {
+	/** Titel der Anwendung */
+	TITLE("Timetable"),
     /** Startdatum */
     START_DATE("Startdatum"),
     /** Zeitspanne */
