@@ -4,7 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -90,6 +92,7 @@ public class NewEntryFrame extends AbstractFrame {
 
         date.setName("date");
         date.setBounds(110, 10, 200, 24);
+        date.setText(new SimpleDateFormat("dd.MM.yyyy").format(new Date()));
         date.setInputVerifier(new InputVerifier() {
             /**
              * (non-Jsdoc)
