@@ -8,8 +8,11 @@
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver" />
             <property name="javax.persistence.jdbc.url" value="jdbc:derby:${timetable.path}/database/timetable-database;create=true" />
-            <property name="eclipselink.ddl-generation" value="create-tables" />
             <property name="eclipselink.logging.level" value="OFF" />
+            <property name="eclipselink.ddl-generation" value="create-tables" />
+            <!-- Caching -->
+            <property name="eclipselink.cache.type.default" value="SoftWeak" />
+            <property name="eclipselink.cache.size.default" value="500"/>
         </properties>
     </persistence-unit>
 </persistence>
