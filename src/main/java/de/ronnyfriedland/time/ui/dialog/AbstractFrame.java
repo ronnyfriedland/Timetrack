@@ -27,6 +27,7 @@ public abstract class AbstractFrame extends JFrame {
         setTitle(title);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
+        setAlwaysOnTop(true);
     }
 
     protected void formatError(JComponent component) {
