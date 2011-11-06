@@ -4,8 +4,8 @@ package de.ronnyfriedland.time.config;
  * @author ronnyfriedland
  */
 public enum Messages {
-	/** Titel der Anwendung */
-	TITLE("Timetable"),
+    /** Titel der Anwendung */
+    TITLE("Timetable"),
     /** Startdatum */
     START_DATE("Startdatum"),
     /** Zeitspanne */
@@ -39,7 +39,9 @@ public enum Messages {
     /** Speichern */
     SAVE("Speichern"),
     /** Löschen */
-    DELETE("Löschen");
+    DELETE("Löschen"),
+    /** Text für das Popup */
+    MESSAGE_POPUP("Bitte an das Kontieren denken.");
 
     public String getText() {
         return text;

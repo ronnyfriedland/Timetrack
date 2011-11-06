@@ -24,7 +24,9 @@ public class Configurator {
         /** Pfad zur Export-Datei */
         PATH("timetable.path"),
         /** Name der Export-Datei */
-        EXPORT_FILE("timetable.export.file");
+        EXPORT_FILE("timetable.export.file"),
+        /** Cron-Ausdruck für Popup */
+        CRON_EXPRESSION_POPUP("timetable.popup.cron");
 
         private final String key;
 

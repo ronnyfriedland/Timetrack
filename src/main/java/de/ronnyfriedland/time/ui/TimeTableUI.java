@@ -25,6 +25,7 @@ import javax.swing.UIManager;
 import de.ronnyfriedland.time.config.Messages;
 import de.ronnyfriedland.time.entity.Entry;
 import de.ronnyfriedland.time.logic.EntityController;
+import de.ronnyfriedland.time.logic.QuartzController;
 import de.ronnyfriedland.time.ui.dialog.ExportFrame;
 import de.ronnyfriedland.time.ui.dialog.NewEntryFrame;
 import de.ronnyfriedland.time.ui.dialog.NewProjectFrame;
@@ -55,8 +56,9 @@ public class TimeTableUI {
         if (!SystemTray.isSupported()) {
             LOG.severe("SystemTray not supported!");
         } else {
-            // initialize EntityController ...
+            // initialize Controller ...
             EntityController.getInstance();
+            QuartzController.getInstance();
 
             LogManager logManager = LogManager.getLogManager();
             try {
@@ -168,6 +170,7 @@ public class TimeTableUI {
                 exitItem.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(final ActionEvent e) {
+                        QuartzController.getInstance().shutdownScheduler();
                         tray.remove(trayIcon);
                         System.exit(0);
                     }
