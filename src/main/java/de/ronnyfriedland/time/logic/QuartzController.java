@@ -38,12 +38,12 @@ public class QuartzController {
     }
 
     private QuartzController(String message) {
-        initSCHEDULER(message);
+        initScheduler(message);
     }
 
     private Scheduler sched;
 
-    private void initSCHEDULER(String message) {
+    private void initScheduler(String message) {
         try {
             sched = StdSchedulerFactory.getDefaultScheduler();
             for (Class<? extends Job> clazz : JOBS) {
