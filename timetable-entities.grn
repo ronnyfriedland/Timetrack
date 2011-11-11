@@ -1,0 +1,39 @@
+<uml>
+   <greenVersion="30500"/>
+   <type>
+      <name="=timetable/src\/main\/java<de.ronnyfriedland.time.entity{Project.java[Project"/>
+      <height="-1"/>
+      <width="-1"/>
+      <x="352"/>
+      <y="290"/>
+   </type>
+   <type>
+      <name="=timetable/src\/main\/java<de.ronnyfriedland.time.entity{AbstractEntity.java[AbstractEntity"/>
+      <height="-1"/>
+      <width="-1"/>
+      <x="176"/>
+      <y="0"/>
+   </type>
+   <type>
+      <name="=timetable/src\/main\/java<de.ronnyfriedland.time.entity{Entry.java[Entry"/>
+      <height="-1"/>
+      <width="-1"/>
+      <x="0"/>
+      <y="285"/>
+   </type>
+   <relationship>
+      <class="edu.buffalo.cse.green.relationship.generalization.GeneralizationPart"/>
+      <sourceType="=timetable/src\/main\/java<de.ronnyfriedland.time.entity{Entry.java[Entry"/>
+      <targetType="=timetable/src\/main\/java<de.ronnyfriedland.time.entity{AbstractEntity.java[AbstractEntity"/>
+      <bendpoints>
+      </bendpoints>
+   </relationship>
+   <relationship>
+      <class="edu.buffalo.cse.green.relationship.generalization.GeneralizationPart"/>
+      <sourceType="=timetable/src\/main\/java<de.ronnyfriedland.time.entity{Project.java[Project"/>
+      <targetType="=timetable/src\/main\/java<de.ronnyfriedland.time.entity{AbstractEntity.java[AbstractEntity"/>
+      <bendpoints>
+      </bendpoints>
+   </relationship>
+</uml>
+
