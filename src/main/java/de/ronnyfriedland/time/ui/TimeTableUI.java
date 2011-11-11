@@ -22,6 +22,10 @@ import javax.swing.ImageIcon;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
+import org.quartz.SchedulerException;
+
+import de.ronnyfriedland.time.config.Configurator;
+import de.ronnyfriedland.time.config.Configurator.ConfiguratorKeys;
 import de.ronnyfriedland.time.config.Messages;
 import de.ronnyfriedland.time.entity.Entry;
 import de.ronnyfriedland.time.logic.EntityController;
@@ -158,7 +162,11 @@ public class TimeTableUI {
                 exitItem.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(final ActionEvent e) {
-                        QuartzController.getInstance().shutdownScheduler();
+                        try {
+                            QuartzController.getInstance().shutdownScheduler();
+                        } catch (SchedulerException ex) {
+                            LOG.log(Level.SEVERE, "Error shutting down scheduler.", ex);
+                        }
                         tray.remove(trayIcon);
                         System.exit(0);
                     }
@@ -166,7 +174,8 @@ public class TimeTableUI {
 
                 // initialize Controller ...
                 EntityController.getInstance();
-                QuartzController.getInstance();
+                QuartzController.getInstance().initScheduler(
+                        Configurator.CONFIG.getString(ConfiguratorKeys.CRON_EXPRESSION_POPUP.getKey()));
 
                 LogManager logManager = LogManager.getLogManager();
                 try {

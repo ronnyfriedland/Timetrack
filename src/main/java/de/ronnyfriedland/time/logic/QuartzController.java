@@ -3,20 +3,22 @@
  */
 package de.ronnyfriedland.time.logic;
 
+import java.text.ParseException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.quartz.CronTrigger;
+import org.quartz.CronScheduleBuilder;
 import org.quartz.Job;
+import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
 
-import de.ronnyfriedland.time.config.Configurator;
 import de.ronnyfriedland.time.logic.jobs.ShowMessagePopupJob;
 
 /**
@@ -35,44 +37,39 @@ public class QuartzController {
 
     public static QuartzController getInstance() {
         if (null == INSTANCE) {
-            INSTANCE = new QuartzController(
-                    Configurator.CONFIG.getString(Configurator.ConfiguratorKeys.CRON_EXPRESSION_POPUP.getKey()));
+            INSTANCE = new QuartzController();
         }
         return INSTANCE;
     }
 
-    private QuartzController(String message) {
-        initScheduler(message);
+    private QuartzController() {
     }
 
     private Scheduler sched;
 
-    private void initScheduler(String cronExpression) {
-        try {
-            sched = StdSchedulerFactory.getDefaultScheduler();
-            for (Class<? extends Job> clazz : JOBS) {
-                String jobname = clazz.getDeclaredField("JOB").getName();
-                String groupname = clazz.getDeclaredField("GROUP").getName();
-                String triggername = clazz.getDeclaredField("TRIGGER").getName();
+    public void initScheduler(String cronExpression) throws SchedulerException, ParseException {
+        sched = StdSchedulerFactory.getDefaultScheduler();
+        for (Class<? extends Job> clazz : JOBS) {
+            try {
+                String jobname = (String) clazz.getDeclaredField("JOB").get(null);
+                String triggername = (String) clazz.getDeclaredField("TRIGGER").get(null);
                 if (LOG.isLoggable(Level.FINE)) {
                     LOG.fine(String.format("Scheduling job %s.", jobname));
                 }
-                JobDetail job = new JobDetail(jobname, groupname, clazz);
-                Trigger trigger = new CronTrigger(triggername, groupname, cronExpression);
-                // Tell quartz to schedule the job using our trigger
+
+                JobDetail job = JobBuilder.newJob(clazz).withIdentity(jobname).build();
+
+                Trigger trigger = TriggerBuilder.newTrigger().withIdentity(triggername).forJob(jobname)
+                        .withSchedule(CronScheduleBuilder.cronSchedule(cronExpression)).build();
+
                 sched.scheduleJob(job, trigger);
+            } catch (Exception ex) {
+                LOG.log(Level.SEVERE, "Error creting scheduler.", ex);
             }
-            sched.start();
-        } catch (Exception ex) {
-            ex.printStackTrace();
         }
     }
 
-    public void shutdownScheduler() {
-        try {
-            sched.shutdown();
-        } catch (SchedulerException ex) {
-            LOG.log(Level.SEVERE, "Error on scheduler shutdown.", ex);
-        }
+    public void shutdownScheduler() throws SchedulerException {
+        sched.shutdown();
     }
 }

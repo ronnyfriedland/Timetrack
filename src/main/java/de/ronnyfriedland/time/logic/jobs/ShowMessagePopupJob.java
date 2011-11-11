@@ -16,9 +16,8 @@ import de.ronnyfriedland.time.config.Messages;
  */
 public class ShowMessagePopupJob implements Job {
 
-    public final String JOB = "showpopupjob";
-    public final String GROUP = "showpopupgroup";
-    public final String TRIGGER = "showpopuptrigger";
+    public final static String JOB = "showpopupjob";
+    public final static String TRIGGER = "showpopuptrigger";
 
     private static final Logger LOG = Logger.getLogger(ShowMessagePopupJob.class.getName());
 
@@ -31,7 +30,7 @@ public class ShowMessagePopupJob implements Job {
     public void execute(JobExecutionContext context) throws JobExecutionException {
         JOptionPane.showMessageDialog(null, Messages.MESSAGE_POPUP.getText());
         if (LOG.isLoggable(Level.FINE)) {
-            LOG.fine(String.format("Job %s executed successfully.", context.getJobDetail().getName()));
+            LOG.fine(String.format("Job %s executed successfully.", context.getJobDetail().getKey()));
         }
     }
 
