@@ -23,6 +23,7 @@ import org.apache.commons.lang.StringUtils;
 import de.ronnyfriedland.time.config.Messages;
 import de.ronnyfriedland.time.entity.Project;
 import de.ronnyfriedland.time.logic.EntityController;
+import de.ronnyfriedland.time.ui.adapter.TimeTableKeyAdapter;
 
 /**
  * @author ronnyfriedland
@@ -68,6 +69,7 @@ public class NewProjectFrame extends AbstractFrame {
 
         name.setName("name");
         name.setBounds(110, 10, 200, 24);
+        name.addKeyListener(new TimeTableKeyAdapter());
         name.setInputVerifier(new InputVerifier() {
             /**
              * (non-Javadoc)
@@ -94,9 +96,11 @@ public class NewProjectFrame extends AbstractFrame {
 
         description.setName("description");
         description.setBounds(110, 35, 200, 24);
+        description.addKeyListener(new TimeTableKeyAdapter());
 
         delete.setBounds(10, 95, 300, 24);
         delete.setEnabled(false);
+        delete.addKeyListener(new TimeTableKeyAdapter());
         delete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
@@ -110,6 +114,7 @@ public class NewProjectFrame extends AbstractFrame {
         });
 
         save.setBounds(10, 70, 300, 24);
+        save.addKeyListener(new TimeTableKeyAdapter());
         save.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {

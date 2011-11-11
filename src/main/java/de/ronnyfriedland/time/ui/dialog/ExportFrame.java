@@ -28,6 +28,7 @@ import de.ronnyfriedland.time.config.Messages;
 import de.ronnyfriedland.time.entity.Entry;
 import de.ronnyfriedland.time.logic.EntityController;
 import de.ronnyfriedland.time.logic.ExportController;
+import de.ronnyfriedland.time.ui.adapter.TimeTableKeyAdapter;
 
 /**
  * @author ronnyfriedland
@@ -65,11 +66,13 @@ public class ExportFrame extends AbstractFrame {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.DAY_OF_WEEK, 2);
         dateChooser.setDate(cal.getTime());
+        dateChooser.addKeyListener(new TimeTableKeyAdapter());
 
         labelDays.setBounds(10, 170, 100, 24);
 
         days.setBounds(110, 170, 200, 24);
         days.setValue(7);
+        days.addKeyListener(new TimeTableKeyAdapter());
         days.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(final ChangeEvent e) {
@@ -82,7 +85,7 @@ public class ExportFrame extends AbstractFrame {
         labelSelectedDays.setText(String.format(LABEL_SELECTED_DAYS_VALUE, days.getValue()));
 
         export.setBounds(10, 225, 300, 24);
-
+        export.addKeyListener(new TimeTableKeyAdapter());
         export.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {

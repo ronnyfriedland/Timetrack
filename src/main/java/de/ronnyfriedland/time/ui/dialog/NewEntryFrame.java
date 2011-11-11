@@ -37,6 +37,7 @@ import de.ronnyfriedland.time.entity.Project;
 import de.ronnyfriedland.time.logic.EntityController;
 import de.ronnyfriedland.time.sort.SortParam;
 import de.ronnyfriedland.time.sort.SortParam.SortOrder;
+import de.ronnyfriedland.time.ui.adapter.TimeTableKeyAdapter;
 
 /**
  * @author ronnyfriedland
@@ -93,6 +94,7 @@ public class NewEntryFrame extends AbstractFrame {
         date.setName("date");
         date.setBounds(110, 10, 200, 24);
         date.setText(new SimpleDateFormat("dd.MM.yyyy").format(new Date()));
+        date.addKeyListener(new TimeTableKeyAdapter());
         date.setInputVerifier(new InputVerifier() {
             /**
              * (non-Jsdoc)
@@ -119,6 +121,7 @@ public class NewEntryFrame extends AbstractFrame {
 
         description.setName("description");
         description.setBounds(110, 35, 200, 24);
+        description.addKeyListener(new TimeTableKeyAdapter());
         description.setInputVerifier(new InputVerifier() {
             /**
              * (non-Javadoc)
@@ -145,6 +148,7 @@ public class NewEntryFrame extends AbstractFrame {
 
         duration.setName("duration");
         duration.setBounds(110, 60, 200, 24);
+        duration.addKeyListener(new TimeTableKeyAdapter());
         duration.setInputVerifier(new InputVerifier() {
             /**
              * (non-Javadoc)
@@ -178,6 +182,7 @@ public class NewEntryFrame extends AbstractFrame {
 
         projects.setName("projects");
         projects.setListData(projectNameList);
+        projects.addKeyListener(new TimeTableKeyAdapter());
         projects.setInputVerifier(new InputVerifier() {
             /**
              * (non-Javadoc)
@@ -218,7 +223,7 @@ public class NewEntryFrame extends AbstractFrame {
         scrollPaneProjects.setBounds(10, 85, 300, 100);
 
         save.setBounds(10, 190, 300, 24);
-
+        save.addKeyListener(new TimeTableKeyAdapter());
         save.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
