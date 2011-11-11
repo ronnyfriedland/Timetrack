@@ -16,7 +16,6 @@ public class TimeTableKeyAdapter extends KeyAdapter {
      */
     @Override
     public void keyPressed(KeyEvent e) {
-        System.err.println(SwingUtilities.getRootPane(e.getComponent()));
         if (KeyEvent.VK_ESCAPE == e.getKeyCode()) {
             SwingUtilities.getRoot(e.getComponent()).setVisible(false);
         }
