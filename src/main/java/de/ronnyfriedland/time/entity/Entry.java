@@ -28,6 +28,8 @@ import de.ronnyfriedland.time.entity.validation.NotBlank;
         @NamedQuery(name = Entry.QUERY_FIND_BY_LASTMODIFIEDDATE, query = "SELECT e FROM Entry e WHERE e.lastModifiedDate >= :from") })
 public class Entry extends AbstractEntity {
 
+    public static final String DATESTRINGFORMAT = "dd.MM.yyyy";
+
     public static final String QUERY_FIND_BY_LASTMODIFIEDDATE = "Entry.findTodayByLastModifieddate";
     public static final String QUERY_FIND_FROM_TO = "Entry.findFromTo";
 
@@ -91,8 +93,7 @@ public class Entry extends AbstractEntity {
 
     public void setDate(Date date) {
         this.date = date;
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-        dateString = sdf.format(date);
+        dateString = new SimpleDateFormat(DATESTRINGFORMAT).format(date);
     }
 
     public String getDateString() {
@@ -101,9 +102,8 @@ public class Entry extends AbstractEntity {
 
     public void setDateString(String dateString) {
         this.dateString = dateString;
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
         try {
-            date = sdf.parse(dateString);
+            date = new SimpleDateFormat(DATESTRINGFORMAT).parse(dateString);
         } catch (ParseException e) {
             date = new Date();
         }

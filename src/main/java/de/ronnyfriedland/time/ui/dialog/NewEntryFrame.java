@@ -93,7 +93,7 @@ public class NewEntryFrame extends AbstractFrame {
 
         date.setName("date");
         date.setBounds(110, 10, 200, 24);
-        date.setText(new SimpleDateFormat("dd.MM.yyyy").format(new Date()));
+        date.setText(new SimpleDateFormat(Entry.DATESTRINGFORMAT).format(new Date()));
         date.addKeyListener(new TimeTableKeyAdapter());
         date.setInputVerifier(new InputVerifier() {
             /**
