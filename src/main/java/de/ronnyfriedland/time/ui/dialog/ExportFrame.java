@@ -27,7 +27,7 @@ import de.ronnyfriedland.time.config.Configurator.ConfiguratorKeys;
 import de.ronnyfriedland.time.config.Messages;
 import de.ronnyfriedland.time.entity.Entry;
 import de.ronnyfriedland.time.logic.EntityController;
-import de.ronnyfriedland.time.logic.ImportExportController;
+import de.ronnyfriedland.time.logic.ExportController;
 
 /**
  * @author ronnyfriedland
@@ -36,6 +36,8 @@ public class ExportFrame extends AbstractFrame {
     private static final Logger LOG = Logger.getLogger(ExportFrame.class.getName());
 
     private static final long serialVersionUID = -8738367859388084898L;
+
+    private static final String LABEL_SELECTED_DAYS_VALUE = "%1$d Tag(e)";
 
     private final JLabel labelDate = new JLabel(Messages.START_DATE.getText());
     private final DateChooserPanel dateChooser = new DateChooserPanel();
@@ -60,21 +62,24 @@ public class ExportFrame extends AbstractFrame {
         labelDate.setBounds(10, 10, 100, 24);
 
         dateChooser.setBounds(110, 10, 200, 150);
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.DAY_OF_WEEK, 2);
+        dateChooser.setDate(cal.getTime());
 
         labelDays.setBounds(10, 170, 100, 24);
 
         days.setBounds(110, 170, 200, 24);
+        days.setValue(7);
         days.addChangeListener(new ChangeListener() {
-
             @Override
-            public void stateChanged(ChangeEvent e) {
+            public void stateChanged(final ChangeEvent e) {
                 JSlider source = (JSlider) e.getSource();
-                int value = source.getValue();
-                labelSelectedDays.setText(String.format("%1$d Tag(e)", value));
+                labelSelectedDays.setText(String.format(LABEL_SELECTED_DAYS_VALUE, source.getValue()));
             }
         });
 
         labelSelectedDays.setBounds(110, 200, 200, 24);
+        labelSelectedDays.setText(String.format(LABEL_SELECTED_DAYS_VALUE, days.getValue()));
 
         export.setBounds(10, 225, 300, 24);
 
@@ -104,7 +109,7 @@ public class ExportFrame extends AbstractFrame {
                     Collection<Entry> todayEntries = EntityController.getInstance().findResultlistByParameter(
                             Entry.class, Entry.QUERY_FIND_FROM_TO, params);
 
-                    ImportExportController controller = new ImportExportController();
+                    ExportController controller = new ExportController();
                     Workbook wb = controller.loadOrCreateWorkbook(
                             Configurator.CONFIG.getString(ConfiguratorKeys.PATH.getKey()),
                             Configurator.CONFIG.getString(ConfiguratorKeys.EXPORT_FILE.getKey()));

@@ -5,6 +5,8 @@ package de.ronnyfriedland.time.logic;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.quartz.CronTrigger;
 import org.quartz.Job;
@@ -21,6 +23,8 @@ import de.ronnyfriedland.time.logic.jobs.ShowMessagePopupJob;
  * @author ronnyfriedland
  */
 public class QuartzController {
+
+    private static final Logger LOG = Logger.getLogger(QuartzController.class.getName());
 
     private static QuartzController INSTANCE;
 
@@ -43,20 +47,18 @@ public class QuartzController {
 
     private Scheduler sched;
 
-    private void initScheduler(String message) {
+    private void initScheduler(String cronExpression) {
         try {
             sched = StdSchedulerFactory.getDefaultScheduler();
             for (Class<? extends Job> clazz : JOBS) {
                 String jobname = clazz.getDeclaredField("JOB").getName();
                 String groupname = clazz.getDeclaredField("GROUP").getName();
                 String triggername = clazz.getDeclaredField("TRIGGER").getName();
-
-                // Define job instance
+                if (LOG.isLoggable(Level.FINE)) {
+                    LOG.fine(String.format("Scheduling job %s.", jobname));
+                }
                 JobDetail job = new JobDetail(jobname, groupname, clazz);
-
-                // Define a Trigger that will fire "now"
-                Trigger trigger = new CronTrigger(triggername, groupname, message);
-
+                Trigger trigger = new CronTrigger(triggername, groupname, cronExpression);
                 // Tell quartz to schedule the job using our trigger
                 sched.scheduleJob(job, trigger);
             }
@@ -70,7 +72,7 @@ public class QuartzController {
         try {
             sched.shutdown();
         } catch (SchedulerException ex) {
-            ex.printStackTrace();
+            LOG.log(Level.SEVERE, "Error on scheduler shutdown.", ex);
         }
     }
 }

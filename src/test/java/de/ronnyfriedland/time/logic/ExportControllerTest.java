@@ -18,9 +18,9 @@ import de.ronnyfriedland.time.config.Configurator.ConfiguratorKeys;
 import de.ronnyfriedland.time.entity.Entry;
 import de.ronnyfriedland.time.entity.Project;
 
-public class ImportExportControllerTest {
+public class ExportControllerTest {
 
-    private ImportExportController controller;
+    private ExportController controller;
     private Collection<Entry> entries;
 
     private final String path = Configurator.CONFIG.getString(ConfiguratorKeys.PATH.getKey());
@@ -28,7 +28,7 @@ public class ImportExportControllerTest {
 
     @Before
     public void setUp() {
-        controller = new ImportExportController();
+        controller = new ExportController();
         entries = new HashSet<Entry>();
 
         Project p = new Project();

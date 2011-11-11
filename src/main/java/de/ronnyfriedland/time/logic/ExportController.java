@@ -22,7 +22,7 @@ import de.ronnyfriedland.time.entity.Entry;
 /**
  * @author ronnyfriedland
  */
-public class ImportExportController {
+public class ExportController {
 
     public static final String TAB_OVERVIEW = "Überblick";
 

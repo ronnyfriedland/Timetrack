@@ -56,18 +56,6 @@ public class TimeTableUI {
         if (!SystemTray.isSupported()) {
             LOG.severe("SystemTray not supported!");
         } else {
-            // initialize Controller ...
-            EntityController.getInstance();
-            QuartzController.getInstance();
-
-            LogManager logManager = LogManager.getLogManager();
-            try {
-                logManager.readConfiguration(Thread.currentThread().getContextClassLoader()
-                        .getResourceAsStream("logging.properties"));
-            } catch (IOException e) {
-                LOG.log(Level.SEVERE, "Error reading logging.properties to configure logger.", e);
-            }
-
             final PopupMenu popup = new PopupMenu();
             final TrayIcon trayIcon = new TrayIcon((new ImageIcon(Thread.currentThread().getContextClassLoader()
                     .getResource("images/icon.gif"))).getImage());
@@ -175,6 +163,18 @@ public class TimeTableUI {
                         System.exit(0);
                     }
                 });
+
+                // initialize Controller ...
+                EntityController.getInstance();
+                QuartzController.getInstance();
+
+                LogManager logManager = LogManager.getLogManager();
+                try {
+                    logManager.readConfiguration(Thread.currentThread().getContextClassLoader()
+                            .getResourceAsStream("logging.properties"));
+                } catch (IOException e) {
+                    LOG.log(Level.SEVERE, "Error reading logging.properties to configure logger.", e);
+                }
             } catch (Exception e) {
                 LOG.log(Level.SEVERE, "Unable to set look and feel or add tray icon", e);
             }
