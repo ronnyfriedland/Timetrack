@@ -36,6 +36,8 @@ public enum Messages {
     CREATE_NEW_PROJECT("Neues Projekt anlegen"),
     /** Exportieren */
     EXPORT("Exportieren"),
+    /** Vorschau */
+    PREVIEW("Vorschau"),
     /** Speichern */
     SAVE("Speichern"),
     /** Löschen */
