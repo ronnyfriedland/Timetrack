@@ -25,7 +25,7 @@ import de.ronnyfriedland.time.entity.validation.NotBlank;
 @Entity
 @NamedQueries({
         @NamedQuery(name = Entry.QUERY_FIND_FROM_TO, query = "SELECT e FROM Entry e WHERE e.date >= :from AND e.date < :to ORDER BY e.date"),
-        @NamedQuery(name = Entry.QUERY_FIND_BY_LASTMODIFIEDDATE, query = "SELECT e FROM Entry e WHERE e.lastModifiedDate >= :from") })
+        @NamedQuery(name = Entry.QUERY_FIND_BY_LASTMODIFIEDDATE, query = "SELECT e FROM Entry e WHERE e.lastModifiedDate >= :from ORDER BY e.date") })
 public class Entry extends AbstractEntity {
 
     public static final String DATESTRINGFORMAT = "dd.MM.yyyy";
