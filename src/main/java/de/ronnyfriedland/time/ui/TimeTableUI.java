@@ -10,10 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
@@ -30,6 +27,8 @@ import de.ronnyfriedland.time.config.Messages;
 import de.ronnyfriedland.time.entity.Entry;
 import de.ronnyfriedland.time.logic.EntityController;
 import de.ronnyfriedland.time.logic.QuartzController;
+import de.ronnyfriedland.time.sort.SortParam;
+import de.ronnyfriedland.time.sort.SortParam.SortOrder;
 import de.ronnyfriedland.time.ui.dialog.ExportFrame;
 import de.ronnyfriedland.time.ui.dialog.NewEntryFrame;
 import de.ronnyfriedland.time.ui.dialog.NewProjectFrame;
@@ -68,7 +67,7 @@ public class TimeTableUI {
             // Create a popup menu components
             final MenuItem newProject = new MenuItem(Messages.NEW_PROJECT.getText());
             final MenuItem newItem = new MenuItem(Messages.NEW_ENTRY.getText());
-            final Menu todayItems = new Menu(Messages.TODAY_ENTRIES.getText());
+            final Menu todayItems = new Menu(Messages.LAST_ENTRIES.getText());
             final MenuItem exportItem = new MenuItem(Messages.EXPORT_DATA.getText());
             final MenuItem exitItem = new MenuItem(Messages.EXIT.getText());
 
@@ -92,18 +91,8 @@ public class TimeTableUI {
 
                 @Override
                 public void mousePressed(MouseEvent e) {
-                    Map<String, Object> params = new HashMap<String, Object>();
-
-                    Calendar from = Calendar.getInstance();
-                    from.set(Calendar.HOUR_OF_DAY, 0);
-                    from.set(Calendar.MINUTE, 0);
-                    from.set(Calendar.SECOND, 0);
-                    from.set(Calendar.MILLISECOND, 0);
-
-                    params.put(Entry.PARAM_DATE_FROM, from.getTime());
-
-                    Collection<Entry> todayEntries = EntityController.getInstance().findResultlistByParameter(
-                            Entry.class, Entry.QUERY_FIND_BY_LASTMODIFIEDDATE, params);
+                    Collection<Entry> todayEntries = EntityController.getInstance().findAll(Entry.class,
+                            new SortParam("lastModifiedDate", SortOrder.DESC), 10);
 
                     todayItems.removeAll();
 

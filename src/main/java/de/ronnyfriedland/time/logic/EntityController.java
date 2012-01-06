@@ -52,6 +52,14 @@ public class EntityController {
         return query.getResultList();
     }
 
+    public <T> Collection<T> findAll(final Class<T> clazz, final SortParam sortParam, final int max) {
+        String queryString = String.format("SELECT e FROM %1$s e ORDER BY e.%2$s %3$s", clazz.getSimpleName(),
+                sortParam.getAttribute(), sortParam.getOrder());
+        TypedQuery<T> query = em.createQuery(queryString, clazz);
+        query.setMaxResults(max);
+        return query.getResultList();
+    }
+
     public <T> Collection<T> findAll(final Class<T> clazz, final SortParam sortParam) {
         String queryString = String.format("SELECT e FROM %1$s e ORDER BY e.%2$s %3$s", clazz.getSimpleName(),
                 sortParam.getAttribute(), sortParam.getOrder());

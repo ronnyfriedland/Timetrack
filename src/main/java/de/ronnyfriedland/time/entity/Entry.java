@@ -23,14 +23,11 @@ import de.ronnyfriedland.time.entity.validation.NotBlank;
  * @author ronnyfriedland
  */
 @Entity
-@NamedQueries({
-        @NamedQuery(name = Entry.QUERY_FIND_FROM_TO, query = "SELECT e FROM Entry e WHERE e.date >= :from AND e.date < :to ORDER BY e.date"),
-        @NamedQuery(name = Entry.QUERY_FIND_BY_LASTMODIFIEDDATE, query = "SELECT e FROM Entry e WHERE e.lastModifiedDate >= :from ORDER BY e.date") })
+@NamedQueries({ @NamedQuery(name = Entry.QUERY_FIND_FROM_TO, query = "SELECT e FROM Entry e WHERE e.date >= :from AND e.date < :to ORDER BY e.date") })
 public class Entry extends AbstractEntity {
 
     public static final String DATESTRINGFORMAT = "dd.MM.yyyy";
 
-    public static final String QUERY_FIND_BY_LASTMODIFIEDDATE = "Entry.findTodayByLastModifieddate";
     public static final String QUERY_FIND_FROM_TO = "Entry.findFromTo";
 
     public static final String PARAM_DATE_FROM = "from";

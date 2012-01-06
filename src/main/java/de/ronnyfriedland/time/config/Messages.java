@@ -25,7 +25,7 @@ public enum Messages {
     /** neuer Eintrag */
     NEW_EXPORT("Neuer Export"),
     /** heute erstelle Einträge */
-    TODAY_ENTRIES("Heute erstellt"),
+    LAST_ENTRIES("Zuletzt erstellt"),
     /** Daten exportieren */
     EXPORT_DATA("Daten exportieren"),
     /** Beenden */
