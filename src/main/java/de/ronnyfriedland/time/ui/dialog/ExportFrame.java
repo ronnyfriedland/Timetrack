@@ -50,7 +50,14 @@ public class ExportFrame extends AbstractFrame {
     private final JLabel labelDays = new JLabel(Messages.PERIOD_OF_TIME.getText());
     private final JSlider days = new JSlider(JSlider.HORIZONTAL, 1, 365, 7);
     private final JLabel labelSelectedDays = new JLabel("");
-    private final DefaultTableModel tableModel = new DefaultTableModel(TABLE_HEADERS, 0);
+    private final DefaultTableModel tableModel = new DefaultTableModel(TABLE_HEADERS, 0) {
+        private static final long serialVersionUID = 2177197508177608415L;
+
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        };
+    };
     private final JScrollPane scrollPane = new JScrollPane(new JTable(tableModel));
     private final JButton preview = new JButton(Messages.PREVIEW.getText());
     private final JButton export = new JButton(Messages.EXPORT.getText());
@@ -174,6 +181,7 @@ public class ExportFrame extends AbstractFrame {
      */
     private Calendar getEndDate() {
         Calendar to = Calendar.getInstance();
+        to.setTime(dateChooser.getDate());
         to.add(Calendar.DAY_OF_YEAR, days.getValue());
         to.set(Calendar.HOUR_OF_DAY, 0);
         to.set(Calendar.MINUTE, 0);
