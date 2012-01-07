@@ -107,7 +107,7 @@ public class ExportFrame extends AbstractFrame {
                 try {
                     Calendar from = getStartDate();
                     Calendar to = getEndDate();
-                    Collection<Entry> entries = getFilteredData(to, from);
+                    Collection<Entry> entries = getFilteredData(from, to);
 
                     ExportController controller = new ExportController();
                     Workbook wb = controller.loadOrCreateWorkbook(
