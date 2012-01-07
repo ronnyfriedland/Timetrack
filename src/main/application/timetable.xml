@@ -1,0 +1,51 @@
+<launch4jConfig>
+  <dontWrapJar>false</dontWrapJar>
+  <headerType>gui</headerType>
+  <jar>C:\Dokumente und Einstellungen\Administrator\Desktop\target\timetable-0.4-SNAPSHOT.jar</jar>
+  <outfile>C:\Dokumente und Einstellungen\Administrator\Desktop\target\Timetable.exe</outfile>
+  <errTitle></errTitle>
+  <cmdLine></cmdLine>
+  <chdir></chdir>
+  <priority>normal</priority>
+  <downloadUrl>http://java.com/download</downloadUrl>
+  <supportUrl></supportUrl>
+  <customProcName>false</customProcName>
+  <stayAlive>false</stayAlive>
+  <manifest></manifest>
+  <icon>C:\Dokumente und Einstellungen\Administrator\Desktop\target\icon.ico</icon>
+  <classPath>
+    <mainClass>de.ronnyfriedland.time.ui.TimeTableUI</mainClass>
+    <cp>lib/javax.persistence-2.0.0.jar</cp>
+    <cp>lib/eclipselink-2.0.0.jar</cp>
+    <cp>lib/validation-api-1.0.0.GA.jar</cp>
+    <cp>lib/derby-10.8.1.2.jar</cp>
+    <cp>lib/commons-lang-2.6.jar</cp>
+    <cp>lib/slf4j-api-1.6.2.jar</cp>
+    <cp>lib/slf4j-jdk14-1.6.2.jar</cp>
+    <cp>lib/hibernate-validator-4.2.0.Final.jar</cp>
+    <cp>lib/poi-ooxml-3.7.jar</cp>
+    <cp>lib/poi-3.7.jar</cp>
+    <cp>lib/poi-ooxml-schemas-3.7.jar</cp>
+    <cp>lib/xmlbeans-2.3.0.jar</cp>
+    <cp>lib/stax-api-1.0.1.jar</cp>
+    <cp>lib/geronimo-stax-api_1.0_spec-1.0.jar</cp>
+    <cp>lib/dom4j-1.6.1.jar</cp>
+    <cp>lib/xml-apis-1.0.b2.jar</cp>
+    <cp>lib/commons-configuration-1.7.jar</cp>
+    <cp>lib/commons-collections-3.2.1.jar</cp>
+    <cp>lib/commons-logging-1.1.1.jar</cp>
+    <cp>lib/commons-digester-1.8.1.jar</cp>
+    <cp>lib/commons-beanutils-1.8.3.jar</cp>
+    <cp>lib/jcommon-0.9.5.jar</cp>
+    <cp>lib/quartz-2.1.0.jar</cp>
+    <cp>lib/jta-1.1.jar</cp>
+    <cp>lib/c3p0-0.9.1.1.jar</cp>
+    <cp>lib</cp>
+  </classPath>
+  <jre>
+    <path></path>
+    <minVersion>1.6.0</minVersion>
+    <maxVersion></maxVersion>
+    <jdkPreference>jreOnly</jdkPreference>
+  </jre>
+</launch4jConfig>
