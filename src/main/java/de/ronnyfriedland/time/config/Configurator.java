@@ -3,7 +3,6 @@ package de.ronnyfriedland.time.config;
 import org.apache.commons.configuration.CompositeConfiguration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.commons.configuration.SystemConfiguration;
 
 /**
  * @author ronnyfriedland
@@ -13,8 +12,8 @@ public class Configurator {
     public static CompositeConfiguration CONFIG = new CompositeConfiguration();
     static {
         try {
-            CONFIG.addConfiguration(new SystemConfiguration());
-            CONFIG.addConfiguration(new PropertiesConfiguration("application.properties"));
+            CONFIG.addConfiguration(new PropertiesConfiguration(Thread.currentThread().getContextClassLoader()
+                    .getResource("application.properties")));
         } catch (ConfigurationException e) {
             throw new ExceptionInInitializerError(e);
         }
