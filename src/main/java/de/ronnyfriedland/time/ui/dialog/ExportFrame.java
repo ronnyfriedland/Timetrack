@@ -1,5 +1,7 @@
 package de.ronnyfriedland.time.ui.dialog;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -12,14 +14,17 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -50,6 +55,8 @@ public class ExportFrame extends AbstractFrame {
     private final JLabel labelDays = new JLabel(Messages.PERIOD_OF_TIME.getText());
     private final JSlider days = new JSlider(JSlider.HORIZONTAL, 1, 365, 7);
     private final JLabel labelSelectedDays = new JLabel("");
+    private final JButton preview = new JButton(Messages.PREVIEW.getText());
+    private final JButton export = new JButton(Messages.EXPORT.getText());
     private final DefaultTableModel tableModel = new DefaultTableModel(TABLE_HEADERS, 0) {
         private static final long serialVersionUID = 2177197508177608415L;
 
@@ -57,10 +64,30 @@ public class ExportFrame extends AbstractFrame {
         public boolean isCellEditable(int row, int column) {
             return false;
         };
+
     };
-    private final JScrollPane scrollPane = new JScrollPane(new JTable(tableModel));
-    private final JButton preview = new JButton(Messages.PREVIEW.getText());
-    private final JButton export = new JButton(Messages.EXPORT.getText());
+    private final TableCellRenderer tableCellRenderer = new TableCellRenderer() {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+                boolean hasFocus, int row, int column) {
+            JTextField component = new JTextField();
+            if (row % 2 == 0) {
+                component.setBackground(Color.WHITE);
+            } else {
+                component.setBackground(Color.LIGHT_GRAY);
+            }
+            component.setText(value.toString());
+            component.setToolTipText(value.toString());
+            component.setBorder(BorderFactory.createEmptyBorder());
+            return component;
+        }
+    };
+    private final JTable table = new JTable();
+    {
+        table.setModel(tableModel);
+        table.setDefaultRenderer(Object.class, tableCellRenderer);
+    }
+    private final JScrollPane scrollPane = new JScrollPane(table);
 
     public ExportFrame() {
         super(Messages.NEW_EXPORT.getText(), 320, 440);
@@ -81,6 +108,9 @@ public class ExportFrame extends AbstractFrame {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.DAY_OF_WEEK, 2);
         dateChooser.setDate(cal.getTime());
+        dateChooser.setChosenDateButtonColor(Color.LIGHT_GRAY);
+        dateChooser.setYearSelectionRange(2);
+        dateChooser.setBorder(BorderFactory.createEmptyBorder());
         dateChooser.addKeyListener(new TimeTableKeyAdapter());
 
         labelDays.setBounds(10, 170, 100, 24);
