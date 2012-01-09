@@ -32,22 +32,22 @@
       <name="=timetable/src\/main\/java<de.ronnyfriedland.time.logic{ExportController.java[ExportController"/>
       <height="-1"/>
       <width="-1"/>
-      <x="869"/>
-      <y="809"/>
+      <x="871"/>
+      <y="768"/>
    </type>
    <type>
       <name="=timetable/src\/main\/java<de.ronnyfriedland.time.sort{SortParam.java[SortParam"/>
       <height="-1"/>
       <width="-1"/>
-      <x="3"/>
-      <y="498"/>
+      <x="5"/>
+      <y="879"/>
    </type>
    <type>
       <name="=timetable/src\/main\/java<de.ronnyfriedland.time.sort{SortParam.java[SortParam[SortOrder"/>
       <height="-1"/>
       <width="-1"/>
-      <x="0"/>
-      <y="363"/>
+      <x="7"/>
+      <y="1076"/>
    </type>
    <type>
       <name="=timetable/src\/main\/java<de.ronnyfriedland.time.ui{TimeTableUI.java[TimeTableUI"/>
@@ -60,22 +60,22 @@
       <name="=timetable/src\/main\/java<de.ronnyfriedland.time.ui.dialog{NewProjectFrame.java[NewProjectFrame"/>
       <height="-1"/>
       <width="-1"/>
-      <x="304"/>
-      <y="762"/>
+      <x="303"/>
+      <y="720"/>
    </type>
    <type>
       <name="=timetable/src\/main\/java<de.ronnyfriedland.time.ui.dialog{NewEntryFrame.java[NewEntryFrame"/>
       <height="344"/>
       <width="195"/>
-      <x="2"/>
-      <y="728"/>
+      <x="0"/>
+      <y="454"/>
    </type>
    <type>
       <name="=timetable/src\/main\/java<de.ronnyfriedland.time.ui.dialog{ExportFrame.java[ExportFrame"/>
       <height="-1"/>
       <width="-1"/>
-      <x="563"/>
-      <y="764"/>
+      <x="573"/>
+      <y="633"/>
    </type>
    <type>
       <name="=timetable/src\/main\/java<de.ronnyfriedland.time.ui.dialog{AbstractFrame.java[AbstractFrame"/>
@@ -85,9 +85,9 @@
       <y="557"/>
    </type>
    <relationship>
-      <class="edu.buffalo.cse.green.relationship.dependency.DependencyIPart"/>
-      <sourceType="=timetable/src\/main\/java<de.ronnyfriedland.time.ui{TimeTableUI.java[TimeTableUI"/>
-      <targetType="=timetable/src\/main\/java<de.ronnyfriedland.time.ui.dialog{NewProjectFrame.java[NewProjectFrame"/>
+      <class="edu.buffalo.cse.green.relationship.generalization.GeneralizationPart"/>
+      <sourceType="=timetable/src\/main\/java<de.ronnyfriedland.time.ui.dialog{NewProjectFrame.java[NewProjectFrame"/>
+      <targetType="=timetable/src\/main\/java<de.ronnyfriedland.time.ui.dialog{AbstractFrame.java[AbstractFrame"/>
       <bendpoints>
       </bendpoints>
    </relationship>
@@ -100,22 +100,8 @@
    </relationship>
    <relationship>
       <class="edu.buffalo.cse.green.relationship.dependency.DependencyIPart"/>
-      <sourceType="=timetable/src\/main\/java<de.ronnyfriedland.time.ui.dialog{NewEntryFrame.java[NewEntryFrame"/>
-      <targetType="=timetable/src\/main\/java<de.ronnyfriedland.time.ui.dialog{NewProjectFrame.java[NewProjectFrame"/>
-      <bendpoints>
-      </bendpoints>
-   </relationship>
-   <relationship>
-      <class="edu.buffalo.cse.green.relationship.dependency.DependencyIPart"/>
       <sourceType="=timetable/src\/main\/java<de.ronnyfriedland.time.ui{TimeTableUI.java[TimeTableUI"/>
-      <targetType="=timetable/src\/main\/java<de.ronnyfriedland.time.ui.dialog{ExportFrame.java[ExportFrame"/>
-      <bendpoints>
-      </bendpoints>
-   </relationship>
-   <relationship>
-      <class="edu.buffalo.cse.green.relationship.generalization.GeneralizationPart"/>
-      <sourceType="=timetable/src\/main\/java<de.ronnyfriedland.time.ui.dialog{NewProjectFrame.java[NewProjectFrame"/>
-      <targetType="=timetable/src\/main\/java<de.ronnyfriedland.time.ui.dialog{AbstractFrame.java[AbstractFrame"/>
+      <targetType="=timetable/src\/main\/java<de.ronnyfriedland.time.ui.dialog{NewProjectFrame.java[NewProjectFrame"/>
       <bendpoints>
       </bendpoints>
    </relationship>
@@ -127,9 +113,16 @@
       </bendpoints>
    </relationship>
    <relationship>
+      <class="edu.buffalo.cse.green.relationship.association.AssociationPart"/>
+      <sourceType="=timetable/src\/main\/java<de.ronnyfriedland.time.sort{SortParam.java[SortParam"/>
+      <targetType="=timetable/src\/main\/java<de.ronnyfriedland.time.sort{SortParam.java[SortParam[SortOrder"/>
+      <bendpoints>
+      </bendpoints>
+   </relationship>
+   <relationship>
       <class="edu.buffalo.cse.green.relationship.dependency.DependencyIPart"/>
       <sourceType="=timetable/src\/main\/java<de.ronnyfriedland.time.ui.dialog{NewEntryFrame.java[NewEntryFrame"/>
-      <targetType="=timetable/src\/main\/java<de.ronnyfriedland.time.sort{SortParam.java[SortParam"/>
+      <targetType="=timetable/src\/main\/java<de.ronnyfriedland.time.ui.dialog{NewProjectFrame.java[NewProjectFrame"/>
       <bendpoints>
       </bendpoints>
    </relationship>
@@ -141,6 +134,13 @@
       </bendpoints>
    </relationship>
    <relationship>
+      <class="edu.buffalo.cse.green.relationship.dependency.DependencyIPart"/>
+      <sourceType="=timetable/src\/main\/java<de.ronnyfriedland.time.ui.dialog{NewEntryFrame.java[NewEntryFrame"/>
+      <targetType="=timetable/src\/main\/java<de.ronnyfriedland.time.sort{SortParam.java[SortParam"/>
+      <bendpoints>
+      </bendpoints>
+   </relationship>
+   <relationship>
       <class="edu.buffalo.cse.green.relationship.generalization.GeneralizationPart"/>
       <sourceType="=timetable/src\/main\/java<de.ronnyfriedland.time.ui.dialog{NewEntryFrame.java[NewEntryFrame"/>
       <targetType="=timetable/src\/main\/java<de.ronnyfriedland.time.ui.dialog{AbstractFrame.java[AbstractFrame"/>
@@ -148,9 +148,16 @@
       </bendpoints>
    </relationship>
    <relationship>
-      <class="edu.buffalo.cse.green.relationship.association.AssociationPart"/>
-      <sourceType="=timetable/src\/main\/java<de.ronnyfriedland.time.sort{SortParam.java[SortParam"/>
-      <targetType="=timetable/src\/main\/java<de.ronnyfriedland.time.sort{SortParam.java[SortParam[SortOrder"/>
+      <class="edu.buffalo.cse.green.relationship.dependency.DependencyIPart"/>
+      <sourceType="=timetable/src\/main\/java<de.ronnyfriedland.time.ui{TimeTableUI.java[TimeTableUI"/>
+      <targetType="=timetable/src\/main\/java<de.ronnyfriedland.time.sort{SortParam.java[SortParam"/>
+      <bendpoints>
+      </bendpoints>
+   </relationship>
+   <relationship>
+      <class="edu.buffalo.cse.green.relationship.dependency.DependencyIPart"/>
+      <sourceType="=timetable/src\/main\/java<de.ronnyfriedland.time.ui{TimeTableUI.java[TimeTableUI"/>
+      <targetType="=timetable/src\/main\/java<de.ronnyfriedland.time.ui.dialog{ExportFrame.java[ExportFrame"/>
       <bendpoints>
       </bendpoints>
    </relationship>
