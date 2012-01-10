@@ -92,7 +92,7 @@ public class TimeTableUI {
                 @Override
                 public void mousePressed(MouseEvent e) {
                     Collection<Entry> todayEntries = EntityController.getInstance().findAll(Entry.class,
-                            new SortParam("lastModifiedDate", SortOrder.DESC), 10);
+                            new SortParam("date", SortOrder.DESC), 10);
 
                     todayItems.removeAll();
 
