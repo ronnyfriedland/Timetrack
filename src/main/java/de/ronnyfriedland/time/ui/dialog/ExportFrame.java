@@ -2,6 +2,9 @@ package de.ronnyfriedland.time.ui.dialog;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -169,9 +172,16 @@ public class ExportFrame extends AbstractFrame {
                 Calendar to = getEndDate();
                 Collection<Entry> entries = getFilteredData(from, to);
 
+                StringBuilder sbuild = new StringBuilder();
                 for (Entry entry : entries) {
                     tableModel.addRow(new Object[] { entry.getDateString(), entry.getDescription(), entry.getDuration() });
+                    sbuild.append(String.format("%1$s: %2$s (%3$sh)\n", entry.getDateString(), entry.getDescription(),
+                            entry.getDuration()));
                 }
+
+                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                StringSelection data = new StringSelection(sbuild.toString());
+                clipboard.setContents(data, data);
             }
         });
 
