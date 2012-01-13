@@ -50,6 +50,8 @@ public class ExportFrame extends AbstractFrame {
     private static final long serialVersionUID = -8738367859388084898L;
 
     private static final String LABEL_SELECTED_DAYS_VALUE = "%1$d Tag(e)";
+    private static final String LABEL_SELECTED_EXPORT_DATA = "%1$.2f Stunden für %2$d Tage ausgewählt.";
+
     private static final String[] TABLE_HEADERS = new String[] { Messages.DATE.getText(),
             Messages.DESCRIPTION.getText(), Messages.DURATION.getText() };
 
@@ -60,6 +62,7 @@ public class ExportFrame extends AbstractFrame {
     private final JLabel labelSelectedDays = new JLabel("");
     private final JButton preview = new JButton(Messages.PREVIEW.getText());
     private final JButton export = new JButton(Messages.EXPORT.getText());
+    private final JLabel summary = new JLabel();
     private final DefaultTableModel tableModel = new DefaultTableModel(TABLE_HEADERS, 0) {
         private static final long serialVersionUID = 2177197508177608415L;
 
@@ -93,7 +96,7 @@ public class ExportFrame extends AbstractFrame {
     private final JScrollPane scrollPane = new JScrollPane(table);
 
     public ExportFrame() {
-        super(Messages.NEW_EXPORT.getText(), 320, 440);
+        super(Messages.NEW_EXPORT.getText(), 320, 460);
         createUI();
     }
 
@@ -172,20 +175,26 @@ public class ExportFrame extends AbstractFrame {
                 Calendar to = getEndDate();
                 Collection<Entry> entries = getFilteredData(from, to);
 
+                float hours = 0;
                 StringBuilder sbuild = new StringBuilder();
                 for (Entry entry : entries) {
                     tableModel.addRow(new Object[] { entry.getDateString(), entry.getDescription(), entry.getDuration() });
                     sbuild.append(String.format("%1$s: %2$s (%3$sh)\n", entry.getDateString(), entry.getDescription(),
                             entry.getDuration()));
+                    hours += Float.valueOf(entry.getDuration());
                 }
 
                 Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
                 StringSelection data = new StringSelection(sbuild.toString());
                 clipboard.setContents(data, data);
+
+                summary.setText(String.format(LABEL_SELECTED_EXPORT_DATA, hours, days.getValue()));
             }
         });
 
         scrollPane.setBounds(10, 260, 300, 150);
+
+        summary.setBounds(10, 410, 300, 20);
 
         formatOk(dateChooser, days);
 
@@ -197,6 +206,7 @@ public class ExportFrame extends AbstractFrame {
         getContentPane().add(scrollPane);
         getContentPane().add(preview);
         getContentPane().add(export);
+        getContentPane().add(summary);
     }
 
     /**
