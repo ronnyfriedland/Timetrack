@@ -63,6 +63,7 @@ public class QuartzController {
                         .withSchedule(CronScheduleBuilder.cronSchedule(cronExpression)).build();
 
                 sched.scheduleJob(job, trigger);
+                sched.start();
             } catch (Exception ex) {
                 LOG.log(Level.SEVERE, "Error creting scheduler.", ex);
             }
