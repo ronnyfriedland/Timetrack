@@ -42,8 +42,10 @@ public enum Messages {
     SAVE("Speichern"),
     /** Löschen */
     DELETE("Löschen"),
-    /** Text für das Popup */
-    MESSAGE_POPUP("Bitte an das Kontieren denken.");
+    /** Text für Kontierungserinnerung (Popup) */
+    MESSAGE_POPUP("Bitte an das Kontieren denken."),
+    /** Text Erfolgsmeldung Export (Popup) */
+    EXPORT_SUCCESSFUL("Der Export wurde erfolgreich durchgeführt.\nOrdner: %s");
 
     public String getText() {
         return text;

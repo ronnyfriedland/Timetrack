@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JTable;
@@ -156,6 +157,11 @@ public class ExportFrame extends AbstractFrame {
                             Configurator.CONFIG.getString(ConfiguratorKeys.EXPORT_FILE.getKey()));
 
                     setVisible(false);
+
+                    JOptionPane.showMessageDialog(
+                            null,
+                            String.format(Messages.EXPORT_SUCCESSFUL.getText(),
+                                    Configurator.CONFIG.getString(ConfiguratorKeys.PATH.getKey())));
                 } catch (IOException ex) {
                     LOG.log(Level.SEVERE, "Error exporting data", ex);
                     formatError(export);
