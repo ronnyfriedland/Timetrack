@@ -240,7 +240,7 @@ public class NewEntryFrame extends AbstractFrame {
                     entry.setDescription(description.getText());
                 }
                 if (!StringUtils.isBlank(duration.getText())) {
-                    entry.setDuration(duration.getText());
+                    entry.setDuration(duration.getText().replaceAll(",", ".").trim());
                 }
                 String projectName = (String) projects.getSelectedValue();
                 if (!StringUtils.isBlank(projectName)) {

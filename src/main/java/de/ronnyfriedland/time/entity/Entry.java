@@ -17,6 +17,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import de.ronnyfriedland.time.entity.validation.IsFloat;
 import de.ronnyfriedland.time.entity.validation.NotBlank;
 
 /**
@@ -35,7 +36,7 @@ public class Entry extends AbstractEntity {
 
     private static final long serialVersionUID = -6406081124935463200L;
     @NotBlank
-    @Pattern(regexp = "(\\+?((([0-9]+(\\.)?)|([0-9]*\\.[0-9]+))([eE][+-]?[0-9]+)?))")
+    @IsFloat
     @Column(name = "DURATION", nullable = false)
     private String duration;
     @Column(name = "DATE", nullable = false)

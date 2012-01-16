@@ -70,10 +70,27 @@ public class NewEntryFrameTest extends UISpecTestCase {
 
         dateField.setText("01.01.2011");
         descriptionField.setText("test");
+        durationField.setText("3a");
+        projectField.selectIndex(0);
+
+        saveButton.triggerClick().run();
+        Assert.assertTrue(EntityController.getInstance().findAll(Entry.class).isEmpty());
+
+        dateField.setText("01.01.2011");
+        descriptionField.setText("test");
         durationField.setText("3");
         projectField.selectIndex(0);
 
         saveButton.triggerClick().run();
-        Assert.assertFalse(EntityController.getInstance().findAll(Entry.class).isEmpty());
+        Assert.assertEquals(1, EntityController.getInstance().findAll(Entry.class).size());
+
+        dateField.setText("01.01.2011");
+        descriptionField.setText("test");
+        durationField.setText("3,123 ");
+        projectField.selectIndex(0);
+
+        saveButton.triggerClick().run();
+        Assert.assertEquals(2, EntityController.getInstance().findAll(Entry.class).size());
+
     }
 }
