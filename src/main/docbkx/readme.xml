@@ -1,0 +1,84 @@
+<article lang="de">
+	<articleinfo>
+		<title>Dokumentation für ${project.name} Version ${project.version}
+		</title>
+		<author>
+			<firstname>Ronny</firstname>
+			<surname>Friedland</surname>
+		</author>
+		<copyright>
+			<year>2012</year>
+			<holder>Open Source Software</holder>
+		</copyright>
+		<abstract>
+			<para>Zeiterfassungssoftware für Linux/Mac/Windows.</para>
+		</abstract>
+	</articleinfo>
+	<sect1>
+		<title>Funktionen</title>
+		<sect2>
+			<title>Projekte erstellen</title>
+			<para>TODO</para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						Einschränkungen
+						<itemizedlist>
+							<listitem>
+								<para>Projektnamen müssen eindeutig sein</para>
+							</listitem>
+						</itemizedlist>
+					</para>
+				</listitem>
+			</itemizedlist>
+		</sect2>
+		<sect2>
+			<title>Projekte bearbeiten / löschen</title>
+			<para>TODO</para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						Einschränkungen
+						<itemizedlist>
+							<listitem>
+								<para>Beim Löschen von Projekten werden die assoziierten
+									Einträge ebenfalls gelöscht.
+								</para>
+							</listitem>
+						</itemizedlist>
+					</para>
+				</listitem>
+			</itemizedlist>
+		</sect2>
+		<sect2>
+			<title>Einträge erstellen</title>
+			<para>TODO</para>
+			<para>Die letzten 10 erstellten Einträge werden unter dem Menüpunkt
+				"Zuletzt erstellt" angezeigt.
+			</para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						Einschränkungen
+						<itemizedlist>
+							<listitem>
+								<para>Jedem Eintrag muss ein Projekt zugeordnet werden.</para>
+							</listitem>
+							<listitem>
+								<para>Die Dauer kann Kommawerte enthalten.</para>
+							</listitem>
+						</itemizedlist>
+					</para>
+				</listitem>
+			</itemizedlist>
+		</sect2>
+		<sect2>
+			<title>Einträge bearbeiten</title>
+			<para>TODO</para>
+		</sect2>
+		<sect2>
+			<title>Daten exportieren</title>
+			<para>TODO</para>
+		</sect2>
+	</sect1>
+</article>
