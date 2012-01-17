@@ -34,6 +34,5 @@ public class ShowMessagePopupJob implements Job {
         if (LOG.isLoggable(Level.FINE)) {
             LOG.fine(String.format("Job %s executed successfully.", context.getJobDetail().getKey()));
         }
-        System.err.print("fertsch");
     }
 }
