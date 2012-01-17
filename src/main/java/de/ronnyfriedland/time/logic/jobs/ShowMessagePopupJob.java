@@ -30,9 +30,10 @@ public class ShowMessagePopupJob implements Job {
      */
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        JOptionPane.showConfirmDialog(null, Messages.MESSAGE_POPUP.getText());
+        JOptionPane.showMessageDialog(null, Messages.MESSAGE_POPUP.getText());
         if (LOG.isLoggable(Level.FINE)) {
             LOG.fine(String.format("Job %s executed successfully.", context.getJobDetail().getKey()));
         }
+        System.err.print("fertsch");
     }
 }
