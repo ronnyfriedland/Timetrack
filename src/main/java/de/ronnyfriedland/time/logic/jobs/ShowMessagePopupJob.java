@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 
+import org.quartz.DisallowConcurrentExecution;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -14,6 +15,7 @@ import de.ronnyfriedland.time.config.Messages;
 /**
  * @author ronnyfriedland
  */
+@DisallowConcurrentExecution
 public class ShowMessagePopupJob implements Job {
 
     public final static String JOB = "showpopupjob";
@@ -28,10 +30,9 @@ public class ShowMessagePopupJob implements Job {
      */
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        JOptionPane.showMessageDialog(null, Messages.MESSAGE_POPUP.getText());
+        JOptionPane.showConfirmDialog(null, Messages.MESSAGE_POPUP.getText());
         if (LOG.isLoggable(Level.FINE)) {
             LOG.fine(String.format("Job %s executed successfully.", context.getJobDetail().getKey()));
         }
     }
-
 }
