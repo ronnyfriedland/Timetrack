@@ -184,10 +184,12 @@ public class ExportFrame extends AbstractFrame {
                 float hours = 0;
                 StringBuilder sbuild = new StringBuilder();
                 for (Entry entry : entries) {
-                    tableModel.addRow(new Object[] { entry.getDateString(), entry.getDescription(), entry.getDuration() });
-                    sbuild.append(String.format("%1$s: %2$s (%3$sh)\n", entry.getDateString(), entry.getDescription(),
-                            entry.getDuration()));
-                    hours += Float.valueOf(entry.getDuration());
+                    Float duration = Float.valueOf(entry.getDuration());
+                    hours += duration;
+                    tableModel.addRow(new Object[] { entry.getDateString(), entry.getDescription(),
+                            String.format("%1$.2f", duration) });
+                    sbuild.append(String.format("%1$s: %2$s (%3$.2fh)\n", entry.getDateString(),
+                            entry.getDescription(), duration));
                 }
 
                 Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
