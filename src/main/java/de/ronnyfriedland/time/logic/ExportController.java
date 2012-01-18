@@ -10,6 +10,7 @@ import java.util.Iterator;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Hyperlink;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
@@ -73,7 +74,7 @@ public class ExportController {
         for (Entry entry : entries) {
             Row row = sheet.createRow(i);
 
-            row.createCell(0).setCellValue(entry.getDate());
+            row.createCell(0).setCellValue(entry.getDateString());
             row.createCell(1).setCellValue(entry.getProject().getName());
             row.createCell(2).setCellValue(entry.getDescription());
             row.createCell(3).setCellValue(entry.getDuration());
@@ -109,7 +110,13 @@ public class ExportController {
         Cell cell0 = row.createCell(0);
         cell0.setCellValue(sheetName);
         cell0.setHyperlink(link);
-        row.createCell(1).setCellValue(Calendar.getInstance());
+
+        CreationHelper createHelper = wb.getCreationHelper();
+        CellStyle cellStyle = wb.createCellStyle();
+        cellStyle.setDataFormat(createHelper.createDataFormat().getFormat("dd.mm.yyyy hh:mm:ss"));
+        Cell cell1 = row.createCell(1);
+        cell1.setCellValue(Calendar.getInstance().getTime());
+        cell1.setCellStyle(cellStyle);
     }
 
     public void persistWorkbook(final Workbook wb, final String path, final String file) throws IOException {
@@ -120,8 +127,9 @@ public class ExportController {
     }
 
     /**
-     * @param style
-     * @param headerRow
+     * @param wb
+     * @param cell
+     * @param cellValue
      */
     private void formatHeaderCell(Workbook wb, Cell cell, String cellValue) {
         CellStyle style = wb.createCellStyle();
