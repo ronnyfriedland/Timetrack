@@ -45,7 +45,12 @@ public enum Messages {
     /** Text für Kontierungserinnerung (Popup) */
     MESSAGE_POPUP("Bitte an das Kontieren denken."),
     /** Text Erfolgsmeldung Export (Popup) */
-    EXPORT_SUCCESSFUL("Der Export wurde erfolgreich durchgeführt.\nOrdner: %s");
+    EXPORT_SUCCESSFUL("Der Export wurde erfolgreich durchgeführt.\nOrdner: %s"),
+    /** Hinweistext für Export */
+    EXPORT_DESCRIPTION("Über den Kalender wird der Startzeitpunkt ausgewählt. Über den Regler wird die Zeitspanne "
+            + "(in Tagen) eingestellt. Über den Button " + PREVIEW.getText() + " werden alle Daten tabellarisch "
+            + "dargestellt. Gleichzeitig werden die Daten in die Zwischenablage kopiert. Erst durch den Button "
+            + EXPORT.getText() + " werden die Daten in eine Excel-Arbeitsmappe exportiert.");
 
     public String getText() {
         return text;

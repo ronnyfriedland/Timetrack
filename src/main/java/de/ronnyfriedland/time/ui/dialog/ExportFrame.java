@@ -24,6 +24,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -54,7 +55,7 @@ public class ExportFrame extends AbstractFrame {
     private static final String LABEL_SELECTED_EXPORT_DATA = "%1$.2f Stunden für %2$d Tage ausgewählt.";
 
     private static final String[] TABLE_HEADERS = new String[] { Messages.DATE.getText(),
-            Messages.DESCRIPTION.getText(), Messages.DURATION.getText() };
+            Messages.DESCRIPTION.getText(), Messages.PROJECT_NAME.getText(), Messages.DURATION.getText() };
 
     private final JLabel labelDate = new JLabel(Messages.START_DATE.getText());
     private final DateChooserPanel dateChooser = new DateChooserPanel();
@@ -64,6 +65,7 @@ public class ExportFrame extends AbstractFrame {
     private final JButton preview = new JButton(Messages.PREVIEW.getText());
     private final JButton export = new JButton(Messages.EXPORT.getText());
     private final JLabel summary = new JLabel();
+    private final JTextArea description = new JTextArea();
     private final DefaultTableModel tableModel = new DefaultTableModel(TABLE_HEADERS, 0) {
         private static final long serialVersionUID = 2177197508177608415L;
 
@@ -97,7 +99,7 @@ public class ExportFrame extends AbstractFrame {
     private final JScrollPane scrollPane = new JScrollPane(table);
 
     public ExportFrame() {
-        super(Messages.NEW_EXPORT.getText(), 320, 460);
+        super(Messages.NEW_EXPORT.getText(), 500, 460);
         createUI();
     }
 
@@ -187,7 +189,7 @@ public class ExportFrame extends AbstractFrame {
                     Float duration = Float.valueOf(entry.getDuration());
                     hours += duration;
                     tableModel.addRow(new Object[] { entry.getDateString(), entry.getDescription(),
-                            String.format("%1$.2f", duration) });
+                            entry.getProject().getName(), String.format("%1$.2f", duration) });
                     sbuild.append(String.format("%1$s: %2$s (%3$.2fh)\n", entry.getDateString(),
                             entry.getDescription(), duration));
                 }
@@ -200,9 +202,16 @@ public class ExportFrame extends AbstractFrame {
             }
         });
 
-        scrollPane.setBounds(10, 260, 300, 150);
+        scrollPane.setBounds(10, 260, 480, 150);
 
-        summary.setBounds(10, 410, 300, 20);
+        summary.setBounds(10, 410, 480, 20);
+
+        description.setBounds(320, 10, 170, 240);
+        description.setEditable(false);
+        description.setLineWrap(true);
+        description.setWrapStyleWord(true);
+        description.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        description.setText(Messages.EXPORT_DESCRIPTION.getText());
 
         formatOk(dateChooser, days);
 
@@ -215,6 +224,7 @@ public class ExportFrame extends AbstractFrame {
         getContentPane().add(preview);
         getContentPane().add(export);
         getContentPane().add(summary);
+        getContentPane().add(description);
     }
 
     /**
