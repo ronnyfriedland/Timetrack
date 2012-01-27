@@ -18,7 +18,10 @@
 		<title>Funktionen</title>
 		<sect2>
 			<title>Projekte erstellen</title>
-			<para>TODO</para>
+			<para>Alle Einträge müssen exakt einem Projekt zugeordnet werden.
+				Diese müssen vor dem Anlegen der Einträge existieren. Optional kann
+				ein Kommentar angegeben werden.
+			</para>
 			<itemizedlist>
 				<listitem>
 					<para>
@@ -34,7 +37,9 @@
 		</sect2>
 		<sect2>
 			<title>Projekte bearbeiten / löschen</title>
-			<para>TODO</para>
+			<para>Um ein Projekt zu bearbeiten oder zu löschen, muss es per
+				Doppelklick in der Eingabemaske für neue Einträge ausgewählt werden.
+			</para>
 			<itemizedlist>
 				<listitem>
 					<para>
@@ -52,7 +57,10 @@
 		</sect2>
 		<sect2>
 			<title>Einträge erstellen</title>
-			<para>TODO</para>
+			<para>Für jeden Eintrag muss eine Beschreibung und die Dauer
+				angegeben werden. Zusätzlich muss dem Eintrag ein Projekt zugeordnet
+				werden.
+			</para>
 			<para>Die letzten 10 erstellten Einträge werden unter dem Menüpunkt
 				"Zuletzt erstellt" angezeigt.
 			</para>
@@ -74,11 +82,14 @@
 		</sect2>
 		<sect2>
 			<title>Einträge bearbeiten</title>
-			<para>TODO</para>
+			<para>Es werden die letzten 10 Einträge dargestellt. Diese können
+				durch Anwählen bearbeitet werden.
+			</para>
 		</sect2>
 		<sect2>
 			<title>Daten exportieren</title>
-			<para>TODO</para>
+			<para>Alle gespeicherten Einträge können als Excel Arbeitsmappe
+				exportiert werden.</para>
 		</sect2>
 	</sect1>
 </article>
