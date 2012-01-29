@@ -10,6 +10,11 @@
 			<source>${project.build.directory}/timetable.sh</source>
 			<outputDirectory>/</outputDirectory>
 		</file>
+        <!-- add readme -->
+        <file>
+            <source>${project.build.directory}/docbkx/html/readme.html</source>
+            <outputDirectory>/</outputDirectory>
+        </file>
 	</files>
 	<fileSets>
 		<!-- add dependency libs -->
