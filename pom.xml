@@ -108,6 +108,25 @@
 							<skipTests>true</skipTests>
 						</configuration>
 					</plugin>
+					<plugin>
+						<artifactId>maven-assembly-plugin</artifactId>
+						<version>2.2.2</version>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>single</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<descriptors>
+								<descriptor>src/main/application/zip.xml</descriptor>
+							</descriptors>
+							<outputDirectory>target/zip</outputDirectory>
+							<appendAssemblyId>false</appendAssemblyId>
+						</configuration>
+					</plugin>
 				</plugins>
 			</build>
 		</profile>
