@@ -101,8 +101,9 @@
 								<configuration>
 									<headerType>gui</headerType>
 									<outfile>${project.build.directory}/Timetable.exe</outfile>
-									<jar>${project.build.directory}/${project.build.finalName}</jar>
+									<jar>${project.build.directory}/${project.artifactId}-${project.version}.jar</jar>
 									<errTitle>Timetable</errTitle>
+									<icon>${basedir}/src/main/resources/images/icon.ico</icon>
 									<classPath>
 										<mainClass>de.ronnyfriedland.time.ui.TimeTableUI</mainClass>
 										<addDependencies>true</addDependencies>
@@ -111,10 +112,15 @@
 										<minVersion>1.5.0</minVersion>
 									</jre>
 									<versionInfo>
-										<fileVersion>${project.version}</fileVersion>
+										<fileVersion>0.4.0.0</fileVersion>
+										<txtFileVersion>${project.version}</txtFileVersion>
+										<fileDescription>Timetable executable</fileDescription>
 										<copyright>GPL</copyright>
-										<productVersion>${project.version}</productVersion>
+										<productVersion>0.4.0.0</productVersion>
+										<txtProductVersion>${project.version}</txtProductVersion>
 										<productName>Timetable</productName>
+										<internalName>Timetable</internalName>
+										<originalFilename>Timetable.exe</originalFilename>
 									</versionInfo>
 								</configuration>
 							</execution>

@@ -5,6 +5,11 @@
 	</formats>
 	<includeBaseDirectory>false</includeBaseDirectory>
 	<files>
+        <!-- add windows executable -->
+        <file>
+            <source>${project.build.directory}/Timetable.exe</source>
+            <outputDirectory>/</outputDirectory>
+        </file>
 		<!-- add startup script -->
 		<file>
 			<source>${project.build.directory}/timetable.sh</source>
