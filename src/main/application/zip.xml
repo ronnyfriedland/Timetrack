@@ -34,6 +34,12 @@
 				<include>de.ronnyfriedland:timetable</include>
 			</includes>
 		</dependencySet>
+        <dependencySet>
+            <outputDirectory>/lib</outputDirectory>
+            <excludes>
+                <exclude>de.ronnyfriedland:timetable</exclude>
+            </excludes>
+        </dependencySet>
 	</dependencySets>
 
 </assembly>
