@@ -57,6 +57,7 @@
 			<plugin>
 				<groupId>com.agilejava.docbkx</groupId>
 				<artifactId>docbkx-maven-plugin</artifactId>
+				<version>2.0.13</version>
 				<executions>
 					<execution>
 						<goals>
@@ -86,6 +87,39 @@
 			<id>release</id>
 			<build>
 				<plugins>
+					<plugin>
+						<groupId>com.akathist.maven.plugins.launch4j</groupId>
+						<artifactId>launch4j-maven-plugin</artifactId>
+						<version>1.3</version>
+						<executions>
+							<execution>
+								<id>l4j-gui</id>
+								<phase>package</phase>
+								<goals>
+									<goal>launch4j</goal>
+								</goals>
+								<configuration>
+									<headerType>gui</headerType>
+									<outfile>${project.build.directory}/Timetable.exe</outfile>
+									<jar>${project.build.directory}/${project.build.finalName}</jar>
+									<errTitle>Timetable</errTitle>
+									<classPath>
+										<mainClass>de.ronnyfriedland.time.ui.TimeTableUI</mainClass>
+										<addDependencies>true</addDependencies>
+									</classPath>
+									<jre>
+										<minVersion>1.5.0</minVersion>
+									</jre>
+									<versionInfo>
+										<fileVersion>${project.version}</fileVersion>
+										<copyright>GPL</copyright>
+										<productVersion>${project.version}</productVersion>
+										<productName>Timetable</productName>
+									</versionInfo>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-surefire-plugin</artifactId>
@@ -198,5 +232,17 @@
 			<id>EclipseLink Repo</id>
 			<url>http://www.eclipse.org/downloads/download.php?r=1&amp;nf=1&amp;file=/rt/eclipselink/maven.repo</url>
 		</repository>
+		<repository>
+			<id>akathist-repository</id>
+			<name>Akathist Repository</name>
+			<url>http://www.9stmaryrd.com/maven</url>
+		</repository>
 	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>akathist-repository</id>
+			<name>Akathist Repository</name>
+			<url>http://www.9stmaryrd.com/maven</url>
+		</pluginRepository>
+	</pluginRepositories>
 </project>
