@@ -47,6 +47,19 @@ public class EntityController {
         return em.find(clazz, uuid);
     }
 
+    public <T> T findLast(final Class<T> clazz) {
+        T result;
+        TypedQuery<T> query = em.createQuery("SELECT e FROM " + clazz.getSimpleName()
+                + " e ORDER BY e.lastModifiedDate desc", clazz);
+        query.setMaxResults(1);
+        try {
+            result = query.getSingleResult();
+        } catch (Exception e) {
+            result = null;
+        }
+        return result;
+    }
+
     public <T> Collection<T> findAll(final Class<T> clazz) {
         TypedQuery<T> query = em.createQuery("SELECT e FROM " + clazz.getSimpleName() + " e", clazz);
         return query.getResultList();
