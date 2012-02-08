@@ -73,7 +73,6 @@ public class ExportFrame extends AbstractFrame {
         public boolean isCellEditable(int row, int column) {
             return false;
         };
-
     };
     private final TableCellRenderer tableCellRenderer = new TableCellRenderer() {
         @Override
@@ -84,6 +83,12 @@ public class ExportFrame extends AbstractFrame {
                 component.setBackground(Color.WHITE);
             } else {
                 component.setBackground(Color.LIGHT_GRAY);
+            }
+            if (isSelected) {
+                component.setBackground(Color.GRAY);
+                component.setForeground(Color.WHITE);
+            } else {
+                component.setForeground(Color.BLACK);
             }
             component.setText(value.toString());
             component.setToolTipText(value.toString());
