@@ -214,7 +214,10 @@ public class NewEntryFrame extends AbstractFrame {
                             Project.QUERY_FINDBYNAME, parameters);
 
                     new NewProjectFrame(project).setVisible(true);
-                    setVisible(false);
+                    if (StringUtils.isBlank(date.getText()) || StringUtils.isBlank(description.getText())
+                            || StringUtils.isBlank(duration.getText())) {
+                        setVisible(false);
+                    }
                 }
             }
         });
