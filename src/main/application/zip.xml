@@ -43,6 +43,8 @@
             <outputDirectory>/lib</outputDirectory>
             <excludes>
                 <exclude>de.ronnyfriedland:timetable</exclude>
+                <exclude>org.uispec4j:uispec4j</exclude>
+                <excluede>junit:junit</excluede>
             </excludes>
         </dependencySet>
 	</dependencySets>
