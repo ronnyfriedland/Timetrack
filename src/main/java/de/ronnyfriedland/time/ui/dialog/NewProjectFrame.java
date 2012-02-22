@@ -43,7 +43,7 @@ public class NewProjectFrame extends AbstractFrame {
     private String uuid = null;
 
     public NewProjectFrame() {
-        super(Messages.CREATE_NEW_PROJECT.getText(), 320, 150);
+        super(Messages.CREATE_NEW_PROJECT.getText(), 320, 130);
         createUI();
     }
 
@@ -98,7 +98,7 @@ public class NewProjectFrame extends AbstractFrame {
         description.setBounds(110, 35, 200, 24);
         description.addKeyListener(new TimeTableKeyAdapter());
 
-        delete.setBounds(10, 95, 300, 24);
+        delete.setBounds(165, 70, 145, 24);
         delete.setEnabled(false);
         delete.addKeyListener(new TimeTableKeyAdapter());
         delete.addActionListener(new ActionListener() {
@@ -117,7 +117,7 @@ public class NewProjectFrame extends AbstractFrame {
             }
         });
 
-        save.setBounds(10, 70, 300, 24);
+        save.setBounds(10, 70, 145, 24);
         save.addKeyListener(new TimeTableKeyAdapter());
         save.addActionListener(new ActionListener() {
             @Override

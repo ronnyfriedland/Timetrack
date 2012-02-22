@@ -57,6 +57,7 @@ public class NewEntryFrame extends AbstractFrame {
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
     private final JList projects = new JList();
     private final JButton save = new JButton(Messages.SAVE.getText());
+    private final JButton delete = new JButton(Messages.DELETE.getText());
 
     private String uuid = null;
 
@@ -79,6 +80,8 @@ public class NewEntryFrame extends AbstractFrame {
                 projects.setSelectedIndex(i);
             }
         }
+
+        delete.setEnabled(true);
     }
 
     /**
@@ -225,7 +228,7 @@ public class NewEntryFrame extends AbstractFrame {
         scrollPaneProjects.setViewportView(projects);
         scrollPaneProjects.setBounds(10, 85, 300, 100);
 
-        save.setBounds(10, 190, 300, 24);
+        save.setBounds(10, 190, 145, 24);
         save.addKeyListener(new TimeTableKeyAdapter());
         save.addActionListener(new ActionListener() {
             @Override
@@ -270,6 +273,25 @@ public class NewEntryFrame extends AbstractFrame {
             }
         });
 
+        delete.setBounds(165, 190, 145, 24);
+        delete.addKeyListener(new TimeTableKeyAdapter());
+        delete.setEnabled(false);
+        delete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                if (null != uuid) {
+                    try {
+                        Entry entry = EntityController.getInstance().findById(Entry.class, uuid);
+                        EntityController.getInstance().delete(entry);
+                        setVisible(false);
+                    } catch (PersistenceException ex) {
+                        LOG.log(Level.SEVERE, "Error removing project", ex);
+                        formatError(delete);
+                    }
+                }
+            }
+        });
+
         formatOk(date, description, duration, scrollPaneProjects);
 
         getContentPane().add(labelDate);
@@ -280,6 +302,7 @@ public class NewEntryFrame extends AbstractFrame {
         getContentPane().add(duration);
         getContentPane().add(scrollPaneProjects);
         getContentPane().add(save);
+        getContentPane().add(delete);
     }
 
     public static void main(String[] args) {
