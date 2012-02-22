@@ -105,11 +105,15 @@ public class NewProjectFrame extends AbstractFrame {
             @Override
             public void actionPerformed(final ActionEvent e) {
                 if (null != uuid) {
-                    Project project = new Project(uuid);
-                    project.setName(name.getText());
-                    EntityController.getInstance().deleteDetached(project);
+                    try {
+                        Project project = EntityController.getInstance().findById(Project.class, uuid);
+                        EntityController.getInstance().delete(project);
+                        setVisible(false);
+                    } catch (PersistenceException ex) {
+                        LOG.log(Level.SEVERE, "Error removing project", ex);
+                        formatError(delete);
+                    }
                 }
-                setVisible(false);
             }
         });
 
