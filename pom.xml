@@ -66,6 +66,7 @@
 						</goals>
 						<configuration>
 							<excludeResources>true</excludeResources>
+							<includePom>true</includePom>
 						</configuration>
 					</execution>
 				</executions>
