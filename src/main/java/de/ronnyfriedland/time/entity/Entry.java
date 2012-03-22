@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.PostLoad;
+import javax.persistence.PostUpdate;
+import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -108,6 +110,7 @@ public class Entry extends AbstractEntity {
     }
 
     @PostLoad
+    @PostUpdate
     public void updateDateString() {
         setDate(getDate());
     }
