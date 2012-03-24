@@ -2,9 +2,6 @@ package de.ronnyfriedland.time.ui.dialog;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -75,7 +72,7 @@ public class ExportFrame extends AbstractFrame {
         };
     };
     private final TableCellRenderer tableCellRenderer = new TableCellRenderer() {
-        @Override
+    	@Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
                 boolean hasFocus, int row, int column) {
             JTextField component = new JTextField();
@@ -100,6 +97,7 @@ public class ExportFrame extends AbstractFrame {
     {
         table.setModel(tableModel);
         table.setDefaultRenderer(Object.class, tableCellRenderer);
+        table.addKeyListener(new TimeTableKeyAdapter());
     }
     private final JScrollPane scrollPane = new JScrollPane(table);
 
@@ -189,19 +187,12 @@ public class ExportFrame extends AbstractFrame {
                 Collection<Entry> entries = getFilteredData(from, to);
 
                 float hours = 0;
-                StringBuilder sbuild = new StringBuilder();
                 for (Entry entry : entries) {
                     Float duration = Float.valueOf(entry.getDuration());
                     hours += duration;
                     tableModel.addRow(new Object[] { entry.getDateString(), entry.getDescription(),
                             entry.getProject().getName(), String.format("%1$.2f", duration) });
-                    sbuild.append(String.format("%1$s: %2$s (%3$.2fh)\n", entry.getDateString(),
-                            entry.getDescription(), duration));
                 }
-
-                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-                StringSelection data = new StringSelection(sbuild.toString());
-                clipboard.setContents(data, data);
 
                 summary.setText(String.format(LABEL_SELECTED_EXPORT_DATA, hours, days.getValue()));
             }
