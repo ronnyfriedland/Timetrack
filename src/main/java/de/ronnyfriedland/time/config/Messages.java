@@ -36,6 +36,8 @@ public enum Messages {
 	CREATE_NEW_PROJECT("Neues Projekt anlegen"),
 	/** Exportieren */
 	EXPORT("Exportieren"),
+	/** Projektliste aktualisieren */
+	REFRESH_PROJECT("Projektliste aktualisieren"),
 	/** Vorschau */
 	PREVIEW("Vorschau"),
 	/** Speichern */
@@ -47,14 +49,10 @@ public enum Messages {
 	/** Text Erfolgsmeldung Export (Popup) */
 	EXPORT_SUCCESSFUL("Der Export wurde erfolgreich durchgeführt.\nOrdner: %s"),
 	/** Hinweistext für Export */
-	EXPORT_DESCRIPTION(
-			"Über den Kalender wird der Startzeitpunkt ausgewählt.\nDie Zeitspanne "
-					+ "(in Tagen) kann über den Regler eingestellt werden. Das Maximum beträgt 365 Tage. Der Button "
-					+ PREVIEW.getText()
-					+ " aktualisiert die Vorschaudaten in der Tabelle. "
-					+ "\n\nErst durch den Button "
-					+ EXPORT.getText()
-					+ " werden die Daten in eine Arbeitsmappe exportiert.");
+	EXPORT_DESCRIPTION("Über den Kalender wird der Startzeitpunkt ausgewählt.\nDie Zeitspanne "
+	        + "(in Tagen) kann über den Regler eingestellt werden. Das Maximum beträgt 365 Tage. Der Button "
+	        + PREVIEW.getText() + " aktualisiert die Vorschaudaten in der Tabelle. " + "\n\nErst durch den Button "
+	        + EXPORT.getText() + " werden die Daten in eine Arbeitsmappe exportiert.");
 
 	public String getText() {
 		return text;
