@@ -32,6 +32,10 @@
 							<listitem>
 								<para>Projektnamen müssen eindeutig sein</para>
 							</listitem>
+							<listitem>
+								<para>Projektnamen können nicht nachträglich verändert werden
+								</para>
+							</listitem>
 						</itemizedlist>
 					</para>
 				</listitem>
@@ -50,7 +54,8 @@
 							<listitem>
 								<para>Beim Löschen von Projekten werden die assoziierten
 									Einträge nicht gelöscht. Diese müssen vorher manuell entfernt
-									werden.
+									werden. Existieren assoziierte Einträge ist das Löschen nicht
+									möglich.
 								</para>
 							</listitem>
 						</itemizedlist>
@@ -92,7 +97,12 @@
 		<sect2>
 			<title>Daten exportieren</title>
 			<para>Alle gespeicherten Einträge können als Excel Arbeitsmappe
-				exportiert werden.
+				exportiert werden. Das Startdatum und die Anzahl der Tage kann für
+				den Export ausgewählt werden.
+			</para>
+			<para>Die zu exportierenden Daten können in einer Vorschau (Tabelle)
+				dargestellt werden. Einzelne Einträge können aus der Tabelle in die
+				Zwischenablage kopert werden.
 			</para>
 		</sect2>
 	</sect1>
