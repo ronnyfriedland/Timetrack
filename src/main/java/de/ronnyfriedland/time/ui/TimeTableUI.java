@@ -95,24 +95,23 @@ public class TimeTableUI {
 						if (2 == e.getClickCount()) {
 							new NewEntryFrame().setVisible(true);
 						}
-					} else {
-						Collection<Entry> todayEntries = EntityController.getInstance().findAll(Entry.class,
-						        new SortParam("date", SortOrder.DESC), 10);
+					}
+					Collection<Entry> todayEntries = EntityController.getInstance().findAll(Entry.class,
+					        new SortParam("date", SortOrder.DESC), 10);
 
-						todayItems.removeAll();
+					todayItems.removeAll();
 
-						for (final Entry entry : todayEntries) {
-							MenuItem menuItem = new MenuItem(String.format("%1$s: %2$sh - %3$s (%4$s)", entry
-							        .getDateString(), entry.getDuration(), entry.getDescription(), entry.getProject()
-							        .getName()));
-							menuItem.addActionListener(new ActionListener() {
-								@Override
-								public void actionPerformed(ActionEvent e) {
-									new NewEntryFrame(entry).setVisible(true);
-								}
-							});
-							todayItems.add(menuItem);
-						}
+					for (final Entry entry : todayEntries) {
+						MenuItem menuItem = new MenuItem(String.format("%1$s: %2$sh - %3$s (%4$s)", entry
+						        .getDateString(), entry.getDuration(), entry.getDescription(), entry.getProject()
+						        .getName()));
+						menuItem.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								new NewEntryFrame(entry).setVisible(true);
+							}
+						});
+						todayItems.add(menuItem);
 					}
 				}
 
