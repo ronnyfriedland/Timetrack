@@ -99,7 +99,7 @@ public class ExportFrame extends AbstractFrame {
 		table.setModel(tableModel);
 		table.setDefaultRenderer(Object.class, tableCellRenderer);
 		table.addKeyListener(new TimeTableKeyAdapter());
-		table.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		table.setTransferHandler(null); // remove default TransferHandler
 	}
 	private final JScrollPane scrollPane = new JScrollPane(table);
