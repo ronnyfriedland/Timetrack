@@ -207,12 +207,12 @@ public class ExportFrame extends AbstractFrame {
 
 		description.setBounds(320, 10, 170, 240);
 		description.setEditable(false);
+		description.setSelectionColor(Color.WHITE);
 		description.setLineWrap(true);
 		description.setWrapStyleWord(true);
-		description.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 		description.setText(Messages.EXPORT_DESCRIPTION.getText());
 
-		formatOk(dateChooser, days);
+		formatOk(dateChooser, days, description);
 
 		getContentPane().add(labelDate);
 		getContentPane().add(dateChooser);
