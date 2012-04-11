@@ -14,7 +14,9 @@ import javax.persistence.TemporalType;
 import de.ronnyfriedland.time.entity.validation.NotBlank;
 
 /**
- * @author ronnyfriedland
+ * Abstrakte Basisklasse für alle Entitäten.
+ * 
+ * @author Ronny Friedland
  */
 @MappedSuperclass
 public abstract class AbstractEntity implements Serializable {
@@ -33,7 +35,7 @@ public abstract class AbstractEntity implements Serializable {
         this(UUID.randomUUID().toString());
     }
 
-    public AbstractEntity(String uuid) {
+    public AbstractEntity(final String uuid) {
         this.uuid = uuid;
         lastModifiedDate = Calendar.getInstance().getTime();
     }

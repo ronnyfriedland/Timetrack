@@ -1,7 +1,9 @@
 package de.ronnyfriedland.time.sort;
 
 /**
- * @author ronnyfriedland
+ * Parameter für die Sortierung.
+ * 
+ * @author Ronny Friedland
  */
 public class SortParam {
 
@@ -21,6 +23,9 @@ public class SortParam {
         return order;
     }
 
+    /**
+     * Definiert Absteigende oder Aufsteigende Sortierung.
+     */
     public enum SortOrder {
         /** aufsteigend sortieren */
         ASC,

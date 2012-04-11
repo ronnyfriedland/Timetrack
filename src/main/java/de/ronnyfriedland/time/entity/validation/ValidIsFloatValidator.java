@@ -11,9 +11,9 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 /**
+ * Überprüft Zeichenketten ob diese nicht null, nicht leer und mehr als nur Leerzeichen enthalten (NotBlank).
  * 
- * Überprüft Zeichenketten ob diese nicht null, nicht leer und mehr als nur
- * Leerzeichen enthalten (NotBlank).
+ * @author Ronny Friedland
  */
 public class ValidIsFloatValidator implements ConstraintValidator<IsFloat, String> {
 
@@ -32,8 +32,7 @@ public class ValidIsFloatValidator implements ConstraintValidator<IsFloat, Strin
      * 
      * {@inheritDoc}
      * 
-     * @see javax.validation.ConstraintValidator#isValid(java.lang.Object,
-     *      javax.validation.ConstraintValidatorContext)
+     * @see javax.validation.ConstraintValidator#isValid(java.lang.Object, javax.validation.ConstraintValidatorContext)
      */
     @Override
     public boolean isValid(final String value, final ConstraintValidatorContext context) {

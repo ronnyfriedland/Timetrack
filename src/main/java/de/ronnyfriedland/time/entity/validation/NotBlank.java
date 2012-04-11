@@ -16,8 +16,9 @@ import javax.validation.ReportAsSingleViolation;
 import org.apache.commons.lang.StringUtils;
 
 /**
- * 
  * Validator der nur nicht leere Zeichenketten zulässt. Siehe {@link StringUtils}.isBlank().
+ * 
+ * @author Ronny Friedland
  */
 @Target({ METHOD, FIELD, ANNOTATION_TYPE })
 @Retention(RUNTIME)

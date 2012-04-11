@@ -9,39 +9,39 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 
 /**
- * @author ronnyfriedland
+ * @author Ronny Friedland
  */
 public abstract class AbstractFrame extends JFrame {
 
-	private static final long serialVersionUID = 7680216672898188405L;
+    private static final long serialVersionUID = 7680216672898188405L;
 
-	public AbstractFrame(String title, int width, int height) {
-		Dimension frameSize = new Dimension(width, height);
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		int top = (screenSize.height - frameSize.height) / 2;
-		int left = (screenSize.width - frameSize.width) / 2;
-		setSize(frameSize);
-		setLocation(left, top);
+    public AbstractFrame(final String title, final int width, final int height) {
+        Dimension frameSize = new Dimension(width, height);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int top = (screenSize.height - frameSize.height) / 2;
+        int left = (screenSize.width - frameSize.width) / 2;
+        setSize(frameSize);
+        setLocation(left, top);
 
-		setLayout(null);
-		setTitle(title);
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setResizable(false);
-		setAlwaysOnTop(true);
-	}
+        setLayout(null);
+        setTitle(title);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setResizable(false);
+        setAlwaysOnTop(true);
+    }
 
-	protected void formatError(JComponent component) {
-		component.setBorder(BorderFactory.createLineBorder(new Color(255, 127, 80)));
-	}
+    protected void formatError(final JComponent component) {
+        component.setBorder(BorderFactory.createLineBorder(Color.RED));
+    }
 
-	protected void formatOk(JComponent... components) {
-		for (JComponent component : components) {
-			component.setBorder(BorderFactory.createLineBorder(new Color(150, 150, 150)));
-		}
-	}
+    protected void formatOk(final JComponent... components) {
+        for (JComponent component : components) {
+            component.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        }
+    }
 
-	/**
-	 * Frame-spezifische Konfiguration.
-	 */
-	protected abstract void createUI();
+    /**
+     * Frame-spezifische Konfiguration.
+     */
+    protected abstract void createUI();
 }

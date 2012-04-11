@@ -5,11 +5,13 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
 /**
- * @author ronnyfriedland
+ * Zentrale Konfigurationsklasse.
+ * 
+ * @author Ronny Friedland
  */
-public class Configurator {
+public final class Configurator {
 
-    public static CompositeConfiguration CONFIG = new CompositeConfiguration();
+    public final static CompositeConfiguration CONFIG = new CompositeConfiguration();
     static {
         try {
             CONFIG.addConfiguration(new PropertiesConfiguration(Thread.currentThread().getContextClassLoader()
@@ -19,6 +21,9 @@ public class Configurator {
         }
     }
 
+    /**
+     * Konfigurationsparameter
+     */
     public enum ConfiguratorKeys {
         /** Pfad zur Export-Datei */
         PATH("timetable.path"),
@@ -33,8 +38,17 @@ public class Configurator {
             this.key = aKey;
         }
 
+        /**
+         * Liefert den Schlüssel des Konfigurationsparameters
+         * 
+         * @return Konfigurationsparameter
+         */
         public String getKey() {
             return key;
         }
+    }
+
+    private Configurator() {
+        // empty
     }
 }

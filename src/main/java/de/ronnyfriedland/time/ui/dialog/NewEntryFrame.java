@@ -41,292 +41,292 @@ import de.ronnyfriedland.time.sort.SortParam.SortOrder;
 import de.ronnyfriedland.time.ui.adapter.TimeTableKeyAdapter;
 
 /**
- * @author ronnyfriedland
+ * @author Ronny Friedland
  */
 public class NewEntryFrame extends AbstractFrame {
-	private static final Logger LOG = Logger.getLogger(NewEntryFrame.class.getName());
+    private static final Logger LOG = Logger.getLogger(NewEntryFrame.class.getName());
 
-	private static final long serialVersionUID = -8738367859388084898L;
+    private static final long serialVersionUID = -8738367859388084898L;
 
-	private final JLabel labelDate = new JLabel(Messages.DATE.getText());
-	private final JTextField date = new JTextField();
-	private final JLabel labelDescription = new JLabel(Messages.DESCRIPTION.getText());
-	private final JTextField description = new JTextField();
-	private final JLabel labelDuration = new JLabel(Messages.DURATION.getText());
-	private final JTextField duration = new JTextField();
-	private final JScrollPane scrollPaneProjects = new JScrollPane(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
-	        ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-	private final JList projects = new JList();
-	private final JButton refresh = new JButton(Messages.REFRESH_PROJECT.getText());
-	private final JButton save = new JButton(Messages.SAVE.getText());
-	private final JButton delete = new JButton(Messages.DELETE.getText());
+    private final JLabel labelDate = new JLabel(Messages.DATE.getText());
+    private final JTextField date = new JTextField();
+    private final JLabel labelDescription = new JLabel(Messages.DESCRIPTION.getText());
+    private final JTextField description = new JTextField();
+    private final JLabel labelDuration = new JLabel(Messages.DURATION.getText());
+    private final JTextField duration = new JTextField();
+    private final JScrollPane scrollPaneProjects = new JScrollPane(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+    private final JList projects = new JList();
+    private final JButton refresh = new JButton(Messages.REFRESH_PROJECT.getText());
+    private final JButton save = new JButton(Messages.SAVE.getText());
+    private final JButton delete = new JButton(Messages.DELETE.getText());
 
-	private String uuid = null;
+    private String uuid = null;
 
-	public NewEntryFrame() {
-		super(Messages.CREATE_NEW_ENTRY.getText(), 320, 275);
-		createUI();
-	}
+    public NewEntryFrame() {
+        super(Messages.CREATE_NEW_ENTRY.getText(), 320, 275);
+        createUI();
+    }
 
-	public NewEntryFrame(final Entry entry) {
-		this();
-		uuid = entry.getUuid();
+    public NewEntryFrame(final Entry entry) {
+        this();
+        uuid = entry.getUuid();
 
-		date.setText(entry.getDateString());
-		description.setText(entry.getDescription());
-		duration.setText(entry.getDuration());
-		ListModel model = projects.getModel();
-		for (int i = 0; i < model.getSize(); i++) {
-			String item = (String) model.getElementAt(i);
-			if (entry.getProject().getName().equals(item)) {
-				projects.setSelectedIndex(i);
-			}
-		}
+        date.setText(entry.getDateString());
+        description.setText(entry.getDescription());
+        duration.setText(entry.getDuration());
+        ListModel model = projects.getModel();
+        for (int i = 0; i < model.getSize(); i++) {
+            String item = (String) model.getElementAt(i);
+            if (entry.getProject().getName().equals(item)) {
+                projects.setSelectedIndex(i);
+            }
+        }
 
-		delete.setEnabled(true);
-	}
+        delete.setEnabled(true);
+    }
 
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see de.ronnyfriedland.time.ui.dialog.AbstractFrame#createUI()
-	 */
-	@Override
-	protected void createUI() {
-		// configure
-		labelDate.setBounds(10, 10, 100, 24);
+    /**
+     * (non-Javadoc)
+     * 
+     * @see de.ronnyfriedland.time.ui.dialog.AbstractFrame#createUI()
+     */
+    @Override
+    protected void createUI() {
+        // configure
+        labelDate.setBounds(10, 10, 100, 24);
 
-		date.setName("date");
-		date.setBounds(110, 10, 200, 24);
-		date.setText(new SimpleDateFormat(Entry.DATESTRINGFORMAT).format(new Date()));
-		date.addKeyListener(new TimeTableKeyAdapter());
-		date.setInputVerifier(new InputVerifier() {
-			/**
-			 * (non-Jsdoc)
-			 * 
-			 * @see javax.swing.InputVerifier#verify(javax.swing.JComponent)
-			 */
-			@Override
-			public boolean verify(final JComponent arg0) {
-				ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-				Validator validator = factory.getValidator();
-				Set<ConstraintViolation<Entry>> violations = validator.validateValue(Entry.class, "dateString",
-				        ((JTextField) arg0).getText());
-				boolean valid = violations.isEmpty();
-				if (valid) {
-					formatOk(arg0);
-				} else {
-					formatError(arg0);
-				}
-				return valid;
-			}
-		});
+        date.setName("date");
+        date.setBounds(110, 10, 200, 24);
+        date.setText(new SimpleDateFormat(Entry.DATESTRINGFORMAT).format(new Date()));
+        date.addKeyListener(new TimeTableKeyAdapter());
+        date.setInputVerifier(new InputVerifier() {
+            /**
+             * (non-Jsdoc)
+             * 
+             * @see javax.swing.InputVerifier#verify(javax.swing.JComponent)
+             */
+            @Override
+            public boolean verify(final JComponent arg0) {
+                ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+                Validator validator = factory.getValidator();
+                Set<ConstraintViolation<Entry>> violations = validator.validateValue(Entry.class, "dateString",
+                        ((JTextField) arg0).getText());
+                boolean valid = violations.isEmpty();
+                if (valid) {
+                    formatOk(arg0);
+                } else {
+                    formatError(arg0);
+                }
+                return valid;
+            }
+        });
 
-		labelDescription.setBounds(10, 35, 100, 24);
+        labelDescription.setBounds(10, 35, 100, 24);
 
-		description.setName("description");
-		description.setBounds(110, 35, 200, 24);
-		description.addKeyListener(new TimeTableKeyAdapter());
-		description.setInputVerifier(new InputVerifier() {
-			/**
-			 * (non-Javadoc)
-			 * 
-			 * @see javax.swing.InputVerifier#verify(javax.swing.JComponent)
-			 */
-			@Override
-			public boolean verify(final JComponent arg0) {
-				ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-				Validator validator = factory.getValidator();
-				Set<ConstraintViolation<Entry>> violations = validator.validateValue(Entry.class, "description",
-				        ((JTextField) arg0).getText());
-				boolean valid = violations.isEmpty();
-				if (valid) {
-					formatOk(arg0);
-				} else {
-					formatError(arg0);
-				}
-				return valid;
-			}
-		});
+        description.setName("description");
+        description.setBounds(110, 35, 200, 24);
+        description.addKeyListener(new TimeTableKeyAdapter());
+        description.setInputVerifier(new InputVerifier() {
+            /**
+             * (non-Javadoc)
+             * 
+             * @see javax.swing.InputVerifier#verify(javax.swing.JComponent)
+             */
+            @Override
+            public boolean verify(final JComponent arg0) {
+                ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+                Validator validator = factory.getValidator();
+                Set<ConstraintViolation<Entry>> violations = validator.validateValue(Entry.class, "description",
+                        ((JTextField) arg0).getText());
+                boolean valid = violations.isEmpty();
+                if (valid) {
+                    formatOk(arg0);
+                } else {
+                    formatError(arg0);
+                }
+                return valid;
+            }
+        });
 
-		labelDuration.setBounds(10, 60, 100, 24);
+        labelDuration.setBounds(10, 60, 100, 24);
 
-		duration.setName("duration");
-		duration.setBounds(110, 60, 200, 24);
-		duration.addKeyListener(new TimeTableKeyAdapter());
-		duration.setInputVerifier(new InputVerifier() {
-			/**
-			 * (non-Javadoc)
-			 * 
-			 * @see javax.swing.InputVerifier#verify(javax.swing.JComponent)
-			 */
-			@Override
-			public boolean verify(final JComponent arg0) {
-				ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-				Validator validator = factory.getValidator();
-				Set<ConstraintViolation<Entry>> violations = validator.validateValue(Entry.class, "duration",
-				        ((JTextField) arg0).getText());
-				boolean valid = violations.isEmpty();
-				if (valid) {
-					formatOk(arg0);
-				} else {
-					formatError(arg0);
-				}
-				return valid;
-			}
-		});
+        duration.setName("duration");
+        duration.setBounds(110, 60, 200, 24);
+        duration.addKeyListener(new TimeTableKeyAdapter());
+        duration.setInputVerifier(new InputVerifier() {
+            /**
+             * (non-Javadoc)
+             * 
+             * @see javax.swing.InputVerifier#verify(javax.swing.JComponent)
+             */
+            @Override
+            public boolean verify(final JComponent arg0) {
+                ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+                Validator validator = factory.getValidator();
+                Set<ConstraintViolation<Entry>> violations = validator.validateValue(Entry.class, "duration",
+                        ((JTextField) arg0).getText());
+                boolean valid = violations.isEmpty();
+                if (valid) {
+                    formatOk(arg0);
+                } else {
+                    formatError(arg0);
+                }
+                return valid;
+            }
+        });
 
-		Collection<Project> projectList = EntityController.getInstance().findAll(Project.class,
-		        new SortParam(Project.PARAM_NAME, SortOrder.ASC));
-		String[] projectNameList = new String[projectList.size()];
-		int i = 0;
-		for (Project project : projectList) {
-			projectNameList[i] = project.getName();
-			i++;
-		}
+        Collection<Project> projectList = EntityController.getInstance().findAll(Project.class,
+                new SortParam(Project.PARAM_NAME, SortOrder.ASC));
+        String[] projectNameList = new String[projectList.size()];
+        int i = 0;
+        for (Project project : projectList) {
+            projectNameList[i] = project.getName();
+            i++;
+        }
 
-		projects.setName("projects");
-		projects.setListData(projectNameList);
-		projects.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
-		projects.addKeyListener(new TimeTableKeyAdapter());
-		projects.setInputVerifier(new InputVerifier() {
-			/**
-			 * (non-Javadoc)
-			 * 
-			 * @see javax.swing.InputVerifier#verify(javax.swing.JComponent)
-			 */
-			@Override
-			public boolean verify(final JComponent arg0) {
-				ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-				Validator validator = factory.getValidator();
-				Set<ConstraintViolation<Entry>> violations = validator.validateValue(Entry.class, "project",
-				        ((JList) arg0).getSelectedValue());
-				boolean valid = violations.isEmpty();
-				if (valid) {
-					formatOk(arg0);
-				} else {
-					formatError(arg0);
-				}
-				return valid;
-			}
-		});
-		projects.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 2 && null != projects.getSelectedValue()) {
-					Map<String, Object> parameters = new HashMap<String, Object>();
-					parameters.put(Project.PARAM_NAME, projects.getSelectedValue());
-					Project project = EntityController.getInstance().findSingleResultByParameter(Project.class,
-					        Project.QUERY_FINDBYNAME, parameters);
+        projects.setName("projects");
+        projects.setListData(projectNameList);
+        projects.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
+        projects.addKeyListener(new TimeTableKeyAdapter());
+        projects.setInputVerifier(new InputVerifier() {
+            /**
+             * (non-Javadoc)
+             * 
+             * @see javax.swing.InputVerifier#verify(javax.swing.JComponent)
+             */
+            @Override
+            public boolean verify(final JComponent arg0) {
+                ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+                Validator validator = factory.getValidator();
+                Set<ConstraintViolation<Entry>> violations = validator.validateValue(Entry.class, "project",
+                        ((JList) arg0).getSelectedValue());
+                boolean valid = violations.isEmpty();
+                if (valid) {
+                    formatOk(arg0);
+                } else {
+                    formatError(arg0);
+                }
+                return valid;
+            }
+        });
+        projects.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(final MouseEvent e) {
+                if ((e.getClickCount() == 2) && (null != projects.getSelectedValue())) {
+                    Map<String, Object> parameters = new HashMap<String, Object>();
+                    parameters.put(Project.PARAM_NAME, projects.getSelectedValue());
+                    Project project = EntityController.getInstance().findSingleResultByParameter(Project.class,
+                            Project.QUERY_FINDBYNAME, parameters);
 
-					new NewProjectFrame(project).setVisible(true);
-					if (StringUtils.isBlank(date.getText()) || StringUtils.isBlank(description.getText())
-					        || StringUtils.isBlank(duration.getText())) {
-						setVisible(false);
-					}
-				}
-			}
-		});
+                    new NewProjectFrame(project).setVisible(true);
+                    if (StringUtils.isBlank(date.getText()) || StringUtils.isBlank(description.getText())
+                            || StringUtils.isBlank(duration.getText())) {
+                        setVisible(false);
+                    }
+                }
+            }
+        });
 
-		scrollPaneProjects.setViewportView(projects);
-		scrollPaneProjects.setBounds(10, 85, 300, 100);
+        scrollPaneProjects.setViewportView(projects);
+        scrollPaneProjects.setBounds(10, 85, 300, 100);
 
-		refresh.setBounds(10, 190, 300, 24);
-		refresh.addKeyListener(new TimeTableKeyAdapter());
-		refresh.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				Collection<Project> projectList = EntityController.getInstance().findAll(Project.class,
-				        new SortParam(Project.PARAM_NAME, SortOrder.ASC));
-				String[] projectNameList = new String[projectList.size()];
-				int i = 0;
-				for (Project project : projectList) {
-					projectNameList[i] = project.getName();
-					i++;
-				}
-				projects.setListData(projectNameList);
-			}
-		});
+        refresh.setBounds(10, 190, 300, 24);
+        refresh.addKeyListener(new TimeTableKeyAdapter());
+        refresh.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent arg0) {
+                Collection<Project> projectList = EntityController.getInstance().findAll(Project.class,
+                        new SortParam(Project.PARAM_NAME, SortOrder.ASC));
+                String[] projectNameList = new String[projectList.size()];
+                int i = 0;
+                for (Project project : projectList) {
+                    projectNameList[i] = project.getName();
+                    i++;
+                }
+                projects.setListData(projectNameList);
+            }
+        });
 
-		save.setBounds(10, 220, 145, 24);
-		save.addKeyListener(new TimeTableKeyAdapter());
-		save.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(final ActionEvent e) {
-				Entry entry;
-				if (null == uuid) {
-					entry = new Entry();
-				} else {
-					entry = new Entry(uuid);
-				}
-				if (!StringUtils.isBlank(date.getText())) {
-					entry.setDateString(date.getText());
-				}
-				if (!StringUtils.isBlank(description.getText())) {
-					entry.setDescription(description.getText());
-				}
-				if (!StringUtils.isBlank(duration.getText())) {
-					entry.setDuration(duration.getText().replaceAll(",", ".").trim());
-				}
-				String projectName = (String) projects.getSelectedValue();
-				if (!StringUtils.isBlank(projectName)) {
-					Map<String, Object> parameters = new HashMap<String, Object>();
-					parameters.put(Project.PARAM_NAME, projectName);
-					Project selectedProject = EntityController.getInstance().findSingleResultByParameter(Project.class,
-					        Project.QUERY_FINDBYNAME, parameters);
-					entry.setProject(selectedProject);
-				}
-				try {
-					if (null != uuid) {
-						EntityController.getInstance().update(entry);
-					} else {
-						EntityController.getInstance().create(entry);
-					}
-					setVisible(false);
-				} catch (PersistenceException ex) {
-					LOG.log(Level.SEVERE, "Error saving new entry", ex);
-					formatOk(save);
-				} catch (ConstraintViolationException ex) {
-					LOG.log(Level.SEVERE, "Error saving new entry", ex);
-					formatError(save);
-				}
-			}
-		});
+        save.setBounds(10, 220, 145, 24);
+        save.addKeyListener(new TimeTableKeyAdapter());
+        save.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                Entry entry;
+                if (null == uuid) {
+                    entry = new Entry();
+                } else {
+                    entry = new Entry(uuid);
+                }
+                if (!StringUtils.isBlank(date.getText())) {
+                    entry.setDateString(date.getText());
+                }
+                if (!StringUtils.isBlank(description.getText())) {
+                    entry.setDescription(description.getText());
+                }
+                if (!StringUtils.isBlank(duration.getText())) {
+                    entry.setDuration(duration.getText().replaceAll(",", ".").trim());
+                }
+                String projectName = (String) projects.getSelectedValue();
+                if (!StringUtils.isBlank(projectName)) {
+                    Map<String, Object> parameters = new HashMap<String, Object>();
+                    parameters.put(Project.PARAM_NAME, projectName);
+                    Project selectedProject = EntityController.getInstance().findSingleResultByParameter(Project.class,
+                            Project.QUERY_FINDBYNAME, parameters);
+                    entry.setProject(selectedProject);
+                }
+                try {
+                    if (null != uuid) {
+                        EntityController.getInstance().update(entry);
+                    } else {
+                        EntityController.getInstance().create(entry);
+                    }
+                    setVisible(false);
+                } catch (PersistenceException ex) {
+                    LOG.log(Level.SEVERE, "Error saving new entry", ex);
+                    formatOk(save);
+                } catch (ConstraintViolationException ex) {
+                    LOG.log(Level.SEVERE, "Error saving new entry", ex);
+                    formatError(save);
+                }
+            }
+        });
 
-		delete.setBounds(165, 220, 145, 24);
-		delete.addKeyListener(new TimeTableKeyAdapter());
-		delete.setEnabled(false);
-		delete.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(final ActionEvent e) {
-				if (null != uuid) {
-					try {
-						Entry entry = EntityController.getInstance().findById(Entry.class, uuid);
-						EntityController.getInstance().delete(entry);
-						setVisible(false);
-					} catch (PersistenceException ex) {
-						LOG.log(Level.SEVERE, "Error removing project", ex);
-						formatError(delete);
-					}
-				}
-			}
-		});
+        delete.setBounds(165, 220, 145, 24);
+        delete.addKeyListener(new TimeTableKeyAdapter());
+        delete.setEnabled(false);
+        delete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                if (null != uuid) {
+                    try {
+                        Entry entry = EntityController.getInstance().findById(Entry.class, uuid);
+                        EntityController.getInstance().delete(entry);
+                        setVisible(false);
+                    } catch (PersistenceException ex) {
+                        LOG.log(Level.SEVERE, "Error removing project", ex);
+                        formatError(delete);
+                    }
+                }
+            }
+        });
 
-		formatOk(date, description, duration, projects);
+        formatOk(date, description, duration, projects);
 
-		getContentPane().add(labelDate);
-		getContentPane().add(date);
-		getContentPane().add(labelDescription);
-		getContentPane().add(description);
-		getContentPane().add(labelDuration);
-		getContentPane().add(duration);
-		getContentPane().add(scrollPaneProjects);
-		getContentPane().add(refresh);
-		getContentPane().add(save);
-		getContentPane().add(delete);
-	}
+        getContentPane().add(labelDate);
+        getContentPane().add(date);
+        getContentPane().add(labelDescription);
+        getContentPane().add(description);
+        getContentPane().add(labelDuration);
+        getContentPane().add(duration);
+        getContentPane().add(scrollPaneProjects);
+        getContentPane().add(refresh);
+        getContentPane().add(save);
+        getContentPane().add(delete);
+    }
 
-	public static void main(String[] args) {
-		new NewEntryFrame().setVisible(true);
-	}
+    public static void main(final String[] args) {
+        new NewEntryFrame().setVisible(true);
+    }
 }

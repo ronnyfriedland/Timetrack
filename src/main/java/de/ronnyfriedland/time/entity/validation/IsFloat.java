@@ -14,9 +14,9 @@ import javax.validation.Payload;
 import javax.validation.ReportAsSingleViolation;
 
 /**
+ * Validator der nur Zeichenketten zulässt, welche in eine Float Zahl konvertiert werden können.
  * 
- * Validator der nur Zeichenketten zulässt, welche in eine Float Zahl
- * konvertiert werden können.
+ * @author Ronny Friedland
  */
 @Target({ METHOD, FIELD, ANNOTATION_TYPE })
 @Retention(RUNTIME)

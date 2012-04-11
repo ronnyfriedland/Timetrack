@@ -15,7 +15,9 @@ import javax.persistence.UniqueConstraint;
 import de.ronnyfriedland.time.entity.validation.NotBlank;
 
 /**
- * @author ronnyfriedland
+ * Entität zum Speichern der Projekte.
+ * 
+ * @author Ronny Friedland
  */
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "NAME" }))
@@ -41,7 +43,7 @@ public class Project extends AbstractEntity {
         entries = new HashSet<Entry>();
     }
 
-    public Project(String uuid) {
+    public Project(final String uuid) {
         super(uuid);
         entries = new HashSet<Entry>();
     }

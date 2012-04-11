@@ -1,6 +1,3 @@
-/**
- * 
- */
 package de.ronnyfriedland.time.logic;
 
 import java.text.ParseException;
@@ -22,24 +19,29 @@ import org.quartz.impl.StdSchedulerFactory;
 import de.ronnyfriedland.time.logic.jobs.ShowMessagePopupJob;
 
 /**
- * @author ronnyfriedland
+ * Controller für die Scheduler-Steuerung.
+ * 
+ * @author Ronny Friedland
  */
-public class QuartzController {
+public final class QuartzController {
 
     private static final Logger LOG = Logger.getLogger(QuartzController.class.getName());
-
-    private static QuartzController INSTANCE;
-
-    private final Set<Class<? extends Job>> JOBS = new HashSet<Class<? extends Job>>();
-    {
+    private static final Set<Class<? extends Job>> JOBS = new HashSet<Class<? extends Job>>();
+    static {
         JOBS.add(ShowMessagePopupJob.class);
     }
+    private static QuartzController instance;
 
+    /**
+     * Liefert eine Instanz von {@link EntityController}.
+     * 
+     * @return the {@link EntityController}
+     */
     public static QuartzController getInstance() {
-        if (null == INSTANCE) {
-            INSTANCE = new QuartzController();
+        if (null == instance) {
+            instance = new QuartzController();
         }
-        return INSTANCE;
+        return instance;
     }
 
     private QuartzController() {
@@ -47,7 +49,14 @@ public class QuartzController {
 
     private Scheduler sched;
 
-    public void initScheduler(String cronExpression) throws SchedulerException, ParseException {
+    /**
+     * Initialisiert den Scheduler.
+     * 
+     * @param cronExpression Cron-Ausdruck für Trigger
+     * @throws SchedulerException Fehler beim Initialisieren des Schedulers
+     * @throws ParseException Fehler beim Parsen des Cron-Ausdrucks
+     */
+    public void initScheduler(final String cronExpression) throws SchedulerException, ParseException {
         sched = StdSchedulerFactory.getDefaultScheduler();
         for (Class<? extends Job> clazz : JOBS) {
             try {
@@ -70,6 +79,11 @@ public class QuartzController {
         }
     }
 
+    /**
+     * Beendet den Scheduler.
+     * 
+     * @throws SchedulerException Fehler während des Shutdown
+     */
     public void shutdownScheduler() throws SchedulerException {
         sched.shutdown();
     }

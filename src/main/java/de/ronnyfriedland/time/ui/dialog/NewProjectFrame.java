@@ -26,7 +26,7 @@ import de.ronnyfriedland.time.logic.EntityController;
 import de.ronnyfriedland.time.ui.adapter.TimeTableKeyAdapter;
 
 /**
- * @author ronnyfriedland
+ * @author Ronny Friedland
  */
 public class NewProjectFrame extends AbstractFrame {
     private static final Logger LOG = Logger.getLogger(NewProjectFrame.class.getName());
@@ -161,7 +161,7 @@ public class NewProjectFrame extends AbstractFrame {
         getContentPane().add(delete);
     }
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         new NewProjectFrame().setVisible(true);
     }
 }

@@ -21,9 +21,11 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import de.ronnyfriedland.time.entity.Entry;
 
 /**
- * @author ronnyfriedland
+ * Controller für den Datenexport in eine XSLS-Arbeitsmappe.
+ * 
+ * @author Ronny Friedland
  */
-public class ExportController {
+public final class ExportController {
 
     public static final String TAB_OVERVIEW = "Überblick";
 
@@ -126,12 +128,7 @@ public class ExportController {
         fileOut.close();
     }
 
-    /**
-     * @param wb
-     * @param cell
-     * @param cellValue
-     */
-    private void formatHeaderCell(Workbook wb, Cell cell, String cellValue) {
+    private void formatHeaderCell(final Workbook wb, final Cell cell, final String cellValue) {
         CellStyle style = wb.createCellStyle();
         style.setFillBackgroundColor(IndexedColors.GREY_50_PERCENT.getIndex());
         cell.setCellValue(cellValue);

@@ -13,23 +13,30 @@ import javax.persistence.TypedQuery;
 import de.ronnyfriedland.time.sort.SortParam;
 
 /**
- * @author ronnyfriedland
+ * Controller für den Zugriff auf die Persistenz-Schicht.
+ * 
+ * @author Ronny Friedland
  */
-public class EntityController {
+public final class EntityController {
 
-    private static EntityController INSTANCE;
+    private static EntityController instance;
 
     private final EntityManagerFactory emf;
     private final EntityManager em;
 
+    /**
+     * Liefert eine Instanz von {@link EntityController}.
+     * 
+     * @return the {@link EntityController}
+     */
     public static EntityController getInstance() {
-        if (null == INSTANCE) {
-            INSTANCE = new EntityController();
+        if (null == instance) {
+            instance = new EntityController();
         }
-        return INSTANCE;
+        return instance;
     }
 
-    public EntityController() {
+    private EntityController() {
         emf = Persistence.createEntityManagerFactory("timetable");
         em = emf.createEntityManager();
     }
@@ -37,10 +44,8 @@ public class EntityController {
     /**
      * Ermittelt einen Datensatz anhand der übergebenen UUID.
      * 
-     * @param clazz
-     *            Typ
-     * @param uuid
-     *            eindeutige ID des Datensatz
+     * @param clazz Typ
+     * @param uuid eindeutige ID des Datensatz
      * @return Datensatz
      */
     public <T> T findById(final Class<T> clazz, final String uuid) {

@@ -22,7 +22,9 @@ import de.ronnyfriedland.time.entity.validation.IsFloat;
 import de.ronnyfriedland.time.entity.validation.NotBlank;
 
 /**
- * @author ronnyfriedland
+ * Entität zum Speichern der Einträge.
+ * 
+ * @author Ronny Friedland
  */
 @Entity
 @NamedQueries({ @NamedQuery(name = Entry.QUERY_FIND_FROM_TO, query = "SELECT e FROM Entry e WHERE e.date >= :from AND e.date < :to ORDER BY e.date") })
@@ -58,7 +60,7 @@ public class Entry extends AbstractEntity {
         super();
     }
 
-    public Entry(String uuid) {
+    public Entry(final String uuid) {
         super(uuid);
     }
 
@@ -90,7 +92,7 @@ public class Entry extends AbstractEntity {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(final Date date) {
         this.date = date;
         dateString = new SimpleDateFormat(DATESTRINGFORMAT).format(date);
     }
@@ -99,7 +101,7 @@ public class Entry extends AbstractEntity {
         return dateString;
     }
 
-    public void setDateString(String dateString) {
+    public void setDateString(final String dateString) {
         this.dateString = dateString;
         try {
             date = new SimpleDateFormat(DATESTRINGFORMAT).parse(dateString);

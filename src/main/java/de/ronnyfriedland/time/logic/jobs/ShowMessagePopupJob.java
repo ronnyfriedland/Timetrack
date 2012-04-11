@@ -16,7 +16,9 @@ import de.ronnyfriedland.time.entity.Entry;
 import de.ronnyfriedland.time.logic.EntityController;
 
 /**
- * @author ronnyfriedland
+ * Scheduler-Job für die Anzeige eines Hinweistextes.
+ * 
+ * @author Ronny Friedland
  */
 @DisallowConcurrentExecution
 public class ShowMessagePopupJob implements Job {
@@ -32,7 +34,7 @@ public class ShowMessagePopupJob implements Job {
      * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
      */
     @Override
-    public void execute(JobExecutionContext context) throws JobExecutionException {
+    public void execute(final JobExecutionContext context) throws JobExecutionException {
         Date previousFireTime = context.getPreviousFireTime();
         Date now = new Date();
         Entry lastEntry = EntityController.getInstance().findLast(Entry.class);
@@ -43,7 +45,7 @@ public class ShowMessagePopupJob implements Job {
             diff = now.getTime() - previousFireTime.getTime();
         }
         if (null != lastEntry) {
-            if (diff > now.getTime() - lastEntry.getLastModifiedDate().getTime()) {
+            if (diff > (now.getTime() - lastEntry.getLastModifiedDate().getTime())) {
                 showPopup = false;
             }
         }
@@ -58,10 +60,9 @@ public class ShowMessagePopupJob implements Job {
     /**
      * Darstellung des Popups
      * 
-     * @param context
-     *            der {@link JobExecutionContext}
+     * @param context der {@link JobExecutionContext}
      */
-    protected void showPopup(JobExecutionContext context) {
+    protected void showPopup(final JobExecutionContext context) {
         JOptionPane.showMessageDialog(null, Messages.MESSAGE_POPUP.getText());
     }
 }
