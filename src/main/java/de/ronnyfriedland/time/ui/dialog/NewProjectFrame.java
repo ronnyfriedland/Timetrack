@@ -33,17 +33,17 @@ public class NewProjectFrame extends AbstractFrame {
 
     private static final long serialVersionUID = -8738367859388084898L;
 
-    private final JLabel labelName = new JLabel(Messages.PROJECT_NAME.getText());
+    private final JLabel labelName = new JLabel(Messages.PROJECT_NAME.getMessage());
     private final JTextField name = new JTextField();
-    private final JLabel labelDescription = new JLabel(Messages.DESCRIPTION.getText());
+    private final JLabel labelDescription = new JLabel(Messages.DESCRIPTION.getMessage());
     private final JTextField description = new JTextField();
-    private final JButton save = new JButton(Messages.SAVE.getText());
-    private final JButton delete = new JButton(Messages.DELETE.getText());
+    private final JButton save = new JButton(Messages.SAVE.getMessage());
+    private final JButton delete = new JButton(Messages.DELETE.getMessage());
 
     private String uuid = null;
 
     public NewProjectFrame() {
-        super(Messages.CREATE_NEW_PROJECT.getText(), 320, 130);
+        super(Messages.CREATE_NEW_PROJECT.getMessage(), 320, 130);
         createUI();
     }
 

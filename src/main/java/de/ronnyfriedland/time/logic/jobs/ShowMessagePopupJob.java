@@ -63,6 +63,6 @@ public class ShowMessagePopupJob implements Job {
      * @param context der {@link JobExecutionContext}
      */
     protected void showPopup(final JobExecutionContext context) {
-        JOptionPane.showMessageDialog(null, Messages.MESSAGE_POPUP.getText());
+        JOptionPane.showMessageDialog(null, Messages.MESSAGE_POPUP.getMessage());
     }
 }

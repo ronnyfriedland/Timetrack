@@ -76,11 +76,11 @@ public final class TimeTableUI {
             final SystemTray tray = SystemTray.getSystemTray();
 
             // Create a popup menu components
-            final MenuItem newProject = new MenuItem(Messages.NEW_PROJECT.getText());
-            final MenuItem newItem = new MenuItem(Messages.NEW_ENTRY.getText());
-            final Menu todayItems = new Menu(Messages.LAST_ENTRIES.getText());
-            final MenuItem exportItem = new MenuItem(Messages.EXPORT_DATA.getText());
-            final MenuItem exitItem = new MenuItem(Messages.EXIT.getText());
+            final MenuItem newProject = new MenuItem(Messages.NEW_PROJECT.getMessage());
+            final MenuItem newItem = new MenuItem(Messages.NEW_ENTRY.getMessage());
+            final Menu todayItems = new Menu(Messages.LAST_ENTRIES.getMessage());
+            final MenuItem exportItem = new MenuItem(Messages.EXPORT_DATA.getMessage());
+            final MenuItem exitItem = new MenuItem(Messages.EXIT.getMessage());
 
             // Add components to popup menu
             popup.add(newProject);
@@ -92,7 +92,7 @@ public final class TimeTableUI {
             popup.add(exitItem);
 
             trayIcon.setPopupMenu(popup);
-            trayIcon.setToolTip(Messages.TITLE.getText());
+            trayIcon.setToolTip(Messages.TITLE.getMessage());
 
             trayIcon.addMouseListener(new MouseListener() {
 

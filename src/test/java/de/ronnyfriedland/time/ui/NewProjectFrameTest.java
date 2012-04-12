@@ -20,40 +20,40 @@ import de.ronnyfriedland.time.ui.dialog.NewProjectFrame;
 
 public class NewProjectFrameTest extends UISpecTestCase {
 
-    @Override
-    @Before
-    protected void setUp() throws Exception {
-        super.setUp();
-        setAdapter(new MainClassAdapter(NewProjectFrame.class, new String[0]));
-    }
+	@Override
+	@Before
+	protected void setUp() throws Exception {
+		super.setUp();
+		setAdapter(new MainClassAdapter(NewProjectFrame.class, new String[0]));
+	}
 
-    @Override
-    @After
-    protected void tearDown() throws Exception {
-        super.tearDown();
-        Collection<Project> projects = EntityController.getInstance().findAll(Project.class);
-        for (Project project : projects) {
-            EntityController.getInstance().deleteDetached(project);
-        }
-    }
+	@Override
+	@After
+	protected void tearDown() throws Exception {
+		super.tearDown();
+		Collection<Project> projects = EntityController.getInstance().findAll(Project.class);
+		for (Project project : projects) {
+			EntityController.getInstance().deleteDetached(project);
+		}
+	}
 
-    @Test
-    public void testValidation() throws Exception {
-        Window window = getMainWindow();
-        TextBox nameField = window.getInputTextBox("name");
-        TextBox descriptionField = window.getInputTextBox("description");
-        Button saveButton = window.getButton(Messages.SAVE.getText());
+	@Test
+	public void testValidation() throws Exception {
+		Window window = getMainWindow();
+		TextBox nameField = window.getInputTextBox("name");
+		TextBox descriptionField = window.getInputTextBox("description");
+		Button saveButton = window.getButton(Messages.SAVE.getMessage());
 
-        Assert.assertNotNull(descriptionField);
-        Assert.assertNotNull(saveButton);
+		Assert.assertNotNull(descriptionField);
+		Assert.assertNotNull(saveButton);
 
-        saveButton.triggerClick().run();
-        Assert.assertTrue(EntityController.getInstance().findAll(Project.class).isEmpty());
+		saveButton.triggerClick().run();
+		Assert.assertTrue(EntityController.getInstance().findAll(Project.class).isEmpty());
 
-        nameField.setText("testproject");
-        descriptionField.setText("test");
+		nameField.setText("testproject");
+		descriptionField.setText("test");
 
-        saveButton.triggerClick().run();
-        Assert.assertFalse(EntityController.getInstance().findAll(Project.class).isEmpty());
-    }
+		saveButton.triggerClick().run();
+		Assert.assertFalse(EntityController.getInstance().findAll(Project.class).isEmpty());
+	}
 }

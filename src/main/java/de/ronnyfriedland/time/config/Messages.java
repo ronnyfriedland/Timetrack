@@ -7,67 +7,67 @@ package de.ronnyfriedland.time.config;
  */
 public enum Messages {
     /** Titel der Anwendung */
-    TITLE("Timetable"),
+    TITLE("title"),
     /** Startdatum */
-    START_DATE("Startdatum"),
+    START_DATE("startdate"),
     /** Zeitspanne */
-    PERIOD_OF_TIME("Zeitspanne"),
+    PERIOD_OF_TIME("periodoftime"),
+    /** Datum */
+    DATE("date"),
     /** Projektname */
-    DATE("Datum"),
+    DURATION("duration"),
     /** Projektname */
-    DURATION("Dauer (in h)"),
-    /** Projektname */
-    PROJECT_NAME("Projektname"),
+    PROJECT_NAME("projectname"),
     /** Beschreibung */
-    DESCRIPTION("Beschreibung"),
+    DESCRIPTION("description"),
     /** neues Projekt */
-    NEW_PROJECT("Neues Projekt"),
+    NEW_PROJECT("newproject"),
     /** neuer Eintrag */
-    NEW_ENTRY("Neuer Eintrag"),
+    NEW_ENTRY("newentry"),
     /** neuer Eintrag */
-    NEW_EXPORT("Neuer Export"),
+    NEW_EXPORT("newexport"),
     /** heute erstelle Einträge */
-    LAST_ENTRIES("Zuletzt erstellt"),
+    LAST_ENTRIES("lastentries"),
     /** Daten exportieren */
-    EXPORT_DATA("Daten exportieren"),
+    EXPORT_DATA("exportdata"),
     /** Beenden */
-    EXIT("Beenden"),
+    EXIT("exit"),
     /** Neuen Eintrag erstellen */
-    CREATE_NEW_ENTRY("Neuen Eintrag anlegen"),
+    CREATE_NEW_ENTRY("createnewentry"),
     /** Neuen Eintrag erstellen */
-    CREATE_NEW_PROJECT("Neues Projekt anlegen"),
+    CREATE_NEW_PROJECT("createnewproject"),
     /** Exportieren */
-    EXPORT("Exportieren"),
+    EXPORT("export"),
     /** Projektliste aktualisieren */
-    REFRESH_PROJECT("Projektliste aktualisieren"),
+    REFRESH_PROJECT("refreshprojects"),
     /** Vorschau */
-    PREVIEW("Vorschau"),
+    PREVIEW("preview"),
     /** Speichern */
-    SAVE("Speichern"),
+    SAVE("save"),
     /** Löschen */
-    DELETE("Löschen"),
+    DELETE("delete"),
     /** Text für Kontierungserinnerung (Popup) */
-    MESSAGE_POPUP("Bitte an das Kontieren denken."),
+    MESSAGE_POPUP("messagepopup"),
     /** Text Erfolgsmeldung Export (Popup) */
-    EXPORT_SUCCESSFUL("Der Export wurde erfolgreich durchgeführt.\nOrdner: %s"),
+    EXPORT_SUCCESSFUL("exportsuccessful"),
     /** Hinweistext für Export */
-    EXPORT_DESCRIPTION("Über den Kalender wird der Startzeitpunkt ausgewählt.\nDie Zeitspanne "
-            + "(in Tagen) kann über den Regler eingestellt werden. Das Maximum beträgt 365 Tage. Der Button "
-            + PREVIEW.getText() + " aktualisiert die Vorschaudaten in der Tabelle. " + "\n\nErst durch den Button "
-            + EXPORT.getText() + " werden die Daten in eine Arbeitsmappe exportiert.");
+    EXPORT_DESCRIPTION("exportdescription", PREVIEW.getMessage(), EXPORT.getMessage());
 
-    /**
-     * Liefert den Textbaustein.
-     * 
-     * @return Textbaustein
-     */
-    public String getText() {
-        return text;
+    private String message;
+    private String[] properties;
+
+    private Messages(final String aMessage, final String... aProperties) {
+        this.message = aMessage;
+        this.properties = aProperties;
     }
 
-    private String text;
-
-    private Messages(final String aText) {
-        this.text = aText;
+    /**
+     * Liefert die Fehlermeldung.
+     * 
+     * @param customProperties
+     * @return Fehlermeldung
+     */
+    public String getMessage(final String... customProperties) {
+        return MessageProperties.getString(message, 0 == customProperties.length ? properties : customProperties);
     }
 }

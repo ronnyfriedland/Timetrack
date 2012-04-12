@@ -52,16 +52,16 @@ public class ExportFrame extends AbstractFrame {
     private static final String LABEL_SELECTED_DAYS_VALUE = "%1$d Tag(e)";
     private static final String LABEL_SELECTED_EXPORT_DATA = "%1$.2f Stunden für %2$d Tage ausgewählt.";
 
-    private static final String[] TABLE_HEADERS = new String[] { Messages.DATE.getText(),
-            Messages.DESCRIPTION.getText(), Messages.PROJECT_NAME.getText(), Messages.DURATION.getText() };
+    private static final String[] TABLE_HEADERS = new String[] { Messages.DATE.getMessage(),
+            Messages.DESCRIPTION.getMessage(), Messages.PROJECT_NAME.getMessage(), Messages.DURATION.getMessage() };
 
-    private final JLabel labelDate = new JLabel(Messages.START_DATE.getText());
+    private final JLabel labelDate = new JLabel(Messages.START_DATE.getMessage());
     private final DateChooserPanel dateChooser = new DateChooserPanel();
-    private final JLabel labelDays = new JLabel(Messages.PERIOD_OF_TIME.getText());
+    private final JLabel labelDays = new JLabel(Messages.PERIOD_OF_TIME.getMessage());
     private final JSlider days = new JSlider(JSlider.HORIZONTAL, 1, 365, 7);
     private final JLabel labelSelectedDays = new JLabel("");
-    private final JButton preview = new JButton(Messages.PREVIEW.getText());
-    private final JButton export = new JButton(Messages.EXPORT.getText());
+    private final JButton preview = new JButton(Messages.PREVIEW.getMessage());
+    private final JButton export = new JButton(Messages.EXPORT.getMessage());
     private final JLabel summary = new JLabel();
     private final JTextArea description = new JTextArea();
     private final DefaultTableModel tableModel = new DefaultTableModel(TABLE_HEADERS, 0) {
@@ -105,7 +105,7 @@ public class ExportFrame extends AbstractFrame {
     private final JScrollPane scrollPane = new JScrollPane(table);
 
     public ExportFrame() {
-        super(Messages.NEW_EXPORT.getText(), 500, 460);
+        super(Messages.NEW_EXPORT.getMessage(), 500, 460);
         createUI();
     }
 
@@ -166,10 +166,8 @@ public class ExportFrame extends AbstractFrame {
 
                     setVisible(false);
 
-                    JOptionPane.showMessageDialog(
-                            null,
-                            String.format(Messages.EXPORT_SUCCESSFUL.getText(),
-                                    Configurator.CONFIG.getString(ConfiguratorKeys.PATH.getKey())));
+                    JOptionPane.showMessageDialog(null, Messages.EXPORT_SUCCESSFUL.getMessage(Configurator.CONFIG
+                            .getString(ConfiguratorKeys.PATH.getKey())));
                 } catch (IOException ex) {
                     LOG.log(Level.SEVERE, "Error exporting data", ex);
                     formatError(export);
@@ -210,7 +208,7 @@ public class ExportFrame extends AbstractFrame {
         description.setLineWrap(true);
         description.setWrapStyleWord(true);
         description.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-        description.setText(Messages.EXPORT_DESCRIPTION.getText());
+        description.setText(Messages.EXPORT_DESCRIPTION.getMessage());
 
         formatOk(dateChooser, days);
 

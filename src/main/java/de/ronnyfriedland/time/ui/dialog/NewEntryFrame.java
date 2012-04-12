@@ -48,23 +48,23 @@ public class NewEntryFrame extends AbstractFrame {
 
     private static final long serialVersionUID = -8738367859388084898L;
 
-    private final JLabel labelDate = new JLabel(Messages.DATE.getText());
+    private final JLabel labelDate = new JLabel(Messages.DATE.getMessage());
     private final JTextField date = new JTextField();
-    private final JLabel labelDescription = new JLabel(Messages.DESCRIPTION.getText());
+    private final JLabel labelDescription = new JLabel(Messages.DESCRIPTION.getMessage());
     private final JTextField description = new JTextField();
-    private final JLabel labelDuration = new JLabel(Messages.DURATION.getText());
+    private final JLabel labelDuration = new JLabel(Messages.DURATION.getMessage());
     private final JTextField duration = new JTextField();
     private final JScrollPane scrollPaneProjects = new JScrollPane(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
     private final JList projects = new JList();
-    private final JButton refresh = new JButton(Messages.REFRESH_PROJECT.getText());
-    private final JButton save = new JButton(Messages.SAVE.getText());
-    private final JButton delete = new JButton(Messages.DELETE.getText());
+    private final JButton refresh = new JButton(Messages.REFRESH_PROJECT.getMessage());
+    private final JButton save = new JButton(Messages.SAVE.getMessage());
+    private final JButton delete = new JButton(Messages.DELETE.getMessage());
 
     private String uuid = null;
 
     public NewEntryFrame() {
-        super(Messages.CREATE_NEW_ENTRY.getText(), 320, 275);
+        super(Messages.CREATE_NEW_ENTRY.getMessage(), 320, 275);
         createUI();
     }
 
