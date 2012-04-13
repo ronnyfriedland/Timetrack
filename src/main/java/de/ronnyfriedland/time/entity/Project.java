@@ -34,7 +34,7 @@ public class Project extends AbstractEntity {
 	private String name;
 	@Column(name = "DESCRIPTION", nullable = true)
 	private String description;
-	@Column(name = "ENABLED")
+	@Column(name = "ENABLED", nullable = false)
 	private Boolean enabled = Boolean.TRUE;
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "ENTRIES_UUID")
