@@ -36,7 +36,7 @@ public class Project extends AbstractEntity {
 	private String description;
 	@Column(name = "ENABLED", nullable = false)
 	private Boolean enabled = Boolean.TRUE;
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "project")
 	@JoinColumn(name = "ENTRIES_UUID")
 	private Collection<Entry> entries;
 
