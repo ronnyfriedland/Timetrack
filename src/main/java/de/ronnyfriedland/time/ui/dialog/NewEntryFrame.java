@@ -274,6 +274,7 @@ public class NewEntryFrame extends AbstractFrame {
 					parameters.put(Project.PARAM_NAME, projectData.projectName);
 					Project selectedProject = EntityController.getInstance().findSingleResultByParameter(Project.class,
 					        Project.QUERY_FINDBYNAME, parameters);
+					selectedProject.addEntry(entry);
 					entry.setProject(selectedProject);
 				}
 				try {
