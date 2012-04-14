@@ -106,7 +106,8 @@ public class NewProjectFrame extends AbstractFrame {
 				if (null != uuid) {
 					try {
 						Project project = EntityController.getInstance().findById(Project.class, uuid);
-						EntityController.getInstance().delete(project);
+						project.setEnabled(false);
+						EntityController.getInstance().update(project);
 						setVisible(false);
 					} catch (PersistenceException ex) {
 						LOG.log(Level.SEVERE, "Error removing project", ex);
