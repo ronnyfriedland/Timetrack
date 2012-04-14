@@ -19,10 +19,8 @@
 		<sect2>
 			<title>Projekte erstellen</title>
 			<para>Alle Einträge müssen exakt einem Projekt zugeordnet werden.
-				Diese müssen vor dem Anlegen der Einträge existieren. Projektnamen
-				können nachträglich nicht angepasst werden. Optional kann
-				ein
-				Kommentar angegeben werden.
+				Diese müssen vor dem Anlegen der Einträge existieren. Optional kann
+				ein Kommentar angegeben werden.
 			</para>
 			<itemizedlist>
 				<listitem>
@@ -31,10 +29,6 @@
 						<itemizedlist>
 							<listitem>
 								<para>Projektnamen müssen eindeutig sein</para>
-							</listitem>
-							<listitem>
-								<para>Projektnamen können nicht nachträglich verändert werden
-								</para>
 							</listitem>
 						</itemizedlist>
 					</para>
@@ -52,10 +46,9 @@
 						Einschränkungen
 						<itemizedlist>
 							<listitem>
-								<para>Beim Löschen von Projekten werden die assoziierten
-									Einträge nicht gelöscht. Diese müssen vorher manuell entfernt
-									werden. Existieren assoziierte Einträge ist das Löschen nicht
-									möglich.
+								<para>Beim Löschen von Projekten werden diese nicht gelöscht
+									sondern deaktiviert. Damit ist der Zugriff auf gespeicherte
+									Einträge noch möglich.
 								</para>
 							</listitem>
 						</itemizedlist>
