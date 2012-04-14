@@ -223,7 +223,7 @@ public class NewEntryFrame extends AbstractFrame {
 			public void mouseClicked(final MouseEvent e) {
 				if ((e.getClickCount() == 2) && (null != projects.getSelectedValue())) {
 					Map<String, Object> parameters = new HashMap<String, Object>();
-					parameters.put(Project.PARAM_NAME, projects.getSelectedValue());
+					parameters.put(Project.PARAM_NAME, ((ProjectData) projects.getSelectedValue()).projectName);
 					Project project = EntityController.getInstance().findSingleResultByParameter(Project.class,
 					        Project.QUERY_FINDBYNAME, parameters);
 
