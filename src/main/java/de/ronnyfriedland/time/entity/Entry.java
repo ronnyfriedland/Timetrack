@@ -30,104 +30,114 @@ import de.ronnyfriedland.time.entity.validation.NotBlank;
 @NamedQueries({ @NamedQuery(name = Entry.QUERY_FIND_FROM_TO, query = "SELECT e FROM Entry e WHERE e.date >= :from AND e.date < :to ORDER BY e.date") })
 public class Entry extends AbstractEntity {
 
-    public static final String DATESTRINGFORMAT = "dd.MM.yyyy";
+	public static final String DATESTRINGFORMAT = "dd.MM.yyyy";
 
-    public static final String QUERY_FIND_FROM_TO = "Entry.findFromTo";
+	public static final String QUERY_FIND_FROM_TO = "Entry.findFromTo";
 
-    public static final String PARAM_DATE_FROM = "from";
-    public static final String PARAM_DATE_TO = "to";
+	public static final String PARAM_DATE_FROM = "from";
+	public static final String PARAM_DATE_TO = "to";
 
-    private static final long serialVersionUID = -6406081124935463200L;
-    @NotBlank
-    @IsFloat
-    @Column(name = "DURATION", nullable = false)
-    private String duration;
-    @Column(name = "DATE", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date date;
-    @NotBlank
-    @Pattern(regexp = "[0-9]{2}\\.[0-9]{2}\\.[0-9]{4}")
-    private transient String dateString;
-    @NotBlank
-    @Column(name = "DESCRIPTION", nullable = false)
-    private String description;
-    @NotNull
-    @ManyToOne(cascade = CascadeType.PERSIST, optional = false)
-    @JoinColumn(name = "PROJECT_UUID", nullable = false)
-    private Project project;
+	private static final long serialVersionUID = -6406081124935463200L;
+	@NotBlank
+	@IsFloat
+	@Column(name = "DURATION", nullable = false)
+	private String duration;
+	@Column(name = "DATE", nullable = false)
+	@Temporal(TemporalType.DATE)
+	private Date date;
+	@NotBlank
+	@Pattern(regexp = "[0-9]{2}\\.[0-9]{2}\\.[0-9]{4}")
+	private transient String dateString;
+	@NotBlank
+	@Column(name = "DESCRIPTION", nullable = false)
+	private String description;
+	@Column(name = "ENABLED", nullable = false)
+	private Boolean enabled = Boolean.TRUE;
+	@NotNull
+	@ManyToOne(cascade = CascadeType.PERSIST, optional = false)
+	@JoinColumn(name = "PROJECT_UUID", nullable = false)
+	private Project project;
 
-    public Entry() {
-        super();
-    }
+	public Entry() {
+		super();
+	}
 
-    public Entry(final String uuid) {
-        super(uuid);
-    }
+	public Entry(final String uuid) {
+		super(uuid);
+	}
 
-    public String getDuration() {
-        return duration;
-    }
+	public String getDuration() {
+		return duration;
+	}
 
-    public void setDuration(final String duration) {
-        this.duration = duration;
-    }
+	public void setDuration(final String duration) {
+		this.duration = duration;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public void setDescription(final String description) {
-        this.description = description;
-    }
+	public void setDescription(final String description) {
+		this.description = description;
+	}
 
-    public Project getProject() {
-        return project;
-    }
+	public Project getProject() {
+		return project;
+	}
 
-    public void setProject(final Project project) {
-        this.project = project;
-    }
+	public void setProject(final Project project) {
+		this.project = project;
+	}
 
-    public Date getDate() {
-        return date;
-    }
+	public Date getDate() {
+		return date;
+	}
 
-    public void setDate(final Date date) {
-        this.date = date;
-        dateString = new SimpleDateFormat(DATESTRINGFORMAT).format(date);
-    }
+	public void setDate(final Date date) {
+		this.date = date;
+		dateString = new SimpleDateFormat(DATESTRINGFORMAT).format(date);
+	}
 
-    public String getDateString() {
-        return dateString;
-    }
+	public String getDateString() {
+		return dateString;
+	}
 
-    public void setDateString(final String dateString) {
-        this.dateString = dateString;
-        try {
-            date = new SimpleDateFormat(DATESTRINGFORMAT).parse(dateString);
-        } catch (ParseException e) {
-            date = new Date();
-        }
-    }
+	public void setDateString(final String dateString) {
+		this.dateString = dateString;
+		try {
+			date = new SimpleDateFormat(DATESTRINGFORMAT).parse(dateString);
+		} catch (ParseException e) {
+			date = new Date();
+		}
+	}
 
-    @PostLoad
-    @PostUpdate
-    public void updateDateString() {
-        setDate(getDate());
-    }
+	@PostLoad
+	@PostUpdate
+	public void updateDateString() {
+		setDate(getDate());
+	}
 
-    /**
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Object#toString()
-     */
-    @Override
-    public String toString() {
-        StringBuilder sbuild = new StringBuilder(super.toString());
-        sbuild.append(String.format("[duration: %s, ", getDuration()));
-        sbuild.append(String.format("date: %s, ", getDate()));
-        sbuild.append(String.format("description: %s, ", getDescription()));
-        sbuild.append(String.format("project: %s]", getProject()));
-        return sbuild.toString();
-    }
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	/**
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		StringBuilder sbuild = new StringBuilder(super.toString());
+		sbuild.append(String.format("[duration: %s, ", getDuration()));
+		sbuild.append(String.format("date: %s, ", getDate()));
+		sbuild.append(String.format("description: %s, ", getDescription()));
+		sbuild.append(String.format("project: %s]", getProject()));
+		return sbuild.toString();
+	}
 }

@@ -28,6 +28,16 @@ public class MigrateDatabase {
 				migration.migrate();
 			}
 		}
+
+		public static Version valueOfVersion(final String versionString) {
+			for (Version version : Version.values()) {
+				if (version.getVersion().equals(versionString)) {
+					return version;
+				}
+			}
+			throw new IllegalArgumentException("No enum const class " + Version.class);
+
+		}
 	}
 
 	public static void main(String[] args) {
@@ -39,7 +49,7 @@ public class MigrateDatabase {
 			}
 			throw new IllegalArgumentException(sbuild.toString());
 		}
-		Version targetVersion = Version.valueOf(args[0]);
+		Version targetVersion = Version.valueOfVersion(args[0]);
 		targetVersion.migrate();
 	}
 }
