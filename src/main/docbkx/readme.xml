@@ -98,5 +98,13 @@
 				Zwischenablage kopert werden.
 			</para>
 		</sect2>
+		<sect2>
+			<title>Datenmigration</title>
+			<para>Ab Version 1.0 können bestehende Daten migriert werden. Die
+				Migration erfolgt durch den Aufruf der Klasse
+				de.ronnyfriedland.time.migration.MigrateDatabase. Als Parameter wird
+				die bisher verwendete Version erwartet (>= 1.0).
+			</para>
+		</sect2>
 	</sect1>
 </article>
