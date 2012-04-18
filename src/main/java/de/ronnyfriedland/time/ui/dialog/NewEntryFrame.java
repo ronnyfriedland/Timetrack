@@ -257,7 +257,7 @@ public class NewEntryFrame extends AbstractFrame {
 				if (null == uuid) {
 					entry = new Entry();
 				} else {
-					entry = new Entry(uuid);
+					entry = EntityController.getInstance().findById(Entry.class, uuid);
 				}
 				if (!StringUtils.isBlank(date.getText())) {
 					entry.setDateString(date.getText());
