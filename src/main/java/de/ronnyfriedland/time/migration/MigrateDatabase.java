@@ -35,7 +35,7 @@ public class MigrateDatabase {
 					return version;
 				}
 			}
-			throw new IllegalArgumentException("No enum const class " + Version.class);
+			throw new IllegalArgumentException("No enum const " + Version.class);
 
 		}
 	}
