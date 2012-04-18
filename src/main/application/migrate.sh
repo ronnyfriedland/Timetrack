@@ -1,0 +1,1 @@
+java -cp lib:timetable-${project.version}.jar de.ronnyfriedland.time.migration.MigrateDatabase $1

@@ -15,6 +15,16 @@
 			<source>${project.build.directory}/timetable.sh</source>
 			<outputDirectory>/</outputDirectory>
 		</file>
+        <!-- add mac/linux migration script -->
+        <file>
+            <source>${project.build.directory}/migrate.sh</source>
+            <outputDirectory>/</outputDirectory>
+        </file>
+        <!-- add windows migration script -->
+        <file>
+            <source>${project.build.directory}/migrate.bat</source>
+            <outputDirectory>/</outputDirectory>
+        </file>
         <!-- add readme -->
         <file>
             <source>${project.build.directory}/docbkx/html/readme.html</source>
