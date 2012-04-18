@@ -126,7 +126,7 @@ public class NewProjectFrame extends AbstractFrame {
 				if (null == uuid) {
 					project = new Project();
 				} else {
-					project = new Project(uuid);
+					project = EntityController.getInstance().findById(Project.class, uuid);
 				}
 				if (!StringUtils.isBlank(name.getText())) {
 					project.setName(name.getText());
