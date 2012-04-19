@@ -7,9 +7,11 @@ public class MigrateDatabase {
 
 	public enum Version {
 		/** Version 1.0 -> current */
-		VERSION10("1.0", new MigrateToVersion12()),
+		VERSION10("1.0", new MigrateToVersion12(), new MigrateToVersion13()),
 		/** Version 1.1 -> current */
-		VERSION11("1.1", new MigrateToVersion12());
+		VERSION11("1.1", new MigrateToVersion12(), new MigrateToVersion13()),
+		/** Version 1.2 -> current */
+		VERSION12("1.2", new MigrateToVersion13());
 
 		private final String version;
 		private final MigrateVersion[] migrations;
