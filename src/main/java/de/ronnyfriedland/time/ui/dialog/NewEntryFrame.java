@@ -1,5 +1,8 @@
 package de.ronnyfriedland.time.ui.dialog;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -23,6 +26,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ListCellRenderer;
 import javax.swing.ListModel;
 import javax.swing.ScrollPaneConstants;
 import javax.validation.ConstraintViolation;
@@ -57,24 +61,54 @@ public class NewEntryFrame extends AbstractFrame {
 	private final JTextField duration = new JTextField();
 	private final JScrollPane scrollPaneProjects = new JScrollPane(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
 	        ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-	private final JList projects = new JList();
 	private final JCheckBox showDisabledProjects = new JCheckBox(Messages.SHOW_DISABLED_PROJECT.getMessage());
 	private final JButton refresh = new JButton(Messages.REFRESH_PROJECT.getMessage());
 	private final JButton save = new JButton(Messages.SAVE.getMessage());
 	private final JButton delete = new JButton(Messages.DELETE.getMessage());
 
-	private class ProjectData {
-		private final String projectName;
-		private final Integer entryCount;
+	private class MyListCellThing extends JLabel implements ListCellRenderer {
+		private static final long serialVersionUID = 1L;
 
-		public ProjectData(final String projectName, final Integer entryCount) {
-			this.projectName = projectName;
-			this.entryCount = entryCount;
+		public MyListCellThing() {
+			setOpaque(true);
 		}
 
 		@Override
-		public String toString() {
-			return projectName + " (" + entryCount + ")";
+		public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected,
+		        boolean cellHasFocus) {
+			ProjectData data = (ProjectData) value;
+			if (data.enabled) {
+				setFont(new Font(getFont().getName(), Font.PLAIN, getFont().getSize()));
+				setForeground(Color.DARK_GRAY);
+			} else {
+				setFont(new Font(getFont().getName(), Font.ITALIC, getFont().getSize()));
+				setForeground(Color.GRAY);
+			}
+			if (isSelected) {
+				setBackground(new Color(184, 207, 229));
+			} else {
+				setBackground(Color.WHITE);
+			}
+			setText(data.projectName + " (" + data.entryCount + ")");
+			setToolTipText(data.projectName);
+			return this;
+		}
+	}
+
+	private final JList projects = new JList();
+	{
+		projects.setCellRenderer(new MyListCellThing());
+	}
+
+	private class ProjectData {
+		private final String projectName;
+		private final Integer entryCount;
+		private final Boolean enabled;
+
+		public ProjectData(final String projectName, final boolean enabled, final Integer entryCount) {
+			this.projectName = projectName;
+			this.enabled = enabled;
+			this.entryCount = entryCount;
 		}
 	}
 
@@ -337,7 +371,7 @@ public class NewEntryFrame extends AbstractFrame {
 		ProjectData[] projectNameList = new ProjectData[projectList.size()];
 		int i = 0;
 		for (Project project : projectList) {
-			projectNameList[i] = new ProjectData(project.getName(), project.getEntries().size());
+			projectNameList[i] = new ProjectData(project.getName(), project.getEnabled(), project.getEntries().size());
 			i++;
 		}
 		projects.setListData(projectNameList);
