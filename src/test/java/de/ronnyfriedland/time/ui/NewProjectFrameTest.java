@@ -31,7 +31,7 @@ public class NewProjectFrameTest extends UISpecTestCase {
 	@After
 	protected void tearDown() throws Exception {
 		super.tearDown();
-		Collection<Project> projects = EntityController.getInstance().findAll(Project.class);
+		Collection<Project> projects = EntityController.getInstance().findAll(Project.class, false);
 		for (Project project : projects) {
 			EntityController.getInstance().deleteDetached(project);
 		}
@@ -48,12 +48,12 @@ public class NewProjectFrameTest extends UISpecTestCase {
 		Assert.assertNotNull(saveButton);
 
 		saveButton.triggerClick().run();
-		Assert.assertTrue(EntityController.getInstance().findAll(Project.class).isEmpty());
+		Assert.assertTrue(EntityController.getInstance().findAll(Project.class, false).isEmpty());
 
 		nameField.setText("testproject");
 		descriptionField.setText("test");
 
 		saveButton.triggerClick().run();
-		Assert.assertFalse(EntityController.getInstance().findAll(Project.class).isEmpty());
+		Assert.assertFalse(EntityController.getInstance().findAll(Project.class, false).isEmpty());
 	}
 }

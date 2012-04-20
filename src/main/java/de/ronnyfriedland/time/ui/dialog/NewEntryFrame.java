@@ -17,6 +17,7 @@ import javax.persistence.PersistenceException;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.InputVerifier;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -57,6 +58,7 @@ public class NewEntryFrame extends AbstractFrame {
 	private final JScrollPane scrollPaneProjects = new JScrollPane(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
 	        ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 	private final JList projects = new JList();
+	private final JCheckBox showDisabledProjects = new JCheckBox(Messages.SHOW_DISABLED_PROJECT.getMessage());
 	private final JButton refresh = new JButton(Messages.REFRESH_PROJECT.getMessage());
 	private final JButton save = new JButton(Messages.SAVE.getMessage());
 	private final JButton delete = new JButton(Messages.DELETE.getMessage());
@@ -79,11 +81,10 @@ public class NewEntryFrame extends AbstractFrame {
 	private String uuid = null;
 
 	public NewEntryFrame() {
-		super(Messages.CREATE_NEW_ENTRY.getMessage(), 320, 275);
+		super(Messages.CREATE_NEW_ENTRY.getMessage(), 320, 300);
 		createUI();
 
-		loadProjectListData();
-
+		loadProjectListData(false);
 	}
 
 	public NewEntryFrame(final Entry entry) {
@@ -239,16 +240,18 @@ public class NewEntryFrame extends AbstractFrame {
 		scrollPaneProjects.setViewportView(projects);
 		scrollPaneProjects.setBounds(10, 85, 300, 100);
 
-		refresh.setBounds(10, 190, 300, 24);
+		showDisabledProjects.setBounds(10, 185, 300, 24);
+
+		refresh.setBounds(10, 215, 300, 24);
 		refresh.addKeyListener(new TimeTableKeyAdapter());
 		refresh.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent arg0) {
-				loadProjectListData();
+				loadProjectListData(showDisabledProjects.isSelected());
 			}
 		});
 
-		save.setBounds(10, 220, 145, 24);
+		save.setBounds(10, 245, 145, 24);
 		save.addKeyListener(new TimeTableKeyAdapter());
 		save.addActionListener(new ActionListener() {
 			@Override
@@ -294,7 +297,7 @@ public class NewEntryFrame extends AbstractFrame {
 			}
 		});
 
-		delete.setBounds(165, 220, 145, 24);
+		delete.setBounds(165, 245, 145, 24);
 		delete.addKeyListener(new TimeTableKeyAdapter());
 		delete.setEnabled(false);
 		delete.addActionListener(new ActionListener() {
@@ -322,14 +325,15 @@ public class NewEntryFrame extends AbstractFrame {
 		getContentPane().add(labelDuration);
 		getContentPane().add(duration);
 		getContentPane().add(scrollPaneProjects);
+		getContentPane().add(showDisabledProjects);
 		getContentPane().add(refresh);
 		getContentPane().add(save);
 		getContentPane().add(delete);
 	}
 
-	private void loadProjectListData() {
+	private void loadProjectListData(boolean includeDisabledProjects) {
 		Collection<Project> projectList = EntityController.getInstance().findAll(Project.class,
-		        new SortParam(Project.PARAM_NAME, SortOrder.ASC));
+		        new SortParam(Project.PARAM_NAME, SortOrder.ASC), includeDisabledProjects);
 		ProjectData[] projectNameList = new ProjectData[projectList.size()];
 		int i = 0;
 		for (Project project : projectList) {

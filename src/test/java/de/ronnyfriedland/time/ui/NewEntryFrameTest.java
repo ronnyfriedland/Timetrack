@@ -41,7 +41,7 @@ public class NewEntryFrameTest extends UISpecTestCase {
 	@After
 	protected void tearDown() throws Exception {
 		super.tearDown();
-		Collection<Entry> entries = EntityController.getInstance().findAll(Entry.class);
+		Collection<Entry> entries = EntityController.getInstance().findAll(Entry.class, false);
 		for (Entry entry : entries) {
 			EntityController.getInstance().deleteDetached(entry);
 		}
@@ -66,7 +66,7 @@ public class NewEntryFrameTest extends UISpecTestCase {
 		Assert.assertNotNull(saveButton);
 
 		saveButton.triggerClick().run();
-		Assert.assertTrue(EntityController.getInstance().findAll(Entry.class).isEmpty());
+		Assert.assertTrue(EntityController.getInstance().findAll(Entry.class, false).isEmpty());
 
 		dateField.setText("01.01.2011");
 		descriptionField.setText("test");
@@ -74,7 +74,7 @@ public class NewEntryFrameTest extends UISpecTestCase {
 		projectField.selectIndex(0);
 
 		saveButton.triggerClick().run();
-		Assert.assertTrue(EntityController.getInstance().findAll(Entry.class).isEmpty());
+		Assert.assertTrue(EntityController.getInstance().findAll(Entry.class, false).isEmpty());
 
 		dateField.setText("01.01.2011");
 		descriptionField.setText("test");
@@ -82,7 +82,7 @@ public class NewEntryFrameTest extends UISpecTestCase {
 		projectField.selectIndex(0);
 
 		saveButton.triggerClick().run();
-		Assert.assertEquals(1, EntityController.getInstance().findAll(Entry.class).size());
+		Assert.assertEquals(1, EntityController.getInstance().findAll(Entry.class, false).size());
 
 		dateField.setText("01.01.2011");
 		descriptionField.setText("test");
@@ -90,7 +90,7 @@ public class NewEntryFrameTest extends UISpecTestCase {
 		projectField.selectIndex(0);
 
 		saveButton.triggerClick().run();
-		Assert.assertEquals(2, EntityController.getInstance().findAll(Entry.class).size());
+		Assert.assertEquals(2, EntityController.getInstance().findAll(Entry.class, false).size());
 
 	}
 }

@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import javax.persistence.PersistenceException;
 import javax.swing.InputVerifier;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -37,13 +38,14 @@ public class NewProjectFrame extends AbstractFrame {
 	private final JTextField name = new JTextField();
 	private final JLabel labelDescription = new JLabel(Messages.DESCRIPTION.getMessage());
 	private final JTextField description = new JTextField();
+	private final JLabel labelDisable = new JLabel(Messages.DISABLE.getMessage());
+	private final JCheckBox disableProject = new JCheckBox();
 	private final JButton save = new JButton(Messages.SAVE.getMessage());
-	private final JButton delete = new JButton(Messages.DELETE.getMessage());
 
 	private String uuid = null;
 
 	public NewProjectFrame() {
-		super(Messages.CREATE_NEW_PROJECT.getMessage(), 320, 130);
+		super(Messages.CREATE_NEW_PROJECT.getMessage(), 320, 150);
 		createUI();
 	}
 
@@ -52,8 +54,7 @@ public class NewProjectFrame extends AbstractFrame {
 		uuid = project.getUuid();
 		name.setText(project.getName());
 		description.setText(project.getDescription());
-
-		delete.setEnabled(true);
+		disableProject.setSelected(!project.getEnabled());
 	}
 
 	/**
@@ -97,27 +98,11 @@ public class NewProjectFrame extends AbstractFrame {
 		description.setBounds(110, 35, 200, 24);
 		description.addKeyListener(new TimeTableKeyAdapter());
 
-		delete.setBounds(165, 70, 145, 24);
-		delete.setEnabled(false);
-		delete.addKeyListener(new TimeTableKeyAdapter());
-		delete.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(final ActionEvent e) {
-				if (null != uuid) {
-					try {
-						Project project = EntityController.getInstance().findById(Project.class, uuid);
-						project.setEnabled(false);
-						EntityController.getInstance().update(project);
-						setVisible(false);
-					} catch (PersistenceException ex) {
-						LOG.log(Level.SEVERE, "Error removing project", ex);
-						formatError(delete);
-					}
-				}
-			}
-		});
+		labelDisable.setBounds(10, 65, 100, 24);
 
-		save.setBounds(10, 70, 145, 24);
+		disableProject.setBounds(110, 65, 200, 24);
+
+		save.setBounds(10, 90, 300, 24);
 		save.addKeyListener(new TimeTableKeyAdapter());
 		save.addActionListener(new ActionListener() {
 			@Override
@@ -134,6 +119,7 @@ public class NewProjectFrame extends AbstractFrame {
 				if (!StringUtils.isBlank(description.getText())) {
 					project.setDescription(description.getText());
 				}
+				project.setEnabled(!disableProject.isSelected());
 				try {
 					if (null != uuid) {
 						EntityController.getInstance().update(project);
@@ -157,8 +143,9 @@ public class NewProjectFrame extends AbstractFrame {
 		getContentPane().add(name);
 		getContentPane().add(labelDescription);
 		getContentPane().add(description);
+		getContentPane().add(labelDisable);
+		getContentPane().add(disableProject);
 		getContentPane().add(save);
-		getContentPane().add(delete);
 	}
 
 	public static void main(final String[] args) {

@@ -34,8 +34,6 @@ public class Project extends AbstractEntity {
 	private String name;
 	@Column(name = "DESCRIPTION", nullable = true)
 	private String description;
-	@Column(name = "ENABLED", nullable = false)
-	private Boolean enabled = Boolean.TRUE;
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "project")
 	@JoinColumn(name = "ENTRIES_UUID")
 	private Collection<Entry> entries;
@@ -76,14 +74,6 @@ public class Project extends AbstractEntity {
 
 	public void addEntry(final Entry entry) {
 		this.entries.add(entry);
-	}
-
-	public Boolean getEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(Boolean enabled) {
-		this.enabled = enabled;
 	}
 
 	/**

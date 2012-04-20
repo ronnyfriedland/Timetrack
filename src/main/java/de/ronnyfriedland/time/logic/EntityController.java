@@ -67,23 +67,38 @@ public final class EntityController {
 		return result;
 	}
 
-	public <T> Collection<T> findAll(final Class<T> clazz) {
-		TypedQuery<T> query = em.createQuery("SELECT e FROM " + clazz.getSimpleName() + " e", clazz);
+	public <T> Collection<T> findAll(final Class<T> clazz, final boolean includeDisabled) {
+		String queryString = "SELECT e FROM %1$s e ";
+		if (!includeDisabled) {
+			queryString += "WHERE e.enabled = 1 ";
+		}
+		TypedQuery<T> query = em.createQuery(String.format(queryString, clazz.getSimpleName()), clazz);
 		return query.getResultList();
 	}
 
-	public <T> Collection<T> findAll(final Class<T> clazz, final SortParam sortParam, final int max) {
-		String queryString = String.format("SELECT e FROM %1$s e ORDER BY e.%2$s %3$s", clazz.getSimpleName(),
-		        sortParam.getAttribute(), sortParam.getOrder());
-		TypedQuery<T> query = em.createQuery(queryString, clazz);
+	public <T> Collection<T> findAll(final Class<T> clazz, final SortParam sortParam, final int max,
+	        final boolean includeDisabled) {
+		String queryString = "SELECT e FROM %1$s e ";
+		if (!includeDisabled) {
+			queryString += "WHERE e.enabled = 1 ";
+		}
+		queryString += "ORDER BY e.%2$s %3$s";
+		TypedQuery<T> query = em.createQuery(
+		        String.format(queryString, clazz.getSimpleName(), sortParam.getAttribute(), sortParam.getOrder()),
+		        clazz);
 		query.setMaxResults(max);
 		return query.getResultList();
 	}
 
-	public <T> Collection<T> findAll(final Class<T> clazz, final SortParam sortParam) {
-		String queryString = String.format("SELECT e FROM %1$s e WHERE e.enabled = true ORDER BY e.%2$s %3$s",
-		        clazz.getSimpleName(), sortParam.getAttribute(), sortParam.getOrder());
-		TypedQuery<T> query = em.createQuery(queryString, clazz);
+	public <T> Collection<T> findAll(final Class<T> clazz, final SortParam sortParam, final boolean includeDisabled) {
+		String queryString = "SELECT e FROM %1$s e ";
+		if (!includeDisabled) {
+			queryString += "WHERE e.enabled = 1 ";
+		}
+		queryString += "ORDER BY e.%2$s %3$s";
+		TypedQuery<T> query = em.createQuery(
+		        String.format(queryString, clazz.getSimpleName(), sortParam.getAttribute(), sortParam.getOrder()),
+		        clazz);
 		return query.getResultList();
 	}
 

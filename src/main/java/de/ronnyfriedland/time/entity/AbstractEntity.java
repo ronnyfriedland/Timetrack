@@ -20,68 +20,80 @@ import de.ronnyfriedland.time.entity.validation.NotBlank;
  */
 @MappedSuperclass
 public abstract class AbstractEntity implements Serializable {
-    private static final long serialVersionUID = 3220515724286916541L;
+	private static final long serialVersionUID = 3220515724286916541L;
 
-    @NotBlank
-    @Id
-    @Column(name = "UUID", nullable = false)
-    private final String uuid;
+	@NotBlank
+	@Id
+	@Column(name = "UUID", nullable = false)
+	private final String uuid;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "LASTMODIFIEDDATE", nullable = false)
-    private final Date lastModifiedDate;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "LASTMODIFIEDDATE", nullable = false)
+	private final Date lastModifiedDate;
 
-    public AbstractEntity() {
-        this(UUID.randomUUID().toString());
-    }
+	@Column(name = "ENABLED", nullable = false)
+	private Boolean enabled = Boolean.TRUE;
 
-    public AbstractEntity(final String uuid) {
-        this.uuid = uuid;
-        lastModifiedDate = Calendar.getInstance().getTime();
-    }
+	public AbstractEntity() {
+		this(UUID.randomUUID().toString());
+	}
 
-    public String getUuid() {
-        return uuid;
-    }
+	public AbstractEntity(final String uuid) {
+		this.uuid = uuid;
+		lastModifiedDate = Calendar.getInstance().getTime();
+	}
 
-    public Date getLastModifiedDate() {
-        return lastModifiedDate;
-    }
+	public String getUuid() {
+		return uuid;
+	}
 
-    /**
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(final Object obj) {
-        if ((null != obj) && (obj instanceof AbstractEntity)) {
-            return getUuid().equals(((AbstractEntity) obj).getUuid());
-        } else {
-            return false;
-        }
-    }
+	public Date getLastModifiedDate() {
+		return lastModifiedDate;
+	}
 
-    /**
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode() {
-        return uuid.hashCode();
-    }
+	public Boolean getEnabled() {
+		return enabled;
+	}
 
-    /**
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Object#toString()
-     */
-    @Override
-    public String toString() {
-        StringBuilder sbuild = new StringBuilder(super.toString());
-        sbuild.append(String.format("[uuid: %s, ", getUuid()));
-        sbuild.append(String.format("lastModifiedDate: %s]", getLastModifiedDate()));
-        return sbuild.toString();
-    }
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	/**
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(final Object obj) {
+		if ((null != obj) && (obj instanceof AbstractEntity)) {
+			return getUuid().equals(((AbstractEntity) obj).getUuid());
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return uuid.hashCode();
+	}
+
+	/**
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		StringBuilder sbuild = new StringBuilder(super.toString());
+		sbuild.append(String.format("[uuid: %s, ", getUuid()));
+		sbuild.append(String.format("enabled: %s, ", getEnabled()));
+		sbuild.append(String.format("lastModifiedDate: %s]", getLastModifiedDate()));
+		return sbuild.toString();
+	}
 }

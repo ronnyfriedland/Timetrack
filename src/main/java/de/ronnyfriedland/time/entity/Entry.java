@@ -51,8 +51,6 @@ public class Entry extends AbstractEntity {
 	@NotBlank
 	@Column(name = "DESCRIPTION", nullable = false)
 	private String description;
-	@Column(name = "ENABLED", nullable = false)
-	private Boolean enabled = Boolean.TRUE;
 	@NotNull
 	@ManyToOne(cascade = CascadeType.PERSIST, optional = false)
 	@JoinColumn(name = "PROJECT_UUID", nullable = false)
@@ -116,14 +114,6 @@ public class Entry extends AbstractEntity {
 	@PostUpdate
 	public void updateDateString() {
 		setDate(getDate());
-	}
-
-	public Boolean getEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(Boolean enabled) {
-		this.enabled = enabled;
 	}
 
 	/**
