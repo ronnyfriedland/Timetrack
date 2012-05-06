@@ -250,23 +250,16 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	<repositories>
+	<distributionManagement>
+		<!-- use the following if you're not using a snapshot version. -->
 		<repository>
-			<id>eclipselink-repository</id>
-			<name>Elipselink Repository</name>
-			<url>http://maven.eclipse.org/nexus/content/groups/build/</url>
+			<id>nexus</id>
+			<url>http://192.168.8.5:8081/nexus/content/repositories/releases</url>
 		</repository>
-		<repository>
-			<id>akathist-repository</id>
-			<name>Akathist Repository</name>
-			<url>http://www.9stmaryrd.com/maven</url>
-		</repository>
-	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>akathist-repository</id>
-			<name>Akathist Repository</name>
-			<url>http://www.9stmaryrd.com/maven</url>
-		</pluginRepository>
-	</pluginRepositories>
+		<!-- use the following if you ARE using a snapshot version. -->
+		<snapshotRepository>
+			<id>nexus</id>
+			<url>http://192.168.8.5:8081/nexus/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
 </project>
