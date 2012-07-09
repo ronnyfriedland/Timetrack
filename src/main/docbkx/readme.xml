@@ -101,9 +101,11 @@
 		<sect2>
 			<title>Datenmigration</title>
 			<para>Ab Version 1.0 können bestehende Daten migriert werden. Die
-				Migration erfolgt durch den Aufruf der Klasse
-				de.ronnyfriedland.time.migration.MigrateDatabase. Als Parameter wird
-				die bisher verwendete Version erwartet (>= 1.0).
+				Migration erfolgt über mitgelieferte Skripte (migration.sh bzw. migration.bat). 
+				Die Migration kann nur bei Vorhandensein von Bestandsdaten durchgeführt werden, 
+				d.h. die Anwendung muss mindestens einmal gestartet wurden sein.
+				
+				Das Management der Datenbankänderungen erfolgt über Liquibase.
 			</para>
 		</sect2>
 	</sect1>
