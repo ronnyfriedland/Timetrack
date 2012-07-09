@@ -17,5 +17,14 @@
 			ALTER TABLE ENTRY ADD ENABLED INTEGER DEFAULT 1;
 		</sql>
 	</changeSet>
-
+	
+    <changeSet author="ronnyfriedland" id="update_to_version_1.3">
+        <sql>
+            ALTER TABLE ENTRY ALTER COLUMN DESCRIPTION SET DATA TYPE VARCHAR(2000);
+        </sql>
+        <sql>
+            ALTER TABLE PROJECT ALTER COLUMN DESCRIPTION SET DATA TYPE VARCHAR(2000);
+        </sql>
+    </changeSet>
+    
 </databaseChangeLog>
