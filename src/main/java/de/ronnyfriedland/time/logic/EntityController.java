@@ -54,6 +54,9 @@ public final class EntityController {
 		return em.find(clazz, uuid);
 	}
 
+	/**
+	 * TODO (Ronny Friedland): to be removed
+	 */
 	public <T> T findLast(final Class<T> clazz) {
 		T result;
 		TypedQuery<T> query = em.createQuery("SELECT e FROM " + clazz.getSimpleName()
@@ -124,6 +127,21 @@ public final class EntityController {
 			}
 		}
 		return (T) query.getSingleResult();
+	}
+
+	public <T> int deleteAll(final Class<T> clazz) {
+		int updatedRows = 0;
+		TypedQuery<T> query = em.createQuery("DELETE FROM " + clazz.getSimpleName() + " e", clazz);
+		try {
+			em.getTransaction().begin();
+			query.executeUpdate();
+			em.getTransaction().commit();
+		} finally {
+			if (em.getTransaction().isActive() && em.getTransaction().getRollbackOnly()) {
+				em.getTransaction().rollback();
+			}
+		}
+		return updatedRows;
 	}
 
 	public <T> void create(final T entity) {
