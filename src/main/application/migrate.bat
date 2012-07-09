@@ -1,1 +1,1 @@
-java -cp lib;timetable-${project.version}.jar de.ronnyfriedland.time.migration.MigrateDatabase %1
+java -cp lib -jar lib/liquibase-core-1.9.5.jar --url="jdbc:derby:${timetable.path}/database/timetable-database;create=false" --classpath="lib/derby-10.8.1.2.jar" --changeLogFile="db/master.xml" --defaultsFile="db/liquibase.properties" update

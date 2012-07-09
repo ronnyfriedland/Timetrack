@@ -30,6 +30,15 @@
             <source>${project.build.directory}/docbkx/html/readme.html</source>
             <outputDirectory>/</outputDirectory>
         </file>
+        <!-- add db changelog -->
+        <file>
+            <source>${project.build.directory}/db/master.xml</source>
+            <outputDirectory>/db</outputDirectory>
+        </file>
+        <file>
+            <source>${project.build.directory}/db/liquibase.properties</source>
+            <outputDirectory>/db</outputDirectory>
+        </file>
 	</files>
 	<fileSets>
 		<!-- add dependency libs -->
