@@ -26,6 +26,9 @@ public class DatabaseImport {
 			throw new IllegalArgumentException(String.format("Usage: java <path to import file>"));
 		}
 		File importFile = new File(args[0]);
+		if (!importFile.exists()) {
+			throw new IllegalArgumentException(String.format("File %1$s does not exist.", args[0]));
+		}
 
 		ImportController controller = new ImportController();
 		Workbook wb = controller.loadWorkbook(importFile.getParentFile().getAbsolutePath(), importFile.getName());
