@@ -1,6 +1,7 @@
 package de.ronnyfriedland.time.entity;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.logging.Logger;
 
 import org.junit.After;
@@ -58,6 +59,7 @@ public class EntityControllerTest {
 		Entry entry = new Entry();
 		entry.setDuration("2.2");
 		entry.setDescription("Testbeschreibung");
+		entry.setState(new EntryState(new Date()));
 
 		p1.addEntry(entry);
 

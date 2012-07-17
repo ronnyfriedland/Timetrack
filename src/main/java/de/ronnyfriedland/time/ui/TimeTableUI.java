@@ -11,6 +11,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
@@ -19,13 +21,16 @@ import javax.swing.ImageIcon;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
+import org.apache.poi.ss.usermodel.Workbook;
 import org.quartz.SchedulerException;
 
 import de.ronnyfriedland.time.config.Configurator;
 import de.ronnyfriedland.time.config.Configurator.ConfiguratorKeys;
 import de.ronnyfriedland.time.config.Messages;
 import de.ronnyfriedland.time.entity.Entry;
+import de.ronnyfriedland.time.entity.Project;
 import de.ronnyfriedland.time.logic.EntityController;
+import de.ronnyfriedland.time.logic.ImportController;
 import de.ronnyfriedland.time.logic.QuartzController;
 import de.ronnyfriedland.time.sort.SortParam;
 import de.ronnyfriedland.time.sort.SortParam.SortOrder;
@@ -81,6 +86,7 @@ public final class TimeTableUI {
 			final MenuItem newItem = new MenuItem(Messages.NEW_ENTRY.getMessage());
 			final Menu todayItems = new Menu(Messages.LAST_ENTRIES.getMessage());
 			final MenuItem exportItem = new MenuItem(Messages.EXPORT_DATA.getMessage());
+			final MenuItem importItem = new MenuItem(Messages.IMPORT_DATA.getMessage());
 			final MenuItem exitItem = new MenuItem(Messages.EXIT.getMessage());
 
 			// Add components to popup menu
@@ -88,7 +94,9 @@ public final class TimeTableUI {
 			popup.add(newItem);
 			popup.addSeparator();
 			popup.add(todayItems);
+			popup.addSeparator();
 			popup.add(exportItem);
+			popup.add(importItem);
 			popup.addSeparator();
 			popup.add(exitItem);
 
@@ -110,7 +118,6 @@ public final class TimeTableUI {
 					}
 					Collection<Entry> todayEntries = EntityController.getInstance().findAll(Entry.class,
 					        new SortParam("date", SortOrder.DESC), 10, false);
-
 					todayItems.removeAll();
 
 					for (final Entry entry : todayEntries) {
@@ -125,6 +132,7 @@ public final class TimeTableUI {
 						});
 						todayItems.add(menuItem);
 					}
+
 				}
 
 				@Override
@@ -163,6 +171,40 @@ public final class TimeTableUI {
 					@Override
 					public void actionPerformed(final ActionEvent e) {
 						new ExportFrame().setVisible(true);
+					}
+				});
+
+				importItem.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(final ActionEvent e) {
+						try {
+							ImportController controller = new ImportController();
+							Workbook wb = controller.loadWorkbook(
+							        Configurator.CONFIG.getString(ConfiguratorKeys.PATH.getKey()),
+							        Configurator.CONFIG.getString(ConfiguratorKeys.EXPORT_FILE.getKey()));
+							Collection<Entry> entries = controller.loadSheet(wb);
+
+							EntityController.getInstance().deleteAll(Entry.class);
+							EntityController.getInstance().deleteAll(Project.class);
+
+							for (Entry entry : entries) {
+								Project project = entry.getProject();
+								Map<String, Object> parameters = new HashMap<String, Object>();
+								parameters.put(Project.PARAM_NAME, project.getName());
+								try {
+									Project savedProject = EntityController.getInstance().findSingleResultByParameter(
+									        Project.class, Project.QUERY_FINDBYNAME, parameters);
+									project = savedProject;
+									project.addEntry(entry);
+								} catch (Exception ex) {
+									EntityController.getInstance().create(project);
+								}
+								entry.setProject(project);
+								EntityController.getInstance().create(entry);
+							}
+						} catch (IOException ex) {
+							LOG.log(Level.SEVERE, "Error importing data.", ex);
+						}
 					}
 				});
 

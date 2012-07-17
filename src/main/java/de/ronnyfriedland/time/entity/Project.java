@@ -6,6 +6,7 @@ import java.util.HashSet;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -34,7 +35,9 @@ public class Project extends AbstractEntity {
 	private String name;
 	@Column(name = "DESCRIPTION", nullable = true)
 	private String description;
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "project")
+	@Column(name = "ENABLED", nullable = false)
+	private Boolean enabled = Boolean.TRUE;
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "project", fetch=FetchType.LAZY)
 	@JoinColumn(name = "ENTRIES_UUID")
 	private Collection<Entry> entries;
 
@@ -64,6 +67,14 @@ public class Project extends AbstractEntity {
 		this.description = description;
 	}
 
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+
 	public Collection<Entry> getEntries() {
 		return entries;
 	}
@@ -85,6 +96,7 @@ public class Project extends AbstractEntity {
 	public String toString() {
 		StringBuilder sbuild = new StringBuilder(super.toString());
 		sbuild.append(String.format("[name: %s, ", getName()));
+		sbuild.append(String.format("enabled: %s, ", getEnabled()));
 		sbuild.append(String.format("description: %s]", getDescription()));
 		return sbuild.toString();
 	}

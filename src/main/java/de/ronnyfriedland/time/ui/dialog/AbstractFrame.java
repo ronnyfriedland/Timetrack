@@ -13,35 +13,35 @@ import javax.swing.JFrame;
  */
 public abstract class AbstractFrame extends JFrame {
 
-    private static final long serialVersionUID = 7680216672898188405L;
+	private static final long serialVersionUID = 7680216672898188405L;
 
-    public AbstractFrame(final String title, final int width, final int height) {
-        Dimension frameSize = new Dimension(width, height);
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int top = (screenSize.height - frameSize.height) / 2;
-        int left = (screenSize.width - frameSize.width) / 2;
-        setSize(frameSize);
-        setLocation(left, top);
+	public AbstractFrame(final String title, final int width, final int height) {
+		Dimension frameSize = new Dimension(width + 5, height + 5);
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int top = (screenSize.height - frameSize.height) / 2;
+		int left = (screenSize.width - frameSize.width) / 2;
+		setSize(frameSize);
+		setLocation(left, top);
+		setLayout(null);
+		setTitle(title);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		setResizable(false);
+		setAlwaysOnTop(true);
+		getRootPane().setBorder(BorderFactory.createLineBorder(Color.BLACK));
+	}
 
-        setLayout(null);
-        setTitle(title);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setResizable(false);
-        setAlwaysOnTop(true);
-    }
+	protected void formatError(final JComponent component) {
+		component.setBorder(BorderFactory.createLineBorder(Color.RED));
+	}
 
-    protected void formatError(final JComponent component) {
-        component.setBorder(BorderFactory.createLineBorder(Color.RED));
-    }
+	protected void formatOk(final JComponent... components) {
+		for (JComponent component : components) {
+			component.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		}
+	}
 
-    protected void formatOk(final JComponent... components) {
-        for (JComponent component : components) {
-            component.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-        }
-    }
-
-    /**
-     * Frame-spezifische Konfiguration.
-     */
-    protected abstract void createUI();
+	/**
+	 * Frame-spezifische Konfiguration.
+	 */
+	protected abstract void createUI();
 }

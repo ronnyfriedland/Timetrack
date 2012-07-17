@@ -7,10 +7,12 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.PostLoad;
 import javax.persistence.PostUpdate;
 import javax.persistence.Temporal;
@@ -27,17 +29,21 @@ import de.ronnyfriedland.time.entity.validation.NotBlank;
  * @author Ronny Friedland
  */
 @Entity
-@NamedQueries({ @NamedQuery(name = Entry.QUERY_FIND_FROM_TO, query = "SELECT e FROM Entry e WHERE e.date >= :from AND e.date < :to ORDER BY e.date") })
+@NamedQueries({ @NamedQuery(name = Entry.QUERY_FIND_FROM_TO, query = "SELECT e FROM Entry e WHERE e.date >= :from AND e.date < :to ORDER BY e.date"),
+	@NamedQuery(name = Entry.QUERY_FIND_BY_STATE, query = "SELECT e FROM Entry e WHERE e.state = :state")})
 public class Entry extends AbstractEntity {
 
 	public static final String DATESTRINGFORMAT = "dd.MM.yyyy";
 
+	public static final String QUERY_FIND_BY_STATE = "Entry.findByState";
 	public static final String QUERY_FIND_FROM_TO = "Entry.findFromTo";
 
 	public static final String PARAM_DATE_FROM = "from";
 	public static final String PARAM_DATE_TO = "to";
+	public static final String PARAM_STATE = "state";
 
 	private static final long serialVersionUID = -6406081124935463200L;
+	
 	@NotBlank
 	@IsFloat
 	@Column(name = "DURATION", nullable = false)
@@ -51,10 +57,16 @@ public class Entry extends AbstractEntity {
 	@NotBlank
 	@Column(name = "DESCRIPTION", nullable = false)
 	private String description;
+	@Column(name = "ENABLED", nullable = false)
+	private Boolean enabled = Boolean.TRUE;
 	@NotNull
-	@ManyToOne(cascade = CascadeType.PERSIST, optional = false)
+	@ManyToOne(cascade = CascadeType.PERSIST, optional = false, fetch=FetchType.LAZY)
 	@JoinColumn(name = "PROJECT_UUID", nullable = false)
 	private Project project;
+	@NotNull
+	@OneToOne(cascade = CascadeType.ALL, optional = false, fetch=FetchType.LAZY)
+	@JoinColumn(name = "ENTRYSTATE_UUID", nullable = false)
+	private EntryState state;
 
 	public Entry() {
 		super();
@@ -69,7 +81,7 @@ public class Entry extends AbstractEntity {
 	}
 
 	public void setDuration(final String duration) {
-		this.duration = duration;
+		this.duration = duration.replaceAll(",", ".").trim();
 	}
 
 	public String getDescription() {
@@ -78,6 +90,14 @@ public class Entry extends AbstractEntity {
 
 	public void setDescription(final String description) {
 		this.description = description;
+	}
+
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	public Project getProject() {
@@ -110,6 +130,14 @@ public class Entry extends AbstractEntity {
 		}
 	}
 
+	public EntryState getState() {
+		return state;
+	}
+	
+	public void setState(EntryState state) {
+		this.state = state;
+	}
+	
 	@PostLoad
 	@PostUpdate
 	public void updateDateString() {
@@ -127,6 +155,8 @@ public class Entry extends AbstractEntity {
 		sbuild.append(String.format("[duration: %s, ", getDuration()));
 		sbuild.append(String.format("date: %s, ", getDate()));
 		sbuild.append(String.format("description: %s, ", getDescription()));
+		sbuild.append(String.format("enabled: %s, ", getEnabled()));
+		sbuild.append(String.format("state: %s, ", getState()));
 		sbuild.append(String.format("project: %s]", getProject()));
 		return sbuild.toString();
 	}

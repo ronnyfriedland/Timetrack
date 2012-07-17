@@ -129,10 +129,10 @@ public class NewProjectFrame extends AbstractFrame {
 					setVisible(false);
 				} catch (PersistenceException ex) {
 					LOG.log(Level.SEVERE, "Error saving new project", ex);
-					formatError(save);
+					formatError(getRootPane());
 				} catch (ConstraintViolationException ex) {
 					LOG.log(Level.SEVERE, "Error saving new project", ex);
-					formatError(save);
+					formatError(getRootPane());
 				}
 			}
 		});

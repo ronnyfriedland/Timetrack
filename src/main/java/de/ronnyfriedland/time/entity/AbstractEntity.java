@@ -31,9 +31,6 @@ public abstract class AbstractEntity implements Serializable {
 	@Column(name = "LASTMODIFIEDDATE", nullable = false)
 	private final Date lastModifiedDate;
 
-	@Column(name = "ENABLED", nullable = false)
-	private Boolean enabled = Boolean.TRUE;
-
 	public AbstractEntity() {
 		this(UUID.randomUUID().toString());
 	}
@@ -49,14 +46,6 @@ public abstract class AbstractEntity implements Serializable {
 
 	public Date getLastModifiedDate() {
 		return lastModifiedDate;
-	}
-
-	public Boolean getEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(Boolean enabled) {
-		this.enabled = enabled;
 	}
 
 	/**
@@ -92,7 +81,6 @@ public abstract class AbstractEntity implements Serializable {
 	public String toString() {
 		StringBuilder sbuild = new StringBuilder(super.toString());
 		sbuild.append(String.format("[uuid: %s, ", getUuid()));
-		sbuild.append(String.format("enabled: %s, ", getEnabled()));
 		sbuild.append(String.format("lastModifiedDate: %s]", getLastModifiedDate()));
 		return sbuild.toString();
 	}

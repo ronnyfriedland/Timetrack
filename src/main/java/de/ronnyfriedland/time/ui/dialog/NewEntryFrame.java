@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -18,6 +19,7 @@ import java.util.logging.Logger;
 
 import javax.persistence.PersistenceException;
 import javax.swing.DefaultListSelectionModel;
+import javax.swing.ImageIcon;
 import javax.swing.InputVerifier;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -39,6 +41,8 @@ import org.apache.commons.lang.StringUtils;
 
 import de.ronnyfriedland.time.config.Messages;
 import de.ronnyfriedland.time.entity.Entry;
+import de.ronnyfriedland.time.entity.EntryState;
+import de.ronnyfriedland.time.entity.EntryState.State;
 import de.ronnyfriedland.time.entity.Project;
 import de.ronnyfriedland.time.logic.EntityController;
 import de.ronnyfriedland.time.sort.SortParam;
@@ -62,6 +66,10 @@ public class NewEntryFrame extends AbstractFrame {
 	private final JScrollPane scrollPaneProjects = new JScrollPane(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
 	        ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 	private final JCheckBox showDisabledProjects = new JCheckBox(Messages.SHOW_DISABLED_PROJECT.getMessage());
+	private final JButton start = new JButton(new ImageIcon(Thread.currentThread().getContextClassLoader()
+	        .getResource("images/start.png")));
+	private final JButton stop = new JButton(new ImageIcon(Thread.currentThread().getContextClassLoader()
+	        .getResource("images/stop.png")));
 	private final JButton refresh = new JButton(Messages.REFRESH_PROJECT.getMessage());
 	private final JButton save = new JButton(Messages.SAVE.getMessage());
 	private final JButton delete = new JButton(Messages.DELETE.getMessage());
@@ -90,7 +98,7 @@ public class NewEntryFrame extends AbstractFrame {
 				setBackground(Color.WHITE);
 			}
 			setText(data.projectName + " (" + data.entryCount + ")");
-			setToolTipText(data.projectName);
+			setToolTipText(data.projectName + " (" + data.description + ")");
 			return this;
 		}
 	}
@@ -102,13 +110,20 @@ public class NewEntryFrame extends AbstractFrame {
 
 	private class ProjectData {
 		private final String projectName;
+		private final String description;
 		private final Integer entryCount;
 		private final Boolean enabled;
 
-		public ProjectData(final String projectName, final boolean enabled, final Integer entryCount) {
+		public ProjectData(final String projectName, final String description, final boolean enabled,
+		        final Integer entryCount) {
 			this.projectName = projectName;
 			this.enabled = enabled;
 			this.entryCount = entryCount;
+			if (!StringUtils.isBlank(description)) {
+				this.description = description;
+			} else {
+				this.description = StringUtils.EMPTY;
+			}
 		}
 	}
 
@@ -117,17 +132,25 @@ public class NewEntryFrame extends AbstractFrame {
 	public NewEntryFrame() {
 		super(Messages.CREATE_NEW_ENTRY.getMessage(), 320, 300);
 		createUI();
-
 		loadProjectListData(false);
 	}
 
 	public NewEntryFrame(final Entry entry) {
 		this();
 		uuid = entry.getUuid();
-
 		date.setText(entry.getDateString());
 		description.setText(entry.getDescription());
 		duration.setText(entry.getDuration());
+		switch (entry.getState().getState()) {
+		case OK:
+		case WARN:
+			duration.setEditable(false);
+			break;
+		case FIXED:
+		case STOPPED:
+		default:
+			break;
+		}
 		ListModel model = projects.getModel();
 		for (int i = 0; i < model.getSize(); i++) {
 			ProjectData item = (ProjectData) model.getElementAt(i);
@@ -135,7 +158,6 @@ public class NewEntryFrame extends AbstractFrame {
 				projects.setSelectedIndex(i);
 			}
 		}
-
 		delete.setEnabled(true);
 	}
 
@@ -205,7 +227,8 @@ public class NewEntryFrame extends AbstractFrame {
 		labelDuration.setBounds(10, 60, 100, 24);
 
 		duration.setName("duration");
-		duration.setBounds(110, 60, 200, 24);
+		duration.setBounds(110, 60, 150, 24);
+		duration.setText("0");
 		duration.addKeyListener(new TimeTableKeyAdapter());
 		duration.setInputVerifier(new InputVerifier() {
 			/**
@@ -276,6 +299,49 @@ public class NewEntryFrame extends AbstractFrame {
 
 		showDisabledProjects.setBounds(10, 185, 300, 24);
 
+		start.setBounds(265, 62, 20, 20);
+		start.addKeyListener(new TimeTableKeyAdapter());
+		start.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent arg0) {
+				Entry entry;
+				if (null == uuid) {
+					entry = createEntry(date.getText(), description.getText(), duration.getText(), State.OK,
+					        (ProjectData) projects.getSelectedValue());
+					if (null != entry) {
+						setVisible(false);
+					}
+				}
+			}
+		});
+
+		stop.setBounds(290, 62, 20, 20);
+		stop.addKeyListener(new TimeTableKeyAdapter());
+		stop.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent arg0) {
+				Entry entry = null;
+				if (null != uuid) {
+					entry = EntityController.getInstance().findById(Entry.class, uuid);
+					EntryState entryState = entry.getState();
+					if (!State.STOPPED.equals(entryState.getState()) && !State.FIXED.equals(entryState.getState())) {
+						// update entrystate
+						entryState.setEnd(Calendar.getInstance().getTime());
+						entryState.setState(State.STOPPED);
+						// calculate duration
+						Date start = entryState.getStart();
+						Date end = entryState.getEnd();
+						// update entry
+						entry.setDuration(String.format("%.2f",
+						        new Float(end.getTime() - start.getTime()) / 1000 / 60 / 60));
+						EntityController.getInstance().update(entry);
+
+						setVisible(false);
+					}
+				}
+			}
+		});
+
 		refresh.setBounds(10, 215, 300, 24);
 		refresh.addKeyListener(new TimeTableKeyAdapter());
 		refresh.addActionListener(new ActionListener() {
@@ -290,43 +356,17 @@ public class NewEntryFrame extends AbstractFrame {
 		save.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent e) {
-				Entry entry;
+				Entry entry = null;
 				if (null == uuid) {
-					entry = new Entry();
+					entry = createEntry(date.getText(), description.getText(), duration.getText(), State.FIXED,
+					        (ProjectData) projects.getSelectedValue());
 				} else {
 					entry = EntityController.getInstance().findById(Entry.class, uuid);
+					entry = updateEntry(entry, date.getText(), description.getText(), duration.getText(),
+					        (ProjectData) projects.getSelectedValue());
 				}
-				if (!StringUtils.isBlank(date.getText())) {
-					entry.setDateString(date.getText());
-				}
-				if (!StringUtils.isBlank(description.getText())) {
-					entry.setDescription(description.getText());
-				}
-				if (!StringUtils.isBlank(duration.getText())) {
-					entry.setDuration(duration.getText().replaceAll(",", ".").trim());
-				}
-				ProjectData projectData = (ProjectData) projects.getSelectedValue();
-				if (null != projectData) {
-					Map<String, Object> parameters = new HashMap<String, Object>();
-					parameters.put(Project.PARAM_NAME, projectData.projectName);
-					Project selectedProject = EntityController.getInstance().findSingleResultByParameter(Project.class,
-					        Project.QUERY_FINDBYNAME, parameters);
-					selectedProject.addEntry(entry);
-					entry.setProject(selectedProject);
-				}
-				try {
-					if (null != uuid) {
-						EntityController.getInstance().update(entry);
-					} else {
-						EntityController.getInstance().create(entry);
-					}
+				if (null != entry) {
 					setVisible(false);
-				} catch (PersistenceException ex) {
-					LOG.log(Level.SEVERE, "Error saving new entry", ex);
-					formatOk(save);
-				} catch (ConstraintViolationException ex) {
-					LOG.log(Level.SEVERE, "Error saving new entry", ex);
-					formatError(save);
 				}
 			}
 		});
@@ -340,7 +380,10 @@ public class NewEntryFrame extends AbstractFrame {
 				if (null != uuid) {
 					try {
 						Entry entry = EntityController.getInstance().findById(Entry.class, uuid);
+						Project project = entry.getProject();
+						project.getEntries().remove(entry);
 						EntityController.getInstance().delete(entry);
+						EntityController.getInstance().update(project);
 						setVisible(false);
 					} catch (PersistenceException ex) {
 						LOG.log(Level.SEVERE, "Error removing project", ex);
@@ -360,6 +403,8 @@ public class NewEntryFrame extends AbstractFrame {
 		getContentPane().add(duration);
 		getContentPane().add(scrollPaneProjects);
 		getContentPane().add(showDisabledProjects);
+		getContentPane().add(start);
+		getContentPane().add(stop);
 		getContentPane().add(refresh);
 		getContentPane().add(save);
 		getContentPane().add(delete);
@@ -371,10 +416,79 @@ public class NewEntryFrame extends AbstractFrame {
 		ProjectData[] projectNameList = new ProjectData[projectList.size()];
 		int i = 0;
 		for (Project project : projectList) {
-			projectNameList[i] = new ProjectData(project.getName(), project.getEnabled(), project.getEntries().size());
+			projectNameList[i] = new ProjectData(project.getName(), project.getDescription(), project.getEnabled(),
+			        project.getEntries().size());
 			i++;
 		}
 		projects.setListData(projectNameList);
+	}
+
+	private Entry createEntry(final String date, final String description, final String duration, final State state,
+	        final ProjectData projectData) {
+		Entry result = null;
+		Entry entry = new Entry();
+		if (!StringUtils.isBlank(date)) {
+			entry.setDateString(date);
+		}
+		if (!StringUtils.isBlank(description)) {
+			entry.setDescription(description);
+		}
+		if (!StringUtils.isBlank(duration)) {
+			entry.setDuration(duration);
+		}
+		if (null != projectData) {
+			Map<String, Object> parameters = new HashMap<String, Object>();
+			parameters.put(Project.PARAM_NAME, projectData.projectName);
+			Project selectedProject = EntityController.getInstance().findSingleResultByParameter(Project.class,
+			        Project.QUERY_FINDBYNAME, parameters);
+			selectedProject.addEntry(entry);
+			entry.setProject(selectedProject);
+			entry.setState(new EntryState(Calendar.getInstance().getTime(), state));
+		}
+		try {
+			EntityController.getInstance().create(entry);
+			result = entry;
+		} catch (PersistenceException ex) {
+			LOG.log(Level.SEVERE, "Error creating new entry", ex);
+			formatError(getRootPane());
+		} catch (ConstraintViolationException ex) {
+			LOG.log(Level.SEVERE, "Error creating new entry", ex);
+			formatError(getRootPane());
+		}
+		return result;
+	}
+
+	private Entry updateEntry(final Entry entry, final String date, final String description, final String duration,
+	        final ProjectData projectData) {
+		Entry result = null;
+		if (!StringUtils.isBlank(date)) {
+			entry.setDateString(date);
+		}
+		if (!StringUtils.isBlank(description)) {
+			entry.setDescription(description);
+		}
+		if (!StringUtils.isBlank(duration)) {
+			entry.setDuration(duration);
+		}
+		if (null != projectData) {
+			Map<String, Object> parameters = new HashMap<String, Object>();
+			parameters.put(Project.PARAM_NAME, projectData.projectName);
+			Project selectedProject = EntityController.getInstance().findSingleResultByParameter(Project.class,
+			        Project.QUERY_FINDBYNAME, parameters);
+			selectedProject.addEntry(entry);
+			entry.setProject(selectedProject);
+		}
+		try {
+			EntityController.getInstance().update(entry);
+			result = entry;
+		} catch (PersistenceException ex) {
+			LOG.log(Level.SEVERE, "Error updating entry", ex);
+			formatError(getRootPane());
+		} catch (ConstraintViolationException ex) {
+			LOG.log(Level.SEVERE, "Error updating entry", ex);
+			formatError(getRootPane());
+		}
+		return result;
 	}
 
 	public static void main(final String[] args) {
