@@ -97,43 +97,43 @@
 					</dependency>
 				</dependencies>
 			</plugin>
-                        <plugin>
-                                <executions>
-                                        <execution>
-                                                <goals>
-                                                        <goal>check</goal>
-                                                </goals>
-                                                <phase>validate</phase>
-                                        </execution>
-                                </executions>
-                                <groupId>org.apache.maven.plugins</groupId>
-                                <artifactId>maven-checkstyle-plugin</artifactId>
-                                <version>2.9.1</version>
-                                <configuration>
-                                        <configLocation>checkstyle.xml</configLocation>
+			<plugin>
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<phase>validate</phase>
+					</execution>
+				</executions>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>2.9.1</version>
+				<configuration>
+					<configLocation>checkstyle.xml</configLocation>
 					<encoding>utf-8</encoding>
 					<failOnViolation>false</failOnViolation>
-                                </configuration>
-                        </plugin>
-                        <plugin>
-                                <executions>
-                                        <execution>
-                                                <goals>
-                                                        <goal>check</goal>
-                                                </goals>
-                                                <phase>validate</phase>
-                                        </execution>
-                                </executions>
-                                <groupId>org.apache.maven.plugins</groupId>
-                                <artifactId>maven-pmd-plugin</artifactId>
-                                <version>2.7.1</version>
-                                <configuration>
+				</configuration>
+			</plugin>
+			<plugin>
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<phase>validate</phase>
+					</execution>
+				</executions>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>2.7.1</version>
+				<configuration>
 					<sourceEncoding>utf-8</sourceEncoding>
 					<targetJdk>1.6</targetJdk>
 					<minimumTokens>100</minimumTokens>
-                                        <failOnViolation>false</failOnViolation>
-                                </configuration>
-                        </plugin>
+					<failOnViolation>false</failOnViolation>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
