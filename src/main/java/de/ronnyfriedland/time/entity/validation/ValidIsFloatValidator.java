@@ -32,7 +32,6 @@ public class ValidIsFloatValidator implements ConstraintValidator<IsFloat, Strin
 	@Override
 	public boolean isValid(final String value, final ConstraintValidatorContext context) {
 		boolean isValid = false;
-		;
 		if (null != value) {
 			String result = value.replaceAll(",", ".").trim();
 			try {
