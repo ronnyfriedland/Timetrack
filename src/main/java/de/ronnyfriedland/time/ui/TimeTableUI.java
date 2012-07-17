@@ -18,6 +18,7 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
@@ -204,6 +205,8 @@ public final class TimeTableUI {
                                 entry.setProject(project);
                                 EntityController.getInstance().create(entry);
                             }
+                            JOptionPane.showMessageDialog(null,
+                                    Messages.IMPORT_SUCCESSFUL.getMessage(String.valueOf(entries.size())));
                         } catch (IOException ex) {
                             LOG.log(Level.SEVERE, "Error importing data.", ex);
                         }
