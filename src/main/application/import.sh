@@ -1,1 +1,0 @@
-java -cp lib:timetable-${project.version}.jar de.ronnyfriedland.time.dataimport.DatabaseImport $1

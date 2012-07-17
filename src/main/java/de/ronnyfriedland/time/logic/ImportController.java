@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -14,6 +15,8 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import de.ronnyfriedland.time.entity.Entry;
+import de.ronnyfriedland.time.entity.EntryState;
+import de.ronnyfriedland.time.entity.EntryState.State;
 import de.ronnyfriedland.time.entity.Project;
 
 /**
@@ -42,8 +45,8 @@ public final class ImportController {
 		for (int i = 0; i < numberOfSheets; i++) {
 			Sheet sheet = wb.getSheetAt(i);
 			if (!TAB_OVERVIEW.equalsIgnoreCase(sheet.getSheetName())) { // skip
-																		// overview
-																		// tab
+				                                                        // overview
+				                                                        // tab
 				Iterator<Row> rowIter = sheet.iterator();
 				while (rowIter.hasNext()) {
 					Row row = rowIter.next();
@@ -52,6 +55,7 @@ public final class ImportController {
 						e.setDateString(row.getCell(0).getStringCellValue());
 						e.setDescription(row.getCell(2).getStringCellValue());
 						e.setDuration(row.getCell(3).getStringCellValue());
+						e.setState(new EntryState(Calendar.getInstance().getTime(), State.FIXED));
 						Project p = new Project();
 						p.setEnabled(true);
 						p.setName(row.getCell(1).getStringCellValue());
