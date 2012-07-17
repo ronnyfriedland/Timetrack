@@ -26,6 +26,11 @@ public class EntryState extends AbstractEntity {
     public static final String PARAM_DATE = "date";
     public static final String PARAM_STATE = "state";
 
+    public static String getDuration(final Date start, final Date end) {
+        // calculate duration
+        return String.format("%.2f", new Float(end.getTime() - start.getTime()) / 1000 / 60 / 60);
+    }
+
     private static final long serialVersionUID = 4704359592289513635L;
 
     public enum State {

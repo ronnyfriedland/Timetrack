@@ -1,8 +1,5 @@
 package de.ronnyfriedland.time.logic;
 
-import java.text.ParseException;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,8 +13,6 @@ import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
 
-import de.ronnyfriedland.time.logic.jobs.ShowMessagePopupJob;
-
 /**
  * Controller für die Scheduler-Steuerung.
  * 
@@ -25,66 +20,71 @@ import de.ronnyfriedland.time.logic.jobs.ShowMessagePopupJob;
  */
 public final class QuartzController {
 
-    private static final Logger LOG = Logger.getLogger(QuartzController.class.getName());
-    private static final Set<Class<? extends Job>> JOBS = new HashSet<Class<? extends Job>>();
-    static {
-        JOBS.add(ShowMessagePopupJob.class);
-    }
-    private static QuartzController instance;
+	private static final Logger LOG = Logger.getLogger(QuartzController.class.getName());
 
-    /**
-     * Liefert eine Instanz von {@link EntityController}.
-     * 
-     * @return the {@link EntityController}
-     */
-    public static QuartzController getInstance() {
-        if (null == instance) {
-            instance = new QuartzController();
-        }
-        return instance;
-    }
+	private static QuartzController instance;
 
-    private QuartzController() {
-    }
+	/**
+	 * Liefert eine Instanz von {@link EntityController}.
+	 * 
+	 * @return the {@link EntityController}
+	 * @throws SchedulerException
+	 *             Fehler beim Initialisieren des Schedulers
+	 */
+	public static QuartzController getInstance() throws SchedulerException {
+		synchronized (QuartzController.class) {
+			if (null == instance) {
+				instance = new QuartzController();
+			}
+		}
+		return instance;
+	}
 
-    private Scheduler sched;
+	private QuartzController() throws SchedulerException {
+		StdSchedulerFactory schdFact = new StdSchedulerFactory(Thread.currentThread().getContextClassLoader()
+		        .getResource("quartz.properties").getFile());
+		sched = schdFact.getScheduler();
+	}
 
-    /**
-     * Initialisiert den Scheduler.
-     * 
-     * @param cronExpression Cron-Ausdruck für Trigger
-     * @throws SchedulerException Fehler beim Initialisieren des Schedulers
-     * @throws ParseException Fehler beim Parsen des Cron-Ausdrucks
-     */
-    public void initScheduler(final String cronExpression) throws SchedulerException, ParseException {
-        sched = StdSchedulerFactory.getDefaultScheduler();
-        for (Class<? extends Job> clazz : JOBS) {
-            try {
-                String jobname = (String) clazz.getDeclaredField("JOB").get(null);
-                String triggername = (String) clazz.getDeclaredField("TRIGGER").get(null);
-                if (LOG.isLoggable(Level.FINE)) {
-                    LOG.fine(String.format("Scheduling job %s.", jobname));
-                }
+	private final Scheduler sched;
 
-                JobDetail job = JobBuilder.newJob(clazz).withIdentity(jobname).build();
+	/**
+	 * Initialisiert den Scheduler.
+	 * 
+	 * @param jobClazz
+	 *            Jobklasse
+	 * @param cronExpression
+	 *            Cron-Ausdruck für Trigger
+	 */
+	public void initScheduler(final Class<? extends Job> jobClazz, final String cronExpression) {
+		try {
+			String jobname = (String) jobClazz.getDeclaredField("JOB").get(null);
+			String triggername = (String) jobClazz.getDeclaredField("TRIGGER").get(null);
+			if (LOG.isLoggable(Level.FINE)) {
+				LOG.fine(String.format("Scheduling job %s.", jobname));
+			}
 
-                Trigger trigger = TriggerBuilder.newTrigger().withIdentity(triggername).forJob(jobname)
-                        .withSchedule(CronScheduleBuilder.cronSchedule(cronExpression)).build();
+			JobDetail job = JobBuilder.newJob(jobClazz).withIdentity(jobname).build();
 
-                sched.scheduleJob(job, trigger);
-                sched.start();
-            } catch (Exception ex) {
-                LOG.log(Level.SEVERE, "Error creting scheduler.", ex);
-            }
-        }
-    }
+			Trigger trigger = TriggerBuilder.newTrigger().withIdentity(triggername).forJob(jobname)
+			        .withSchedule(CronScheduleBuilder.cronSchedule(cronExpression)).build();
 
-    /**
-     * Beendet den Scheduler.
-     * 
-     * @throws SchedulerException Fehler während des Shutdown
-     */
-    public void shutdownScheduler() throws SchedulerException {
-        sched.shutdown();
-    }
+			sched.scheduleJob(job, trigger);
+			if (!sched.isStarted()) {
+				sched.start();
+			}
+		} catch (Exception ex) {
+			LOG.log(Level.SEVERE, "Error creating scheduler.", ex);
+		}
+	}
+
+	/**
+	 * Beendet den Scheduler.
+	 * 
+	 * @throws SchedulerException
+	 *             Fehler während des Shutdown
+	 */
+	public void shutdownScheduler() throws SchedulerException {
+		sched.shutdown();
+	}
 }
