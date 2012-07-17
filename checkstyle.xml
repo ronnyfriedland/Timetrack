@@ -41,6 +41,7 @@ limitations under the License.
     <module name="JavadocMethod">
       <property name="allowUndeclaredRTE" value="true"/>
       <property name="allowThrowsTagsForSubclasses" value="true"/>
+      <property name="scope" value="public"/>
     </module>
  </module>
 </module>

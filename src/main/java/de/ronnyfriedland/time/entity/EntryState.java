@@ -21,90 +21,89 @@ import javax.validation.constraints.NotNull;
 @NamedQueries({ @NamedQuery(name = EntryState.QUERY_FIND_BY_STATE_AND_DATE, query = "SELECT e FROM EntryState e WHERE e.state = :state AND e.lastModifiedDate < :date") })
 public class EntryState extends AbstractEntity {
 
-	public static final String QUERY_FIND_BY_STATE_AND_DATE = "EntryState.findByStateAndDate";
+    public static final String QUERY_FIND_BY_STATE_AND_DATE = "EntryState.findByStateAndDate";
 
-	public static final String PARAM_DATE = "date";
-	public static final String PARAM_STATE = "state";
+    public static final String PARAM_DATE = "date";
+    public static final String PARAM_STATE = "state";
 
-	private static final long serialVersionUID = 4704359592289513635L;
+    private static final long serialVersionUID = 4704359592289513635L;
 
-	public enum State {
-		/** Entry started - everything is ok */
-		OK, 
-		/** Entry is running a period of time and reached warn time */
-		WARN, 
-		/** Entry was stopped (manually or automatically) */
-		STOPPED, 
-		/** Entry is fixed (no workflow) */
-		FIXED;
-	}
+    public enum State {
+        /** Entry started - everything is ok */
+        OK,
+        /** Entry is running a period of time and reached warn time */
+        WARN,
+        /** Entry was stopped (manually or automatically) */
+        STOPPED,
+        /** Entry is fixed (no workflow) */
+        FIXED;
+    }
 
-	@NotNull
-	@Column(name = "STATE", nullable = false)
-	@Enumerated(EnumType.STRING)
-	private State state = State.OK;
-	@NotNull
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "STARTTIME", nullable = false)
-	private Date start;
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "ENDTIME", nullable = true)
-	private Date end;
+    @NotNull
+    @Column(name = "STATE", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private State state = State.OK;
+    @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "STARTTIME", nullable = false)
+    private Date start;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "ENDTIME", nullable = true)
+    private Date end;
 
-	public EntryState() {
-		super();
-	}
-	
-	public EntryState(final Date start) {
-		super();
-		setStart(start);
-	}
+    public EntryState() {
+        super();
+    }
 
-	public EntryState(final Date start, final State state) {
-		this(start);
-		setState(state);
-	}
+    public EntryState(final Date start) {
+        super();
+        setStart(start);
+    }
 
-	
-	public EntryState(final String uuid) {
-		super(uuid);
-	}
+    public EntryState(final Date start, final State state) {
+        this(start);
+        setState(state);
+    }
 
-	public State getState() {
-		return state;
-	}
+    public EntryState(final String uuid) {
+        super(uuid);
+    }
 
-	public void setState(State state) {
-		this.state = state;
-	}
+    public State getState() {
+        return state;
+    }
 
-	public Date getStart() {
-		return start;
-	}
+    public void setState(State state) {
+        this.state = state;
+    }
 
-	public void setStart(Date start) {
-		this.start = start;
-	}
+    public Date getStart() {
+        return start;
+    }
 
-	public Date getEnd() {
-		return end;
-	}
+    public void setStart(Date start) {
+        this.start = start;
+    }
 
-	public void setEnd(Date end) {
-		this.end = end;
-	}
-	
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		StringBuilder sbuild = new StringBuilder(super.toString());
-		sbuild.append(String.format("[state: %s, ", getState()));
-		sbuild.append(String.format("start: %s, ", getStart()));
-		sbuild.append(String.format("end: %s]", getEnd()));
-		return sbuild.toString();
-	}
+    public Date getEnd() {
+        return end;
+    }
+
+    public void setEnd(Date end) {
+        this.end = end;
+    }
+
+    /**
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        StringBuilder sbuild = new StringBuilder(super.toString());
+        sbuild.append(String.format("[state: %s, ", getState()));
+        sbuild.append(String.format("start: %s, ", getStart()));
+        sbuild.append(String.format("end: %s]", getEnd()));
+        return sbuild.toString();
+    }
 }
