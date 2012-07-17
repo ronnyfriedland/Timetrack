@@ -13,10 +13,9 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 import javax.validation.ReportAsSingleViolation;
 
-import org.apache.commons.lang.StringUtils;
-
 /**
- * Validator der nur nicht leere Zeichenketten zulässt. Siehe {@link StringUtils}.isBlank().
+ * Validator der nur nicht leere Zeichenketten zulässt. Siehe
+ * StringUtils.isBlank().
  * 
  * @author Ronny Friedland
  */
