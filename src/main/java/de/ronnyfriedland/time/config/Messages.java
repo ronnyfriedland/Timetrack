@@ -73,7 +73,8 @@ public enum Messages {
      * Liefert die Fehlermeldung.
      * 
      * @param customProperties
-     * @return Fehlermeldung
+     *            replace tokens with given properties
+     * @return Fehlermeldung with replaced tokens
      */
     public String getMessage(final String... customProperties) {
         return MessageProperties.getString(message, 0 == customProperties.length ? properties : customProperties);
