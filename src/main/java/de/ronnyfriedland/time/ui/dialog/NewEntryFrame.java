@@ -425,26 +425,26 @@ public class NewEntryFrame extends AbstractFrame {
     private Entry createEntry(final String date, final String description, final String duration, final State state,
             final ProjectData projectData) {
         Entry result = null;
-        Entry entry = new Entry();
-        if (!StringUtils.isBlank(date)) {
-            entry.setDateString(date);
-        }
-        if (!StringUtils.isBlank(description)) {
-            entry.setDescription(description);
-        }
-        if (!StringUtils.isBlank(duration)) {
-            entry.setDuration(duration);
-        }
-        if (null != projectData) {
-            Map<String, Object> parameters = new HashMap<String, Object>();
-            parameters.put(Project.PARAM_NAME, projectData.projectName);
-            Project selectedProject = EntityController.getInstance().findSingleResultByParameter(Project.class,
-                    Project.QUERY_FINDBYNAME, parameters);
-            selectedProject.addEntry(entry);
-            entry.setProject(selectedProject);
-            entry.setState(new EntryState(Calendar.getInstance().getTime(), state));
-        }
         try {
+            Entry entry = new Entry();
+            if (!StringUtils.isBlank(date)) {
+                entry.setDateString(date);
+            }
+            if (!StringUtils.isBlank(description)) {
+                entry.setDescription(description);
+            }
+            if (!StringUtils.isBlank(duration)) {
+                entry.setDuration(duration);
+            }
+            if (null != projectData) {
+                Map<String, Object> parameters = new HashMap<String, Object>();
+                parameters.put(Project.PARAM_NAME, projectData.projectName);
+                Project selectedProject = EntityController.getInstance().findSingleResultByParameter(Project.class,
+                        Project.QUERY_FINDBYNAME, parameters);
+                selectedProject.addEntry(entry);
+                entry.setProject(selectedProject);
+                entry.setState(new EntryState(Calendar.getInstance().getTime(), state));
+            }
             EntityController.getInstance().create(entry);
             result = entry;
         } catch (PersistenceException ex) {
@@ -460,24 +460,28 @@ public class NewEntryFrame extends AbstractFrame {
     private Entry updateEntry(final Entry entry, final String date, final String description, final String duration,
             final ProjectData projectData) {
         Entry result = null;
-        if (!StringUtils.isBlank(date)) {
-            entry.setDateString(date);
-        }
-        if (!StringUtils.isBlank(description)) {
-            entry.setDescription(description);
-        }
-        if (!StringUtils.isBlank(duration)) {
-            entry.setDuration(duration);
-        }
-        if (null != projectData) {
-            Map<String, Object> parameters = new HashMap<String, Object>();
-            parameters.put(Project.PARAM_NAME, projectData.projectName);
-            Project selectedProject = EntityController.getInstance().findSingleResultByParameter(Project.class,
-                    Project.QUERY_FINDBYNAME, parameters);
-            selectedProject.addEntry(entry);
-            entry.setProject(selectedProject);
-        }
         try {
+            if (!StringUtils.isBlank(date)) {
+                entry.setDateString(date);
+            }
+            if (!StringUtils.isBlank(description)) {
+                entry.setDescription(description);
+            }
+            if (!StringUtils.isBlank(duration)) {
+                entry.setDuration(duration);
+            }
+            if (null != projectData) {
+                Map<String, Object> parameters = new HashMap<String, Object>();
+                parameters.put(Project.PARAM_NAME, projectData.projectName);
+                Project selectedProject = EntityController.getInstance().findSingleResultByParameter(Project.class,
+                        Project.QUERY_FINDBYNAME, parameters);
+                if (!entry.getProject().equals(selectedProject)) {
+                    entry.getProject().getEntries().remove(entry);
+                    selectedProject.addEntry(entry);
+                    entry.setProject(selectedProject);
+                    EntityController.getInstance().update(entry.getProject());
+                }
+            }
             EntityController.getInstance().update(entry);
             result = entry;
         } catch (PersistenceException ex) {
