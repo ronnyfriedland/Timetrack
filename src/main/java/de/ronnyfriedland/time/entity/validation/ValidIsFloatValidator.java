@@ -11,36 +11,36 @@ import javax.validation.ConstraintValidatorContext;
  */
 public class ValidIsFloatValidator implements ConstraintValidator<IsFloat, String> {
 
-	/**
-	 * 
-	 * {@inheritDoc}
-	 * 
-	 * @see javax.validation.ConstraintValidator#initialize(java.lang.annotation.Annotation)
-	 */
-	@Override
-	public void initialize(final IsFloat isFloat) {
-		// initialize
-	}
+    /**
+     * 
+     * {@inheritDoc}
+     * 
+     * @see javax.validation.ConstraintValidator#initialize(java.lang.annotation.Annotation)
+     */
+    @Override
+    public void initialize(final IsFloat isFloat) {
+        // initialize
+    }
 
-	/**
-	 * 
-	 * {@inheritDoc}
-	 * 
-	 * @see javax.validation.ConstraintValidator#isValid(java.lang.Object,
-	 *      javax.validation.ConstraintValidatorContext)
-	 */
-	@Override
-	public boolean isValid(final String value, final ConstraintValidatorContext context) {
-		boolean isValid = false;
-		if (null != value) {
-			String result = value.replaceAll(",", ".").trim();
-			try {
-				Float floatResult = Float.valueOf(result);
-				isValid = (0 <= floatResult);
-			} catch (NumberFormatException e) {
-				isValid = false;
-			}
-		}
-		return isValid;
-	}
+    /**
+     * 
+     * {@inheritDoc}
+     * 
+     * @see javax.validation.ConstraintValidator#isValid(java.lang.Object,
+     *      javax.validation.ConstraintValidatorContext)
+     */
+    @Override
+    public boolean isValid(final String value, final ConstraintValidatorContext context) {
+        boolean isValid = false;
+        if (null != value) {
+            String result = value.replaceAll(",", ".").trim();
+            try {
+                Float floatResult = Float.valueOf(result);
+                isValid = (0 <= floatResult);
+            } catch (NumberFormatException e) {
+                isValid = false;
+            }
+        }
+        return isValid;
+    }
 }

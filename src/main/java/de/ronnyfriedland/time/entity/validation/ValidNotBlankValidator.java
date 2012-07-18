@@ -13,26 +13,26 @@ import org.apache.commons.lang.StringUtils;
  */
 public class ValidNotBlankValidator implements ConstraintValidator<NotBlank, String> {
 
-	/**
-	 * 
-	 * {@inheritDoc}
-	 * 
-	 * @see javax.validation.ConstraintValidator#initialize(java.lang.annotation.Annotation)
-	 */
-	@Override
-	public void initialize(final NotBlank notBlank) {
-		// initialize
-	}
+    /**
+     * 
+     * {@inheritDoc}
+     * 
+     * @see javax.validation.ConstraintValidator#initialize(java.lang.annotation.Annotation)
+     */
+    @Override
+    public void initialize(final NotBlank notBlank) {
+        // initialize
+    }
 
-	/**
-	 * 
-	 * {@inheritDoc}
-	 * 
-	 * @see javax.validation.ConstraintValidator#isValid(java.lang.Object,
-	 *      javax.validation.ConstraintValidatorContext)
-	 */
-	@Override
-	public boolean isValid(final String value, final ConstraintValidatorContext context) {
-		return StringUtils.isNotBlank(value);
-	}
+    /**
+     * 
+     * {@inheritDoc}
+     * 
+     * @see javax.validation.ConstraintValidator#isValid(java.lang.Object,
+     *      javax.validation.ConstraintValidatorContext)
+     */
+    @Override
+    public boolean isValid(final String value, final ConstraintValidatorContext context) {
+        return StringUtils.isNotBlank(value);
+    }
 }
