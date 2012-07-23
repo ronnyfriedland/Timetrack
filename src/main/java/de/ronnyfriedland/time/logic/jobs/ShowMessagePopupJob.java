@@ -1,5 +1,7 @@
 package de.ronnyfriedland.time.logic.jobs;
 
+import java.awt.TrayIcon;
+import java.awt.TrayIcon.MessageType;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,6 +13,8 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
+import de.ronnyfriedland.time.config.Configurator;
+import de.ronnyfriedland.time.config.Configurator.ConfiguratorKeys;
 import de.ronnyfriedland.time.config.Messages;
 import de.ronnyfriedland.time.entity.Entry;
 import de.ronnyfriedland.time.logic.EntityController;
@@ -27,6 +31,16 @@ public class ShowMessagePopupJob implements Job {
     public final static String TRIGGER = "showpopuptrigger";
 
     private static final Logger LOG = Logger.getLogger(ShowMessagePopupJob.class.getName());
+
+    private TrayIcon trayIcon;
+
+    public TrayIcon getTrayIcon() {
+        return trayIcon;
+    }
+
+    public void setTrayIcon(TrayIcon trayIcon) {
+        this.trayIcon = trayIcon;
+    }
 
     /**
      * (non-Javadoc)
@@ -65,6 +79,11 @@ public class ShowMessagePopupJob implements Job {
      *            der {@link JobExecutionContext}
      */
     protected void showPopup(final JobExecutionContext context) {
-        JOptionPane.showMessageDialog(null, Messages.MESSAGE_POPUP.getMessage());
+        Boolean showPopup = Configurator.CONFIG.getBoolean(ConfiguratorKeys.SHOW_POPUP.getKey());
+        if (showPopup || null == trayIcon) {
+            JOptionPane.showMessageDialog(null, Messages.MESSAGE_POPUP.getMessage());
+        } else {
+            trayIcon.displayMessage(null, Messages.MESSAGE_POPUP.getMessage(), MessageType.INFO);
+        }
     }
 }

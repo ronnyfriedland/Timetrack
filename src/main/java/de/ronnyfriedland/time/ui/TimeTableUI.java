@@ -240,7 +240,7 @@ public final class TimeTableUI {
                 Map<String, Object> jobData = new HashMap<String, Object>();
                 jobData.put("trayIcon", trayIcon);
                 QuartzController.getInstance().initScheduler(ShowMessagePopupJob.class,
-                        Configurator.CONFIG.getString(ConfiguratorKeys.CRON_EXPRESSION_POPUP.getKey()), null);
+                        Configurator.CONFIG.getString(ConfiguratorKeys.CRON_EXPRESSION_POPUP.getKey()), jobData);
                 QuartzController.getInstance()
                         .initScheduler(CheckEntryWorkflowStateJob.class,
                                 Configurator.CONFIG.getString(ConfiguratorKeys.CRON_EXPRESSION_ENTRYWORKFLOW.getKey()),
