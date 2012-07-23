@@ -23,45 +23,48 @@ import de.ronnyfriedland.time.logic.EntityController;
 @DisallowConcurrentExecution
 public class ShowMessagePopupJob implements Job {
 
-	public final static String JOB = "showpopupjob";
-	public final static String TRIGGER = "showpopuptrigger";
+    public final static String JOB = "showpopupjob";
+    public final static String TRIGGER = "showpopuptrigger";
 
-	private static final Logger LOG = Logger.getLogger(ShowMessagePopupJob.class.getName());
+    private static final Logger LOG = Logger.getLogger(ShowMessagePopupJob.class.getName());
 
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
-	 */
-	@Override
-	public void execute(final JobExecutionContext context) throws JobExecutionException {
-		Date previousFireTime = context.getPreviousFireTime();
-		Date now = new Date();
-		Entry lastEntry = EntityController.getInstance().findLast(Entry.class);
+    /**
+     * (non-Javadoc)
+     * 
+     * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
+     */
+    @Override
+    public void execute(final JobExecutionContext context) throws JobExecutionException {
+        if (LOG.isLoggable(Level.INFO)) {
+            LOG.info("Executing ... " + getClass().getSimpleName());
+        }
+        Date previousFireTime = context.getPreviousFireTime();
+        Date now = new Date();
+        Entry lastEntry = EntityController.getInstance().findLast(Entry.class);
 
-		boolean showPopup = true;
-		long diff = Long.MAX_VALUE;
-		if (null != previousFireTime) {
-			diff = now.getTime() - previousFireTime.getTime();
-		}
-		if (null != lastEntry && (diff > (now.getTime() - lastEntry.getLastModifiedDate().getTime()))) {
-			showPopup = false;
-		}
-		if (showPopup) {
-			showPopup(context);
-		}
-		if (LOG.isLoggable(Level.FINE)) {
-			LOG.fine(String.format("Job %s executed successfully.", context.getJobDetail().getKey()));
-		}
-	}
+        boolean showPopup = true;
+        long diff = Long.MAX_VALUE;
+        if (null != previousFireTime) {
+            diff = now.getTime() - previousFireTime.getTime();
+        }
+        if (null != lastEntry && (diff > (now.getTime() - lastEntry.getLastModifiedDate().getTime()))) {
+            showPopup = false;
+        }
+        if (showPopup) {
+            showPopup(context);
+        }
+        if (LOG.isLoggable(Level.FINE)) {
+            LOG.fine(String.format("Job %s executed successfully.", context.getJobDetail().getKey()));
+        }
+    }
 
-	/**
-	 * Darstellung des Popups
-	 * 
-	 * @param context
-	 *            der {@link JobExecutionContext}
-	 */
-	protected void showPopup(final JobExecutionContext context) {
-		JOptionPane.showMessageDialog(null, Messages.MESSAGE_POPUP.getMessage());
-	}
+    /**
+     * Darstellung des Popups
+     * 
+     * @param context
+     *            der {@link JobExecutionContext}
+     */
+    protected void showPopup(final JobExecutionContext context) {
+        JOptionPane.showMessageDialog(null, Messages.MESSAGE_POPUP.getMessage());
+    }
 }

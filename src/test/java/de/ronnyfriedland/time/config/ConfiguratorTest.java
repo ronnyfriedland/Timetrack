@@ -22,4 +22,12 @@ public class ConfiguratorTest {
         Assert.assertEquals("timetable-export.xlsx", file);
     }
 
+    @Test
+    public void testSystemConfiguration() {
+        for (String value : new String[] { "true", "false" }) {
+            System.setProperty(ConfiguratorKeys.SHOW_POPUP.getKey(), value);
+            Assert.assertEquals(Boolean.valueOf(value).booleanValue(),
+                    Configurator.CONFIG.getBoolean(ConfiguratorKeys.SHOW_POPUP.getKey()));
+        }
+    }
 }

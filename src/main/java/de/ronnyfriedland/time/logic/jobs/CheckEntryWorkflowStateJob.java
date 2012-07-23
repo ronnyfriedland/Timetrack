@@ -1,11 +1,14 @@
 package de.ronnyfriedland.time.logic.jobs;
 
+import java.awt.TrayIcon;
+import java.awt.TrayIcon.MessageType;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
@@ -16,6 +19,8 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
+import de.ronnyfriedland.time.config.Configurator;
+import de.ronnyfriedland.time.config.Configurator.ConfiguratorKeys;
 import de.ronnyfriedland.time.entity.Entry;
 import de.ronnyfriedland.time.entity.EntryState;
 import de.ronnyfriedland.time.entity.EntryState.State;
@@ -34,6 +39,16 @@ public class CheckEntryWorkflowStateJob implements Job {
 
     private static final Logger LOG = Logger.getLogger(CheckEntryWorkflowStateJob.class.getName());
 
+    private TrayIcon trayIcon;
+
+    public TrayIcon getTrayIcon() {
+        return trayIcon;
+    }
+
+    public void setTrayIcon(TrayIcon trayIcon) {
+        this.trayIcon = trayIcon;
+    }
+
     /**
      * (non-Javadoc)
      * 
@@ -41,7 +56,9 @@ public class CheckEntryWorkflowStateJob implements Job {
      */
     @Override
     public void execute(final JobExecutionContext context) throws JobExecutionException {
-        LOG.info("executing ... " + CheckEntryWorkflowStateJob.class.getSimpleName());
+        if (LOG.isLoggable(Level.INFO)) {
+            LOG.info("Executing ... " + getClass().getSimpleName());
+        }
         /*
          * 1. Statustabelle abfragen, ob es einen Eintrag im Status 'OK' gibt,
          * dessen lastModifiedDate < als x ist. 2. Status auf WARN stellen 3.
@@ -49,9 +66,11 @@ public class CheckEntryWorkflowStateJob implements Job {
          * auf WARN steht und lastModifiedDate < y, dann Status auf STOPPED
          * stellen und Hinweis bringen
          */
-        // TODO: parameter auslagern
-        Integer x = 60 * 60; // 1h
-        Integer y = x * 2; // 2h
+
+        Integer x = Configurator.CONFIG.getInt(ConfiguratorKeys.WORKFLOW_WARN.getKey());
+        Integer y = Configurator.CONFIG.getInt(ConfiguratorKeys.WORKFLOW_STOP.getKey());
+
+        Boolean showPopup = Configurator.CONFIG.getBoolean(ConfiguratorKeys.SHOW_POPUP.getKey());
 
         Calendar cal = Calendar.getInstance();
         Map<String, Object> params = new HashMap<String, Object>();
@@ -80,16 +99,24 @@ public class CheckEntryWorkflowStateJob implements Job {
 
         Collection<String> warn = getEntryStatesInStateWarn(params);
 
+        // show entries in state WARN
         if (!warn.isEmpty()) {
-            // FIXME: hier sollte für jeden Eintrag ein Popup erscheinen, auf
-            // die man reagieren kann
-            JOptionPane.showMessageDialog(null, "Die folgenden Einträge laufen seit einiger Zeit - bitte prüfen:\n"
-                    + StringUtils.join(warn, "\n"));
+            String messageText = "Die folgenden Einträge laufen seit einiger Zeit - bitte prüfen:\n"
+                    + StringUtils.join(warn, "\n") + "\n";
+            if (showPopup || null == trayIcon) {
+                JOptionPane.showMessageDialog(null, messageText);
+            } else {
+                trayIcon.displayMessage(null, messageText, MessageType.WARNING);
+            }
         }
-
+        // show stopped entries
         if (!stop.isEmpty()) {
-            JOptionPane.showMessageDialog(null,
-                    "Die folgenden Einträge wurden gestoppt:\n" + StringUtils.join(stop, "\n"));
+            String messageText = "Die folgenden Einträge wurden gestoppt:\n" + StringUtils.join(stop, "\n") + "\n";
+            if (showPopup || null == trayIcon) {
+                JOptionPane.showMessageDialog(null, messageText);
+            } else {
+                trayIcon.displayMessage("Es wurden Einträge automatisch gestoppt", messageText, MessageType.WARNING);
+            }
         }
 
     }

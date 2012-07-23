@@ -234,12 +234,17 @@ public final class TimeTableUI {
                 } catch (IOException e) {
                     LOG.log(Level.SEVERE, "Error reading logging.properties to configure logger.", e);
                 }
-                // initialize Controller ...
+                // initialize entity controller ...
                 EntityController.getInstance();
+                // initialize quartz controller ...
+                Map<String, Object> jobData = new HashMap<String, Object>();
+                jobData.put("trayIcon", trayIcon);
                 QuartzController.getInstance().initScheduler(ShowMessagePopupJob.class,
-                        Configurator.CONFIG.getString(ConfiguratorKeys.CRON_EXPRESSION_POPUP.getKey()));
-                QuartzController.getInstance().initScheduler(CheckEntryWorkflowStateJob.class,
-                        Configurator.CONFIG.getString(ConfiguratorKeys.CRON_EXPRESSION_ENTRYWORKFLOW.getKey()));
+                        Configurator.CONFIG.getString(ConfiguratorKeys.CRON_EXPRESSION_POPUP.getKey()), null);
+                QuartzController.getInstance()
+                        .initScheduler(CheckEntryWorkflowStateJob.class,
+                                Configurator.CONFIG.getString(ConfiguratorKeys.CRON_EXPRESSION_ENTRYWORKFLOW.getKey()),
+                                jobData);
             } catch (Exception e) {
                 LOG.log(Level.SEVERE, "Unable to set look and feel or add tray icon", e);
             }

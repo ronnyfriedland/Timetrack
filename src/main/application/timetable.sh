@@ -1,1 +1,1 @@
-java -cp lib -Xmx128m -jar timetable-${project.version}.jar
+java -cp lib -Xmx128m -Dtimetable.popup.show=true -jar timetable-${project.version}.jar
