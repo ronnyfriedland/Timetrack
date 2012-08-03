@@ -31,7 +31,7 @@
   <class id="4" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.entity.AbstractEntity" 
     project="Zeiterfassung (Timetable)" 
     file="/Zeiterfassung (Timetable)/src/main/java/de/ronnyfriedland/time/entity/AbstractEntity.java" binary="false">    
-    <position height="-1" width="-1" x="835" y="107"/>    
+    <position height="-1" width="-1" x="842" y="105"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="false"/>      
       <operations public="true" package="true" protected="true" private="false"/>    
@@ -50,7 +50,7 @@
   <class id="6" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.entity.Entry" 
     project="Zeiterfassung (Timetable)" 
     file="/Zeiterfassung (Timetable)/src/main/java/de/ronnyfriedland/time/entity/Entry.java" binary="false">    
-    <position height="-1" width="-1" x="835" y="510"/>    
+    <position height="-1" width="-1" x="843" y="510"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="false"/>      
       <operations public="true" package="true" protected="true" private="false"/>    
@@ -69,56 +69,56 @@
   <class id="8" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.entity.EntryState" 
     project="Zeiterfassung (Timetable)" 
     file="/Zeiterfassung (Timetable)/src/main/java/de/ronnyfriedland/time/entity/EntryState.java" binary="false">    
-    <position height="-1" width="-1" x="539" y="508"/>    
+    <position height="-1" width="-1" x="530" y="508"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="false"/>      
       <operations public="true" package="true" protected="true" private="false"/>    
     </display>  
   </class>  
-  <association id="9">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="10" name="entries"/>      
-      <multiplicity id="11" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="12">    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="1"/>  
+  <dependency id="9">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="7"/>  
   </dependency>  
-  <generalization id="13">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="4"/>  
-  </generalization>  
-  <generalization id="14">    
+  <generalization id="10">    
     <end type="SOURCE" refId="2"/>    
     <end type="TARGET" refId="4"/>  
   </generalization>  
-  <generalization id="15">    
-    <end type="SOURCE" refId="8"/>    
+  <generalization id="11">    
+    <end type="SOURCE" refId="6"/>    
     <end type="TARGET" refId="4"/>  
   </generalization>  
-  <association id="16">    
+  <association id="12">    
     <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="17" name="project"/>      
-      <multiplicity id="18" minimum="0" maximum="1"/>    
+      <attribute id="13" name="project"/>      
+      <multiplicity id="14" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="19">    
+  <dependency id="15">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <association id="16">    
     <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="20" name="state"/>      
-      <multiplicity id="21" minimum="0" maximum="1"/>    
+      <attribute id="17" name="state"/>      
+      <multiplicity id="18" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="8" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <dependency id="22">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="7"/>  
-  </dependency>  
+  <generalization id="19">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="4"/>  
+  </generalization>  
+  <association id="20">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="21" name="entries"/>      
+      <multiplicity id="22" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     visibility="true">    
     <attributes public="true" package="true" protected="true" private="false"/>    
