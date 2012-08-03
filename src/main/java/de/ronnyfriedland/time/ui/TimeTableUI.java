@@ -34,7 +34,7 @@ import de.ronnyfriedland.time.logic.EntityController;
 import de.ronnyfriedland.time.logic.ImportController;
 import de.ronnyfriedland.time.logic.QuartzController;
 import de.ronnyfriedland.time.logic.jobs.CheckEntryWorkflowStateJob;
-import de.ronnyfriedland.time.logic.jobs.ShowMessagePopupJob;
+import de.ronnyfriedland.time.logic.jobs.ShowReminderJob;
 import de.ronnyfriedland.time.sort.SortParam;
 import de.ronnyfriedland.time.sort.SortParam.SortOrder;
 import de.ronnyfriedland.time.ui.dialog.ExportFrame;
@@ -239,7 +239,7 @@ public final class TimeTableUI {
                 // initialize quartz controller ...
                 Map<String, Object> jobData = new HashMap<String, Object>();
                 jobData.put("trayIcon", trayIcon);
-                QuartzController.getInstance().initScheduler(ShowMessagePopupJob.class,
+                QuartzController.getInstance().initScheduler(ShowReminderJob.class,
                         Configurator.CONFIG.getString(ConfiguratorKeys.CRON_EXPRESSION_POPUP.getKey()), jobData);
                 QuartzController.getInstance()
                         .initScheduler(CheckEntryWorkflowStateJob.class,

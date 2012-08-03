@@ -1,6 +1,5 @@
 package de.ronnyfriedland.time.logic.jobs;
 
-import java.awt.TrayIcon;
 import java.awt.TrayIcon.MessageType;
 import java.util.Calendar;
 import java.util.Collection;
@@ -15,7 +14,6 @@ import javax.swing.JOptionPane;
 
 import org.apache.commons.lang.StringUtils;
 import org.quartz.DisallowConcurrentExecution;
-import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
@@ -32,22 +30,12 @@ import de.ronnyfriedland.time.logic.EntityController;
  * @author Ronny Friedland
  */
 @DisallowConcurrentExecution
-public class CheckEntryWorkflowStateJob implements Job {
+public class CheckEntryWorkflowStateJob extends AbstractJob {
 
     public final static String JOB = "checkentryworkflowstatejob";
     public final static String TRIGGER = "checkentryworkflowstate";
 
     private static final Logger LOG = Logger.getLogger(CheckEntryWorkflowStateJob.class.getName());
-
-    private TrayIcon trayIcon;
-
-    public TrayIcon getTrayIcon() {
-        return trayIcon;
-    }
-
-    public void setTrayIcon(TrayIcon trayIcon) {
-        this.trayIcon = trayIcon;
-    }
 
     /**
      * (non-Javadoc)
@@ -103,19 +91,20 @@ public class CheckEntryWorkflowStateJob implements Job {
         if (!warn.isEmpty()) {
             String messageText = "Die folgenden Einträge laufen seit einiger Zeit - bitte prüfen:\n"
                     + StringUtils.join(warn, "\n") + "\n";
-            if (showPopup || null == trayIcon) {
+            if (showPopup || null == getTrayIcon()) {
                 JOptionPane.showMessageDialog(null, messageText);
             } else {
-                trayIcon.displayMessage(null, messageText, MessageType.WARNING);
+                getTrayIcon().displayMessage(null, messageText, MessageType.WARNING);
             }
         }
         // show stopped entries
         if (!stop.isEmpty()) {
             String messageText = "Die folgenden Einträge wurden gestoppt:\n" + StringUtils.join(stop, "\n") + "\n";
-            if (showPopup || null == trayIcon) {
+            if (showPopup || null == getTrayIcon()) {
                 JOptionPane.showMessageDialog(null, messageText);
             } else {
-                trayIcon.displayMessage("Es wurden Einträge automatisch gestoppt", messageText, MessageType.WARNING);
+                getTrayIcon().displayMessage("Es wurden Einträge automatisch gestoppt", messageText,
+                        MessageType.WARNING);
             }
         }
 

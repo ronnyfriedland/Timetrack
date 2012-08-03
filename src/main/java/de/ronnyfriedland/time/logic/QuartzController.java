@@ -5,7 +5,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.quartz.CronScheduleBuilder;
-import org.quartz.Job;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
@@ -13,6 +12,8 @@ import org.quartz.SchedulerException;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
+
+import de.ronnyfriedland.time.logic.jobs.AbstractJob;
 
 /**
  * Controller für die Scheduler-Steuerung.
@@ -58,9 +59,9 @@ public final class QuartzController {
      * @param cronExpression
      *            Cron-Ausdruck für Trigger
      * @param jobData
-     *            optinal dat
+     *            optional data
      */
-    public void initScheduler(final Class<? extends Job> jobClazz, final String cronExpression,
+    public void initScheduler(final Class<? extends AbstractJob> jobClazz, final String cronExpression,
             final Map<? extends String, ? extends Object> jobData) {
         try {
             String jobname = (String) jobClazz.getDeclaredField("JOB").get(null);

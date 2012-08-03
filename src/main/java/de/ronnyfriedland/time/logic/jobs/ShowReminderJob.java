@@ -1,6 +1,5 @@
 package de.ronnyfriedland.time.logic.jobs;
 
-import java.awt.TrayIcon;
 import java.awt.TrayIcon.MessageType;
 import java.util.Date;
 import java.util.logging.Level;
@@ -9,7 +8,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 import org.quartz.DisallowConcurrentExecution;
-import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
@@ -25,22 +23,12 @@ import de.ronnyfriedland.time.logic.EntityController;
  * @author Ronny Friedland
  */
 @DisallowConcurrentExecution
-public class ShowMessagePopupJob implements Job {
+public class ShowReminderJob extends AbstractJob {
 
     public final static String JOB = "showpopupjob";
     public final static String TRIGGER = "showpopuptrigger";
 
-    private static final Logger LOG = Logger.getLogger(ShowMessagePopupJob.class.getName());
-
-    private TrayIcon trayIcon;
-
-    public TrayIcon getTrayIcon() {
-        return trayIcon;
-    }
-
-    public void setTrayIcon(TrayIcon trayIcon) {
-        this.trayIcon = trayIcon;
-    }
+    private static final Logger LOG = Logger.getLogger(ShowReminderJob.class.getName());
 
     /**
      * (non-Javadoc)
@@ -80,10 +68,10 @@ public class ShowMessagePopupJob implements Job {
      */
     protected void showPopup(final JobExecutionContext context) {
         Boolean showPopup = Configurator.CONFIG.getBoolean(ConfiguratorKeys.SHOW_POPUP.getKey());
-        if (showPopup || null == trayIcon) {
+        if (showPopup || null == getTrayIcon()) {
             JOptionPane.showMessageDialog(null, Messages.MESSAGE_POPUP.getMessage());
         } else {
-            trayIcon.displayMessage(null, Messages.MESSAGE_POPUP.getMessage(), MessageType.INFO);
+            getTrayIcon().displayMessage(null, Messages.MESSAGE_POPUP.getMessage(), MessageType.INFO);
         }
     }
 }

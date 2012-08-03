@@ -143,7 +143,7 @@ public class ShowMessagePopupJobTest {
 
 	}
 
-	class MockPopupJob extends ShowMessagePopupJob {
+	class MockPopupJob extends ShowReminderJob {
 		private boolean show = false;
 
 		@Override
