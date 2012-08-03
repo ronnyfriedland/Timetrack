@@ -28,6 +28,11 @@
     </changeSet>
 
     <changeSet author="ronnyfriedland" id="update_to_version_1.4">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists schemaName="APP" tableName="ENTRYSTATE" />
+            </not>
+        </preConditions>
         <sql>
             <!-- create table -->
 			CREATE TABLE ENTRYSTATE (
