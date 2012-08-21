@@ -14,6 +14,7 @@
 		<timetable.entryworkflow.cron>0 0/2 8-23 ? * 2-6</timetable.entryworkflow.cron>
         <timetable.workflow.warn>1800</timetable.workflow.warn>
         <timetable.workflow.stop>7200</timetable.workflow.stop>
+        <timetable.popup.show>true</timetable.popup.show>
 	</properties>
 	<build>
 		<resources>
