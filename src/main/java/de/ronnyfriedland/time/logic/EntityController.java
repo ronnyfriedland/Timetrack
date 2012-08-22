@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.FlushModeType;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -39,6 +40,7 @@ public final class EntityController {
     private EntityController() {
         emf = Persistence.createEntityManagerFactory("timetable");
         em = emf.createEntityManager();
+        em.setFlushMode(FlushModeType.COMMIT);
     }
 
     /**
