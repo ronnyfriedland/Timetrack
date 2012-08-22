@@ -70,10 +70,8 @@
 	<changeSet author="ronnyfriedland" id="update_to_version_1.2">
 		<preConditions onFail="MARK_RAN">
 			<not>
-				<columnExists schemaName="APP" tableName="PROJECT"
-					columnName="ENABLED" />
-				<columnExists schemaName="APP" tableName="ENTRY"
-					columnName="ENABLED" />
+				<columnExists schemaName="APP" tableName="PROJECT" columnName="ENABLED" />
+				<columnExists schemaName="APP" tableName="ENTRY" columnName="ENABLED" />
 			</not>
 		</preConditions>
 		<sql>
@@ -86,12 +84,10 @@
 
 	<changeSet author="ronnyfriedland" id="update_to_version_1.3">
 		<sql>
-			ALTER TABLE ENTRY ALTER COLUMN DESCRIPTION SET DATA TYPE
-			VARCHAR(2000);
+			ALTER TABLE ENTRY ALTER COLUMN DESCRIPTION SET DATA TYPE VARCHAR(2000);
 		</sql>
 		<sql>
-			ALTER TABLE PROJECT ALTER COLUMN DESCRIPTION SET DATA TYPE
-			VARCHAR(2000);
+			ALTER TABLE PROJECT ALTER COLUMN DESCRIPTION SET DATA TYPE VARCHAR(2000);
 		</sql>
 	</changeSet>
 
