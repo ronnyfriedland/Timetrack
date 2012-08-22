@@ -12,9 +12,9 @@
 		<timetable.export.file>timetable-export.xlsx</timetable.export.file>
 		<timetable.popup.cron>0 0 8-18/2 ? * 2-6</timetable.popup.cron>
 		<timetable.entryworkflow.cron>0 0/2 8-23 ? * 2-6</timetable.entryworkflow.cron>
-        <timetable.workflow.warn>1800</timetable.workflow.warn>
-        <timetable.workflow.stop>7200</timetable.workflow.stop>
-        <timetable.popup.show>true</timetable.popup.show>
+		<timetable.workflow.warn>1800</timetable.workflow.warn>
+		<timetable.workflow.stop>7200</timetable.workflow.stop>
+		<timetable.popup.show>true</timetable.popup.show>
 	</properties>
 	<build>
 		<resources>
@@ -161,9 +161,8 @@
 									<headerType>gui</headerType>
 									<outfile>${project.build.directory}/Timetable.exe</outfile>
 									<jar>${project.artifactId}-${project.version}.jar</jar>
-                                    <dontWrapJar>true</dontWrapJar>
+									<dontWrapJar>true</dontWrapJar>
 									<errTitle>Timetable</errTitle>
-									<cmdLine>-Dtimetable.popup.show=false</cmdLine>
 									<icon>${basedir}/src/main/resources/images/icon.ico</icon>
 									<classPath>
 										<mainClass>de.ronnyfriedland.time.ui.TimeTableUI</mainClass>
@@ -171,6 +170,9 @@
 									</classPath>
 									<jre>
 										<minVersion>1.6.0</minVersion>
+										<opts>
+											<opt>-Dtimetable.popup.show=false</opt>
+										</opts>
 									</jre>
 									<versionInfo>
 										<fileVersion>0.4.0.0</fileVersion>
