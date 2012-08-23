@@ -172,6 +172,10 @@
 										<minVersion>1.6.0</minVersion>
 										<opts>
 											<opt>-Dtimetable.popup.show=false</opt>
+											<opt>-Xms32m</opt>
+											<opt>-Xmx128m</opt>
+											<opt>-XX:+HeapDumpOnOutOfMemoryError</opt>
+											<opt>-XX:HeapDumpPath=${timetable.path}\heapdump.hprof</opt>
 										</opts>
 									</jre>
 									<versionInfo>
