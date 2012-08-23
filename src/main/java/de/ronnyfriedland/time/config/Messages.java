@@ -54,6 +54,8 @@ public enum Messages {
     DISABLE("disable"),
     /** Text für Kontierungserinnerung (Popup) */
     MESSAGE_POPUP("messagepopup"),
+    /** Abfrage, ob Import wirklich durchgeführt werden soll (Popup) */
+    IMPORT_CONFIRM("importconfirm"),
     /** Text Erfolgsmeldung Import (Popup) */
     IMPORT_SUCCESSFUL("importsuccessful"),
     /** Text Erfolgsmeldung Export (Popup) */

@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
@@ -29,6 +30,7 @@ import de.ronnyfriedland.time.config.Configurator;
 import de.ronnyfriedland.time.config.Configurator.ConfiguratorKeys;
 import de.ronnyfriedland.time.config.Messages;
 import de.ronnyfriedland.time.entity.Entry;
+import de.ronnyfriedland.time.entity.EntryState;
 import de.ronnyfriedland.time.entity.Project;
 import de.ronnyfriedland.time.logic.EntityController;
 import de.ronnyfriedland.time.logic.ImportController;
@@ -177,38 +179,50 @@ public final class TimeTableUI {
                     }
                 });
 
+                importItem.setEnabled(new File(Configurator.CONFIG.getString(ConfiguratorKeys.PATH.getKey()),
+                        Configurator.CONFIG.getString(ConfiguratorKeys.EXPORT_FILE.getKey())).exists());
                 importItem.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(final ActionEvent e) {
-                        try {
-                            ImportController controller = new ImportController();
-                            Workbook wb = controller.loadWorkbook(
-                                    Configurator.CONFIG.getString(ConfiguratorKeys.PATH.getKey()),
-                                    Configurator.CONFIG.getString(ConfiguratorKeys.EXPORT_FILE.getKey()));
-                            Collection<Entry> entries = controller.loadSheet(wb);
+                        int option = JOptionPane.showConfirmDialog(null, Messages.IMPORT_CONFIRM.getMessage());
+                        switch (option) {
+                        case JOptionPane.OK_OPTION:
+                            try {
+                                ImportController controller = new ImportController();
+                                Workbook wb = controller.loadWorkbook(
+                                        Configurator.CONFIG.getString(ConfiguratorKeys.PATH.getKey()),
+                                        Configurator.CONFIG.getString(ConfiguratorKeys.EXPORT_FILE.getKey()));
+                                Collection<Entry> entries = controller.loadSheet(wb);
 
-                            EntityController.getInstance().deleteAll(Entry.class);
-                            EntityController.getInstance().deleteAll(Project.class);
+                                EntityController.getInstance().deleteAll(Entry.class);
+                                EntityController.getInstance().deleteAll(EntryState.class);
+                                EntityController.getInstance().deleteAll(Project.class);
 
-                            for (Entry entry : entries) {
-                                Project project = entry.getProject();
-                                Map<String, Object> parameters = new HashMap<String, Object>();
-                                parameters.put(Project.PARAM_NAME, project.getName());
-                                try {
-                                    Project savedProject = EntityController.getInstance().findSingleResultByParameter(
-                                            Project.class, Project.QUERY_FINDBYNAME, parameters);
-                                    project = savedProject;
-                                    project.addEntry(entry);
-                                } catch (Exception ex) {
-                                    EntityController.getInstance().create(project);
+                                for (Entry entry : entries) {
+                                    Project project = entry.getProject();
+                                    Map<String, Object> parameters = new HashMap<String, Object>();
+                                    parameters.put(Project.PARAM_NAME, project.getName());
+                                    try {
+                                        Project savedProject = EntityController.getInstance()
+                                                .findSingleResultByParameter(Project.class, Project.QUERY_FINDBYNAME,
+                                                        parameters);
+                                        project = savedProject;
+                                        project.addEntry(entry);
+                                    } catch (Exception ex) {
+                                        EntityController.getInstance().create(project);
+                                    }
+                                    entry.setProject(project);
+                                    EntityController.getInstance().create(entry);
                                 }
-                                entry.setProject(project);
-                                EntityController.getInstance().create(entry);
+                                JOptionPane.showMessageDialog(null,
+                                        Messages.IMPORT_SUCCESSFUL.getMessage(String.valueOf(entries.size())));
+                            } catch (IOException ex) {
+                                LOG.log(Level.SEVERE, "Error importing data.", ex);
                             }
-                            JOptionPane.showMessageDialog(null,
-                                    Messages.IMPORT_SUCCESSFUL.getMessage(String.valueOf(entries.size())));
-                        } catch (IOException ex) {
-                            LOG.log(Level.SEVERE, "Error importing data.", ex);
+                            break;
+                        default:
+                            // nothing to do
+                            break;
                         }
                     }
                 });
