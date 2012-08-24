@@ -332,7 +332,8 @@ public class NewEntryFrame extends AbstractFrame {
                         entryState.setEnd(Calendar.getInstance().getTime());
                         entryState.setState(State.STOPPED);
                         // update entry
-                        entry.setDuration(EntryState.getDuration(entryState.getStart(), entryState.getEnd()));
+                        entry.setDuration(EntryState.getDuration(entryState.getStart(), entryState.getEnd(),
+                                entry.getDuration()));
                         EntityController.getInstance().update(entry);
 
                         setVisible(false);

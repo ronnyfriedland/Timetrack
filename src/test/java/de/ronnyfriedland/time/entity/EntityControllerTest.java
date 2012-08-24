@@ -125,10 +125,12 @@ public class EntityControllerTest {
         Calendar start = Calendar.getInstance();
         Calendar stop = Calendar.getInstance();
         stop.add(Calendar.MINUTE, 30);
-        String duration = EntryState.getDuration(start.getTime(), stop.getTime());
+        String duration = EntryState.getDuration(start.getTime(), stop.getTime(), 0);
         Assert.assertEquals("0,50", duration);
         stop.add(Calendar.MINUTE, 15);
-        duration = EntryState.getDuration(start.getTime(), stop.getTime());
+        duration = EntryState.getDuration(start.getTime(), stop.getTime(), 0);
         Assert.assertEquals("0,75", duration);
+        duration = EntryState.getDuration(start.getTime(), stop.getTime(), "0.25");
+        Assert.assertEquals("1,00", duration);
     }
 }

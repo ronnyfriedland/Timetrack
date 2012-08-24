@@ -123,7 +123,7 @@ public class CheckEntryWorkflowStateJob extends AbstractJob {
             params.put(Entry.PARAM_STATE, entryState);
             Entry entry = EntityController.getInstance().findSingleResultByParameter(Entry.class,
                     Entry.QUERY_FIND_BY_STATE, params);
-            entry.setDuration(EntryState.getDuration(entryState.getStart(), entryState.getEnd()));
+            entry.setDuration(EntryState.getDuration(entryState.getStart(), entryState.getEnd(), entry.getDuration()));
 
             EntityController.getInstance().update(entry);
 
