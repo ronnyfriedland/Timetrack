@@ -24,8 +24,11 @@ public class JmxPlugin {
     public JmxPlugin() {
         try {
             ConfigBeanImpl configBean = new ConfigBeanImpl();
+            DataBeanImpl dataBean = new DataBeanImpl();
+
             MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
             mbs.registerMBean(configBean, new ObjectName("de.ronnyfriedland.time:name=Config"));
+            mbs.registerMBean(dataBean, new ObjectName("de.ronnyfriedland.time:name=Data"));
 
             // wait forever
             wait();
