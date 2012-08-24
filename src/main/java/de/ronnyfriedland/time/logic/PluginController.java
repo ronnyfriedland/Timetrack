@@ -60,7 +60,7 @@ public final class PluginController {
                         }
                         plugin.newInstance();
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        LOG.log(Level.SEVERE, "Error starting plugin: " + plugin, e);
                     }
                 }
             }).start();

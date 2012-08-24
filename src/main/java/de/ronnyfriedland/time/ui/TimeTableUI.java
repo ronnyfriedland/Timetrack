@@ -34,6 +34,7 @@ import de.ronnyfriedland.time.entity.EntryState;
 import de.ronnyfriedland.time.entity.Project;
 import de.ronnyfriedland.time.logic.EntityController;
 import de.ronnyfriedland.time.logic.ImportController;
+import de.ronnyfriedland.time.logic.PluginController;
 import de.ronnyfriedland.time.logic.QuartzController;
 import de.ronnyfriedland.time.logic.jobs.CheckEntryWorkflowStateJob;
 import de.ronnyfriedland.time.logic.jobs.ShowReminderJob;
@@ -259,8 +260,10 @@ public final class TimeTableUI {
                         .initScheduler(CheckEntryWorkflowStateJob.class,
                                 Configurator.CONFIG.getString(ConfiguratorKeys.CRON_EXPRESSION_ENTRYWORKFLOW.getKey()),
                                 jobData);
+                // initialize plugin controller ...
+                PluginController.getInstance().executePlugins();
             } catch (Exception e) {
-                LOG.log(Level.SEVERE, "Unable to set look and feel or add tray icon", e);
+                throw new IllegalStateException("Unable to start timetable application", e);
             }
         }
     }
