@@ -1,6 +1,6 @@
 <article lang="de">
 	<articleinfo>
-		<title>Dokumentation für ${project.name} Version ${project.version}
+		<title>Dokumentation für ${project.name} Version ${project.version} (Builddate: ${build.timestamp})
 		</title>
 		<author>
 			<firstname>Ronny</firstname>
@@ -21,6 +21,9 @@
 			<para>Alle Einträge müssen exakt einem Projekt zugeordnet werden.
 				Diese müssen vor dem Anlegen der Einträge existieren. Optional kann
 				ein Kommentar angegeben werden.
+			</para>
+			<para>Projekte können deaktiviert werden. Sie sind dann standardmäßig
+				nicht mehr sichtbar.
 			</para>
 			<itemizedlist>
 				<listitem>
@@ -46,9 +49,8 @@
 						Einschränkungen
 						<itemizedlist>
 							<listitem>
-								<para>Beim Löschen von Projekten werden diese nicht gelöscht
-									sondern deaktiviert. Damit ist der Zugriff auf gespeicherte
-									Einträge noch möglich.
+								<para>Projekte können nicht vollständig gelöscht, sondern nur
+									deaktiviert werden.
 								</para>
 							</listitem>
 						</itemizedlist>
@@ -61,6 +63,12 @@
 			<para>Für jeden Eintrag muss eine Beschreibung und die Dauer
 				angegeben werden. Zusätzlich muss dem Eintrag ein Projekt zugeordnet
 				werden.
+			</para>
+			<para>Die Dauer kann beim Anlegen des Eintrags eingetragen werden. Es
+				ist aber auch möglich, über die Startfunktion einen Workflow zu
+				initialisieren. Dabei wird die Zeit bis zum Beenden des Workflows
+				gemessen. Die maximale Laufzeit beträgt timetable.workflow.stop
+				Sekunden.
 			</para>
 			<para>Die letzten 10 erstellten Einträge werden unter dem Menüpunkt
 				"Zuletzt erstellt" angezeigt.
@@ -84,7 +92,8 @@
 		<sect2>
 			<title>Einträge bearbeiten</title>
 			<para>Es werden die letzten 10 Einträge dargestellt. Diese können
-				durch Anwählen bearbeitet werden.
+				durch Anwählen bearbeitet werden. Ältere Einträge können nicht mehr
+				bearbeitet werden.
 			</para>
 		</sect2>
 		<sect2>
@@ -95,17 +104,44 @@
 			</para>
 			<para>Die zu exportierenden Daten können in einer Vorschau (Tabelle)
 				dargestellt werden. Einzelne Einträge können aus der Tabelle in die
-				Zwischenablage kopert werden.
+				Zwischenablage über den Shortcut CTRL + C kopiert werden.
+			</para>
+		</sect2>
+		<sect2>
+			<title>Daten importieren</title>
+			<para>Sofern eine vorher exportierte Datei vorhanden ist, können die
+				Daten in die Anwendung importiert werden. Dazu muss eine gültige
+				Datei mit dem Namen "${timetable.export.file}" in den Ordner
+				"${timetable.path}" abgelegt werden.
+			</para>
+			<para>Sofern keine Datei zum Import existiert, ist der Menüpunkt
+				nicht auswählbar.
 			</para>
 		</sect2>
 		<sect2>
 			<title>Datenmigration</title>
-			<para>Ab Version 1.0 können bestehende Daten migriert werden. Die
-				Migration erfolgt über mitgelieferte Skripte (migration.sh bzw. migration.bat). 
-				Die Migration kann nur bei Vorhandensein von Bestandsdaten durchgeführt werden, 
-				d.h. die Anwendung muss mindestens einmal gestartet wurden sein.
-				
-				Das Management der Datenbankänderungen erfolgt über Liquibase.
+			<para>Ab Version 1.2 können bestehende Daten migriert werden. Die
+				Migration erfolgt über mitgelieferte Skripte (migration.sh bzw.
+				migration.bat).
+
+				Das Management der Datenbankänderungen erfolgt über
+				Liquibase.
+			</para>
+		</sect2>
+		<sect2>
+			<title>Monitoring</title>
+			<para>
+				Es besteht die Möglichkeit, die Konfiguration der Anwendung
+				über JMX
+				auszulesen. Dafür werden die folgenden MBeans bereitgestellt:
+				<itemizedlist>
+					<listitem>
+						<para>de.ronnyfriedland.time:name=Config</para>
+					</listitem>
+					<listitem>
+						<para>de.ronnyfriedland.time:name=Data</para>
+					</listitem>
+				</itemizedlist>
 			</para>
 		</sect2>
 	</sect1>

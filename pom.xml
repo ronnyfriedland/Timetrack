@@ -8,6 +8,8 @@
 	<description>tool to track time</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.build.timestamp.format>dd.MM.yyyy</maven.build.timestamp.format>
+        <build.timestamp>${maven.build.timestamp}</build.timestamp>
 		<timetable.path>target</timetable.path>
 		<timetable.export.file>timetable-export.xlsx</timetable.export.file>
 		<timetable.popup.cron>0 0 8-18/2 ? * 2-6</timetable.popup.cron>
