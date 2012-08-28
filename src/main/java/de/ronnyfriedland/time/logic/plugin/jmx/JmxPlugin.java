@@ -29,9 +29,6 @@ public class JmxPlugin {
             MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
             mbs.registerMBean(configBean, new ObjectName("de.ronnyfriedland.time:name=Config"));
             mbs.registerMBean(dataBean, new ObjectName("de.ronnyfriedland.time:name=Data"));
-
-            // wait forever
-            wait();
         } catch (NotCompliantMBeanException e) {
             throw new RuntimeException(e);
         } catch (InstanceAlreadyExistsException e) {
@@ -41,8 +38,6 @@ public class JmxPlugin {
         } catch (MalformedObjectNameException e) {
             throw new RuntimeException(e);
         } catch (NullPointerException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
