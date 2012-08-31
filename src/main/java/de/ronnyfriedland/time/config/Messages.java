@@ -61,7 +61,7 @@ public enum Messages {
     /** Text Erfolgsmeldung Export (Popup) */
     EXPORT_SUCCESSFUL("exportsuccessful"),
     /** Hinweistext für Export */
-    EXPORT_DESCRIPTION("exportdescription", PREVIEW.getMessage(), EXPORT.getMessage());
+    EXPORT_DESCRIPTION("exportdescription", PREVIEW.getMessage(), EXPORT.getMessage()), HELP("help");
 
     private String message;
     private String[] properties;

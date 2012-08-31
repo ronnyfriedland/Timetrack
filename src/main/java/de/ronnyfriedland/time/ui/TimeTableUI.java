@@ -43,6 +43,7 @@ import de.ronnyfriedland.time.sort.SortParam.SortOrder;
 import de.ronnyfriedland.time.ui.dialog.ExportFrame;
 import de.ronnyfriedland.time.ui.dialog.NewEntryFrame;
 import de.ronnyfriedland.time.ui.dialog.NewProjectFrame;
+import de.ronnyfriedland.time.ui.dialog.ShowHelpFrame;
 
 /**
  * Die Hauptklasse (Grafisches Interface)
@@ -93,6 +94,7 @@ public final class TimeTableUI {
             final Menu todayItems = new Menu(Messages.LAST_ENTRIES.getMessage());
             final MenuItem exportItem = new MenuItem(Messages.EXPORT_DATA.getMessage());
             final MenuItem importItem = new MenuItem(Messages.IMPORT_DATA.getMessage());
+            final MenuItem helpItem = new MenuItem(Messages.HELP.getMessage());
             final MenuItem exitItem = new MenuItem(Messages.EXIT.getMessage());
 
             // Add components to popup menu
@@ -103,6 +105,8 @@ public final class TimeTableUI {
             popup.addSeparator();
             popup.add(exportItem);
             popup.add(importItem);
+            popup.addSeparator();
+            popup.add(helpItem);
             popup.addSeparator();
             popup.add(exitItem);
 
@@ -225,6 +229,13 @@ public final class TimeTableUI {
                             // nothing to do
                             break;
                         }
+                    }
+                });
+
+                helpItem.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(final ActionEvent e) {
+                        new ShowHelpFrame().setVisible(true);
                     }
                 });
 

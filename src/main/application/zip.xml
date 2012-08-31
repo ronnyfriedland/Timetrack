@@ -27,8 +27,8 @@
         </file>
         <!-- add readme -->
         <file>
-            <source>${project.build.directory}/docbkx/html/readme.html</source>
-            <outputDirectory>/</outputDirectory>
+            <source>${project.build.directory}/docbkx/html/timetable_readme.html</source>
+            <outputDirectory>/info</outputDirectory>
         </file>
         <!-- add db changelog -->
         <file>
