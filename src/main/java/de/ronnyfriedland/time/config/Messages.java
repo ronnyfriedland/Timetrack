@@ -52,6 +52,10 @@ public enum Messages {
     DELETE("delete"),
     /** Löschen */
     DISABLE("disable"),
+    /** Ja */
+    YES("yes"),
+    /** Nein */
+    NO("no"),
     /** Text für Kontierungserinnerung (Popup) */
     MESSAGE_POPUP("messagepopup"),
     /** Abfrage, ob Import wirklich durchgeführt werden soll (Popup) */
@@ -60,6 +64,8 @@ public enum Messages {
     IMPORT_SUCCESSFUL("importsuccessful"),
     /** Text Erfolgsmeldung Export (Popup) */
     EXPORT_SUCCESSFUL("exportsuccessful"),
+    /** Löschen nach Export ? */
+    EXPORT_DELETE("exportdelete"),
     /** Hinweistext für Export */
     EXPORT_DESCRIPTION("exportdescription", PREVIEW.getMessage(), EXPORT.getMessage()), HELP("help");
 

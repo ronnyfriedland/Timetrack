@@ -15,9 +15,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JTable;
@@ -59,6 +61,9 @@ public class ExportFrame extends AbstractFrame {
     private final DateChooserPanel dateChooser = new DateChooserPanel();
     private final JLabel labelDays = new JLabel(Messages.PERIOD_OF_TIME.getMessage());
     private final JSlider days = new JSlider(JSlider.HORIZONTAL, 1, 365, 7);
+    private final JLabel labelDelete = new JLabel(Messages.EXPORT_DELETE.getMessage());
+    private final JRadioButton deleteYes = new JRadioButton(Messages.YES.getMessage());
+    private final JRadioButton deleteNo = new JRadioButton(Messages.NO.getMessage());
     private final JLabel labelSelectedDays = new JLabel("");
     private final JButton preview = new JButton(Messages.PREVIEW.getMessage());
     private final JButton export = new JButton(Messages.EXPORT.getMessage());
@@ -105,7 +110,7 @@ public class ExportFrame extends AbstractFrame {
     private final JScrollPane scrollPane = new JScrollPane(table);
 
     public ExportFrame() {
-        super(Messages.NEW_EXPORT.getMessage(), 500, 460);
+        super(Messages.NEW_EXPORT.getMessage(), 500, 510);
         createUI();
     }
 
@@ -116,10 +121,17 @@ public class ExportFrame extends AbstractFrame {
      */
     @Override
     protected void createUI() {
-        // configure
-        labelDate.setBounds(10, 10, 100, 24);
+        description.setBounds(10, 10, 485, 115);
+        description.setEditable(false);
+        description.setLineWrap(true);
+        description.setWrapStyleWord(true);
+        description.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        description.setText(Messages.EXPORT_DESCRIPTION.getMessage());
 
-        dateChooser.setBounds(110, 10, 200, 150);
+        // configure
+        labelDate.setBounds(10, 130, 100, 24);
+
+        dateChooser.setBounds(110, 130, 200, 150);
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.DAY_OF_WEEK, 2);
         dateChooser.setDate(cal.getTime());
@@ -128,9 +140,9 @@ public class ExportFrame extends AbstractFrame {
         dateChooser.setBorder(BorderFactory.createEmptyBorder());
         dateChooser.addKeyListener(new TimeTableKeyAdapter());
 
-        labelDays.setBounds(10, 170, 100, 24);
+        labelDays.setBounds(340, 130, 150, 24);
 
-        days.setBounds(110, 170, 200, 24);
+        days.setBounds(340, 155, 150, 30);
         days.setValue(7);
         days.addKeyListener(new TimeTableKeyAdapter());
         days.addChangeListener(new ChangeListener() {
@@ -141,10 +153,20 @@ public class ExportFrame extends AbstractFrame {
             }
         });
 
-        labelSelectedDays.setBounds(110, 200, 200, 24);
+        labelSelectedDays.setBounds(340, 190, 200, 24);
         labelSelectedDays.setText(String.format(LABEL_SELECTED_DAYS_VALUE, days.getValue()));
 
-        export.setBounds(170, 225, 140, 24);
+        labelDelete.setBounds(340, 230, 150, 24);
+
+        deleteYes.setBounds(340, 250, 60, 24);
+        deleteNo.setBounds(400, 250, 60, 24);
+        deleteNo.setSelected(true);
+
+        ButtonGroup buttonGroup = new ButtonGroup();
+        buttonGroup.add(deleteYes);
+        buttonGroup.add(deleteNo);
+
+        export.setBounds(265, 285, 230, 24);
         export.addKeyListener(new TimeTableKeyAdapter());
         export.addActionListener(new ActionListener() {
             @Override
@@ -154,20 +176,28 @@ public class ExportFrame extends AbstractFrame {
                     Calendar to = getEndDate();
                     Collection<Entry> entries = getFilteredData(from, to);
 
-                    ExportController controller = new ExportController();
-                    Workbook wb = controller.loadOrCreateWorkbook(
-                            Configurator.CONFIG.getString(ConfiguratorKeys.PATH.getKey()),
-                            Configurator.CONFIG.getString(ConfiguratorKeys.EXPORT_FILE.getKey()));
-                    Sheet sheet = controller.loadOrCreateSheet(wb, SimpleDateFormat.getDateInstance(DateFormat.SHORT)
-                            .format(from.getTime()), entries);
-                    controller.addSheetToOverview(wb, sheet.getSheetName());
-                    controller.persistWorkbook(wb, Configurator.CONFIG.getString(ConfiguratorKeys.PATH.getKey()),
-                            Configurator.CONFIG.getString(ConfiguratorKeys.EXPORT_FILE.getKey()));
+                    if (0 < entries.size()) {
+                        ExportController controller = new ExportController();
+                        Workbook wb = controller.loadOrCreateWorkbook(
+                                Configurator.CONFIG.getString(ConfiguratorKeys.PATH.getKey()),
+                                Configurator.CONFIG.getString(ConfiguratorKeys.EXPORT_FILE.getKey()));
+                        Sheet sheet = controller.loadOrCreateSheet(wb,
+                                SimpleDateFormat.getDateInstance(DateFormat.SHORT).format(from.getTime()), entries);
+                        controller.addSheetToOverview(wb, sheet.getSheetName());
+                        controller.persistWorkbook(wb, Configurator.CONFIG.getString(ConfiguratorKeys.PATH.getKey()),
+                                Configurator.CONFIG.getString(ConfiguratorKeys.EXPORT_FILE.getKey()));
 
-                    setVisible(false);
+                        if (deleteYes.isSelected()) {
+                            for (Entry entry : entries) {
+                                EntityController.getInstance().delete(entry);
+                            }
+                        }
 
-                    JOptionPane.showMessageDialog(null, Messages.EXPORT_SUCCESSFUL.getMessage(Configurator.CONFIG
-                            .getString(ConfiguratorKeys.PATH.getKey())));
+                        setVisible(false);
+
+                        JOptionPane.showMessageDialog(null, Messages.EXPORT_SUCCESSFUL.getMessage(Configurator.CONFIG
+                                .getString(ConfiguratorKeys.PATH.getKey())));
+                    }
                 } catch (IOException ex) {
                     LOG.log(Level.SEVERE, "Error exporting data", ex);
                     formatError(export);
@@ -176,7 +206,7 @@ public class ExportFrame extends AbstractFrame {
             }
         });
 
-        preview.setBounds(10, 225, 140, 24);
+        preview.setBounds(10, 285, 230, 24);
         preview.addKeyListener(new TimeTableKeyAdapter());
         preview.addActionListener(new ActionListener() {
             @Override
@@ -199,16 +229,9 @@ public class ExportFrame extends AbstractFrame {
             }
         });
 
-        scrollPane.setBounds(10, 260, 480, 150);
+        scrollPane.setBounds(10, 315, 485, 150);
 
-        summary.setBounds(10, 410, 480, 20);
-
-        description.setBounds(320, 10, 170, 240);
-        description.setEditable(false);
-        description.setLineWrap(true);
-        description.setWrapStyleWord(true);
-        description.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-        description.setText(Messages.EXPORT_DESCRIPTION.getMessage());
+        summary.setBounds(10, 465, 480, 20);
 
         formatOk(dateChooser, days);
 
@@ -217,6 +240,9 @@ public class ExportFrame extends AbstractFrame {
         getContentPane().add(labelDays);
         getContentPane().add(days);
         getContentPane().add(labelSelectedDays);
+        getContentPane().add(labelDelete);
+        getContentPane().add(deleteYes);
+        getContentPane().add(deleteNo);
         getContentPane().add(scrollPane);
         getContentPane().add(preview);
         getContentPane().add(export);
