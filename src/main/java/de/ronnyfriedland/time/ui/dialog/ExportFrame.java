@@ -110,7 +110,7 @@ public class ExportFrame extends AbstractFrame {
     private final JScrollPane scrollPane = new JScrollPane(table);
 
     public ExportFrame() {
-        super(Messages.NEW_EXPORT.getMessage(), 500, 510);
+        super(Messages.NEW_EXPORT.getMessage(), 505, 510);
         createUI();
     }
 
@@ -127,6 +127,7 @@ public class ExportFrame extends AbstractFrame {
         description.setWrapStyleWord(true);
         description.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         description.setText(Messages.EXPORT_DESCRIPTION.getMessage());
+        description.addKeyListener(new TimeTableKeyAdapter());
 
         // configure
         labelDate.setBounds(10, 130, 100, 24);
@@ -159,8 +160,10 @@ public class ExportFrame extends AbstractFrame {
         labelDelete.setBounds(340, 230, 150, 24);
 
         deleteYes.setBounds(340, 250, 60, 24);
+        deleteYes.addKeyListener(new TimeTableKeyAdapter());
         deleteNo.setBounds(400, 250, 60, 24);
         deleteNo.setSelected(true);
+        deleteNo.addKeyListener(new TimeTableKeyAdapter());
 
         ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(deleteYes);
@@ -230,6 +233,7 @@ public class ExportFrame extends AbstractFrame {
         });
 
         scrollPane.setBounds(10, 315, 485, 150);
+        scrollPane.addKeyListener(new TimeTableKeyAdapter());
 
         summary.setBounds(10, 465, 480, 20);
 

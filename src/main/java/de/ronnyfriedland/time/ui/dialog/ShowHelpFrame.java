@@ -23,7 +23,7 @@ public class ShowHelpFrame extends AbstractFrame implements HyperlinkListener {
     private final JEditorPane editorPane = new JEditorPane();
 
     public ShowHelpFrame() {
-        super(Messages.HELP.getMessage(), 650, 450);
+        super(Messages.HELP.getMessage(), 655, 450);
         createUI();
     }
 
