@@ -12,6 +12,7 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -91,7 +92,7 @@ public final class TimeTableUI {
             // Create a popup menu components
             final MenuItem newProject = new MenuItem(Messages.NEW_PROJECT.getMessage());
             final MenuItem newItem = new MenuItem(Messages.NEW_ENTRY.getMessage());
-            final Menu todayItems = new Menu(Messages.LAST_ENTRIES.getMessage());
+            final Menu lastItems = new Menu(Messages.LAST_ENTRIES.getMessage());
             final MenuItem exportItem = new MenuItem(Messages.EXPORT_DATA.getMessage());
             final MenuItem importItem = new MenuItem(Messages.IMPORT_DATA.getMessage());
             final MenuItem helpItem = new MenuItem(Messages.HELP.getMessage());
@@ -101,7 +102,7 @@ public final class TimeTableUI {
             popup.add(newProject);
             popup.add(newItem);
             popup.addSeparator();
-            popup.add(todayItems);
+            popup.add(lastItems);
             popup.addSeparator();
             popup.add(exportItem);
             popup.add(importItem);
@@ -126,21 +127,21 @@ public final class TimeTableUI {
                             new NewEntryFrame().setVisible(true);
                         }
                     }
-                    Collection<Entry> todayEntries = EntityController.getInstance().findAll(Entry.class,
+                    Collection<Entry> lastEntries = EntityController.getInstance().findAll(Entry.class,
                             new SortParam("date", SortOrder.DESC), 10, false);
-                    todayItems.removeAll();
+                    lastItems.removeAll();
 
-                    for (final Entry entry : todayEntries) {
-                        MenuItem menuItem = new MenuItem(String.format("%1$s: %2$sh - %3$s (%4$s)", entry
-                                .getDateString(), entry.getDuration(), entry.getDescription(), entry.getProject()
-                                .getName()));
+                    for (final Entry entry : lastEntries) {
+                        String duration = entry.getCalculatedDuration(new Date());
+                        MenuItem menuItem = new MenuItem(String.format("%1$s: %2$sh - %3$s (%4$s)",
+                                entry.getDateString(), duration, entry.getDescription(), entry.getProject().getName()));
                         menuItem.addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(final ActionEvent e) {
                                 new NewEntryFrame(entry).setVisible(true);
                             }
                         });
-                        todayItems.add(menuItem);
+                        lastItems.add(menuItem);
                     }
 
                 }
