@@ -140,7 +140,7 @@ public class NewEntryFrame extends AbstractFrame {
         uuid = entry.getUuid();
         date.setText(entry.getDateString());
         description.setText(entry.getDescription());
-        duration.setText(entry.getDuration());
+        duration.setText(entry.getCalculatedDuration(new Date()));
         switch (entry.getState().getState()) {
         case OK:
         case WARN:

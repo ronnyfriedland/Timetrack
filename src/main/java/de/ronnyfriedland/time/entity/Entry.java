@@ -20,6 +20,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import de.ronnyfriedland.time.entity.EntryState.State;
 import de.ronnyfriedland.time.entity.validation.IsFloat;
 import de.ronnyfriedland.time.entity.validation.NotBlank;
 
@@ -75,6 +76,16 @@ public class Entry extends AbstractEntity {
 
     public Entry(final String uuid) {
         super(uuid);
+    }
+
+    public String getCalculatedDuration(final Date reference) {
+        String duration = getDuration();
+        if (State.OK == state.getState() || State.WARN == state.getState()) {
+            // workflow still running
+            Date start = state.getStart();
+            duration = EntryState.getDuration(start, reference, getDuration());
+        }
+        return duration;
     }
 
     public String getDuration() {
