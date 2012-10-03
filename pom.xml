@@ -315,16 +315,4 @@
 			<version>0.9.8</version>
 		</dependency>
 	</dependencies>
-	<distributionManagement>
-		<!-- use the following if you're not using a snapshot version. -->
-		<repository>
-			<id>nexus</id>
-			<url>http://192.168.8.5:8081/nexus/content/repositories/releases</url>
-		</repository>
-		<!-- use the following if you ARE using a snapshot version. -->
-		<snapshotRepository>
-			<id>nexus</id>
-			<url>http://192.168.8.5:8081/nexus/content/repositories/snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
 </project>
