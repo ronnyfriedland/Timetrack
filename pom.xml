@@ -17,6 +17,7 @@
 		<timetable.workflow.warn>7200</timetable.workflow.warn>
 		<timetable.workflow.stop>14400</timetable.workflow.stop>
 		<timetable.popup.show>true</timetable.popup.show>
+		<timetable.database.password>nth12vireO</timetable.database.password>
 	</properties>
 	<build>
 		<resources>
