@@ -3,12 +3,15 @@ package de.ronnyfriedland.time.logic.plugin.jmx;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import javax.management.NotCompliantMBeanException;
 import javax.management.StandardMBean;
+import javax.management.openmbean.CompositeData;
+import javax.management.openmbean.CompositeDataSupport;
+import javax.management.openmbean.CompositeType;
+import javax.management.openmbean.OpenType;
+import javax.management.openmbean.SimpleType;
 
 import de.ronnyfriedland.time.entity.Entry;
 import de.ronnyfriedland.time.entity.EntryState;
@@ -17,8 +20,6 @@ import de.ronnyfriedland.time.logic.EntityController;
 
 /**
  * @author Ronny Friedland
- * 
- *         TODO caching !!!
  */
 public class DataBeanImpl extends StandardMBean implements IDataBean {
 
@@ -27,21 +28,38 @@ public class DataBeanImpl extends StandardMBean implements IDataBean {
     }
 
     @Override
-    public Collection<String> getActiveWorkflowEntries() {
-        Set<String> entries = new HashSet<String>();
+    public CompositeData getActiveWorkflowEntries() {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put(EntryState.PARAM_STATE, EntryState.State.OK);
         params.put(EntryState.PARAM_DATE, Calendar.getInstance().getTime());
         Collection<EntryState> entryStates = EntityController.getInstance().findResultlistByParameter(EntryState.class,
                 EntryState.QUERY_FIND_BY_STATE_AND_DATE, params);
-        for (EntryState entryState : entryStates) {
-            params = new HashMap<String, Object>();
-            params.put(Entry.PARAM_STATE, entryState);
-            Entry entry = EntityController.getInstance().findSingleResultByParameter(Entry.class,
-                    Entry.QUERY_FIND_BY_STATE, params);
-            entries.add(entry.toString());
+        try {
+            if (entryStates.isEmpty()) {
+                return null;
+            } else {
+                int i = 0;
+                String[] itemNames = new String[entryStates.size()];
+                Object[] items = new Object[entryStates.size()];
+                OpenType[] itemTypes = new OpenType[entryStates.size()];
+                for (EntryState entryState : entryStates) {
+                    params = new HashMap<String, Object>();
+                    params.put(Entry.PARAM_STATE, entryState);
+                    Entry entry = EntityController.getInstance().findSingleResultByParameter(Entry.class,
+                            Entry.QUERY_FIND_BY_STATE, params);
+
+                    itemNames[i] = entry.getUuid();
+                    items[i] = String.format("%s (project: %s)", entry.getDescription(), entry.getProject().getName());
+                    itemTypes[i] = SimpleType.STRING;
+                    i++;
+                }
+                return new CompositeDataSupport(new CompositeType(String.class.getName(), "active workflow entries",
+                        itemNames, itemNames, itemTypes), itemNames, items);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        return entries;
     }
 
     @Override

@@ -1,6 +1,6 @@
 package de.ronnyfriedland.time.logic.plugin.jmx;
 
-import java.util.Collection;
+import javax.management.openmbean.CompositeData;
 
 /**
  * Interface Definition für die Darstellung der Anwendungsdaten.
@@ -8,7 +8,7 @@ import java.util.Collection;
  * @author Ronny Friedland
  */
 public interface IDataBean {
-    public Collection<String> getActiveWorkflowEntries();
+    public CompositeData getActiveWorkflowEntries();
 
     public int getEntryCount();
 
