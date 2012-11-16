@@ -17,6 +17,7 @@ import de.ronnyfriedland.time.entity.Entry;
 import de.ronnyfriedland.time.entity.EntryState;
 import de.ronnyfriedland.time.entity.Project;
 import de.ronnyfriedland.time.logic.EntityController;
+import de.ronnyfriedland.time.logic.plugin.PluginException;
 
 /**
  * @author Ronny Friedland
@@ -28,7 +29,7 @@ public class DataBeanImpl extends StandardMBean implements IDataBean {
     }
 
     @Override
-    public CompositeData getActiveWorkflowEntries() {
+    public CompositeData getActiveWorkflowEntries() throws PluginException {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put(EntryState.PARAM_STATE, EntryState.State.OK);
         params.put(EntryState.PARAM_DATE, Calendar.getInstance().getTime());
@@ -57,8 +58,7 @@ public class DataBeanImpl extends StandardMBean implements IDataBean {
                         itemNames, itemNames, itemTypes), itemNames, items);
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
+            throw new PluginException("error providing jmx data", e);
         }
     }
 

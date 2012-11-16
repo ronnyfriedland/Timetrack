@@ -1,6 +1,8 @@
 package de.ronnyfriedland.time.logic.plugin.jmx;
 
-import java.util.Collection;
+import javax.management.openmbean.CompositeData;
+
+import de.ronnyfriedland.time.logic.plugin.PluginException;
 
 /**
  * Interface Definition für die Darstellung der Anwendungskonfiguration.
@@ -12,8 +14,10 @@ public interface IConfigBean {
      * Liefert die Konfiguration der Anwendung
      * 
      * @return Liste der Konfigurationsparameter
+     * @throws PluginException
+     *             bei einem Fehler
      */
-    public Collection<String> getConfiguration();
+    public CompositeData getConfiguration() throws PluginException;
 
     /**
      * Ausführen von GC
