@@ -47,13 +47,12 @@ public class CheckEntryWorkflowStateJob extends AbstractJob {
         if (LOG.isLoggable(Level.INFO)) {
             LOG.info("Executing ... " + getClass().getSimpleName());
         }
-        /*
-         * 1. Statustabelle abfragen, ob es einen Eintrag im Status 'OK' gibt,
-         * dessen lastModifiedDate < als x ist. 2. Status auf WARN stellen 3.
-         * Wenn lastModifiedDate < y ist, dann Hinweis bringen 4. wenn status
-         * auf WARN steht und lastModifiedDate < y, dann Status auf STOPPED
-         * stellen und Hinweis bringen
-         */
+        // 1. Statustabelle abfragen, ob es einen Eintrag im Status 'OK' gibt,
+        // dessen lastModifiedDate < als x ist.
+        // 2. Status auf WARN stellen
+        // 3. Wenn lastModifiedDate < y ist, dann Hinweis bringen
+        // 4. Wenn Status auf WARN steht und lastModifiedDate < y, dann Status
+        // auf STOPPED stellen und Hinweis bringen
 
         Integer x = Configurator.CONFIG.getInt(ConfiguratorKeys.WORKFLOW_WARN.getKey());
         Integer y = Configurator.CONFIG.getInt(ConfiguratorKeys.WORKFLOW_STOP.getKey());

@@ -40,20 +40,18 @@ public class ShowReminderJob extends AbstractJob {
         if (LOG.isLoggable(Level.INFO)) {
             LOG.info("Executing ... " + getClass().getSimpleName());
         }
+        Boolean showPopup = Configurator.CONFIG.getBoolean(ConfiguratorKeys.SHOW_POPUP.getKey());
+
         Date previousFireTime = context.getPreviousFireTime();
         Date now = new Date();
         Entry lastEntry = EntityController.getInstance().findLast(Entry.class);
 
-        boolean showPopup = true;
         long diff = Long.MAX_VALUE;
         if (null != previousFireTime) {
             diff = now.getTime() - previousFireTime.getTime();
         }
         if (null != lastEntry && (diff > (now.getTime() - lastEntry.getLastModifiedDate().getTime()))) {
-            showPopup = false;
-        }
-        if (showPopup) {
-            showPopup(context);
+            showPopup(showPopup);
         }
         if (LOG.isLoggable(Level.FINE)) {
             LOG.fine(String.format("Job %s executed successfully.", context.getJobDetail().getKey()));
@@ -63,11 +61,10 @@ public class ShowReminderJob extends AbstractJob {
     /**
      * Darstellung des Popups
      * 
-     * @param context
-     *            der {@link JobExecutionContext}
+     * @param showPopup
+     *            Flag, ob Hinweis als Popup dargestellt werden soll.
      */
-    protected void showPopup(final JobExecutionContext context) {
-        Boolean showPopup = Configurator.CONFIG.getBoolean(ConfiguratorKeys.SHOW_POPUP.getKey());
+    protected void showPopup(final boolean showPopup) {
         if (showPopup || null == getTrayIcon()) {
             JOptionPane.showMessageDialog(null, Messages.MESSAGE_POPUP.getMessage());
         } else {
