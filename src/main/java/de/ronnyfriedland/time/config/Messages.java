@@ -66,8 +66,8 @@ public enum Messages {
     EXPORT_SUCCESSFUL("exportsuccessful"),
     /** Löschen nach Export ? */
     EXPORT_DELETE("exportdelete"),
-    /** Hinweistext für Export */
-    EXPORT_DESCRIPTION("exportdescription", PREVIEW.getMessage(), EXPORT.getMessage()), HELP("help");
+    /** Hilfe */
+    HELP("help");
 
     private String message;
     private String[] properties;
