@@ -60,6 +60,7 @@
 						</manifest>
 						<manifestEntries>
 							<Class-Path>info/</Class-Path>
+							<Built-By></Built-By>
 						</manifestEntries>
 					</archive>
 				</configuration>
