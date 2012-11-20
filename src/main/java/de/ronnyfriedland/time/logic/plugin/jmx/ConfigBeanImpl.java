@@ -44,7 +44,7 @@ public class ConfigBeanImpl extends StandardMBean implements IConfigBean {
             for (ConfiguratorKeys key : ConfiguratorKeys.values()) {
                 i--;
                 itemNames[i] = key.getKey();
-                items[i] = String.format("%1$s : %2$s", key, Configurator.CONFIG.getString(key.getKey()));
+                items[i] = String.format("%1$s", Configurator.CONFIG.getString(key.getKey()));
                 itemTypes[i] = SimpleType.STRING;
             }
             return new CompositeDataSupport(new CompositeType(String.class.getName(), "configuration", itemNames,
