@@ -1,9 +1,13 @@
 package de.ronnyfriedland.time.ui.dialog;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -16,20 +20,26 @@ import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -54,7 +64,7 @@ public class ExportFrame extends AbstractFrame {
     private static final String LABEL_SELECTED_DAYS_VALUE = "%1$d Tag(e)";
     private static final String LABEL_SELECTED_EXPORT_DATA = "%1$.2f Stunden für %2$d Tage ausgewählt.";
 
-    private static final String[] TABLE_HEADERS = new String[] { Messages.DATE.getMessage(),
+    private static final String[] TABLE_HEADERS = new String[] { null, Messages.DATE.getMessage(),
             Messages.DESCRIPTION.getMessage(), Messages.PROJECT_NAME.getMessage(), Messages.DURATION.getMessage() };
 
     private final JLabel labelDate = new JLabel(Messages.START_DATE.getMessage());
@@ -68,9 +78,8 @@ public class ExportFrame extends AbstractFrame {
     private final JButton preview = new JButton(Messages.PREVIEW.getMessage());
     private final JButton export = new JButton(Messages.EXPORT.getMessage());
     private final JLabel summary = new JLabel();
-    private final JTextArea description = new JTextArea();
     private final DefaultTableModel tableModel = new DefaultTableModel(TABLE_HEADERS, 0) {
-        private static final long serialVersionUID = 2177197508177608415L;
+        private static final long serialVersionUID = 1L;
 
         @Override
         public boolean isCellEditable(final int row, final int column) {
@@ -99,18 +108,32 @@ public class ExportFrame extends AbstractFrame {
             return component;
         }
     };
+    private final TableColumnModel columnModel = new DefaultTableColumnModel() {
+        private static final long serialVersionUID = 1L;
+
+        public boolean isColumnVisible(int column) {
+            return 0 < column;
+        }
+
+        @Override
+        public TableColumn getColumn(int columnIndex) {
+            TableColumn col = super.getColumn(columnIndex);
+            if (!isColumnVisible(columnIndex)) {
+                col.setWidth(0);
+                col.setMinWidth(0);
+                col.setMaxWidth(0);
+            }
+            return col;
+        }
+    };
     private final JTable table = new JTable();
-    {
-        table.setModel(tableModel);
-        table.setDefaultRenderer(Object.class, tableCellRenderer);
-        table.addKeyListener(new TimeTableKeyAdapter());
-        table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        table.setTransferHandler(null); // remove default TransferHandler
-    }
     private final JScrollPane scrollPane = new JScrollPane(table);
+    private final JPanel filterPane = new JPanel();
+    private final JPanel summaryPane = new JPanel();
 
     public ExportFrame() {
-        super(Messages.NEW_EXPORT.getMessage(), 505, 510);
+        super(Messages.NEW_EXPORT.getMessage(), 630, 510, true);
+        getContentPane().setBackground(new Color(248, 248, 255));
         createUI();
     }
 
@@ -121,29 +144,15 @@ public class ExportFrame extends AbstractFrame {
      */
     @Override
     protected void createUI() {
-        description.setBounds(10, 10, 485, 115);
-        description.setEditable(false);
-        description.setLineWrap(true);
-        description.setWrapStyleWord(true);
-        description.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-        description.setText(Messages.EXPORT_DESCRIPTION.getMessage());
-        description.addKeyListener(new TimeTableKeyAdapter());
-
-        // configure
-        labelDate.setBounds(10, 130, 100, 24);
-
-        dateChooser.setBounds(110, 130, 200, 150);
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.DAY_OF_WEEK, 2);
-        dateChooser.setDate(cal.getTime());
-        dateChooser.setChosenDateButtonColor(Color.LIGHT_GRAY);
-        dateChooser.setYearSelectionRange(2);
-        dateChooser.setBorder(BorderFactory.createEmptyBorder());
-        dateChooser.addKeyListener(new TimeTableKeyAdapter());
 
-        labelDays.setBounds(340, 130, 150, 24);
-
-        days.setBounds(340, 155, 150, 30);
+        ButtonGroup buttonGroup = new ButtonGroup();
+        getContentPane().setLayout(new BorderLayout(0, 0));
+        filterPane.setBackground(new Color(248, 248, 255));
+        getContentPane().add(filterPane, BorderLayout.NORTH);
+        filterPane.setBounds(0, 0, 600, 300);
+        days.setBackground(new Color(248, 248, 255));
         days.setValue(7);
         days.addKeyListener(new TimeTableKeyAdapter());
         days.addChangeListener(new ChangeListener() {
@@ -153,23 +162,43 @@ public class ExportFrame extends AbstractFrame {
                 labelSelectedDays.setText(String.format(LABEL_SELECTED_DAYS_VALUE, source.getValue()));
             }
         });
-
-        labelSelectedDays.setBounds(340, 190, 200, 24);
         labelSelectedDays.setText(String.format(LABEL_SELECTED_DAYS_VALUE, days.getValue()));
+        dateChooser.setBackground(new Color(248, 248, 255));
+        dateChooser.setDate(cal.getTime());
+        dateChooser.setChosenDateButtonColor(Color.LIGHT_GRAY);
+        dateChooser.setYearSelectionRange(2);
+        dateChooser.setBorder(BorderFactory.createEmptyBorder());
+        dateChooser.addKeyListener(new TimeTableKeyAdapter());
 
-        labelDelete.setBounds(340, 230, 150, 24);
-
-        deleteYes.setBounds(340, 250, 60, 24);
+        formatOk(dateChooser, days);
+        deleteYes.setBackground(new Color(248, 248, 255));
         deleteYes.addKeyListener(new TimeTableKeyAdapter());
-        deleteNo.setBounds(400, 250, 60, 24);
+        buttonGroup.add(deleteYes);
+        deleteNo.setBackground(new Color(248, 248, 255));
         deleteNo.setSelected(true);
         deleteNo.addKeyListener(new TimeTableKeyAdapter());
-
-        ButtonGroup buttonGroup = new ButtonGroup();
-        buttonGroup.add(deleteYes);
         buttonGroup.add(deleteNo);
+        preview.addKeyListener(new TimeTableKeyAdapter());
+        preview.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                tableModel.setDataVector(new Object[0][0], TABLE_HEADERS);
 
-        export.setBounds(265, 285, 230, 24);
+                Calendar from = getStartDate();
+                Calendar to = getEndDate();
+                Collection<Entry> entries = getFilteredData(from, to);
+
+                float hours = 0;
+                for (Entry entry : entries) {
+                    Float duration = Float.valueOf(entry.getDuration());
+                    hours += duration;
+                    tableModel.addRow(new Object[] { entry.getUuid(), entry.getDateString(), entry.getDescription(),
+                            entry.getProject().getName(), String.format("%1$.2f", duration) });
+                }
+
+                summary.setText(String.format(LABEL_SELECTED_EXPORT_DATA, hours, days.getValue()));
+            }
+        });
         export.addKeyListener(new TimeTableKeyAdapter());
         export.addActionListener(new ActionListener() {
             @Override
@@ -208,50 +237,140 @@ public class ExportFrame extends AbstractFrame {
 
             }
         });
-
-        preview.setBounds(10, 285, 230, 24);
-        preview.addKeyListener(new TimeTableKeyAdapter());
-        preview.addActionListener(new ActionListener() {
+        GroupLayout gl_filterPane = new GroupLayout(filterPane);
+        gl_filterPane.setHorizontalGroup(gl_filterPane.createParallelGroup(Alignment.LEADING).addGroup(
+                gl_filterPane
+                        .createSequentialGroup()
+                        .addGap(33)
+                        .addGroup(
+                                gl_filterPane
+                                        .createParallelGroup(Alignment.LEADING)
+                                        .addComponent(labelDate)
+                                        .addComponent(dateChooser, GroupLayout.PREFERRED_SIZE, 219,
+                                                GroupLayout.PREFERRED_SIZE))
+                        .addGap(32)
+                        .addGroup(
+                                gl_filterPane
+                                        .createParallelGroup(Alignment.LEADING, false)
+                                        .addComponent(export, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+                                                Short.MAX_VALUE)
+                                        .addGroup(
+                                                gl_filterPane
+                                                        .createSequentialGroup()
+                                                        .addGroup(
+                                                                gl_filterPane
+                                                                        .createParallelGroup(Alignment.LEADING)
+                                                                        .addComponent(labelDays,
+                                                                                GroupLayout.PREFERRED_SIZE, 110,
+                                                                                GroupLayout.PREFERRED_SIZE)
+                                                                        .addComponent(days, GroupLayout.PREFERRED_SIZE,
+                                                                                156, GroupLayout.PREFERRED_SIZE)
+                                                                        .addComponent(labelSelectedDays,
+                                                                                GroupLayout.PREFERRED_SIZE, 129,
+                                                                                GroupLayout.PREFERRED_SIZE))
+                                                        .addGap(31)
+                                                        .addGroup(
+                                                                gl_filterPane
+                                                                        .createParallelGroup(Alignment.LEADING)
+                                                                        .addComponent(deleteNo)
+                                                                        .addComponent(deleteYes,
+                                                                                GroupLayout.PREFERRED_SIZE, 129,
+                                                                                GroupLayout.PREFERRED_SIZE)
+                                                                        .addComponent(labelDelete)).addGap(9))
+                                        .addComponent(preview, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+                                                Short.MAX_VALUE)).addContainerGap(746, Short.MAX_VALUE)));
+        gl_filterPane
+                .setVerticalGroup(gl_filterPane
+                        .createParallelGroup(Alignment.TRAILING)
+                        .addGroup(
+                                gl_filterPane
+                                        .createSequentialGroup()
+                                        .addContainerGap(20, Short.MAX_VALUE)
+                                        .addGroup(
+                                                gl_filterPane
+                                                        .createParallelGroup(Alignment.LEADING)
+                                                        .addGroup(
+                                                                gl_filterPane
+                                                                        .createSequentialGroup()
+                                                                        .addGroup(
+                                                                                gl_filterPane
+                                                                                        .createParallelGroup(
+                                                                                                Alignment.LEADING)
+                                                                                        .addGroup(
+                                                                                                gl_filterPane
+                                                                                                        .createSequentialGroup()
+                                                                                                        .addComponent(
+                                                                                                                labelDays,
+                                                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                                                25,
+                                                                                                                GroupLayout.PREFERRED_SIZE)
+                                                                                                        .addPreferredGap(
+                                                                                                                ComponentPlacement.UNRELATED)
+                                                                                                        .addComponent(
+                                                                                                                days,
+                                                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                                                GroupLayout.PREFERRED_SIZE)
+                                                                                                        .addPreferredGap(
+                                                                                                                ComponentPlacement.RELATED)
+                                                                                                        .addComponent(
+                                                                                                                labelSelectedDays,
+                                                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                                                25,
+                                                                                                                GroupLayout.PREFERRED_SIZE))
+                                                                                        .addGroup(
+                                                                                                gl_filterPane
+                                                                                                        .createSequentialGroup()
+                                                                                                        .addComponent(
+                                                                                                                labelDelete,
+                                                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                                                25,
+                                                                                                                GroupLayout.PREFERRED_SIZE)
+                                                                                                        .addPreferredGap(
+                                                                                                                ComponentPlacement.UNRELATED)
+                                                                                                        .addGroup(
+                                                                                                                gl_filterPane
+                                                                                                                        .createSequentialGroup()
+                                                                                                                        .addComponent(
+                                                                                                                                deleteYes)
+                                                                                                                        .addPreferredGap(
+                                                                                                                                ComponentPlacement.UNRELATED)
+                                                                                                                        .addComponent(
+                                                                                                                                deleteNo))))
+                                                                        .addGap(48).addComponent(preview)
+                                                                        .addPreferredGap(ComponentPlacement.RELATED)
+                                                                        .addComponent(export))
+                                                        .addGroup(
+                                                                gl_filterPane
+                                                                        .createSequentialGroup()
+                                                                        .addComponent(labelDate)
+                                                                        .addPreferredGap(ComponentPlacement.UNRELATED)
+                                                                        .addComponent(dateChooser, 0, 0,
+                                                                                Short.MAX_VALUE))).addGap(53)));
+        filterPane.setLayout(gl_filterPane);
+        table.setModel(tableModel);
+        table.setDefaultRenderer(Object.class, tableCellRenderer);
+        table.setColumnModel(columnModel);
+        table.addMouseListener(new MouseAdapter() {
             @Override
-            public void actionPerformed(final ActionEvent e) {
-                tableModel.setDataVector(new Object[0][0], TABLE_HEADERS);
-
-                Calendar from = getStartDate();
-                Calendar to = getEndDate();
-                Collection<Entry> entries = getFilteredData(from, to);
-
-                float hours = 0;
-                for (Entry entry : entries) {
-                    Float duration = Float.valueOf(entry.getDuration());
-                    hours += duration;
-                    tableModel.addRow(new Object[] { entry.getDateString(), entry.getDescription(),
-                            entry.getProject().getName(), String.format("%1$.2f", duration) });
+            public void mouseClicked(MouseEvent e) {
+                if (2 == e.getClickCount()) {
+                    int selectedRow = table.getSelectedRow();
+                    String uuid = (String) tableModel.getValueAt(selectedRow, 0);
+                    Entry entry = EntityController.getInstance().findById(Entry.class, uuid);
+                    new NewEntryFrame(entry).setVisible(true);
                 }
-
-                summary.setText(String.format(LABEL_SELECTED_EXPORT_DATA, hours, days.getValue()));
             }
         });
-
-        scrollPane.setBounds(10, 315, 485, 150);
+        table.addKeyListener(new TimeTableKeyAdapter());
+        table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        table.setTransferHandler(null);
+        getContentPane().add(scrollPane, BorderLayout.CENTER);
         scrollPane.addKeyListener(new TimeTableKeyAdapter());
+        FlowLayout fl_summaryPane = (FlowLayout) summaryPane.getLayout();
 
-        summary.setBounds(10, 465, 480, 20);
-
-        formatOk(dateChooser, days);
-
-        getContentPane().add(labelDate);
-        getContentPane().add(dateChooser);
-        getContentPane().add(labelDays);
-        getContentPane().add(days);
-        getContentPane().add(labelSelectedDays);
-        getContentPane().add(labelDelete);
-        getContentPane().add(deleteYes);
-        getContentPane().add(deleteNo);
-        getContentPane().add(scrollPane);
-        getContentPane().add(preview);
-        getContentPane().add(export);
-        getContentPane().add(summary);
-        getContentPane().add(description);
+        getContentPane().add(summaryPane, BorderLayout.SOUTH);
+        summaryPane.add(summary);
     }
 
     /**
@@ -298,5 +417,4 @@ public class ExportFrame extends AbstractFrame {
 
         return EntityController.getInstance().findResultlistByParameter(Entry.class, Entry.QUERY_FIND_FROM_TO, params);
     }
-
 }

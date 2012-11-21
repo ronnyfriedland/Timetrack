@@ -3,6 +3,9 @@ package de.ronnyfriedland.time.ui.dialog;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -26,6 +29,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
@@ -105,7 +109,6 @@ public class NewEntryFrame extends AbstractFrame {
 
     private final JList projects = new JList();
     {
-        projects.setCellRenderer(new MyListCellThing());
     }
 
     private class ProjectData {
@@ -128,9 +131,11 @@ public class NewEntryFrame extends AbstractFrame {
     }
 
     private String uuid = null;
+    private final JPanel panel = new JPanel();
 
     public NewEntryFrame() {
-        super(Messages.CREATE_NEW_ENTRY.getMessage(), 320, 300);
+        super(Messages.CREATE_NEW_ENTRY.getMessage(), 430, 330, false);
+        getContentPane().setBackground(new Color(248, 248, 255));
         createUI();
         loadProjectListData(false);
     }
@@ -171,8 +176,20 @@ public class NewEntryFrame extends AbstractFrame {
      */
     @Override
     protected void createUI() {
+        GridBagLayout gridBagLayout = new GridBagLayout();
+        gridBagLayout.columnWidths = new int[] { 250, 30, 30, 35, 80, 0 };
+        gridBagLayout.rowHeights = new int[] { 22, 22, 22, 100, 22, 0, 0 };
+        gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 1.0, 0.0 };
+        gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0 };
+        getContentPane().setLayout(gridBagLayout);
         // configure
         labelDate.setBounds(10, 10, 100, 24);
+        GridBagConstraints gbc_labelDate = new GridBagConstraints();
+        gbc_labelDate.fill = GridBagConstraints.BOTH;
+        gbc_labelDate.insets = new Insets(25, 25, 5, 5);
+        gbc_labelDate.gridx = 0;
+        gbc_labelDate.gridy = 0;
+        getContentPane().add(labelDate, gbc_labelDate);
 
         date.setName("date");
         date.setBounds(110, 10, 200, 24);
@@ -199,8 +216,21 @@ public class NewEntryFrame extends AbstractFrame {
                 return valid;
             }
         });
+        GridBagConstraints gbc_date = new GridBagConstraints();
+        gbc_date.fill = GridBagConstraints.BOTH;
+        gbc_date.insets = new Insets(25, 10, 5, 10);
+        gbc_date.gridwidth = 3;
+        gbc_date.gridx = 1;
+        gbc_date.gridy = 0;
+        getContentPane().add(date, gbc_date);
 
         labelDescription.setBounds(10, 35, 100, 24);
+        GridBagConstraints gbc_labelDescription = new GridBagConstraints();
+        gbc_labelDescription.fill = GridBagConstraints.BOTH;
+        gbc_labelDescription.insets = new Insets(10, 25, 5, 5);
+        gbc_labelDescription.gridx = 0;
+        gbc_labelDescription.gridy = 1;
+        getContentPane().add(labelDescription, gbc_labelDescription);
 
         description.setName("description");
         description.setBounds(110, 35, 200, 24);
@@ -226,8 +256,21 @@ public class NewEntryFrame extends AbstractFrame {
                 return valid;
             }
         });
+        GridBagConstraints gbc_description = new GridBagConstraints();
+        gbc_description.fill = GridBagConstraints.BOTH;
+        gbc_description.insets = new Insets(10, 10, 5, 10);
+        gbc_description.gridwidth = 3;
+        gbc_description.gridx = 1;
+        gbc_description.gridy = 1;
+        getContentPane().add(description, gbc_description);
 
         labelDuration.setBounds(10, 60, 100, 24);
+        GridBagConstraints gbc_labelDuration = new GridBagConstraints();
+        gbc_labelDuration.fill = GridBagConstraints.BOTH;
+        gbc_labelDuration.insets = new Insets(10, 25, 5, 5);
+        gbc_labelDuration.gridx = 0;
+        gbc_labelDuration.gridy = 2;
+        getContentPane().add(labelDuration, gbc_labelDuration);
 
         duration.setName("duration");
         duration.setBounds(110, 60, 150, 24);
@@ -254,6 +297,16 @@ public class NewEntryFrame extends AbstractFrame {
                 return valid;
             }
         });
+        GridBagConstraints gbc_duration = new GridBagConstraints();
+        gbc_duration.fill = GridBagConstraints.BOTH;
+        gbc_duration.insets = new Insets(10, 10, 5, 5);
+        gbc_duration.gridwidth = 2;
+        gbc_duration.gridx = 1;
+        gbc_duration.gridy = 2;
+        getContentPane().add(duration, gbc_duration);
+        scrollPaneProjects.setBounds(10, 85, 300, 100);
+        scrollPaneProjects.setViewportView(projects);
+        projects.setCellRenderer(new MyListCellThing());
 
         projects.setName("projects");
         projects.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
@@ -296,29 +349,21 @@ public class NewEntryFrame extends AbstractFrame {
                 }
             }
         });
+        panel.setBackground(new Color(248, 248, 255));
+        panel.setLayout(null);
 
-        scrollPaneProjects.setViewportView(projects);
-        scrollPaneProjects.setBounds(10, 85, 300, 100);
+        GridBagConstraints gbc_panel = new GridBagConstraints();
+        gbc_panel.insets = new Insets(10, 0, 5, 10);
+        gbc_panel.fill = GridBagConstraints.BOTH;
+        gbc_panel.gridx = 3;
+        gbc_panel.gridy = 2;
+        getContentPane().add(panel, gbc_panel);
+        panel.add(start);
 
-        showDisabledProjects.setBounds(10, 185, 300, 24);
+        start.setBounds(50, 0, 16, 16);
+        panel.add(stop);
 
-        start.setBounds(265, 62, 20, 20);
-        start.addKeyListener(new TimeTableKeyAdapter());
-        start.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(final ActionEvent arg0) {
-                Entry entry;
-                if (null == uuid) {
-                    entry = createEntry(date.getText(), description.getText(), duration.getText(), State.OK,
-                            (ProjectData) projects.getSelectedValue());
-                    if (null != entry) {
-                        setVisible(false);
-                    }
-                }
-            }
-        });
-
-        stop.setBounds(290, 62, 20, 20);
+        stop.setBounds(77, 0, 16, 16);
         stop.addKeyListener(new TimeTableKeyAdapter());
         stop.addActionListener(new ActionListener() {
             @Override
@@ -341,15 +386,38 @@ public class NewEntryFrame extends AbstractFrame {
                 }
             }
         });
-
-        refresh.setBounds(10, 215, 300, 24);
-        refresh.addKeyListener(new TimeTableKeyAdapter());
-        refresh.addActionListener(new ActionListener() {
+        start.addKeyListener(new TimeTableKeyAdapter());
+        start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent arg0) {
-                loadProjectListData(showDisabledProjects.isSelected());
+                Entry entry;
+                if (null == uuid) {
+                    entry = createEntry(date.getText(), description.getText(), duration.getText(), State.OK,
+                            (ProjectData) projects.getSelectedValue());
+                    if (null != entry) {
+                        setVisible(false);
+                    }
+                }
             }
         });
+
+        formatOk(date, description, duration, projects);
+        GridBagConstraints gbc_scrollPaneProjects = new GridBagConstraints();
+        gbc_scrollPaneProjects.fill = GridBagConstraints.BOTH;
+        gbc_scrollPaneProjects.insets = new Insets(10, 25, 5, 10);
+        gbc_scrollPaneProjects.gridwidth = 4;
+        gbc_scrollPaneProjects.gridx = 0;
+        gbc_scrollPaneProjects.gridy = 3;
+        getContentPane().add(scrollPaneProjects, gbc_scrollPaneProjects);
+        showDisabledProjects.setBackground(new Color(248, 248, 255));
+
+        showDisabledProjects.setBounds(10, 185, 300, 24);
+        GridBagConstraints gbc_showDisabledProjects = new GridBagConstraints();
+        gbc_showDisabledProjects.insets = new Insets(10, 25, 5, 5);
+        gbc_showDisabledProjects.fill = GridBagConstraints.HORIZONTAL;
+        gbc_showDisabledProjects.gridx = 0;
+        gbc_showDisabledProjects.gridy = 4;
+        getContentPane().add(showDisabledProjects, gbc_showDisabledProjects);
 
         save.setBounds(10, 245, 145, 24);
         save.addKeyListener(new TimeTableKeyAdapter());
@@ -370,10 +438,16 @@ public class NewEntryFrame extends AbstractFrame {
                 }
             }
         });
+        GridBagConstraints gbc_save = new GridBagConstraints();
+        gbc_save.fill = GridBagConstraints.HORIZONTAL;
+        gbc_save.insets = new Insets(10, 0, 5, 10);
+        gbc_save.gridx = 3;
+        gbc_save.gridy = 4;
+        getContentPane().add(save, gbc_save);
+        delete.setEnabled(false);
 
         delete.setBounds(165, 245, 145, 24);
         delete.addKeyListener(new TimeTableKeyAdapter());
-        delete.setEnabled(false);
         delete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
@@ -393,21 +467,28 @@ public class NewEntryFrame extends AbstractFrame {
             }
         });
 
-        formatOk(date, description, duration, projects);
-
-        getContentPane().add(labelDate);
-        getContentPane().add(date);
-        getContentPane().add(labelDescription);
-        getContentPane().add(description);
-        getContentPane().add(labelDuration);
-        getContentPane().add(duration);
-        getContentPane().add(scrollPaneProjects);
-        getContentPane().add(showDisabledProjects);
-        getContentPane().add(start);
-        getContentPane().add(stop);
-        getContentPane().add(refresh);
-        getContentPane().add(save);
-        getContentPane().add(delete);
+        refresh.setBounds(10, 215, 300, 24);
+        refresh.addKeyListener(new TimeTableKeyAdapter());
+        refresh.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent arg0) {
+                loadProjectListData(showDisabledProjects.isSelected());
+            }
+        });
+        GridBagConstraints gbc_refresh = new GridBagConstraints();
+        gbc_refresh.anchor = GridBagConstraints.NORTH;
+        gbc_refresh.insets = new Insets(10, 25, 5, 5);
+        gbc_refresh.fill = GridBagConstraints.HORIZONTAL;
+        gbc_refresh.gridx = 0;
+        gbc_refresh.gridy = 5;
+        getContentPane().add(refresh, gbc_refresh);
+        GridBagConstraints gbc_delete = new GridBagConstraints();
+        gbc_delete.insets = new Insets(10, 0, 5, 10);
+        gbc_delete.anchor = GridBagConstraints.NORTH;
+        gbc_delete.fill = GridBagConstraints.HORIZONTAL;
+        gbc_delete.gridx = 3;
+        gbc_delete.gridy = 5;
+        getContentPane().add(delete, gbc_delete);
     }
 
     private void loadProjectListData(boolean includeDisabledProjects) {

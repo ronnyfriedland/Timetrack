@@ -1,5 +1,6 @@
 package de.ronnyfriedland.time.ui.dialog;
 
+import java.awt.BorderLayout;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,7 +24,7 @@ public class ShowHelpFrame extends AbstractFrame implements HyperlinkListener {
     private final JEditorPane editorPane = new JEditorPane();
 
     public ShowHelpFrame() {
-        super(Messages.HELP.getMessage(), 655, 455);
+        super(Messages.HELP.getMessage(), 655, 455, true);
         createUI();
     }
 
@@ -38,9 +39,9 @@ public class ShowHelpFrame extends AbstractFrame implements HyperlinkListener {
         editorPane.setEditable(false);
         editorPane.addHyperlinkListener(this);
         editorPane.addKeyListener(new TimeTableKeyAdapter());
+        getContentPane().setLayout(new BorderLayout(0, 0));
 
         JScrollPane scrollPane = new JScrollPane(editorPane);
-        scrollPane.setBounds(0, 0, 655, 435);
         getContentPane().add(scrollPane);
     }
 
