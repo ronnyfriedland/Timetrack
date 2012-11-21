@@ -137,10 +137,8 @@ public final class TimeTableUI {
 
                 @Override
                 public void mousePressed(final MouseEvent e) {
-                    if ((MouseEvent.BUTTON1 == e.getButton())) {
-                        if (2 == e.getClickCount()) {
-                            new NewEntryFrame().setVisible(true);
-                        }
+                    if ((MouseEvent.BUTTON1 == e.getButton()) && (2 == e.getClickCount())) {
+                        new NewEntryFrame().setVisible(true);
                     }
                     Collection<Entry> lastEntries = EntityController.getInstance().findAll(Entry.class,
                             new SortParam("date", SortOrder.DESC), 10, false);
