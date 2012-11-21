@@ -73,6 +73,21 @@ public final class TimeTableUI {
                 new TimeTableUI().createAndShowGUI();
             }
         });
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            /**
+             * (non-Javadoc)
+             * 
+             * @see java.lang.Thread#run()
+             */
+            @Override
+            public void run() {
+                try {
+                    QuartzController.getInstance().shutdownScheduler();
+                } catch (SchedulerException ex) {
+                    LOG.log(Level.SEVERE, "Error shutting down scheduler.", ex);
+                }
+            }
+        });
     }
 
     private TimeTableUI() {
@@ -243,12 +258,6 @@ public final class TimeTableUI {
                 exitItem.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(final ActionEvent e) {
-                        try {
-                            QuartzController.getInstance().shutdownScheduler();
-                        } catch (SchedulerException ex) {
-                            LOG.log(Level.SEVERE, "Error shutting down scheduler.", ex);
-                        }
-                        tray.remove(trayIcon);
                         System.exit(0);
                     }
                 });
