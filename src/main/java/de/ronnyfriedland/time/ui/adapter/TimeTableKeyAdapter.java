@@ -50,14 +50,16 @@ public class TimeTableKeyAdapter extends KeyAdapter {
         if ((-1 < min) && (-1 < max)) {
             for (int i = min; i <= max; i++) {
                 if (selectedData.isSelectedIndex(i)) {
-                    sbuild.append(table.getValueAt(i, 1));
-                    sbuild.append(" (").append(table.getValueAt(i, 2)).append(") : ");
-                    sbuild.append(table.getValueAt(i, 3)).append(" h\n");
+                    sbuild.append(table.getValueAt(i, 2));
+                    sbuild.append(" (").append(table.getValueAt(i, 3)).append(") : ");
+                    sbuild.append(table.getValueAt(i, 4)).append(" h\n");
                 }
             }
         }
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        clipboard.setContents(new StringSelection(sbuild.toString()), null);
+        if (null != clipboard) {
+            clipboard.setContents(new StringSelection(sbuild.toString()), null);
+        }
     }
 
 }

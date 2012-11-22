@@ -67,7 +67,11 @@ public enum Messages {
     /** Löschen nach Export ? */
     EXPORT_DELETE("exportdelete"),
     /** Hilfe */
-    HELP("help");
+    HELP("help"),
+    /** ausgewählte Zeitspanne für den Export */
+    EXPORT_DURATION("exportduration"),
+    /** Zusammenfassung für Export */
+    EXPORT_SUMMARY("exportsummary");
 
     private String message;
     private String[] properties;
@@ -80,11 +84,10 @@ public enum Messages {
     /**
      * Liefert die Fehlermeldung.
      * 
-     * @param customProperties
-     *            replace tokens with given properties
+     * @param customProperties replace tokens with given properties
      * @return Fehlermeldung with replaced tokens
      */
-    public String getMessage(final String... customProperties) {
+    public String getMessage(final Object... customProperties) {
         return MessageProperties.getString(message, 0 == customProperties.length ? properties : customProperties);
     }
 }

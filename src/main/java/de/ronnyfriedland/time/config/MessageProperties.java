@@ -21,13 +21,11 @@ public final class MessageProperties {
     /**
      * Liefert den Text zum angegebenen Message-Key für das angegebene Locale.
      * 
-     * @param key
-     *            der Message-Key
-     * @param values
-     *            die (optionalen) Parameter
+     * @param key der Message-Key
+     * @param values die (optionalen) Parameter
      * @return der Text
      */
-    public static String getString(final String key, final String... values) {
+    public static String getString(final String key, final Object... values) {
         String result = '!' + key + '!';
         try {
             result = PropertyResourceBundle.getBundle("messages").getString(key);

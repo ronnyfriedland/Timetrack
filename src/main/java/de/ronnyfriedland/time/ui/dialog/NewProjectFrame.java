@@ -1,6 +1,5 @@
 package de.ronnyfriedland.time.ui.dialog;
 
-import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -26,6 +25,7 @@ import javax.validation.ValidatorFactory;
 
 import org.apache.commons.lang.StringUtils;
 
+import de.ronnyfriedland.time.config.Const;
 import de.ronnyfriedland.time.config.Messages;
 import de.ronnyfriedland.time.entity.Project;
 import de.ronnyfriedland.time.logic.EntityController;
@@ -51,7 +51,7 @@ public class NewProjectFrame extends AbstractFrame {
 
     public NewProjectFrame() {
         super(Messages.CREATE_NEW_PROJECT.getMessage(), 315, 205, false);
-        getContentPane().setBackground(new Color(248, 248, 255));
+        getContentPane().setBackground(Const.COLOR_BACKGROUND);
         createUI();
     }
 
@@ -171,7 +171,7 @@ public class NewProjectFrame extends AbstractFrame {
         gbc_labelDisable.gridx = 0;
         gbc_labelDisable.gridy = 2;
         getContentPane().add(labelDisable, gbc_labelDisable);
-        disableProject.setBackground(new Color(248, 248, 255));
+        disableProject.setBackground(Const.COLOR_BACKGROUND);
         GridBagConstraints gbc_disableProject = new GridBagConstraints();
         gbc_disableProject.anchor = GridBagConstraints.NORTH;
         gbc_disableProject.fill = GridBagConstraints.HORIZONTAL;

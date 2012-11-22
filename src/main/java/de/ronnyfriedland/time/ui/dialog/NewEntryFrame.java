@@ -43,6 +43,7 @@ import javax.validation.ValidatorFactory;
 
 import org.apache.commons.lang.StringUtils;
 
+import de.ronnyfriedland.time.config.Const;
 import de.ronnyfriedland.time.config.Messages;
 import de.ronnyfriedland.time.entity.Entry;
 import de.ronnyfriedland.time.entity.EntryState;
@@ -86,8 +87,8 @@ public class NewEntryFrame extends AbstractFrame {
         }
 
         @Override
-        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected,
-                boolean cellHasFocus) {
+        public Component getListCellRendererComponent(final JList list, final Object value, final int index,
+                final boolean isSelected, final boolean cellHasFocus) {
             ProjectData data = (ProjectData) value;
             if (data.enabled) {
                 setFont(new Font(getFont().getName(), Font.PLAIN, getFont().getSize()));
@@ -134,8 +135,8 @@ public class NewEntryFrame extends AbstractFrame {
     private final JPanel panel = new JPanel();
 
     public NewEntryFrame() {
-        super(Messages.CREATE_NEW_ENTRY.getMessage(), 430, 330, false);
-        getContentPane().setBackground(new Color(248, 248, 255));
+        super(Messages.CREATE_NEW_ENTRY.getMessage(), 570, 350, false);
+        getContentPane().setBackground(Const.COLOR_BACKGROUND);
         createUI();
         loadProjectListData(false);
     }
@@ -178,9 +179,9 @@ public class NewEntryFrame extends AbstractFrame {
     protected void createUI() {
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[] { 250, 30, 30, 35, 80, 0 };
-        gridBagLayout.rowHeights = new int[] { 22, 22, 22, 100, 22, 0, 0 };
+        gridBagLayout.rowHeights = new int[] { 22, 22, 22, 100, 22, 0, 0, 0 };
         gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 1.0, 0.0 };
-        gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0 };
+        gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0 };
         getContentPane().setLayout(gridBagLayout);
         // configure
         labelDate.setBounds(10, 10, 100, 24);
@@ -349,7 +350,7 @@ public class NewEntryFrame extends AbstractFrame {
                 }
             }
         });
-        panel.setBackground(new Color(248, 248, 255));
+        panel.setBackground(Const.COLOR_BACKGROUND);
         panel.setLayout(null);
 
         GridBagConstraints gbc_panel = new GridBagConstraints();
@@ -360,10 +361,10 @@ public class NewEntryFrame extends AbstractFrame {
         getContentPane().add(panel, gbc_panel);
         panel.add(start);
 
-        start.setBounds(50, 0, 16, 16);
+        start.setBounds(191, 0, 16, 16);
         panel.add(stop);
 
-        stop.setBounds(77, 0, 16, 16);
+        stop.setBounds(220, 0, 16, 16);
         stop.addKeyListener(new TimeTableKeyAdapter());
         stop.addActionListener(new ActionListener() {
             @Override
@@ -403,47 +404,13 @@ public class NewEntryFrame extends AbstractFrame {
 
         formatOk(date, description, duration, projects);
         GridBagConstraints gbc_scrollPaneProjects = new GridBagConstraints();
+        gbc_scrollPaneProjects.gridheight = 2;
         gbc_scrollPaneProjects.fill = GridBagConstraints.BOTH;
         gbc_scrollPaneProjects.insets = new Insets(10, 25, 5, 10);
         gbc_scrollPaneProjects.gridwidth = 4;
         gbc_scrollPaneProjects.gridx = 0;
         gbc_scrollPaneProjects.gridy = 3;
         getContentPane().add(scrollPaneProjects, gbc_scrollPaneProjects);
-        showDisabledProjects.setBackground(new Color(248, 248, 255));
-
-        showDisabledProjects.setBounds(10, 185, 300, 24);
-        GridBagConstraints gbc_showDisabledProjects = new GridBagConstraints();
-        gbc_showDisabledProjects.insets = new Insets(10, 25, 5, 5);
-        gbc_showDisabledProjects.fill = GridBagConstraints.HORIZONTAL;
-        gbc_showDisabledProjects.gridx = 0;
-        gbc_showDisabledProjects.gridy = 4;
-        getContentPane().add(showDisabledProjects, gbc_showDisabledProjects);
-
-        save.setBounds(10, 245, 145, 24);
-        save.addKeyListener(new TimeTableKeyAdapter());
-        save.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(final ActionEvent e) {
-                Entry entry = null;
-                if (null == uuid) {
-                    entry = createEntry(date.getText(), description.getText(), duration.getText(), State.FIXED,
-                            (ProjectData) projects.getSelectedValue());
-                } else {
-                    entry = EntityController.getInstance().findById(Entry.class, uuid);
-                    entry = updateEntry(entry, date.getText(), description.getText(), duration.getText(),
-                            (ProjectData) projects.getSelectedValue());
-                }
-                if (null != entry) {
-                    setVisible(false);
-                }
-            }
-        });
-        GridBagConstraints gbc_save = new GridBagConstraints();
-        gbc_save.fill = GridBagConstraints.HORIZONTAL;
-        gbc_save.insets = new Insets(10, 0, 5, 10);
-        gbc_save.gridx = 3;
-        gbc_save.gridy = 4;
-        getContentPane().add(save, gbc_save);
         delete.setEnabled(false);
 
         delete.setBounds(165, 245, 145, 24);
@@ -467,6 +434,49 @@ public class NewEntryFrame extends AbstractFrame {
             }
         });
 
+        save.setBounds(10, 245, 145, 24);
+        save.addKeyListener(new TimeTableKeyAdapter());
+        save.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                Entry entry = null;
+                if (null == uuid) {
+                    entry = createEntry(date.getText(), description.getText(), duration.getText(), State.FIXED,
+                            (ProjectData) projects.getSelectedValue());
+                } else {
+                    entry = EntityController.getInstance().findById(Entry.class, uuid);
+                    entry = updateEntry(entry, date.getText(), description.getText(), duration.getText(),
+                            (ProjectData) projects.getSelectedValue());
+                }
+                if (null != entry) {
+                    setVisible(false);
+                }
+            }
+        });
+        GridBagConstraints gbc_save = new GridBagConstraints();
+        gbc_save.anchor = GridBagConstraints.NORTH;
+        gbc_save.fill = GridBagConstraints.HORIZONTAL;
+        gbc_save.insets = new Insets(10, 25, 5, 10);
+        gbc_save.gridx = 0;
+        gbc_save.gridy = 5;
+        getContentPane().add(save, gbc_save);
+        showDisabledProjects.setBackground(Const.COLOR_BACKGROUND);
+
+        showDisabledProjects.setBounds(10, 185, 300, 24);
+        GridBagConstraints gbc_showDisabledProjects = new GridBagConstraints();
+        gbc_showDisabledProjects.insets = new Insets(10, 25, 5, 5);
+        gbc_showDisabledProjects.fill = GridBagConstraints.HORIZONTAL;
+        gbc_showDisabledProjects.gridx = 3;
+        gbc_showDisabledProjects.gridy = 5;
+        getContentPane().add(showDisabledProjects, gbc_showDisabledProjects);
+        GridBagConstraints gbc_delete = new GridBagConstraints();
+        gbc_delete.insets = new Insets(10, 25, 5, 10);
+        gbc_delete.anchor = GridBagConstraints.NORTH;
+        gbc_delete.fill = GridBagConstraints.HORIZONTAL;
+        gbc_delete.gridx = 0;
+        gbc_delete.gridy = 6;
+        getContentPane().add(delete, gbc_delete);
+
         refresh.setBounds(10, 215, 300, 24);
         refresh.addKeyListener(new TimeTableKeyAdapter());
         refresh.addActionListener(new ActionListener() {
@@ -479,19 +489,12 @@ public class NewEntryFrame extends AbstractFrame {
         gbc_refresh.anchor = GridBagConstraints.NORTH;
         gbc_refresh.insets = new Insets(10, 25, 5, 5);
         gbc_refresh.fill = GridBagConstraints.HORIZONTAL;
-        gbc_refresh.gridx = 0;
-        gbc_refresh.gridy = 5;
+        gbc_refresh.gridx = 3;
+        gbc_refresh.gridy = 6;
         getContentPane().add(refresh, gbc_refresh);
-        GridBagConstraints gbc_delete = new GridBagConstraints();
-        gbc_delete.insets = new Insets(10, 0, 5, 10);
-        gbc_delete.anchor = GridBagConstraints.NORTH;
-        gbc_delete.fill = GridBagConstraints.HORIZONTAL;
-        gbc_delete.gridx = 3;
-        gbc_delete.gridy = 5;
-        getContentPane().add(delete, gbc_delete);
     }
 
-    private void loadProjectListData(boolean includeDisabledProjects) {
+    private void loadProjectListData(final boolean includeDisabledProjects) {
         Collection<Project> projectList = EntityController.getInstance().findAll(Project.class,
                 new SortParam(Project.PARAM_NAME, SortOrder.ASC), includeDisabledProjects);
         ProjectData[] projectNameList = new ProjectData[projectList.size()];
