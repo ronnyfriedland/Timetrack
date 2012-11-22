@@ -108,15 +108,11 @@ public class NewEntryFrame extends AbstractFrame {
         }
     }
 
-    private final JList projects = new JList();
-    {
-    }
-
     private class ProjectData {
-        private final String projectName;
-        private final String description;
-        private final Integer entryCount;
-        private final Boolean enabled;
+        public final String projectName;
+        public final String description;
+        public final Integer entryCount;
+        public final Boolean enabled;
 
         public ProjectData(final String projectName, final String description, final boolean enabled,
                 final Integer entryCount) {
@@ -131,6 +127,7 @@ public class NewEntryFrame extends AbstractFrame {
         }
     }
 
+    private final JList projects = new JList();
     private String uuid = null;
     private final JPanel panel = new JPanel();
 
