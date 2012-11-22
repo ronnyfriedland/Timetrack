@@ -17,7 +17,7 @@ import javax.swing.SwingUtilities;
  */
 public class TimeTableKeyAdapter extends KeyAdapter {
     /**
-     * (non-Javadoc)
+     * {@inheritDoc}
      * 
      * @see java.awt.event.KeyAdapter#keyPressed(java.awt.event.KeyEvent)
      */

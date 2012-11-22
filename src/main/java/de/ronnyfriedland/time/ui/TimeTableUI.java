@@ -64,7 +64,7 @@ public final class TimeTableUI {
     public static void main(final String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             /**
-             * (non-Javadoc)
+             * {@inheritDoc}
              * 
              * @see java.lang.Runnable#run()
              */
@@ -75,7 +75,7 @@ public final class TimeTableUI {
         });
         Runtime.getRuntime().addShutdownHook(new Thread() {
             /**
-             * (non-Javadoc)
+             * {@inheritDoc}
              * 
              * @see java.lang.Thread#run()
              */

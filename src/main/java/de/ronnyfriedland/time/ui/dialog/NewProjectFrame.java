@@ -64,7 +64,7 @@ public class NewProjectFrame extends AbstractFrame {
     }
 
     /**
-     * (non-Javadoc)
+     * {@inheritDoc}
      * 
      * @see de.ronnyfriedland.time.ui.dialog.AbstractFrame#createUI()
      */
@@ -120,7 +120,7 @@ public class NewProjectFrame extends AbstractFrame {
         name.addKeyListener(new TimeTableKeyAdapter());
         name.setInputVerifier(new InputVerifier() {
             /**
-             * (non-Javadoc)
+             * {@inheritDoc}
              * 
              * @see javax.swing.InputVerifier#verify(javax.swing.JComponent)
              */

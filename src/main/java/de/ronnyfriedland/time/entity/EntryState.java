@@ -103,7 +103,7 @@ public class EntryState extends AbstractEntity {
     }
 
     /**
-     * (non-Javadoc)
+     * {@inheritDoc}
      * 
      * @see java.lang.Object#toString()
      */

@@ -168,7 +168,7 @@ public class NewEntryFrame extends AbstractFrame {
     }
 
     /**
-     * (non-Javadoc)
+     * {@inheritDoc}
      * 
      * @see de.ronnyfriedland.time.ui.dialog.AbstractFrame#createUI()
      */
@@ -195,7 +195,7 @@ public class NewEntryFrame extends AbstractFrame {
         date.addKeyListener(new TimeTableKeyAdapter());
         date.setInputVerifier(new InputVerifier() {
             /**
-             * (non-Jsdoc)
+             * {@inheritDoc}
              * 
              * @see javax.swing.InputVerifier#verify(javax.swing.JComponent)
              */
@@ -235,7 +235,7 @@ public class NewEntryFrame extends AbstractFrame {
         description.addKeyListener(new TimeTableKeyAdapter());
         description.setInputVerifier(new InputVerifier() {
             /**
-             * (non-Javadoc)
+             * {@inheritDoc}
              * 
              * @see javax.swing.InputVerifier#verify(javax.swing.JComponent)
              */
@@ -276,7 +276,7 @@ public class NewEntryFrame extends AbstractFrame {
         duration.addKeyListener(new TimeTableKeyAdapter());
         duration.setInputVerifier(new InputVerifier() {
             /**
-             * (non-Javadoc)
+             * {@inheritDoc}
              * 
              * @see javax.swing.InputVerifier#verify(javax.swing.JComponent)
              */
@@ -311,7 +311,7 @@ public class NewEntryFrame extends AbstractFrame {
         projects.addKeyListener(new TimeTableKeyAdapter());
         projects.setInputVerifier(new InputVerifier() {
             /**
-             * (non-Javadoc)
+             * {@inheritDoc}
              * 
              * @see javax.swing.InputVerifier#verify(javax.swing.JComponent)
              */

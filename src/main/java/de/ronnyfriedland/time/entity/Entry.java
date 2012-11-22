@@ -157,7 +157,7 @@ public class Entry extends AbstractEntity {
     }
 
     /**
-     * (non-Javadoc)
+     * {@inheritDoc}
      * 
      * @see java.lang.Object#toString()
      */

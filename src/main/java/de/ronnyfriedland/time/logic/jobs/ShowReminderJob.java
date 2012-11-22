@@ -31,7 +31,7 @@ public class ShowReminderJob extends AbstractJob {
     private static final Logger LOG = Logger.getLogger(ShowReminderJob.class.getName());
 
     /**
-     * (non-Javadoc)
+     * {@inheritDoc}
      * 
      * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
      */

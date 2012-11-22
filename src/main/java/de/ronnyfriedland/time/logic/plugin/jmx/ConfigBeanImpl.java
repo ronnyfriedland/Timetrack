@@ -30,7 +30,7 @@ public class ConfigBeanImpl extends StandardMBean implements IConfigBean {
     }
 
     /**
-     * (non-Javadoc)
+     * {@inheritDoc}
      * 
      * @see de.ronnyfriedland.time.logic.plugin.jmx.IConfigBean#getConfiguration()
      */
@@ -55,7 +55,7 @@ public class ConfigBeanImpl extends StandardMBean implements IConfigBean {
     }
 
     /**
-     * (non-Javadoc)
+     * {@inheritDoc}
      * 
      * @see de.ronnyfriedland.time.logic.plugin.jmx.IConfigBean#gc()
      */

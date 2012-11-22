@@ -143,6 +143,7 @@
 					<targetJdk>1.6</targetJdk>
 					<minimumTokens>100</minimumTokens>
 					<failOnViolation>false</failOnViolation>
+					<lineLength>120</lineLength>
 				</configuration>
 			</plugin>
 		</plugins>

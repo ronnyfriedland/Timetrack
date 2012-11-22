@@ -38,7 +38,7 @@ public class CheckEntryWorkflowStateJob extends AbstractJob {
     private static final Logger LOG = Logger.getLogger(CheckEntryWorkflowStateJob.class.getName());
 
     /**
-     * (non-Javadoc)
+     * {@inheritDoc}
      * 
      * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
      */

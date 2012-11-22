@@ -49,7 +49,7 @@ public abstract class AbstractEntity implements Serializable {
     }
 
     /**
-     * (non-Javadoc)
+     * {@inheritDoc}
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
@@ -63,7 +63,7 @@ public abstract class AbstractEntity implements Serializable {
     }
 
     /**
-     * (non-Javadoc)
+     * {@inheritDoc}
      * 
      * @see java.lang.Object#hashCode()
      */
@@ -73,7 +73,7 @@ public abstract class AbstractEntity implements Serializable {
     }
 
     /**
-     * (non-Javadoc)
+     * {@inheritDoc}
      * 
      * @see java.lang.Object#toString()
      */
