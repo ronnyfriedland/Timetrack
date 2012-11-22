@@ -40,6 +40,9 @@ public final class PluginController {
         // empty
     }
 
+    /**
+     * Ausführen der verfügbaren Plugins.
+     */
     public void executePlugins() {
         Reflections reflections = new Reflections(new ConfigurationBuilder().addUrls(
                 ClasspathHelper.forClass(Plugin.class)).setScanners(new TypeAnnotationsScanner()));

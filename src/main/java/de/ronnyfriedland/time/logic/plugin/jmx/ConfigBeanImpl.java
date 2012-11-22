@@ -24,6 +24,7 @@ public class ConfigBeanImpl extends StandardMBean implements IConfigBean {
      * Erzeugt eine neue {@link ConfigBeanImpl} - Instanz.
      * 
      * @throws NotCompliantMBeanException
+     *             Fehler beim Erzeugen
      */
     public ConfigBeanImpl() throws NotCompliantMBeanException {
         super(IConfigBean.class);

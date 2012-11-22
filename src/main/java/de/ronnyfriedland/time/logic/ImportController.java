@@ -28,6 +28,17 @@ public final class ImportController {
 
     public static final String TAB_OVERVIEW = "Überblick";
 
+    /**
+     * Laden einer Arbeitsmappe
+     * 
+     * @param path
+     *            der Pfad zur Datei
+     * @param file
+     *            Dateiname
+     * @return {@link Workbook} Instanz
+     * @throws IOException
+     *             Fehler beim Dateisystemzugriff
+     */
     public Workbook loadWorkbook(final String path, final String file) throws IOException {
         if (!new File(path).exists()) {
             throw new FileNotFoundException(String.format("Path %s not found.", path));
@@ -38,6 +49,15 @@ public final class ImportController {
         return new XSSFWorkbook(new FileInputStream(new File(path, file)));
     }
 
+    /**
+     * Laden der Daten eines Arbeitsblatts
+     * 
+     * @param wb
+     *            {@link Workbook} Instanz
+     * @return die Daten auf dem Arbeitsblatt
+     * @throws IOException
+     *             Fehler beim Dateisystemzugriff
+     */
     public Collection<Entry> loadSheet(final Workbook wb) throws IOException {
         Collection<Entry> entries = new ArrayList<Entry>();
 
