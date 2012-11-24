@@ -3,9 +3,6 @@ package de.ronnyfriedland.time.ui.dialog;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -22,6 +19,8 @@ import java.util.logging.Logger;
 
 import javax.persistence.PersistenceException;
 import javax.swing.DefaultListSelectionModel;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.InputVerifier;
 import javax.swing.JButton;
@@ -29,12 +28,13 @@ import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListModel;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validation;
@@ -129,10 +129,9 @@ public class NewEntryFrame extends AbstractFrame {
 
     private final JList projects = new JList();
     private String uuid = null;
-    private final JPanel panel = new JPanel();
 
     public NewEntryFrame() {
-        super(Messages.CREATE_NEW_ENTRY.getMessage(), 570, 350, false);
+        super(Messages.CREATE_NEW_ENTRY.getMessage(), 585, 410, false);
         getContentPane().setBackground(Const.COLOR_BACKGROUND);
         createUI();
         loadProjectListData(false);
@@ -174,20 +173,8 @@ public class NewEntryFrame extends AbstractFrame {
      */
     @Override
     protected void createUI() {
-        GridBagLayout gridBagLayout = new GridBagLayout();
-        gridBagLayout.columnWidths = new int[] { 250, 30, 30, 35, 80, 0 };
-        gridBagLayout.rowHeights = new int[] { 22, 22, 22, 100, 22, 0, 0, 0 };
-        gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 1.0, 0.0 };
-        gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0 };
-        getContentPane().setLayout(gridBagLayout);
         // configure
         labelDate.setBounds(10, 10, 100, 24);
-        GridBagConstraints gbc_labelDate = new GridBagConstraints();
-        gbc_labelDate.fill = GridBagConstraints.BOTH;
-        gbc_labelDate.insets = new Insets(25, 25, 5, 5);
-        gbc_labelDate.gridx = 0;
-        gbc_labelDate.gridy = 0;
-        getContentPane().add(labelDate, gbc_labelDate);
 
         date.setName("date");
         date.setBounds(110, 10, 200, 24);
@@ -214,21 +201,8 @@ public class NewEntryFrame extends AbstractFrame {
                 return valid;
             }
         });
-        GridBagConstraints gbc_date = new GridBagConstraints();
-        gbc_date.fill = GridBagConstraints.BOTH;
-        gbc_date.insets = new Insets(25, 10, 5, 10);
-        gbc_date.gridwidth = 3;
-        gbc_date.gridx = 1;
-        gbc_date.gridy = 0;
-        getContentPane().add(date, gbc_date);
 
         labelDescription.setBounds(10, 35, 100, 24);
-        GridBagConstraints gbc_labelDescription = new GridBagConstraints();
-        gbc_labelDescription.fill = GridBagConstraints.BOTH;
-        gbc_labelDescription.insets = new Insets(10, 25, 5, 5);
-        gbc_labelDescription.gridx = 0;
-        gbc_labelDescription.gridy = 1;
-        getContentPane().add(labelDescription, gbc_labelDescription);
 
         description.setName("description");
         description.setBounds(110, 35, 200, 24);
@@ -254,21 +228,8 @@ public class NewEntryFrame extends AbstractFrame {
                 return valid;
             }
         });
-        GridBagConstraints gbc_description = new GridBagConstraints();
-        gbc_description.fill = GridBagConstraints.BOTH;
-        gbc_description.insets = new Insets(10, 10, 5, 10);
-        gbc_description.gridwidth = 3;
-        gbc_description.gridx = 1;
-        gbc_description.gridy = 1;
-        getContentPane().add(description, gbc_description);
 
         labelDuration.setBounds(10, 60, 100, 24);
-        GridBagConstraints gbc_labelDuration = new GridBagConstraints();
-        gbc_labelDuration.fill = GridBagConstraints.BOTH;
-        gbc_labelDuration.insets = new Insets(10, 25, 5, 5);
-        gbc_labelDuration.gridx = 0;
-        gbc_labelDuration.gridy = 2;
-        getContentPane().add(labelDuration, gbc_labelDuration);
 
         duration.setName("duration");
         duration.setBounds(110, 60, 150, 24);
@@ -295,13 +256,6 @@ public class NewEntryFrame extends AbstractFrame {
                 return valid;
             }
         });
-        GridBagConstraints gbc_duration = new GridBagConstraints();
-        gbc_duration.fill = GridBagConstraints.BOTH;
-        gbc_duration.insets = new Insets(10, 10, 5, 5);
-        gbc_duration.gridwidth = 2;
-        gbc_duration.gridx = 1;
-        gbc_duration.gridy = 2;
-        getContentPane().add(duration, gbc_duration);
         scrollPaneProjects.setBounds(10, 85, 300, 100);
         scrollPaneProjects.setViewportView(projects);
         projects.setCellRenderer(new MyListCellThing());
@@ -338,76 +292,12 @@ public class NewEntryFrame extends AbstractFrame {
                     parameters.put(Project.PARAM_NAME, ((ProjectData) projects.getSelectedValue()).projectName);
                     Project project = EntityController.getInstance().findSingleResultByParameter(Project.class,
                             Project.QUERY_FINDBYNAME, parameters);
-
                     new NewProjectFrame(project).setVisible(true);
-                    if (StringUtils.isBlank(date.getText()) || StringUtils.isBlank(description.getText())
-                            || StringUtils.isBlank(duration.getText())) {
-                        setVisible(false);
-                    }
-                }
-            }
-        });
-        panel.setBackground(Const.COLOR_BACKGROUND);
-        panel.setLayout(null);
-
-        GridBagConstraints gbc_panel = new GridBagConstraints();
-        gbc_panel.insets = new Insets(10, 0, 5, 10);
-        gbc_panel.fill = GridBagConstraints.BOTH;
-        gbc_panel.gridx = 3;
-        gbc_panel.gridy = 2;
-        getContentPane().add(panel, gbc_panel);
-        panel.add(start);
-
-        start.setBounds(191, 0, 16, 16);
-        panel.add(stop);
-
-        stop.setBounds(220, 0, 16, 16);
-        stop.addKeyListener(new TimeTableKeyAdapter());
-        stop.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(final ActionEvent arg0) {
-                Entry entry = null;
-                if (null != uuid) {
-                    entry = EntityController.getInstance().findById(Entry.class, uuid);
-                    EntryState entryState = entry.getState();
-                    if (!State.STOPPED.equals(entryState.getState()) && !State.FIXED.equals(entryState.getState())) {
-                        // update entrystate
-                        entryState.setEnd(Calendar.getInstance().getTime());
-                        entryState.setState(State.STOPPED);
-                        // update entry
-                        entry.setDuration(EntryState.getDuration(entryState.getStart(), entryState.getEnd(),
-                                entry.getDuration()));
-                        EntityController.getInstance().update(entry);
-
-                        setVisible(false);
-                    }
-                }
-            }
-        });
-        start.addKeyListener(new TimeTableKeyAdapter());
-        start.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(final ActionEvent arg0) {
-                Entry entry;
-                if (null == uuid) {
-                    entry = createEntry(date.getText(), description.getText(), duration.getText(), State.OK,
-                            (ProjectData) projects.getSelectedValue());
-                    if (null != entry) {
-                        setVisible(false);
-                    }
                 }
             }
         });
 
         formatOk(date, description, duration, projects);
-        GridBagConstraints gbc_scrollPaneProjects = new GridBagConstraints();
-        gbc_scrollPaneProjects.gridheight = 2;
-        gbc_scrollPaneProjects.fill = GridBagConstraints.BOTH;
-        gbc_scrollPaneProjects.insets = new Insets(10, 25, 5, 10);
-        gbc_scrollPaneProjects.gridwidth = 4;
-        gbc_scrollPaneProjects.gridx = 0;
-        gbc_scrollPaneProjects.gridy = 3;
-        getContentPane().add(scrollPaneProjects, gbc_scrollPaneProjects);
         delete.setEnabled(false);
 
         delete.setBounds(165, 245, 145, 24);
@@ -450,29 +340,46 @@ public class NewEntryFrame extends AbstractFrame {
                 }
             }
         });
-        GridBagConstraints gbc_save = new GridBagConstraints();
-        gbc_save.anchor = GridBagConstraints.NORTH;
-        gbc_save.fill = GridBagConstraints.HORIZONTAL;
-        gbc_save.insets = new Insets(10, 25, 5, 10);
-        gbc_save.gridx = 0;
-        gbc_save.gridy = 5;
-        getContentPane().add(save, gbc_save);
+        start.addKeyListener(new TimeTableKeyAdapter());
+        start.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent arg0) {
+                Entry entry;
+                if (null == uuid) {
+                    entry = createEntry(date.getText(), description.getText(), duration.getText(), State.OK,
+                            (ProjectData) projects.getSelectedValue());
+                    if (null != entry) {
+                        setVisible(false);
+                    }
+                }
+            }
+        });
+        stop.addKeyListener(new TimeTableKeyAdapter());
+        stop.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent arg0) {
+                Entry entry = null;
+                if (null != uuid) {
+                    entry = EntityController.getInstance().findById(Entry.class, uuid);
+                    EntryState entryState = entry.getState();
+                    if (!State.STOPPED.equals(entryState.getState()) && !State.FIXED.equals(entryState.getState())) {
+                        // update entrystate
+                        entryState.setEnd(Calendar.getInstance().getTime());
+                        entryState.setState(State.STOPPED);
+                        // update entry
+                        entry.setDuration(EntryState.getDuration(entryState.getStart(), entryState.getEnd(),
+                                entry.getDuration()));
+                        EntityController.getInstance().update(entry);
+
+                        setVisible(false);
+                    }
+                }
+            }
+        });
+        showDisabledProjects.setHorizontalAlignment(SwingConstants.RIGHT);
         showDisabledProjects.setBackground(Const.COLOR_BACKGROUND);
 
         showDisabledProjects.setBounds(10, 185, 300, 24);
-        GridBagConstraints gbc_showDisabledProjects = new GridBagConstraints();
-        gbc_showDisabledProjects.insets = new Insets(10, 25, 5, 5);
-        gbc_showDisabledProjects.fill = GridBagConstraints.HORIZONTAL;
-        gbc_showDisabledProjects.gridx = 3;
-        gbc_showDisabledProjects.gridy = 5;
-        getContentPane().add(showDisabledProjects, gbc_showDisabledProjects);
-        GridBagConstraints gbc_delete = new GridBagConstraints();
-        gbc_delete.insets = new Insets(10, 25, 5, 10);
-        gbc_delete.anchor = GridBagConstraints.NORTH;
-        gbc_delete.fill = GridBagConstraints.HORIZONTAL;
-        gbc_delete.gridx = 0;
-        gbc_delete.gridy = 6;
-        getContentPane().add(delete, gbc_delete);
 
         refresh.setBounds(10, 215, 300, 24);
         refresh.addKeyListener(new TimeTableKeyAdapter());
@@ -482,13 +389,154 @@ public class NewEntryFrame extends AbstractFrame {
                 loadProjectListData(showDisabledProjects.isSelected());
             }
         });
-        GridBagConstraints gbc_refresh = new GridBagConstraints();
-        gbc_refresh.anchor = GridBagConstraints.NORTH;
-        gbc_refresh.insets = new Insets(10, 25, 5, 5);
-        gbc_refresh.fill = GridBagConstraints.HORIZONTAL;
-        gbc_refresh.gridx = 3;
-        gbc_refresh.gridy = 6;
-        getContentPane().add(refresh, gbc_refresh);
+        GroupLayout groupLayout = new GroupLayout(getContentPane());
+        groupLayout
+                .setHorizontalGroup(groupLayout
+                        .createParallelGroup(Alignment.LEADING)
+                        .addGroup(
+                                groupLayout
+                                        .createSequentialGroup()
+                                        .addGap(18)
+                                        .addGroup(
+                                                groupLayout
+                                                        .createParallelGroup(Alignment.LEADING)
+                                                        .addGroup(
+                                                                groupLayout
+                                                                        .createSequentialGroup()
+                                                                        .addGroup(
+                                                                                groupLayout
+                                                                                        .createParallelGroup(
+                                                                                                Alignment.LEADING)
+                                                                                        .addComponent(
+                                                                                                save,
+                                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                                278, Short.MAX_VALUE)
+                                                                                        .addComponent(
+                                                                                                delete,
+                                                                                                Alignment.TRAILING,
+                                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                                278, Short.MAX_VALUE))
+                                                                        .addGap(18)
+                                                                        .addGroup(
+                                                                                groupLayout
+                                                                                        .createParallelGroup(
+                                                                                                Alignment.TRAILING)
+                                                                                        .addComponent(
+                                                                                                refresh,
+                                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                                269,
+                                                                                                GroupLayout.PREFERRED_SIZE)
+                                                                                        .addComponent(
+                                                                                                showDisabledProjects,
+                                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                                263,
+                                                                                                GroupLayout.PREFERRED_SIZE)))
+                                                        .addComponent(scrollPaneProjects, GroupLayout.DEFAULT_SIZE,
+                                                                559, Short.MAX_VALUE)
+                                                        .addComponent(labelDescription, GroupLayout.PREFERRED_SIZE,
+                                                                170, GroupLayout.PREFERRED_SIZE)
+                                                        .addGroup(
+                                                                groupLayout
+                                                                        .createSequentialGroup()
+                                                                        .addGroup(
+                                                                                groupLayout
+                                                                                        .createParallelGroup(
+                                                                                                Alignment.LEADING)
+                                                                                        .addComponent(
+                                                                                                labelDate,
+                                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                                170,
+                                                                                                GroupLayout.PREFERRED_SIZE)
+                                                                                        .addComponent(
+                                                                                                labelDuration,
+                                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                                170,
+                                                                                                GroupLayout.PREFERRED_SIZE))
+                                                                        .addGap(113)
+                                                                        .addGroup(
+                                                                                groupLayout
+                                                                                        .createParallelGroup(
+                                                                                                Alignment.TRAILING)
+                                                                                        .addGroup(
+                                                                                                groupLayout
+                                                                                                        .createSequentialGroup()
+                                                                                                        .addComponent(
+                                                                                                                duration,
+                                                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                                                198,
+                                                                                                                Short.MAX_VALUE)
+                                                                                                        .addGap(18)
+                                                                                                        .addComponent(
+                                                                                                                start,
+                                                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                                                24,
+                                                                                                                GroupLayout.PREFERRED_SIZE)
+                                                                                                        .addPreferredGap(
+                                                                                                                ComponentPlacement.UNRELATED)
+                                                                                                        .addComponent(
+                                                                                                                stop,
+                                                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                                                24,
+                                                                                                                GroupLayout.PREFERRED_SIZE))
+                                                                                        .addComponent(description, 276,
+                                                                                                276, 276)
+                                                                                        .addComponent(
+                                                                                                date,
+                                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                                276, Short.MAX_VALUE))))
+                                        .addContainerGap()));
+        groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(
+                groupLayout
+                        .createSequentialGroup()
+                        .addGap(20)
+                        .addGroup(
+                                groupLayout
+                                        .createParallelGroup(Alignment.BASELINE)
+                                        .addComponent(labelDate, GroupLayout.PREFERRED_SIZE, 20,
+                                                GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(date, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+                                                GroupLayout.PREFERRED_SIZE))
+                        .addGap(18)
+                        .addGroup(
+                                groupLayout
+                                        .createParallelGroup(Alignment.BASELINE)
+                                        .addComponent(description, GroupLayout.PREFERRED_SIZE,
+                                                GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(labelDescription, GroupLayout.PREFERRED_SIZE, 20,
+                                                GroupLayout.PREFERRED_SIZE))
+                        .addGap(18)
+                        .addGroup(
+                                groupLayout
+                                        .createParallelGroup(Alignment.LEADING, false)
+                                        .addComponent(start, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+                                                Short.MAX_VALUE)
+                                        .addComponent(stop, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+                                                Short.MAX_VALUE)
+                                        .addGroup(
+                                                groupLayout
+                                                        .createParallelGroup(Alignment.BASELINE)
+                                                        .addComponent(labelDuration, GroupLayout.DEFAULT_SIZE, 20,
+                                                                Short.MAX_VALUE)
+                                                        .addComponent(duration, GroupLayout.PREFERRED_SIZE,
+                                                                GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18)
+                        .addComponent(scrollPaneProjects, GroupLayout.PREFERRED_SIZE, 146, GroupLayout.PREFERRED_SIZE)
+                        .addGap(13)
+                        .addGroup(
+                                groupLayout
+                                        .createParallelGroup(Alignment.BASELINE)
+                                        .addComponent(save, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(showDisabledProjects, GroupLayout.PREFERRED_SIZE, 22,
+                                                GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(ComponentPlacement.UNRELATED)
+                        .addGroup(
+                                groupLayout
+                                        .createParallelGroup(Alignment.BASELINE)
+                                        .addComponent(delete, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+                                                Short.MAX_VALUE)
+                                        .addComponent(refresh, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+                                                Short.MAX_VALUE)).addGap(35)));
+        getContentPane().setLayout(groupLayout);
     }
 
     private void loadProjectListData(final boolean includeDisabledProjects) {

@@ -10,6 +10,8 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 
+import de.ronnyfriedland.time.ui.dialog.ShowHelpFrame;
+
 /**
  * {@link KeyAdapter} Implementierung für anwendungsspezifische Shortcuts.
  * 
@@ -31,6 +33,14 @@ public class TimeTableKeyAdapter extends KeyAdapter {
             if (e.isControlDown() && (e.getComponent() instanceof JTable)) {
                 copySelectedValue((JTable) e.getComponent());
             }
+            break;
+        case KeyEvent.VK_H:
+            if (e.isControlDown()) {
+                new ShowHelpFrame().setVisible(true);
+            }
+            break;
+        case KeyEvent.VK_F1:
+            new ShowHelpFrame().setVisible(true);
             break;
         default:
             // not implemented yet

@@ -50,7 +50,7 @@ public class ShowReminderJob extends AbstractJob {
         if (null != previousFireTime) {
             diff = now.getTime() - previousFireTime.getTime();
         }
-        if (null != lastEntry && (diff > (now.getTime() - lastEntry.getLastModifiedDate().getTime()))) {
+        if ((null != lastEntry) && (diff > (now.getTime() - lastEntry.getLastModifiedDate().getTime()))) {
             showPopup(showPopup);
         }
         if (LOG.isLoggable(Level.FINE)) {
@@ -61,11 +61,10 @@ public class ShowReminderJob extends AbstractJob {
     /**
      * Darstellung des Popups
      * 
-     * @param showPopup
-     *            Flag, ob Hinweis als Popup dargestellt werden soll.
+     * @param showPopup Flag, ob Hinweis als Popup dargestellt werden soll.
      */
     protected void showPopup(final boolean showPopup) {
-        if (showPopup || null == getTrayIcon()) {
+        if (showPopup || (null == getTrayIcon())) {
             JOptionPane.showMessageDialog(null, Messages.MESSAGE_POPUP.getMessage());
         } else {
             getTrayIcon().displayMessage(null, Messages.MESSAGE_POPUP.getMessage(), MessageType.INFO);
