@@ -74,9 +74,9 @@ public enum Messages {
     EXPORT_SUMMARY("exportsummary");
 
     private String message;
-    private String[] properties;
+    private Object[] properties;
 
-    private Messages(final String aMessage, final String... aProperties) {
+    private Messages(final String aMessage, final Object... aProperties) {
         this.message = aMessage;
         this.properties = aProperties;
     }
@@ -84,7 +84,8 @@ public enum Messages {
     /**
      * Liefert die Fehlermeldung.
      * 
-     * @param customProperties replace tokens with given properties
+     * @param customProperties
+     *            replace tokens with given properties
      * @return Fehlermeldung with replaced tokens
      */
     public String getMessage(final Object... customProperties) {
