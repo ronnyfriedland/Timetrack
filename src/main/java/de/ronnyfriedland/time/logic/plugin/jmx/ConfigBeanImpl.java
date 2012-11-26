@@ -1,11 +1,5 @@
 package de.ronnyfriedland.time.logic.plugin.jmx;
 
-import java.lang.management.ManagementFactory;
-import java.lang.management.MemoryMXBean;
-import java.lang.management.MemoryUsage;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javax.management.NotCompliantMBeanException;
 import javax.management.StandardMBean;
 import javax.management.openmbean.CompositeData;
@@ -19,7 +13,8 @@ import de.ronnyfriedland.time.config.Configurator.ConfiguratorKeys;
 import de.ronnyfriedland.time.logic.plugin.PluginException;
 
 /**
- * Implementierung von {@link IConfigBean} zur Darstellung der Anwendungskonfiguration.
+ * Implementierung von {@link IConfigBean} zur Darstellung der
+ * Anwendungskonfiguration.
  * 
  * @author Ronny Friedland
  */
@@ -28,7 +23,8 @@ public class ConfigBeanImpl extends StandardMBean implements IConfigBean {
     /**
      * Erzeugt eine neue {@link ConfigBeanImpl} - Instanz.
      * 
-     * @throws NotCompliantMBeanException Fehler beim Erzeugen
+     * @throws NotCompliantMBeanException
+     *             Fehler beim Erzeugen
      */
     public ConfigBeanImpl() throws NotCompliantMBeanException {
         super(IConfigBean.class);
@@ -40,13 +36,8 @@ public class ConfigBeanImpl extends StandardMBean implements IConfigBean {
      * @see de.ronnyfriedland.time.logic.plugin.jmx.IConfigBean#getConfiguration()
      */
     @Override
+    @SuppressWarnings("rawtypes")
     public CompositeData getConfiguration() throws PluginException {
-        final MemoryMXBean memoryMXBean = ManagementFactory.getMemoryMXBean();
-        MemoryUsage nonHeap = memoryMXBean.getNonHeapMemoryUsage();
-        Logger.getAnonymousLogger().log(Level.SEVERE, "max: " + nonHeap.getMax());
-        Logger.getAnonymousLogger().log(Level.SEVERE, "init: " + nonHeap.getInit());
-        Logger.getAnonymousLogger().log(Level.SEVERE, "committed: " + nonHeap.getCommitted());
-        Logger.getAnonymousLogger().log(Level.SEVERE, "used: " + nonHeap.getUsed());
         try {
             int i = ConfiguratorKeys.values().length;
             String[] itemNames = new String[i];
