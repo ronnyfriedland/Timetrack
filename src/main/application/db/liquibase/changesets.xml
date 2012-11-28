@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+
+    <changeSet author="ronnyfriedland" id="initial_table">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists schemaName="APP" tableName="ENTRY" />
+                <tableExists schemaName="APP" tableName="PROJECT" />
+            </not>
+        </preConditions>
+        <sql>
+            CREATE TABLE ENTRY (
+            UUID VARCHAR(255) NOT NULL,
+            DATE DATE NOT
+            NULL,
+            DESCRIPTION VARCHAR(255) NOT NULL,
+            DURATION VARCHAR(255) NOT
+            NULL,
+            ENABLED SMALLINT DEFAULT 0 NOT NULL,
+            LASTMODIFIEDDATE TIMESTAMP
+            NOT NULL,
+            PROJECT_UUID VARCHAR(255) NOT NULL
+            );
+        </sql>
+        <sql>
+            CREATE TABLE PROJECT (
+            UUID VARCHAR(255) NOT NULL,
+            DESCRIPTION
+            VARCHAR(255),
+            ENABLED SMALLINT DEFAULT 0 NOT NULL,
+            LASTMODIFIEDDATE
+            TIMESTAMP NOT NULL,
+            NAME VARCHAR(255) NOT NULL
+            );
+        </sql>
+    </changeSet>
+    
+    <changeSet author="ronnyfriedland" id="initial_indizes">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists schemaName="APP" tableName="ENTRY" />
+                <tableExists schemaName="APP" tableName="PROJECT" />
+            </not>
+        </preConditions>
+        <sql>
+            CREATE INDEX SQL120820194547860 ON ENTRY (PROJECT_UUID ASC);
+
+            CREATE UNIQUE INDEX SQL120820194547730 ON ENTRY (UUID ASC);
+
+            ALTER
+            TABLE ENTRY ADD CONSTRAINT SQL120820194547730 PRIMARY KEY (UUID);
+
+            ALTER TABLE ENTRY ADD CONSTRAINT ENTRY_PROJECT_UUID FOREIGN KEY
+            (PROJECT_UUID)
+            REFERENCES PROJECT (UUID);
+
+            CREATE UNIQUE INDEX
+            SQL120820194547770 ON PROJECT (NAME ASC);
+
+            CREATE UNIQUE INDEX
+            SQL120820194547610 ON PROJECT (UUID ASC);
+
+            ALTER TABLE PROJECT ADD
+            CONSTRAINT SQL120820194547610 PRIMARY KEY (UUID);
+        </sql>
+    </changeSet>
+
+    <changeSet author="ronnyfriedland" id="update_to_version_1.2">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists schemaName="APP" tableName="PROJECT" columnName="ENABLED" />
+                <columnExists schemaName="APP" tableName="ENTRY" columnName="ENABLED" />
+            </not>
+        </preConditions>
+        <sql>
+            ALTER TABLE PROJECT ADD ENABLED INTEGER DEFAULT 1;
+        </sql>
+        <sql>
+            ALTER TABLE ENTRY ADD ENABLED INTEGER DEFAULT 1;
+        </sql>
+    </changeSet>
+
+    <changeSet author="ronnyfriedland" id="update_to_version_1.3">
+        <sql>
+            ALTER TABLE ENTRY ALTER COLUMN DESCRIPTION SET DATA TYPE VARCHAR(2000);
+        </sql>
+        <sql>
+            ALTER TABLE PROJECT ALTER COLUMN DESCRIPTION SET DATA TYPE VARCHAR(2000);
+        </sql>
+    </changeSet>
+
+    <changeSet author="ronnyfriedland" id="update_to_version_1.4">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists schemaName="APP" tableName="ENTRYSTATE" />
+            </not>
+        </preConditions>
+        <sql>
+            <!-- create table -->
+            CREATE TABLE ENTRYSTATE (
+            UUID VARCHAR(255) NOT NULL,
+            STARTTIME
+            TIMESTAMP NOT NULL,
+            STATE VARCHAR(255) NOT NULL,
+            LASTMODIFIEDDATE
+            TIMESTAMP NOT NULL,
+            ENDTIME TIMESTAMP
+            );
+            <!-- add uuids from entry table -->
+            INSERT INTO ENTRYSTATE(UUID, STARTTIME, LASTMODIFIEDDATE, STATE)
+            SELECT UUID, LASTMODIFIEDDATE, LASTMODIFIEDDATE, 'FIXED' FROM ENTRY;
+        </sql>
+        <sql>
+            <!-- add column to entry -->
+            ALTER TABLE ENTRY ADD COLUMN ENTRYSTATE_UUID VARCHAR(255);
+            <!-- insert uuid from entrystate as foreign key -->
+            UPDATE ENTRY SET ENTRYSTATE_UUID = UUID;
+            <!-- create index -->
+            CREATE INDEX SQL120718090633160 ON ENTRY (ENTRYSTATE_UUID ASC);
+            <!-- add primary key -->
+            ALTER TABLE ENTRYSTATE ADD CONSTRAINT SQL120803202932270 PRIMARY KEY
+            (UUID);
+            <!-- add constraint -->
+            ALTER TABLE ENTRY ADD CONSTRAINT ENTRYSTATE_UUID FOREIGN KEY
+            (ENTRYSTATE_UUID) REFERENCES ENTRYSTATE (UUID);
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
