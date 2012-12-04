@@ -3,7 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
 
-	<changeSet author="ronnyfriedland" id="backup" runAlways="true">
+	<changeSet author="ronnyfriedland" id="backup" runOnChange="true" runAlways="true">
 		<sql>
 			CALL SYSCS_UTIL.SYSCS_BACKUP_DATABASE('${timetable.path}/backup/${build.timestamp}');
 		</sql>

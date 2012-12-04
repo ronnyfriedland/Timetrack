@@ -40,7 +40,11 @@
             <outputDirectory>/db</outputDirectory>
         </file>
         <file>
-            <source>${project.build.directory}/db/liquibase/latest.xml</source>
+            <source>${project.build.directory}/db/liquibase/pre_migrate.xml</source>
+            <outputDirectory>/db/liquibase</outputDirectory>
+        </file>
+        <file>
+            <source>${project.build.directory}/db/liquibase/post_migrate.xml</source>
             <outputDirectory>/db/liquibase</outputDirectory>
         </file>
         <file>
