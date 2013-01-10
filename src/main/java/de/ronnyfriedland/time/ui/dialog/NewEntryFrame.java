@@ -173,7 +173,8 @@ public class NewEntryFrame extends AbstractFrame {
      */
     @Override
     protected void createUI() {
-        // configure
+        getContentPane().addKeyListener(new TimeTableKeyAdapter());
+
         labelDate.setBounds(10, 10, 100, 24);
 
         date.setName("date");

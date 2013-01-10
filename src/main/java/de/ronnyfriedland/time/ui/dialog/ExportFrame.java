@@ -141,6 +141,8 @@ public class ExportFrame extends AbstractFrame {
      */
     @Override
     protected void createUI() {
+        getContentPane().addKeyListener(new TimeTableKeyAdapter());
+
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.DAY_OF_WEEK, 2);
 

@@ -70,6 +70,8 @@ public class NewProjectFrame extends AbstractFrame {
      */
     @Override
     protected void createUI() {
+        getContentPane().addKeyListener(new TimeTableKeyAdapter());
+
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[] { 100, 202, 0 };
         gridBagLayout.rowHeights = new int[] { 28, 28, 23, 29, 0 };
