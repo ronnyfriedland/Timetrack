@@ -160,9 +160,8 @@
 				annotiert
 				werden und die Programmlogik zum Starten im Konstruktor
 				enthalten.
-				Sofern sich das Plugin im Classpath der Anwendung befindet
-				wird
-				dieses automatisch beim Ausführen der Anwendung mit gestartet.
+				Sofern sich das Plugin im Classpath (Ordner "plugins") der Anwendung befindet
+				wird dieses automatisch beim Ausführen der Anwendung mit gestartet.
 			</para>
 		</sect2>
 	</sect1>
