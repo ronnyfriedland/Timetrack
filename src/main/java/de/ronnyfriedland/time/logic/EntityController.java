@@ -11,6 +11,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import de.ronnyfriedland.time.entity.AbstractEntity;
 import de.ronnyfriedland.time.sort.SortParam;
 
 /**
@@ -37,6 +38,9 @@ public final class EntityController {
         return instance;
     }
 
+    /**
+     * Erzeugt eine neue {@link EntityController} Instanz.
+     */
     private EntityController() {
         emf = Persistence.createEntityManagerFactory("timetable");
         em = emf.createEntityManager();
@@ -56,6 +60,16 @@ public final class EntityController {
         return em.find(clazz, uuid);
     }
 
+    /**
+     * Ermittelt alle Datensätze. Es kann entschieden werden, ob deaktivierte
+     * Datensätze ebenfalls berücksichtigt werden sollen.
+     * 
+     * @param clazz
+     *            Typ
+     * @param includeDisabled
+     *            Flag ob deaktiverte Datensätze berücksichtigt werden sollen.
+     * @return Ergebnisliste
+     */
     public <T> Collection<T> findAll(final Class<T> clazz, final boolean includeDisabled) {
         String queryString = "SELECT e FROM %1$s e ";
         if (!includeDisabled) {
@@ -65,6 +79,21 @@ public final class EntityController {
         return query.getResultList();
     }
 
+    /**
+     * Ermittelt alle Datensätze (sortiert). Die Anzahl der Ergebnisse kann
+     * eingeschränkt werden. Es kann entschieden werden, ob deaktivierte
+     * Datensätze ebenfalls berücksichtigt werden sollen.
+     * 
+     * @param clazz
+     *            Typ
+     * @param sortParam
+     *            Sortierung
+     * @param max
+     *            Anzahl maximaler Einträge
+     * @param includeDisabled
+     *            Flag ob deaktiverte Datensätze berücksichtigt werden sollen.
+     * @return Ergebnisliste
+     */
     public <T> Collection<T> findAll(final Class<T> clazz, final SortParam sortParam, final int max,
             final boolean includeDisabled) {
         String queryString = "SELECT e FROM %1$s e ";
@@ -79,6 +108,18 @@ public final class EntityController {
         return query.getResultList();
     }
 
+    /**
+     * Ermittelt alle Datensätze (sortiert). Es kann entschieden werden, ob
+     * deaktivierte Datensätze ebenfalls berücksichtigt werden sollen.
+     * 
+     * @param clazz
+     *            Typ
+     * @param sortParam
+     *            Sortierung
+     * @param includeDisabled
+     *            Flag ob deaktiverte Datensätze berücksichtigt werden sollen.
+     * @return Ergebnisliste
+     */
     public <T> Collection<T> findAll(final Class<T> clazz, final SortParam sortParam, final boolean includeDisabled) {
         String queryString = "SELECT e FROM %1$s e ";
         if (!includeDisabled) {
@@ -91,6 +132,17 @@ public final class EntityController {
         return query.getResultList();
     }
 
+    /**
+     * Liefert die Ergebnisse einer NamedQuery.
+     * 
+     * @param clazz
+     *            Typ
+     * @param namedQuery
+     *            Name der Query
+     * @param parameters
+     *            Abfragekriterien / -parameter
+     * @return Ergebnisliste
+     */
     @SuppressWarnings("unchecked")
     public <T> Collection<T> findResultlistByParameter(final Class<T> clazz, final String namedQuery,
             final Map<String, Object> parameters) {
@@ -103,6 +155,17 @@ public final class EntityController {
         return query.getResultList();
     }
 
+    /**
+     * Liefert die Ergebnisse einer NamedQuery.
+     * 
+     * @param clazz
+     *            Typ
+     * @param namedQuery
+     *            Name der Query
+     * @param parameters
+     *            Abfragekriterien / -parameter
+     * @return Datensatz
+     */
     @SuppressWarnings("unchecked")
     public <T> T findSingleResultByParameter(final Class<T> clazz, final String namedQuery,
             final Map<String, Object> parameters) {
@@ -115,6 +178,13 @@ public final class EntityController {
         return (T) query.getSingleResult();
     }
 
+    /**
+     * Löscht alle Datensätze eines Typs.
+     * 
+     * @param clazz
+     *            Typ
+     * @return Anzahl der gelöschten Datensätze
+     */
     public <T> int deleteAll(final Class<T> clazz) {
         int updatedRows = 0;
         TypedQuery<T> query = em.createQuery("DELETE FROM " + clazz.getSimpleName() + " e", clazz);
@@ -130,6 +200,12 @@ public final class EntityController {
         return updatedRows;
     }
 
+    /**
+     * Erstellt einen Datesatz.
+     * 
+     * @param entity
+     *            {@link AbstractEntity}
+     */
     public <T> void create(final T entity) {
         try {
             em.getTransaction().begin();
@@ -142,6 +218,12 @@ public final class EntityController {
         }
     }
 
+    /**
+     * Aktualisiert einen Datensatz.
+     * 
+     * @param entity
+     *            {@link AbstractEntity}
+     */
     public <T> void update(final T entity) {
         try {
             em.getTransaction().begin();
@@ -154,6 +236,12 @@ public final class EntityController {
         }
     }
 
+    /**
+     * Löscht einen Datensatz
+     * 
+     * @param entity
+     *            {@link AbstractEntity}
+     */
     public <T> void delete(final T entity) {
         try {
             em.getTransaction().begin();
@@ -167,6 +255,12 @@ public final class EntityController {
 
     }
 
+    /**
+     * Löscht einen Datesatz.
+     * 
+     * @param entity
+     *            {@link AbstractEntity}
+     */
     public <T> void deleteDetached(final T entity) {
         delete(em.merge(entity));
     }
