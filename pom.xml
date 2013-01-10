@@ -60,7 +60,7 @@
 							<classpathPrefix>lib</classpathPrefix>
 						</manifest>
 						<manifestEntries>
-							<Class-Path>info/ plugin/</Class-Path>
+							<Class-Path>info/ plugins/</Class-Path>
 							<Built-By></Built-By>
 						</manifestEntries>
 					</archive>
