@@ -1,6 +1,7 @@
 <article lang="de">
 	<articleinfo>
-		<title>Dokumentation für ${project.name} Version ${project.version} (Builddate: ${build.timestamp})
+		<title>Dokumentation für ${project.name} Version ${project.version}
+			(Builddate: ${build.timestamp})
 		</title>
 		<author>
 			<firstname>Ronny</firstname>
@@ -50,7 +51,8 @@
 						<itemizedlist>
 							<listitem>
 								<para>Projekte können nicht vollständig gelöscht, sondern nur
-									deaktiviert werden.
+									deaktiviert werden. Die Zuordnung der Einträge zu Projekten
+									bleibt dabei erhalten.
 								</para>
 							</listitem>
 						</itemizedlist>
@@ -93,7 +95,11 @@
 			<title>Einträge bearbeiten</title>
 			<para>Es werden die letzten 10 Einträge dargestellt. Diese können
 				durch Anwählen bearbeitet werden. Ältere Einträge können nicht mehr
-				bearbeitet werden.
+				direkt bearbeitet werden.
+				Um ältere Einträge zu bearbeiten bzw. zu
+				löschen, können diese über den Datenexport gefiltert werden. In der
+				Ergebnisliste können die Einträge per Mausklick selektiert werden.
+				Es öffnet sich die Eingabemaske mit dem geladenen Eintrag.
 			</para>
 		</sect2>
 		<sect2>
@@ -142,6 +148,21 @@
 						<para>de.ronnyfriedland.time:name=Data</para>
 					</listitem>
 				</itemizedlist>
+			</para>
+		</sect2>
+		<sect2>
+			<title>Plugins</title>
+			<para>
+				Die Anwendung kann über Plugins erweitert werden. Das
+				Plugin-Klasse
+				muss mit
+				"de.ronnyfriedland.time.logic.plugin.Plugin"
+				annotiert
+				werden und die Programmlogik zum Starten im Konstruktor
+				enthalten.
+				Sofern sich das Plugin im Classpath der Anwendung befindet
+				wird
+				dieses automatisch beim Ausführen der Anwendung mit gestartet.
 			</para>
 		</sect2>
 	</sect1>
