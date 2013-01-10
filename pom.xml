@@ -10,13 +10,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.build.timestamp.format>dd.MM.yyyy</maven.build.timestamp.format>
 		<build.timestamp>${maven.build.timestamp}</build.timestamp>
-		<timetable.path>target</timetable.path>
-		<timetable.export.file>timetable-export.xlsx</timetable.export.file>
-		<timetable.popup.cron>0 0 8-18/2 ? * 2-6</timetable.popup.cron>
-		<timetable.entryworkflow.cron>0 0/2 8-23 ? * 2-6</timetable.entryworkflow.cron>
-		<timetable.workflow.warn>7200</timetable.workflow.warn>
-		<timetable.workflow.stop>14400</timetable.workflow.stop>
-		<timetable.popup.show>true</timetable.popup.show>
 		<timetable.database.password>nth12vireO</timetable.database.password>
 	</properties>
 	<build>

@@ -15,9 +15,9 @@ public final class Configurator {
     public final static CompositeConfiguration CONFIG = new CompositeConfiguration();
     static {
         try {
+            CONFIG.addConfiguration(new SystemConfiguration());
             CONFIG.addConfiguration(new PropertiesConfiguration(Thread.currentThread().getContextClassLoader()
                     .getResource("application.properties")));
-            CONFIG.addConfiguration(new SystemConfiguration());
         } catch (ConfigurationException e) {
             throw new ExceptionInInitializerError(e);
         }
