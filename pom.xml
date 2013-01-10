@@ -10,6 +10,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.build.timestamp.format>dd.MM.yyyy</maven.build.timestamp.format>
 		<build.timestamp>${maven.build.timestamp}</build.timestamp>
+		<timetable.path>target</timetable.path>
 		<timetable.database.password>nth12vireO</timetable.database.password>
 	</properties>
 	<build>
