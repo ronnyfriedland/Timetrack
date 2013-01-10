@@ -1,6 +1,7 @@
 package de.ronnyfriedland.time.logic.jobs;
 
 import java.awt.TrayIcon.MessageType;
+import java.util.Collection;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,6 +17,8 @@ import de.ronnyfriedland.time.config.Configurator.ConfiguratorKeys;
 import de.ronnyfriedland.time.config.Messages;
 import de.ronnyfriedland.time.entity.Entry;
 import de.ronnyfriedland.time.logic.EntityController;
+import de.ronnyfriedland.time.sort.SortParam;
+import de.ronnyfriedland.time.sort.SortParam.SortOrder;
 
 /**
  * Scheduler-Job für die Anzeige eines Hinweistextes.
@@ -44,7 +47,14 @@ public class ShowReminderJob extends AbstractJob {
 
         Date previousFireTime = context.getPreviousFireTime();
         Date now = new Date();
-        Entry lastEntry = EntityController.getInstance().findLast(Entry.class);
+
+        Collection<Entry> entries = EntityController.getInstance().findAll(Entry.class,
+                new SortParam("date", SortOrder.DESC), 1, true);
+
+        Entry lastEntry = null;
+        if (null != entries && 0 < entries.size()) {
+            lastEntry = entries.iterator().next();
+        }
 
         long diff = Long.MAX_VALUE;
         if (null != previousFireTime) {
@@ -54,14 +64,15 @@ public class ShowReminderJob extends AbstractJob {
             showPopup(showPopup);
         }
         if (LOG.isLoggable(Level.FINE)) {
-            LOG.fine(String.format("Job %s executed sucpscessfully.", context.getJobDetail().getKey()));
+            LOG.fine(String.format("Job %s executed successfully.", context.getJobDetail().getKey()));
         }
     }
 
     /**
      * Darstellung des Popups
      * 
-     * @param showPopup Flag, ob Hinweis als Popup dargestellt werden soll.
+     * @param showPopup
+     *            Flag, ob Hinweis als Popup dargestellt werden soll.
      */
     protected void showPopup(final boolean showPopup) {
         if (showPopup || (null == getTrayIcon())) {
