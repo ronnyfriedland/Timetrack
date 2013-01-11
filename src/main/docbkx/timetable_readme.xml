@@ -152,16 +152,35 @@
 		</sect2>
 		<sect2>
 			<title>Plugins</title>
-			<para>
-				Die Anwendung kann über Plugins erweitert werden. Das
+			<para>Die Anwendung kann über Plugins erweitert werden. Das
 				Plugin-Klasse
 				muss mit
 				"de.ronnyfriedland.time.logic.plugin.Plugin"
 				annotiert
-				werden und die Programmlogik zum Starten im Konstruktor
+				werden
+				und die Programmlogik zum Starten im Konstruktor
 				enthalten.
-				Sofern sich das Plugin im Classpath (Ordner "plugins") der Anwendung befindet
-				wird dieses automatisch beim Ausführen der Anwendung mit gestartet.
+				Sofern
+				sich das Plugin im Classpath (Ordner "plugins") der
+				Anwendung
+				befindet und der Dateiname des Pluginartefakts in die
+				Datei
+				"plugin.properties" enthalten ist, wird dieses automatisch
+				beim
+				Ausführen der Anwendung mit gestartet.
+			</para>
+			<para>Beispielkonfiguration für ein Plugin mit dem Dateinamen
+				"foo.jar"
+				<itemizedlist>
+					<listitem>
+						<para>plugins/plugin.properties anpassen und "foo.jar" dem
+							Property "files" hinzufügen.
+						</para>
+					</listitem>
+					<listitem>
+						<para>Datei "foo.jar" in den Ordner "plugins" kopieren.</para>
+					</listitem>
+				</itemizedlist>
 			</para>
 		</sect2>
 	</sect1>

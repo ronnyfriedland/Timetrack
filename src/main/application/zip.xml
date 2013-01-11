@@ -51,6 +51,11 @@
             <source>${project.build.directory}/db/liquibase/changesets.xml</source>
             <outputDirectory>/db/liquibase</outputDirectory>
         </file>
+        <!-- Plugin properties (empty) -->
+        <file>
+            <source>${project.build.directory}/plugins/plugin.properties</source>
+            <outputDirectory>/plugins</outputDirectory>
+        </file>
 	</files>
 	<fileSets>
 		<!-- add dependency libs -->

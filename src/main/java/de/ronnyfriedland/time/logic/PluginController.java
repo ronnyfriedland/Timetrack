@@ -1,6 +1,10 @@
 package de.ronnyfriedland.time.logic;
 
+import java.net.URL;
+import java.util.HashSet;
+import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -44,10 +48,34 @@ public final class PluginController {
      * Ausführen der verfügbaren Plugins.
      */
     public void executePlugins() {
-        Reflections reflections = new Reflections(new ConfigurationBuilder().addUrls(
-                ClasspathHelper.forClass(Plugin.class)).setScanners(new TypeAnnotationsScanner()));
+        if (LOG.isLoggable(Level.INFO)) {
+            LOG.info("Retrieving plugins ...");
+        }
+        // configure classpath entries
+        Set<URL> urls = new HashSet<URL>();
+        urls.addAll(ClasspathHelper.forManifest());
+        try {
+            Properties availablePlugins = new Properties();
+            availablePlugins.load(Thread.currentThread().getContextClassLoader()
+                    .getResourceAsStream("plugin.properties"));
+            String files = availablePlugins.getProperty("files");
+            if (null != files && files.length() > 2) {
+                for (String file : files.split(";")) {
+                    urls.add(Thread.currentThread().getContextClassLoader().getResource(file));
+                }
+            }
+        } catch (Exception e) {
+            LOG.warning("There are problems starting plugin. Please check configuration.");
+        }
+
+        Reflections reflections = new Reflections(new ConfigurationBuilder().addUrls(urls)
+                .setScanners(new TypeAnnotationsScanner())
+                .setExecutorService(Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors())));
 
         Set<Class<?>> plugins = reflections.getTypesAnnotatedWith(Plugin.class);
+        if (LOG.isLoggable(Level.INFO)) {
+            LOG.info(String.format("Number of plugins found: %d", plugins.size()));
+        }
         for (final Class<?> plugin : plugins) {
             new Thread(new Runnable() {
                 /**
