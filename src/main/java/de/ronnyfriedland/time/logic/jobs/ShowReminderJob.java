@@ -27,7 +27,6 @@ import de.ronnyfriedland.time.sort.SortParam.SortOrder;
  */
 @DisallowConcurrentExecution
 public class ShowReminderJob extends AbstractJob {
-
     public final static String JOB = "showpopupjob";
     public final static String TRIGGER = "showpopuptrigger";
 
@@ -44,23 +43,18 @@ public class ShowReminderJob extends AbstractJob {
             LOG.info("Executing ... " + getClass().getSimpleName());
         }
         Boolean showPopup = Configurator.CONFIG.getBoolean(ConfiguratorKeys.SHOW_POPUP.getKey());
-
         Date previousFireTime = context.getPreviousFireTime();
-        Date now = new Date();
 
+        if (null == previousFireTime) {
+            previousFireTime = new Date(0);
+        }
         Collection<Entry> entries = EntityController.getInstance().findAll(Entry.class,
                 new SortParam("date", SortOrder.DESC), 1, true);
-
         Entry lastEntry = null;
-        if (null != entries && 0 < entries.size()) {
+        if ((null != entries) && (0 < entries.size())) {
             lastEntry = entries.iterator().next();
         }
-
-        long diff = Long.MAX_VALUE;
-        if (null != previousFireTime) {
-            diff = now.getTime() - previousFireTime.getTime();
-        }
-        if ((null != lastEntry) && (diff > (now.getTime() - lastEntry.getLastModifiedDate().getTime()))) {
+        if ((null != lastEntry) && (lastEntry.getLastModifiedDate().after(previousFireTime))) {
             showPopup(showPopup);
         }
         if (LOG.isLoggable(Level.FINE)) {
