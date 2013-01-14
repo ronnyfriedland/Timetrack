@@ -77,10 +77,20 @@
 							<goal>jar-no-fork</goal>
 						</goals>
 						<configuration>
-							<excludeResources>true</excludeResources>
+							<excludeResources>false</excludeResources>
 							<includePom>true</includePom>
 						</configuration>
 					</execution>
+                    <execution>
+                        <id>attach-test-sources</id>
+                        <goals>
+                            <goal>test-jar-no-fork</goal>
+                        </goals>
+                        <configuration>
+                            <excludeResources>false</excludeResources>
+                            <includePom>true</includePom>
+                        </configuration>
+                    </execution>
 				</executions>
 			</plugin>
 			<plugin>
