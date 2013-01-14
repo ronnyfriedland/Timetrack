@@ -59,23 +59,15 @@ public class CheckEntryWorkflowStateJob extends AbstractJob {
 
         Boolean showPopup = Configurator.CONFIG.getBoolean(ConfiguratorKeys.SHOW_POPUP.getKey());
 
-        Calendar cal = Calendar.getInstance();
         Map<String, Object> params = new HashMap<String, Object>();
 
-        cal = Calendar.getInstance();
+        Calendar cal = Calendar.getInstance();
         cal.add(Calendar.SECOND, -y);
         params.clear();
-        params = new HashMap<String, Object>();
         params.put(EntryState.PARAM_DATE, cal.getTime());
         params.put(EntryState.PARAM_STATE, State.WARN);
 
         Collection<String> stop = getEntryStatesInStateWarnAndStop(params);
-
-        cal = Calendar.getInstance();
-        cal.add(Calendar.SECOND, -x);
-        params.clear();
-        params.put(EntryState.PARAM_DATE, cal.getTime());
-        params.put(EntryState.PARAM_STATE, State.WARN);
 
         cal = Calendar.getInstance();
         cal.add(Calendar.SECOND, -x);
