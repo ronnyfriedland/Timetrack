@@ -354,6 +354,7 @@ public class ExportFrame extends AbstractFrame {
         table.setDefaultRenderer(Object.class, tableCellRenderer);
         table.setColumnModel(columnModel);
         table.getTableHeader().setReorderingAllowed(false);
+        table.setCellSelectionEnabled(true);
         table.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(final MouseEvent e) {

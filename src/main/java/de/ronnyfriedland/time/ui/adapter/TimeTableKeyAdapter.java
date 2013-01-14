@@ -7,7 +7,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 
 import de.ronnyfriedland.time.ui.dialog.ShowHelpFrame;
@@ -52,23 +51,22 @@ public class TimeTableKeyAdapter extends KeyAdapter {
      * Kopiert die ausgewählten Daten in die Zwischenablage
      */
     private void copySelectedValue(final JTable table) {
-        ListSelectionModel selectedData = table.getSelectionModel();
-        int min = selectedData.getMinSelectionIndex();
-        int max = selectedData.getMaxSelectionIndex();
-
         StringBuilder sbuild = new StringBuilder();
-        if ((-1 < min) && (-1 < max)) {
-            for (int i = min; i <= max; i++) {
-                if (selectedData.isSelectedIndex(i)) {
-                    sbuild.append(table.getValueAt(i, 2));
-                    sbuild.append(" (").append(table.getValueAt(i, 3)).append(") : ");
-                    sbuild.append(table.getValueAt(i, 4)).append(" h\n");
+        if (0 < table.getSelectedRowCount()) {
+            int[] selectedRows = table.getSelectedRows();
+            int[] selectedColumns = table.getSelectedColumns();
+
+            for (int row : selectedRows) {
+                for (int col : selectedColumns) {
+                    sbuild.append(table.getValueAt(row, col)).append(" ");
                 }
+                sbuild.append("\n");
             }
-        }
-        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        if (null != clipboard) {
-            clipboard.setContents(new StringSelection(sbuild.toString()), null);
+
+            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+            if (null != clipboard) {
+                clipboard.setContents(new StringSelection(sbuild.toString()), null);
+            }
         }
     }
 
