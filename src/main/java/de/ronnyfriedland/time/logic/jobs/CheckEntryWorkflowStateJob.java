@@ -74,37 +74,41 @@ public class CheckEntryWorkflowStateJob extends AbstractJob {
         params.clear();
         params.put(EntryState.PARAM_DATE, cal.getTime());
         params.put(EntryState.PARAM_STATE, State.OK);
-        setEntryStatesToWarn(params);
-
-        Collection<String> warn = getEntryStatesInStateWarn(params);
+        Collection<String> warn = setEntryStatesToWarn(params);
 
         // show entries in state WARN
         if (!warn.isEmpty()) {
             String messageText = "Die folgenden Einträge laufen seit einiger Zeit - bitte prüfen:\n"
                     + StringUtils.join(warn, "\n") + "\n";
-            if (showPopup || null == getTrayIcon()) {
-                JOptionPane.showMessageDialog(null, messageText);
-            } else {
-                getTrayIcon().displayMessage(null, messageText, MessageType.WARNING);
-            }
+            showPopup(showPopup, messageText);
         }
         // show stopped entries
         if (!stop.isEmpty()) {
             String messageText = "Die folgenden Einträge wurden gestoppt:\n" + StringUtils.join(stop, "\n") + "\n";
-            if (showPopup || null == getTrayIcon()) {
-                JOptionPane.showMessageDialog(null, messageText);
-            } else {
-                getTrayIcon().displayMessage("Es wurden Einträge automatisch gestoppt", messageText,
-                        MessageType.WARNING);
-            }
+            showPopup(showPopup, messageText);
         }
+    }
 
+    /**
+     * Darstellung des Popups
+     * 
+     * @param showPopup
+     *            Flag, ob Hinweis als Popup dargestellt werden soll.
+     * @param messageText
+     *            Der darzustellende Text
+     */
+    protected void showPopup(final boolean showPopup, final String messageText) {
+        if (showPopup || (null == getTrayIcon())) {
+            JOptionPane.showMessageDialog(null, messageText);
+        } else {
+            getTrayIcon().displayMessage(null, messageText, MessageType.INFO);
+        }
     }
 
     private Collection<String> getEntryStatesInStateWarnAndStop(Map<String, Object> params) {
         Set<String> entries = new HashSet<String>();
         Collection<EntryState> entryStates = EntityController.getInstance().findResultlistByParameter(EntryState.class,
-                EntryState.QUERY_FIND_BY_STATE_AND_DATE, params);
+                EntryState.QUERY_FIND_BY_STATE_AND_STARTDATE, params);
         for (EntryState entryState : entryStates) {
             entryState.setEnd(Calendar.getInstance().getTime());
             entryState.setState(State.STOPPED);
@@ -123,28 +127,20 @@ public class CheckEntryWorkflowStateJob extends AbstractJob {
         return entries;
     }
 
-    private Collection<String> getEntryStatesInStateWarn(Map<String, Object> params) {
+    private Collection<String> setEntryStatesToWarn(Map<String, Object> params) {
         Set<String> entries = new HashSet<String>();
         Collection<EntryState> entryStates = EntityController.getInstance().findResultlistByParameter(EntryState.class,
-                EntryState.QUERY_FIND_BY_STATE_AND_DATE, params);
-        for (EntryState entryState : entryStates) {
-            params = new HashMap<String, Object>();
-            params.put(Entry.PARAM_STATE, entryState);
-            Entry entry = EntityController.getInstance().findSingleResultByParameter(Entry.class,
-                    Entry.QUERY_FIND_BY_STATE, params);
-            entries.add(entry.getDescription());
-        }
-        return entries;
-    }
-
-    private void setEntryStatesToWarn(Map<String, Object> params) {
-        Collection<EntryState> entryStates;
-        entryStates = EntityController.getInstance().findResultlistByParameter(EntryState.class,
-                EntryState.QUERY_FIND_BY_STATE_AND_DATE, params);
-
+                EntryState.QUERY_FIND_BY_STATE_AND_STARTDATE, params);
         for (EntryState entryState : entryStates) {
             entryState.setState(State.WARN);
             EntityController.getInstance().update(entryState);
+            // get entry of entrystate and add description to result
+            Map<String, Object> entryParams = new HashMap<String, Object>();
+            entryParams.put(Entry.PARAM_STATE, entryState);
+            Entry entry = EntityController.getInstance().findSingleResultByParameter(Entry.class,
+                    Entry.QUERY_FIND_BY_STATE, entryParams);
+            entries.add(entry.getDescription());
         }
+        return entries;
     }
 }

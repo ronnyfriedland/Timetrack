@@ -18,10 +18,10 @@ import javax.validation.constraints.NotNull;
  * @author Ronny Friedland
  */
 @Entity
-@NamedQueries({ @NamedQuery(name = EntryState.QUERY_FIND_BY_STATE_AND_DATE, query = "SELECT e FROM EntryState e WHERE e.state = :state AND e.lastModifiedDate < :date") })
+@NamedQueries({ @NamedQuery(name = EntryState.QUERY_FIND_BY_STATE_AND_STARTDATE, query = "SELECT e FROM EntryState e WHERE e.state = :state AND e.start < :date") })
 public class EntryState extends AbstractEntity {
 
-    public static final String QUERY_FIND_BY_STATE_AND_DATE = "EntryState.findByStateAndDate";
+    public static final String QUERY_FIND_BY_STATE_AND_STARTDATE = "EntryState.findByStateAndDate";
 
     public static final String PARAM_DATE = "date";
     public static final String PARAM_STATE = "state";

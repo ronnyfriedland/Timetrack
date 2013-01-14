@@ -9,16 +9,17 @@ import org.junit.Test;
 
 import de.ronnyfriedland.time.entity.Entry;
 import de.ronnyfriedland.time.entity.EntryState;
+import de.ronnyfriedland.time.entity.EntryState.State;
 import de.ronnyfriedland.time.entity.Project;
 import de.ronnyfriedland.time.logic.EntityController;
 
-public class ShowReminderJobTest {
-
+public class CheckEntryWorkflowStateJobTest {
     private EntityController entityController;
     private Project project;
     private Entry entry;
+    private EntryState state;
 
-    class MockPopupJob extends ShowReminderJob {
+    class MockPopupJob extends CheckEntryWorkflowStateJob {
         private boolean show = false;
 
         public boolean isShow() {
@@ -26,7 +27,7 @@ public class ShowReminderJobTest {
         }
 
         @Override
-        public void showPopup(boolean show) {
+        public void showPopup(boolean show, String text) {
             this.show = true;
         }
     }
@@ -39,12 +40,16 @@ public class ShowReminderJobTest {
         project.setName("test");
         entityController.create(project);
 
+        state = new EntryState();
+        state.setStart(new Date(0));
+        state.setState(State.OK);
+
         entry = new Entry();
         entry.setDate(new Date());
         entry.setDescription("test");
         entry.setDuration("1");
         entry.setProject(project);
-        entry.setState(new EntryState(new Date()));
+        entry.setState(state);
         entityController.create(entry);
     }
 
@@ -58,20 +63,23 @@ public class ShowReminderJobTest {
     public void testJobExecution() throws Exception {
         MockContext ctx = new MockContext();
 
-        java.util.Calendar cal = java.util.Calendar.getInstance();
-        cal.add(java.util.Calendar.DAY_OF_MONTH, 1);
-        ctx.setPreviousFireTime(cal.getTime());
-
         MockPopupJob job1 = new MockPopupJob();
         job1.execute(ctx);
+        Assert.assertTrue(job1.isShow());
 
-        cal.add(java.util.Calendar.DAY_OF_MONTH, -2);
-        ctx.setPreviousFireTime(cal.getTime());
+        Entry entryInStateWarn = entityController.findById(Entry.class, entry.getUuid());
+        Assert.assertEquals(State.WARN, entryInStateWarn.getState().getState());
 
         MockPopupJob job2 = new MockPopupJob();
         job2.execute(ctx);
+        Assert.assertTrue(job1.isShow());
 
-        Assert.assertFalse(job1.isShow());
-        Assert.assertTrue(job2.isShow());
+        Entry entryInStateStopped = entityController.findById(Entry.class, entry.getUuid());
+        Assert.assertEquals(State.STOPPED, entryInStateStopped.getState().getState());
+
+        MockPopupJob job3 = new MockPopupJob();
+        job3.execute(ctx);
+        Assert.assertFalse(job3.isShow());
+
     }
 }

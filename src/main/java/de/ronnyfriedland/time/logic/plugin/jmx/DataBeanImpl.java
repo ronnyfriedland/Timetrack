@@ -40,7 +40,7 @@ public class DataBeanImpl extends StandardMBean implements IDataBean {
         params.put(EntryState.PARAM_STATE, EntryState.State.OK);
         params.put(EntryState.PARAM_DATE, Calendar.getInstance().getTime());
         Collection<EntryState> entryStates = EntityController.getInstance().findResultlistByParameter(EntryState.class,
-                EntryState.QUERY_FIND_BY_STATE_AND_DATE, params);
+                EntryState.QUERY_FIND_BY_STATE_AND_STARTDATE, params);
         try {
             if (entryStates.isEmpty()) {
                 return null;
