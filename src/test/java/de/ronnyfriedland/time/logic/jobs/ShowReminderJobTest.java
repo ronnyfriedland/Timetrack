@@ -71,7 +71,7 @@ public class ShowReminderJobTest {
         MockPopupJob job2 = new MockPopupJob();
         job2.execute(ctx);
 
-        Assert.assertFalse(job1.isShow());
-        Assert.assertTrue(job2.isShow());
+        Assert.assertTrue(job1.isShow());
+        Assert.assertFalse(job2.isShow());
     }
 }
