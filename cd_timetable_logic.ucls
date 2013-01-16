@@ -168,7 +168,7 @@
   <class id="19" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.logic.jobs.AbstractJob" 
     project="Zeiterfassung (Timetable)" 
     file="/Zeiterfassung (Timetable)/src/main/java/de/ronnyfriedland/time/logic/jobs/AbstractJob.java" binary="false">    
-    <position height="-1" width="-1" x="1076" y="945"/>    
+    <position height="-1" width="-1" x="1080" y="949"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="false"/>      
       <operations public="true" package="true" protected="true" private="false"/>    
@@ -252,109 +252,109 @@
     </display>  
   </class>  
   <dependency id="28">    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="10"/>  
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="16"/>  
   </dependency>  
-  <realization id="29">    
-    <end type="SOURCE" refId="24"/>    
-    <end type="TARGET" refId="23"/>  
-  </realization>  
-  <association id="30">    
+  <nesting id="29">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="1"/>  
+  </nesting>  
+  <dependency id="30">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="16"/>  
+  </dependency>  
+  <dependency id="31">    
+    <end type="SOURCE" refId="21"/>    
+    <end type="TARGET" refId="25"/>  
+  </dependency>  
+  <nesting id="32">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="15"/>  
+  </nesting>  
+  <association id="33">    
     <end type="SOURCE" refId="16" navigable="false">      
-      <attribute id="31" name="order"/>      
-      <multiplicity id="32" minimum="0" maximum="1"/>    
+      <attribute id="34" name="order"/>      
+      <multiplicity id="35" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="15" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="33">    
-    <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="34" name="instance"/>      
-      <multiplicity id="35" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="36">    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="13"/>  
-  </dependency>  
-  <dependency id="37">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="16"/>  
-  </dependency>  
-  <dependency id="38">    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="12"/>  
-  </dependency>  
-  <dependency id="39">    
-    <end type="SOURCE" refId="26"/>    
-    <end type="TARGET" refId="20"/>  
-  </dependency>  
-  <generalization id="40">    
-    <end type="SOURCE" refId="18"/>    
-    <end type="TARGET" refId="19"/>  
-  </generalization>  
-  <dependency id="41">    
-    <end type="SOURCE" refId="13"/>    
-    <end type="TARGET" refId="16"/>  
-  </dependency>  
-  <nesting id="42">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="1"/>  
-  </nesting>  
-  <realization id="43">    
-    <end type="SOURCE" refId="25"/>    
-    <end type="TARGET" refId="22"/>  
-  </realization>  
-  <generalization id="44">    
-    <end type="SOURCE" refId="12"/>    
-    <end type="TARGET" refId="11"/>  
-  </generalization>  
-  <nesting id="45">    
-    <end type="SOURCE" refId="16"/>    
-    <end type="TARGET" refId="15"/>  
-  </nesting>  
-  <association id="46">    
-    <end type="SOURCE" refId="26" navigable="false">      
-      <attribute id="47" name="instance"/>      
-      <multiplicity id="48" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="26" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="49">    
-    <end type="SOURCE" refId="21"/>    
-    <end type="TARGET" refId="24"/>  
-  </dependency>  
-  <generalization id="50">    
-    <end type="SOURCE" refId="10"/>    
-    <end type="TARGET" refId="11"/>  
-  </generalization>  
-  <dependency id="51">    
-    <end type="SOURCE" refId="21"/>    
-    <end type="TARGET" refId="25"/>  
-  </dependency>  
-  <dependency id="52">    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="16"/>  
-  </dependency>  
-  <generalization id="53">    
-    <end type="SOURCE" refId="13"/>    
-    <end type="TARGET" refId="11"/>  
-  </generalization>  
-  <association id="54">    
+  <association id="36">    
     <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="55" name="instance"/>      
-      <multiplicity id="56" minimum="0" maximum="1"/>    
+      <attribute id="37" name="instance"/>      
+      <multiplicity id="38" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="57">    
+  <generalization id="39">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="11"/>  
+  </generalization>  
+  <realization id="40">    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="23"/>  
+  </realization>  
+  <generalization id="41">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="19"/>  
+  </generalization>  
+  <association id="42">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="43" name="instance"/>      
+      <multiplicity id="44" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="45">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="11"/>  
+  </generalization>  
+  <dependency id="46">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="13"/>  
+  </dependency>  
+  <generalization id="47">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="11"/>  
+  </generalization>  
+  <dependency id="48">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="12"/>  
+  </dependency>  
+  <dependency id="49">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="10"/>  
+  </dependency>  
+  <dependency id="50">    
+    <end type="SOURCE" refId="26"/>    
+    <end type="TARGET" refId="20"/>  
+  </dependency>  
+  <association id="51">    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="52" name="instance"/>      
+      <multiplicity id="53" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="26" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="54">    
+    <end type="SOURCE" refId="21"/>    
+    <end type="TARGET" refId="24"/>  
+  </dependency>  
+  <realization id="55">    
+    <end type="SOURCE" refId="25"/>    
+    <end type="TARGET" refId="22"/>  
+  </realization>  
+  <generalization id="56">    
     <end type="SOURCE" refId="8"/>    
     <end type="TARGET" refId="19"/>  
   </generalization>  
+  <dependency id="57">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="16"/>  
+  </dependency>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     visibility="true">    
     <attributes public="true" package="true" protected="true" private="false"/>    
