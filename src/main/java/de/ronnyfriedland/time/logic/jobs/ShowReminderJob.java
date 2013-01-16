@@ -54,7 +54,7 @@ public class ShowReminderJob extends AbstractJob {
         if ((null != entries) && (0 < entries.size())) {
             lastEntry = entries.iterator().next();
         }
-        if ((null != lastEntry) && (lastEntry.getLastModifiedDate().after(previousFireTime))) {
+        if ((null == lastEntry) || (lastEntry.getLastModifiedDate().before(previousFireTime))) {
             showPopup(showPopup);
         }
         if (LOG.isLoggable(Level.FINE)) {
