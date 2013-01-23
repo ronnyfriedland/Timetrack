@@ -1,6 +1,7 @@
 package de.ronnyfriedland.time.logic;
 
 import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
@@ -68,7 +69,8 @@ public final class PluginController {
             LOG.warning("There are problems starting plugin. Please check configuration.");
         }
 
-        Reflections reflections = new Reflections(new ConfigurationBuilder().addUrls(urls)
+        Reflections reflections = new Reflections(new ConfigurationBuilder()
+                .addClassLoader(URLClassLoader.newInstance(urls.toArray(new URL[urls.size()]))).addUrls(urls)
                 .setScanners(new TypeAnnotationsScanner())
                 .setExecutorService(Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors())));
 
