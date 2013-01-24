@@ -39,6 +39,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableRowSorter;
 
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -94,7 +95,7 @@ public class ExportFrame extends AbstractFrame {
                 component.setBackground(Color.LIGHT_GRAY);
             }
             if (isSelected) {
-                component.setBackground(Color.GRAY);
+                component.setBackground(Const.COLOR_SELECTION);
                 component.setForeground(Color.WHITE);
             } else {
                 component.setForeground(Color.BLACK);
@@ -121,6 +122,11 @@ public class ExportFrame extends AbstractFrame {
                 col.setMaxWidth(0);
             }
             return col;
+        }
+    };
+    private final TableRowSorter<DefaultTableModel> rowSorter = new TableRowSorter<DefaultTableModel>(tableModel) {
+        {
+            setRowFilter(null);
         }
     };
     private final JTable table = new JTable();
@@ -366,6 +372,7 @@ public class ExportFrame extends AbstractFrame {
                 }
             }
         });
+        table.setRowSorter(rowSorter);
         table.addKeyListener(new TimeTableKeyAdapter());
         table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         table.setTransferHandler(null);

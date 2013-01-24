@@ -15,4 +15,7 @@ public class Const {
     /** Farbe zum Markieren von Fehlern */
     public static final Color COLOR_ERROR = Color.RED;
 
+    /** Farbe zum Markieren von Feldern */
+    public static final Color COLOR_SELECTION = new Color(124, 145, 97);
+
 }
