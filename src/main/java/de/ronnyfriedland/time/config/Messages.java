@@ -16,6 +16,8 @@ public enum Messages {
     DATE("date"),
     /** Projektname */
     DURATION("duration"),
+    /** Dauer für Projekt */
+    DURATION_PROJECT("durationProject"),
     /** Projektname */
     PROJECT_NAME("projectname"),
     /** Beschreibung */

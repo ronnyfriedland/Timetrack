@@ -10,9 +10,11 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -116,10 +118,15 @@ public class ExportFrame extends AbstractFrame {
         @Override
         public TableColumn getColumn(final int columnIndex) {
             TableColumn col = super.getColumn(columnIndex);
-            if (!isColumnVisible(columnIndex)) {
+            if (!isColumnVisible(columnIndex)) { // hide uuid
                 col.setWidth(0);
                 col.setMinWidth(0);
                 col.setMaxWidth(0);
+            }
+            if (1 == columnIndex || 4 == columnIndex) { // date and duration
+                col.setWidth(200);
+                col.setMinWidth(200);
+                col.setMaxWidth(200);
             }
             return col;
         }
@@ -171,7 +178,7 @@ public class ExportFrame extends AbstractFrame {
         labelSelectedDays.setText(Messages.EXPORT_DURATION.getMessage(days.getValue(), 2 > days.getValue() ? "" : "e"));
         dateChooser.setBackground(Const.COLOR_BACKGROUND);
         dateChooser.setDate(cal.getTime());
-        dateChooser.setChosenDateButtonColor(Color.LIGHT_GRAY);
+        dateChooser.setChosenDateButtonColor(Const.COLOR_SELECTION);
         dateChooser.setYearSelectionRange(2);
         dateChooser.setBorder(BorderFactory.createEmptyBorder());
         dateChooser.addKeyListener(new TimeTableKeyAdapter());
@@ -194,14 +201,26 @@ public class ExportFrame extends AbstractFrame {
                 Calendar to = getEndDate();
                 Collection<Entry> entries = getFilteredData(from, to);
 
+                Map<String, Float> groupedSummary = new HashMap<String, Float>();
+                List<Object[]> entryModelData = new ArrayList<Object[]>();
                 float hours = 0;
                 for (Entry entry : entries) {
                     Float duration = Float.valueOf(entry.getDuration());
                     hours += duration;
-                    tableModel.addRow(new Object[] { entry.getUuid(), entry.getDateString(), entry.getDescription(),
-                            entry.getProject().getName(), String.format("%1$.2f", duration) });
+                    Float value = groupedSummary.get(entry.getProject().getName());
+                    if (null == value) {
+                        value = 0f;
+                    }
+                    groupedSummary.put(entry.getProject().getName(), duration + value);
+                    entryModelData.add(new Object[] { entry.getUuid(), entry.getDateString(), entry.getDescription(),
+                            entry.getProject().getName(), String.format("%1$.2f h", duration) });
                 }
-
+                for (Object[] entryData : entryModelData) {
+                    String projectName = (String) entryData[3];
+                    entryData[3] = String.format("%1$s (%3$s: %2$.2f h)", projectName, groupedSummary.get(projectName),
+                            Messages.DURATION_PROJECT.getMessage());
+                    tableModel.addRow(entryData);
+                }
                 summary.setText(Messages.EXPORT_SUMMARY.getMessage(hours, days.getValue()));
             }
         });
