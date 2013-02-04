@@ -34,12 +34,10 @@ public class TimeTableKeyAdapter extends KeyAdapter {
             }
             break;
         case KeyEvent.VK_H:
-            if (e.isControlDown()) {
+        case KeyEvent.VK_F1:
+            if (KeyEvent.VK_H == e.getKeyCode() && e.isControlDown() || KeyEvent.VK_F1 == e.getKeyCode()) {
                 new ShowHelpFrame().setVisible(true);
             }
-            break;
-        case KeyEvent.VK_F1:
-            new ShowHelpFrame().setVisible(true);
             break;
         default:
             // not implemented yet
