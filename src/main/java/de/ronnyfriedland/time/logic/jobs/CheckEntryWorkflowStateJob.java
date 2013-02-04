@@ -78,12 +78,18 @@ public class CheckEntryWorkflowStateJob extends AbstractJob {
 
         // show entries in state WARN
         if (!warn.isEmpty()) {
+            if (LOG.isLoggable(Level.INFO)) {
+                LOG.info("Show warn popup ... ");
+            }
             String messageText = "Die folgenden Einträge laufen seit einiger Zeit - bitte prüfen:\n"
                     + StringUtils.join(warn, "\n") + "\n";
             showPopup(showPopup, messageText);
         }
         // show stopped entries
         if (!stop.isEmpty()) {
+            if (LOG.isLoggable(Level.INFO)) {
+                LOG.info("Show stop popup ... ");
+            }
             String messageText = "Die folgenden Einträge wurden gestoppt:\n" + StringUtils.join(stop, "\n") + "\n";
             showPopup(showPopup, messageText);
         }
