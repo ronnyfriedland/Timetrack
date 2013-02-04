@@ -103,6 +103,14 @@
 			</para>
 		</sect2>
 		<sect2>
+			<title>Einträge löschen</title>
+			<para>Die letzten 10 Einträge können direkt über das Kontextmenü
+				ausgewählt und gelöscht werden. Ältere Einträge können über den
+				Datenexport gefiltert und entweder per Doppelklick einzeln
+				ausgewählt oder durch den Export gelöscht werden.
+			</para>
+		</sect2>
+		<sect2>
 			<title>Daten exportieren</title>
 			<para>Alle gespeicherten Einträge können als Excel Arbeitsmappe
 				exportiert werden. Das Startdatum und die Anzahl der Tage kann für
@@ -169,7 +177,8 @@
 				beim
 				Ausführen der Anwendung mit gestartet.
 			</para>
-			<para>Beispielkonfiguration für ein Plugin mit dem Dateinamen
+			<para>
+				Beispielkonfiguration für ein Plugin mit dem Dateinamen
 				"foo.jar"
 				<itemizedlist>
 					<listitem>
