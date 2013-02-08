@@ -119,9 +119,9 @@ public class ExportFrame extends AbstractFrame {
         public TableColumn getColumn(final int columnIndex) {
             TableColumn col = super.getColumn(columnIndex);
             if (!isColumnVisible(columnIndex)) { // hide uuid
-                col.setWidth(0);
-                col.setMinWidth(0);
-                col.setMaxWidth(0);
+                // col.setWidth(0);
+                // col.setMinWidth(0);
+                // col.setMaxWidth(0);
             }
             if (1 == columnIndex || 4 == columnIndex) { // date and duration
                 col.setWidth(200);
@@ -385,7 +385,7 @@ public class ExportFrame extends AbstractFrame {
             public void mouseClicked(final MouseEvent e) {
                 if ((MouseEvent.BUTTON1 == e.getButton()) && (2 == e.getClickCount())) {
                     int selectedRow = table.getSelectedRow();
-                    String uuid = (String) tableModel.getValueAt(selectedRow, 0);
+                    String uuid = (String) table.getValueAt(selectedRow, 0);
                     Entry entry = EntityController.getInstance().findById(Entry.class, uuid);
                     new NewEntryFrame(entry).setVisible(true);
                 }
