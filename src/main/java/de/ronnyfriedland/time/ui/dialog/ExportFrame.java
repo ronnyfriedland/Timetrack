@@ -119,9 +119,9 @@ public class ExportFrame extends AbstractFrame {
         public TableColumn getColumn(final int columnIndex) {
             TableColumn col = super.getColumn(columnIndex);
             if (!isColumnVisible(columnIndex)) { // hide uuid
-                // col.setWidth(0);
-                // col.setMinWidth(0);
-                // col.setMaxWidth(0);
+                col.setWidth(0);
+                col.setMinWidth(0);
+                col.setMaxWidth(0);
             }
             if (1 == columnIndex || 4 == columnIndex) { // date and duration
                 col.setWidth(200);
