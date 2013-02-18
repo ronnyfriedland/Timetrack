@@ -31,19 +31,38 @@ public abstract class AbstractEntity implements Serializable {
     @Column(name = "LASTMODIFIEDDATE", nullable = false)
     private final Date lastModifiedDate;
 
+    /**
+     * Erzeugt eine neue {@link AbstractEntity} Instanz.
+     */
     public AbstractEntity() {
         this(UUID.randomUUID().toString());
     }
 
+    /**
+     * Erzeugt eine neue {@link AbstractEntity} Instanz.
+     * 
+     * @param uuid
+     *            die uuid des Entity
+     */
     public AbstractEntity(final String uuid) {
         this.uuid = uuid;
         lastModifiedDate = Calendar.getInstance().getTime();
     }
 
+    /**
+     * Liefert die {@link #uuid} des Entity.
+     * 
+     * @return die uuid
+     */
     public String getUuid() {
         return uuid;
     }
 
+    /**
+     * Liefert das {@link #lastModifiedDate} des Entity.
+     * 
+     * @return das lastModifiedDate
+     */
     public Date getLastModifiedDate() {
         return lastModifiedDate;
     }

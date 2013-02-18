@@ -70,14 +70,30 @@ public class Entry extends AbstractEntity {
     @JoinColumn(name = "ENTRYSTATE_UUID", nullable = false)
     private EntryState state;
 
+    /**
+     * Erzeugt eine neue {@link Entry} Instanz.
+     */
     public Entry() {
         super();
     }
 
+    /**
+     * Erzeugt eine neue {@link Entry} Instanz.
+     * 
+     * @param uuid
+     *            die uuid
+     */
     public Entry(final String uuid) {
         super(uuid);
     }
 
+    /**
+     * Berechnet die Dauer anhand des übergebenen Referenzdatums.
+     * 
+     * @param reference
+     *            das Referenzdatum
+     * @return die errechnete Dauer
+     */
     public String getCalculatedDuration(final Date reference) {
         String duration = getDuration();
         if (State.OK == state.getState() || State.WARN == state.getState()) {

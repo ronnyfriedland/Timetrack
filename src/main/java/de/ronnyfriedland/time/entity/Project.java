@@ -41,11 +41,20 @@ public class Project extends AbstractEntity {
     @JoinColumn(name = "ENTRIES_UUID")
     private Collection<Entry> entries;
 
+    /**
+     * Erzeugt eine neue {@link Project} Instanz.
+     */
     public Project() {
         super();
         entries = new HashSet<Entry>();
     }
 
+    /**
+     * Erzeugt eine neue {@link Project} Instanz.
+     * 
+     * @param uuid
+     *            die uuid
+     */
     public Project(final String uuid) {
         super(uuid);
         entries = new HashSet<Entry>();

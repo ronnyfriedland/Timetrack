@@ -130,6 +130,9 @@ public class NewEntryFrame extends AbstractFrame {
     private final JList projects = new JList();
     private String uuid = null;
 
+    /**
+     * Erzeugt eine neue {@link NewEntryFrame} Instanz.
+     */
     public NewEntryFrame() {
         super(Messages.CREATE_NEW_ENTRY.getMessage(), 585, 410, false);
         getContentPane().setBackground(Const.COLOR_BACKGROUND);

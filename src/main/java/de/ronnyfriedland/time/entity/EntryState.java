@@ -37,6 +37,11 @@ public class EntryState extends AbstractEntity {
 
     private static final long serialVersionUID = 4704359592289513635L;
 
+    /**
+     * Enthält die möglichen Status eines {@link EntryState}.
+     * 
+     * @author Ronny Friedland
+     */
     public enum State {
         /** Entry started - everything is ok */
         OK,
@@ -60,20 +65,42 @@ public class EntryState extends AbstractEntity {
     @Column(name = "ENDTIME", nullable = true)
     private Date end;
 
+    /**
+     * Erzeugt eine neue {@link EntryState} Instanz.
+     */
     public EntryState() {
         super();
     }
 
+    /**
+     * Erzeugt eine neue {@link EntryState} Instanz.
+     * 
+     * @param start
+     *            das Startdatum
+     */
     public EntryState(final Date start) {
         super();
         setStart(start);
     }
 
+    /**
+     * Erzeugt eine neue {@link EntryState} Instanz.
+     * 
+     * @param start
+     *            das Startdatum
+     * @üaram state der Status
+     */
     public EntryState(final Date start, final State state) {
         this(start);
         setState(state);
     }
 
+    /**
+     * Erzeugt eine neue {@link EntryState} Instanz.
+     * 
+     * @param uuid
+     *            die uuid
+     */
     public EntryState(final String uuid) {
         super(uuid);
     }

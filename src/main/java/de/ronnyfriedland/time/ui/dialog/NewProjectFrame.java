@@ -49,6 +49,9 @@ public class NewProjectFrame extends AbstractFrame {
 
     private String uuid = null;
 
+    /**
+     * Erzeugt eine neue {@link NewProjectFrame} Instanz.
+     */
     public NewProjectFrame() {
         super(Messages.CREATE_NEW_PROJECT.getMessage(), 315, 205, false);
         getContentPane().setBackground(Const.COLOR_BACKGROUND);

@@ -15,6 +15,9 @@ public abstract class AbstractFrame extends JFrame {
 
     private static final long serialVersionUID = 7680216672898188405L;
 
+    /**
+     * Erzeugt eine neue {@link AbstractFrame} Instanz.
+     */
     public AbstractFrame(final String title, final int width, final int height, final boolean resizeable) {
         Dimension frameSize = new Dimension(width + 5, height + 5);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();

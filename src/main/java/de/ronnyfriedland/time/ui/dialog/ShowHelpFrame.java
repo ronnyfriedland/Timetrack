@@ -23,6 +23,9 @@ public class ShowHelpFrame extends AbstractFrame implements HyperlinkListener {
     private static final long serialVersionUID = -3667564200048966812L;
     private final JEditorPane editorPane = new JEditorPane();
 
+    /**
+     * Erzeugt eine neue {@link ShowHelpFrame} Instanz.
+     */
     public ShowHelpFrame() {
         super(Messages.HELP.getMessage(), 655, 455, true);
         createUI();

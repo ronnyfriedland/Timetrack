@@ -141,6 +141,9 @@ public class ExportFrame extends AbstractFrame {
     private final JPanel filterPane = new JPanel();
     private final JPanel summaryPane = new JPanel();
 
+    /**
+     * Erzeugt eine neue {@link ExportFrame} Instanz.
+     */
     public ExportFrame() {
         super(Messages.NEW_EXPORT.getMessage(), 640, 510, true);
         getContentPane().setBackground(Const.COLOR_BACKGROUND);
