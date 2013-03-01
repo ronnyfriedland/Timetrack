@@ -1,11 +1,13 @@
 package de.ronnyfriedland.time.ui.adapter;
 
+import java.awt.Component;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 
@@ -27,6 +29,12 @@ public class TimeTableKeyAdapter extends KeyAdapter {
         switch (e.getKeyCode()) {
         case KeyEvent.VK_ESCAPE:
             SwingUtilities.getRoot(e.getComponent()).setVisible(false);
+            break;
+        case KeyEvent.VK_ENTER:
+            Component comp = e.getComponent();
+            if (comp instanceof JButton) {
+                ((JButton) comp).doClick();
+            }
             break;
         case KeyEvent.VK_C:
             if (e.isControlDown() && (e.getComponent() instanceof JTable)) {
