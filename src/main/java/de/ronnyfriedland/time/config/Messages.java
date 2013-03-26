@@ -73,7 +73,13 @@ public enum Messages {
     /** ausgewählte Zeitspanne für den Export */
     EXPORT_DURATION("exportduration"),
     /** Zusammenfassung für Export */
-    EXPORT_SUMMARY("exportsummary");
+    EXPORT_SUMMARY("exportsummary"),
+    /** Fehler */
+    ERROR("error"),
+    /** Meldung beim Zugriff auf Datenbank */
+    ERROR_DATABASE("errordatabase"),
+    /** Allgemeine Fehlermeldung */
+    ERROR_COMMON("errorcommon");
 
     private String message;
     private Object[] properties;

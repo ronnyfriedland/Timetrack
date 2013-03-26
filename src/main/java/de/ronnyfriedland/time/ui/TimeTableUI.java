@@ -1,5 +1,6 @@
 package de.ronnyfriedland.time.ui;
 
+import java.awt.AWTException;
 import java.awt.Menu;
 import java.awt.MenuItem;
 import java.awt.PopupMenu;
@@ -19,10 +20,12 @@ import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
+import javax.persistence.PersistenceException;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import org.apache.poi.ss.usermodel.Workbook;
 import org.quartz.SchedulerException;
@@ -70,7 +73,20 @@ public final class TimeTableUI {
              */
             @Override
             public void run() {
-                new TimeTableUI().createAndShowGUI();
+                boolean initError = true;
+                try {
+                    new TimeTableUI().createAndShowGUI();
+                    initError = false;
+                } catch (PersistenceException e) {
+                    JOptionPane.showMessageDialog(null, Messages.ERROR_DATABASE.getMessage(),
+                            Messages.ERROR.getMessage(), JOptionPane.ERROR_MESSAGE);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, Messages.ERROR_COMMON.getMessage(),
+                            Messages.ERROR.getMessage(), JOptionPane.ERROR_MESSAGE);
+                }
+                if (initError) {
+                    System.exit(1);
+                }
             }
         });
         Runtime.getRuntime().addShutdownHook(new Thread() {
@@ -94,7 +110,8 @@ public final class TimeTableUI {
         // empty
     }
 
-    private void createAndShowGUI() {
+    private void createAndShowGUI() throws ClassNotFoundException, InstantiationException, IllegalAccessException,
+            UnsupportedLookAndFeelException, AWTException, SchedulerException {
         // Check the SystemTray support
         if (!SystemTray.isSupported()) {
             LOG.severe("SystemTray not supported!");
@@ -172,118 +189,111 @@ public final class TimeTableUI {
                 }
             });
 
-            try {
-                UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
 
-                tray.add(trayIcon);
+            tray.add(trayIcon);
 
-                newProject.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(final ActionEvent e) {
-                        new NewProjectFrame().setVisible(true);
-                    }
-                });
-
-                newItem.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(final ActionEvent e) {
-                        new NewEntryFrame().setVisible(true);
-                    }
-                });
-
-                exportItem.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(final ActionEvent e) {
-                        new ExportFrame().setVisible(true);
-                    }
-                });
-
-                importItem.setEnabled(new File(Configurator.CONFIG.getString(ConfiguratorKeys.PATH.getKey()),
-                        Configurator.CONFIG.getString(ConfiguratorKeys.EXPORT_FILE.getKey())).exists());
-                importItem.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(final ActionEvent e) {
-                        int option = JOptionPane.showConfirmDialog(null, Messages.IMPORT_CONFIRM.getMessage());
-                        switch (option) {
-                        case JOptionPane.OK_OPTION:
-                            try {
-                                ImportController controller = new ImportController();
-                                Workbook wb = controller.loadWorkbook(
-                                        Configurator.CONFIG.getString(ConfiguratorKeys.PATH.getKey()),
-                                        Configurator.CONFIG.getString(ConfiguratorKeys.EXPORT_FILE.getKey()));
-                                Collection<Entry> entries = controller.loadSheet(wb);
-
-                                EntityController.getInstance().deleteAll(Entry.class);
-                                EntityController.getInstance().deleteAll(EntryState.class);
-                                EntityController.getInstance().deleteAll(Project.class);
-
-                                for (Entry entry : entries) {
-                                    Project project = entry.getProject();
-                                    Map<String, Object> parameters = new HashMap<String, Object>();
-                                    parameters.put(Project.PARAM_NAME, project.getName());
-                                    try {
-                                        Project savedProject = EntityController.getInstance()
-                                                .findSingleResultByParameter(Project.class, Project.QUERY_FINDBYNAME,
-                                                        parameters);
-                                        project = savedProject;
-                                        project.addEntry(entry);
-                                    } catch (Exception ex) {
-                                        EntityController.getInstance().create(project);
-                                    }
-                                    entry.setProject(project);
-                                    EntityController.getInstance().create(entry);
-                                }
-                                JOptionPane.showMessageDialog(null,
-                                        Messages.IMPORT_SUCCESSFUL.getMessage(String.valueOf(entries.size())));
-                            } catch (IOException ex) {
-                                LOG.log(Level.SEVERE, "Error importing data.", ex);
-                            }
-                            break;
-                        default:
-                            // nothing to do
-                            break;
-                        }
-                    }
-                });
-
-                helpItem.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(final ActionEvent e) {
-                        new ShowHelpFrame().setVisible(true);
-                    }
-                });
-
-                exitItem.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(final ActionEvent e) {
-                        System.exit(0);
-                    }
-                });
-
-                // initialize Logging ...
-                LogManager logManager = LogManager.getLogManager();
-                try {
-                    logManager.readConfiguration(Thread.currentThread().getContextClassLoader()
-                            .getResourceAsStream("logging.properties"));
-                } catch (IOException e) {
-                    LOG.log(Level.SEVERE, "Error reading logging.properties to configure logger.", e);
+            newProject.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(final ActionEvent e) {
+                    new NewProjectFrame().setVisible(true);
                 }
-                // initialize entity controller ...
-                EntityController.getInstance();
-                // initialize quartz controller ...
-                Map<String, Object> jobData = new HashMap<String, Object>();
-                jobData.put("trayIcon", trayIcon);
-                QuartzController.getInstance().initScheduler(ShowReminderJob.class,
-                        Configurator.CONFIG.getString(ConfiguratorKeys.CRON_EXPRESSION_POPUP.getKey()), jobData);
-                QuartzController.getInstance()
-                        .initScheduler(CheckEntryWorkflowStateJob.class,
-                                Configurator.CONFIG.getString(ConfiguratorKeys.CRON_EXPRESSION_ENTRYWORKFLOW.getKey()),
-                                jobData);
-                // initialize plugin controller ...
-                PluginController.getInstance().executePlugins();
-            } catch (Exception e) {
-                throw new IllegalStateException("Unable to start timetable application", e);
+            });
+
+            newItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(final ActionEvent e) {
+                    new NewEntryFrame().setVisible(true);
+                }
+            });
+
+            exportItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(final ActionEvent e) {
+                    new ExportFrame().setVisible(true);
+                }
+            });
+
+            importItem.setEnabled(new File(Configurator.CONFIG.getString(ConfiguratorKeys.PATH.getKey()),
+                    Configurator.CONFIG.getString(ConfiguratorKeys.EXPORT_FILE.getKey())).exists());
+            importItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(final ActionEvent e) {
+                    int option = JOptionPane.showConfirmDialog(null, Messages.IMPORT_CONFIRM.getMessage());
+                    switch (option) {
+                    case JOptionPane.OK_OPTION:
+                        try {
+                            ImportController controller = new ImportController();
+                            Workbook wb = controller.loadWorkbook(
+                                    Configurator.CONFIG.getString(ConfiguratorKeys.PATH.getKey()),
+                                    Configurator.CONFIG.getString(ConfiguratorKeys.EXPORT_FILE.getKey()));
+                            Collection<Entry> entries = controller.loadSheet(wb);
+
+                            EntityController.getInstance().deleteAll(Entry.class);
+                            EntityController.getInstance().deleteAll(EntryState.class);
+                            EntityController.getInstance().deleteAll(Project.class);
+
+                            for (Entry entry : entries) {
+                                Project project = entry.getProject();
+                                Map<String, Object> parameters = new HashMap<String, Object>();
+                                parameters.put(Project.PARAM_NAME, project.getName());
+                                try {
+                                    Project savedProject = EntityController.getInstance().findSingleResultByParameter(
+                                            Project.class, Project.QUERY_FINDBYNAME, parameters);
+                                    project = savedProject;
+                                    project.addEntry(entry);
+                                } catch (Exception ex) {
+                                    EntityController.getInstance().create(project);
+                                }
+                                entry.setProject(project);
+                                EntityController.getInstance().create(entry);
+                            }
+                            JOptionPane.showMessageDialog(null,
+                                    Messages.IMPORT_SUCCESSFUL.getMessage(String.valueOf(entries.size())));
+                        } catch (IOException ex) {
+                            LOG.log(Level.SEVERE, "Error importing data.", ex);
+                        }
+                        break;
+                    default:
+                        // nothing to do
+                        break;
+                    }
+                }
+            });
+
+            helpItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(final ActionEvent e) {
+                    new ShowHelpFrame().setVisible(true);
+                }
+            });
+
+            exitItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(final ActionEvent e) {
+                    System.exit(0);
+                }
+            });
+
+            // initialize Logging ...
+            LogManager logManager = LogManager.getLogManager();
+            try {
+                logManager.readConfiguration(Thread.currentThread().getContextClassLoader()
+                        .getResourceAsStream("logging.properties"));
+            } catch (IOException e) {
+                LOG.log(Level.SEVERE, "Error reading logging.properties to configure logger.", e);
             }
+            // initialize entity controller ...
+            EntityController.getInstance();
+            // initialize quartz controller ...
+            Map<String, Object> jobData = new HashMap<String, Object>();
+            jobData.put("trayIcon", trayIcon);
+            QuartzController.getInstance().initScheduler(ShowReminderJob.class,
+                    Configurator.CONFIG.getString(ConfiguratorKeys.CRON_EXPRESSION_POPUP.getKey()), jobData);
+            QuartzController.getInstance().initScheduler(CheckEntryWorkflowStateJob.class,
+                    Configurator.CONFIG.getString(ConfiguratorKeys.CRON_EXPRESSION_ENTRYWORKFLOW.getKey()), jobData);
+            // initialize plugin controller ...
+            PluginController.getInstance().executePlugins();
         }
     }
 }
