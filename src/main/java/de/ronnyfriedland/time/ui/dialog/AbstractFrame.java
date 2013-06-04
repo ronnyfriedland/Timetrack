@@ -28,7 +28,7 @@ public abstract class AbstractFrame extends JFrame {
         setTitle(title);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(resizeable);
-        setAlwaysOnTop(true);
+        // setAlwaysOnTop(true);
         getRootPane().setBorder(BorderFactory.createLineBorder(Color.BLACK));
     }
 
