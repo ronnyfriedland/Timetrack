@@ -70,6 +70,8 @@ public enum Messages {
     EXPORT_DELETE("exportdelete"),
     /** Hilfe */
     HELP("help"),
+    /** Anwenden */
+    APPLY("apply"),
     /** ausgewählte Zeitspanne für den Export */
     EXPORT_DURATION("exportduration"),
     /** Zusammenfassung für Export */

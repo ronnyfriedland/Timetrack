@@ -2,6 +2,7 @@ package de.ronnyfriedland.time.ui.dialog;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,6 +27,7 @@ import javax.swing.InputVerifier;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
@@ -42,6 +44,7 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
 import org.apache.commons.lang.StringUtils;
+import org.jfree.ui.DateChooserPanel;
 
 import de.ronnyfriedland.time.config.Const;
 import de.ronnyfriedland.time.config.Messages;
@@ -78,6 +81,10 @@ public class NewEntryFrame extends AbstractFrame {
     private final JButton refresh = new JButton(Messages.REFRESH_PROJECT.getMessage());
     private final JButton save = new JButton(Messages.SAVE.getMessage());
     private final JButton delete = new JButton(Messages.DELETE.getMessage());
+
+    private final JFrame datechooserFrame = new JFrame();
+    private final DateChooserPanel datechooser = new DateChooserPanel();
+    private final JButton applyButton = new JButton(Messages.APPLY.getMessage());
 
     private class MyListCellThing extends JLabel implements ListCellRenderer {
         private static final long serialVersionUID = 1L;
@@ -178,6 +185,22 @@ public class NewEntryFrame extends AbstractFrame {
     protected void createUI() {
         getContentPane().addKeyListener(new TimeTableKeyAdapter());
 
+        datechooserFrame.setLayout(new FlowLayout());
+        datechooserFrame.setResizable(false);
+        datechooserFrame.add(datechooser);
+        datechooserFrame.add(applyButton);
+
+        datechooser.setChosenDateButtonColor(Const.COLOR_SELECTION);
+
+        applyButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Date selectedDate = datechooser.getDate();
+                date.setText(new SimpleDateFormat(Entry.DATESTRINGFORMAT).format(selectedDate));
+                datechooserFrame.setVisible(false);
+            }
+        });
+
         labelDate.setBounds(10, 10, 100, 24);
 
         date.setName("date");
@@ -203,6 +226,15 @@ public class NewEntryFrame extends AbstractFrame {
                     formatError(arg0);
                 }
                 return valid;
+            }
+        });
+        date.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (2 == e.getClickCount()) {
+                    datechooserFrame.setBounds(e.getXOnScreen(), e.getYOnScreen(), 200, 250);
+                    datechooserFrame.setVisible(true);
+                }
             }
         });
 
