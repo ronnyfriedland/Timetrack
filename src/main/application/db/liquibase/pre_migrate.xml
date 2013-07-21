@@ -5,7 +5,7 @@
 
 	<changeSet author="ronnyfriedland" id="backup" runOnChange="true" runAlways="true">
 		<sql>
-			CALL SYSCS_UTIL.SYSCS_BACKUP_DATABASE('${timetable.path}/backup/${build.timestamp}');
+			CALL SYSCS_UTIL.SYSCS_BACKUP_DATABASE('${timetrack.path}/backup/${build.timestamp}');
 		</sql>
 	</changeSet>
 

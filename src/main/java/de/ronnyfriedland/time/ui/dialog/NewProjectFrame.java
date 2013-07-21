@@ -29,7 +29,7 @@ import de.ronnyfriedland.time.config.Const;
 import de.ronnyfriedland.time.config.Messages;
 import de.ronnyfriedland.time.entity.Project;
 import de.ronnyfriedland.time.logic.EntityController;
-import de.ronnyfriedland.time.ui.adapter.TimeTableKeyAdapter;
+import de.ronnyfriedland.time.ui.adapter.TimeTrackKeyAdapter;
 
 /**
  * @author Ronny Friedland
@@ -73,7 +73,7 @@ public class NewProjectFrame extends AbstractFrame {
      */
     @Override
     protected void createUI() {
-        getContentPane().addKeyListener(new TimeTableKeyAdapter());
+        getContentPane().addKeyListener(new TimeTrackKeyAdapter());
 
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[] { 100, 202, 0 };
@@ -81,7 +81,7 @@ public class NewProjectFrame extends AbstractFrame {
         gridBagLayout.columnWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
         gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
         getContentPane().setLayout(gridBagLayout);
-        save.addKeyListener(new TimeTableKeyAdapter());
+        save.addKeyListener(new TimeTrackKeyAdapter());
         save.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
@@ -122,7 +122,7 @@ public class NewProjectFrame extends AbstractFrame {
         getContentPane().add(labelName, gbc_labelName);
 
         name.setName("name");
-        name.addKeyListener(new TimeTableKeyAdapter());
+        name.addKeyListener(new TimeTrackKeyAdapter());
         name.setInputVerifier(new InputVerifier() {
             /**
              * {@inheritDoc}
@@ -160,7 +160,7 @@ public class NewProjectFrame extends AbstractFrame {
         getContentPane().add(labelDescription, gbc_labelDescription);
 
         description.setName("description");
-        description.addKeyListener(new TimeTableKeyAdapter());
+        description.addKeyListener(new TimeTrackKeyAdapter());
 
         formatOk(name, description);
         GridBagConstraints gbc_description = new GridBagConstraints();

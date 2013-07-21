@@ -7,12 +7,12 @@
 	<files>
         <!-- add windows executable -->
         <file>
-            <source>${project.build.directory}/Timetable.exe</source>
+            <source>${project.build.directory}/Timetrack.exe</source>
             <outputDirectory>/</outputDirectory>
         </file>
 		<!-- add startup script -->
 		<file>
-			<source>${project.build.directory}/timetable.sh</source>
+			<source>${project.build.directory}/timetrack.sh</source>
 			<outputDirectory>/</outputDirectory>
 		</file>
         <!-- add mac/linux migration script -->
@@ -27,7 +27,7 @@
         </file>
         <!-- add readme -->
         <file>
-            <source>${project.build.directory}/docbkx/html/timetable_readme.html</source>
+            <source>${project.build.directory}/docbkx/html/timetrack_readme.html</source>
             <outputDirectory>/info</outputDirectory>
         </file>
         <!-- add db changelog -->
@@ -72,14 +72,14 @@
 		<dependencySet>
 			<outputDirectory>/</outputDirectory>
 			<includes>
-				<include>de.ronnyfriedland:timetable</include>
+				<include>de.ronnyfriedland:timetrack</include>
 			</includes>
 			<useProjectAttachments>true</useProjectAttachments>
 		</dependencySet>
         <dependencySet>
             <outputDirectory>/lib</outputDirectory>
             <excludes>
-                <exclude>de.ronnyfriedland:timetable</exclude>
+                <exclude>de.ronnyfriedland:timetrack</exclude>
             </excludes>
         </dependencySet>
 	</dependencySets>

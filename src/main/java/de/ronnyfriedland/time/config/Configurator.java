@@ -28,22 +28,22 @@ public final class Configurator {
      */
     public enum ConfiguratorKeys {
         /** Pfad zur Export-Datei */
-        PATH("timetable.path"),
+        PATH("timetrack.path"),
         /** Name der Export-Datei */
-        EXPORT_FILE("timetable.export.file"),
+        EXPORT_FILE("timetrack.export.file"),
         /** Cron-Ausdruck für Popup */
-        CRON_EXPRESSION_POPUP("timetable.popup.cron"),
+        CRON_EXPRESSION_POPUP("timetrack.popup.cron"),
         /** Cron-Ausdruck für Entry-Workflow */
-        CRON_EXPRESSION_ENTRYWORKFLOW("timetable.entryworkflow.cron"),
+        CRON_EXPRESSION_ENTRYWORKFLOW("timetrack.entryworkflow.cron"),
         /**
          * Flag, ob Popup anstelle von "Nachrichtenblase" dargestellt werden
          * soll
          */
-        SHOW_POPUP("timetable.popup.show"),
+        SHOW_POPUP("timetrack.popup.show"),
         /** Dauer bis Eintrag im Workflow in Status WARN geht */
-        WORKFLOW_WARN("timetable.workflow.warn"),
+        WORKFLOW_WARN("timetrack.workflow.warn"),
         /** Dauer bis Eintrag im Workflow in Status STOPPED geht */
-        WORKFLOW_STOP("timetable.workflow.stop");
+        WORKFLOW_STOP("timetrack.workflow.stop");
 
         private final String key;
 

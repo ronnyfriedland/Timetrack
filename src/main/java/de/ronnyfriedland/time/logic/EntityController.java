@@ -42,7 +42,7 @@ public final class EntityController {
      * Erzeugt eine neue {@link EntityController} Instanz.
      */
     private EntityController() {
-        emf = Persistence.createEntityManagerFactory("timetable");
+        emf = Persistence.createEntityManagerFactory("timetrack");
         em = emf.createEntityManager();
         em.setFlushMode(FlushModeType.COMMIT);
     }

@@ -55,7 +55,7 @@ import de.ronnyfriedland.time.entity.Project;
 import de.ronnyfriedland.time.logic.EntityController;
 import de.ronnyfriedland.time.sort.SortParam;
 import de.ronnyfriedland.time.sort.SortParam.SortOrder;
-import de.ronnyfriedland.time.ui.adapter.TimeTableKeyAdapter;
+import de.ronnyfriedland.time.ui.adapter.TimeTrackKeyAdapter;
 
 /**
  * @author Ronny Friedland
@@ -183,7 +183,7 @@ public class NewEntryFrame extends AbstractFrame {
      */
     @Override
     protected void createUI() {
-        getContentPane().addKeyListener(new TimeTableKeyAdapter());
+        getContentPane().addKeyListener(new TimeTrackKeyAdapter());
 
         datechooserFrame.setLayout(new FlowLayout());
         datechooserFrame.setResizable(false);
@@ -206,7 +206,7 @@ public class NewEntryFrame extends AbstractFrame {
         date.setName("date");
         date.setBounds(110, 10, 200, 24);
         date.setText(new SimpleDateFormat(Entry.DATESTRINGFORMAT).format(new Date()));
-        date.addKeyListener(new TimeTableKeyAdapter());
+        date.addKeyListener(new TimeTrackKeyAdapter());
         date.setInputVerifier(new InputVerifier() {
             /**
              * {@inheritDoc}
@@ -242,7 +242,7 @@ public class NewEntryFrame extends AbstractFrame {
 
         description.setName("description");
         description.setBounds(110, 35, 200, 24);
-        description.addKeyListener(new TimeTableKeyAdapter());
+        description.addKeyListener(new TimeTrackKeyAdapter());
         description.setInputVerifier(new InputVerifier() {
             /**
              * {@inheritDoc}
@@ -270,7 +270,7 @@ public class NewEntryFrame extends AbstractFrame {
         duration.setName("duration");
         duration.setBounds(110, 60, 150, 24);
         duration.setText("0");
-        duration.addKeyListener(new TimeTableKeyAdapter());
+        duration.addKeyListener(new TimeTrackKeyAdapter());
         duration.setInputVerifier(new InputVerifier() {
             /**
              * {@inheritDoc}
@@ -298,7 +298,7 @@ public class NewEntryFrame extends AbstractFrame {
 
         projects.setName("projects");
         projects.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
-        projects.addKeyListener(new TimeTableKeyAdapter());
+        projects.addKeyListener(new TimeTrackKeyAdapter());
         projects.setInputVerifier(new InputVerifier() {
             /**
              * {@inheritDoc}
@@ -337,7 +337,7 @@ public class NewEntryFrame extends AbstractFrame {
         delete.setEnabled(false);
 
         delete.setBounds(165, 245, 145, 24);
-        delete.addKeyListener(new TimeTableKeyAdapter());
+        delete.addKeyListener(new TimeTrackKeyAdapter());
         delete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
@@ -358,7 +358,7 @@ public class NewEntryFrame extends AbstractFrame {
         });
 
         save.setBounds(10, 245, 145, 24);
-        save.addKeyListener(new TimeTableKeyAdapter());
+        save.addKeyListener(new TimeTrackKeyAdapter());
         save.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
@@ -376,7 +376,7 @@ public class NewEntryFrame extends AbstractFrame {
                 }
             }
         });
-        start.addKeyListener(new TimeTableKeyAdapter());
+        start.addKeyListener(new TimeTrackKeyAdapter());
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent arg0) {
@@ -390,7 +390,7 @@ public class NewEntryFrame extends AbstractFrame {
                 }
             }
         });
-        stop.addKeyListener(new TimeTableKeyAdapter());
+        stop.addKeyListener(new TimeTrackKeyAdapter());
         stop.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent arg0) {
@@ -418,7 +418,7 @@ public class NewEntryFrame extends AbstractFrame {
         showDisabledProjects.setBounds(10, 185, 300, 24);
 
         refresh.setBounds(10, 215, 300, 24);
-        refresh.addKeyListener(new TimeTableKeyAdapter());
+        refresh.addKeyListener(new TimeTrackKeyAdapter());
         refresh.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent arg0) {

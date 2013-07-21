@@ -11,7 +11,7 @@ import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 
 import de.ronnyfriedland.time.config.Messages;
-import de.ronnyfriedland.time.ui.adapter.TimeTableKeyAdapter;
+import de.ronnyfriedland.time.ui.adapter.TimeTrackKeyAdapter;
 
 /**
  * @author Ronny Friedland
@@ -19,7 +19,7 @@ import de.ronnyfriedland.time.ui.adapter.TimeTableKeyAdapter;
 public class ShowHelpFrame extends AbstractFrame implements HyperlinkListener {
 
     private static final Logger LOG = Logger.getLogger(ShowHelpFrame.class.getName());
-    private static final String README_FILE = "timetable_readme.html";
+    private static final String README_FILE = "timetrack_readme.html";
     private static final long serialVersionUID = -3667564200048966812L;
     private final JEditorPane editorPane = new JEditorPane();
 
@@ -41,7 +41,7 @@ public class ShowHelpFrame extends AbstractFrame implements HyperlinkListener {
         }
         editorPane.setEditable(false);
         editorPane.addHyperlinkListener(this);
-        editorPane.addKeyListener(new TimeTableKeyAdapter());
+        editorPane.addKeyListener(new TimeTrackKeyAdapter());
         getContentPane().setLayout(new BorderLayout(0, 0));
 
         JScrollPane scrollPane = new JScrollPane(editorPane);

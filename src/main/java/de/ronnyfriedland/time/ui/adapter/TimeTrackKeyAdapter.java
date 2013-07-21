@@ -18,7 +18,7 @@ import de.ronnyfriedland.time.ui.dialog.ShowHelpFrame;
  * 
  * @author Ronny Friedland
  */
-public class TimeTableKeyAdapter extends KeyAdapter {
+public class TimeTrackKeyAdapter extends KeyAdapter {
     /**
      * {@inheritDoc}
      * 

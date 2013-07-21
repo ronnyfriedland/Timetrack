@@ -54,7 +54,7 @@ import de.ronnyfriedland.time.config.Messages;
 import de.ronnyfriedland.time.entity.Entry;
 import de.ronnyfriedland.time.logic.EntityController;
 import de.ronnyfriedland.time.logic.ExportController;
-import de.ronnyfriedland.time.ui.adapter.TimeTableKeyAdapter;
+import de.ronnyfriedland.time.ui.adapter.TimeTrackKeyAdapter;
 
 /**
  * @author Ronny Friedland
@@ -157,7 +157,7 @@ public class ExportFrame extends AbstractFrame {
      */
     @Override
     protected void createUI() {
-        getContentPane().addKeyListener(new TimeTableKeyAdapter());
+        getContentPane().addKeyListener(new TimeTrackKeyAdapter());
 
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.DAY_OF_WEEK, 2);
@@ -169,7 +169,7 @@ public class ExportFrame extends AbstractFrame {
         filterPane.setBounds(0, 0, 600, 300);
         days.setBackground(Const.COLOR_BACKGROUND);
         days.setValue(7);
-        days.addKeyListener(new TimeTableKeyAdapter());
+        days.addKeyListener(new TimeTrackKeyAdapter());
         days.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(final ChangeEvent e) {
@@ -184,17 +184,17 @@ public class ExportFrame extends AbstractFrame {
         dateChooser.setChosenDateButtonColor(Const.COLOR_SELECTION);
         dateChooser.setYearSelectionRange(2);
         dateChooser.setBorder(BorderFactory.createEmptyBorder());
-        dateChooser.addKeyListener(new TimeTableKeyAdapter());
+        dateChooser.addKeyListener(new TimeTrackKeyAdapter());
 
         formatOk(dateChooser, days);
         deleteYes.setBackground(Const.COLOR_BACKGROUND);
-        deleteYes.addKeyListener(new TimeTableKeyAdapter());
+        deleteYes.addKeyListener(new TimeTrackKeyAdapter());
         buttonGroup.add(deleteYes);
         deleteNo.setBackground(Const.COLOR_BACKGROUND);
         deleteNo.setSelected(true);
-        deleteNo.addKeyListener(new TimeTableKeyAdapter());
+        deleteNo.addKeyListener(new TimeTrackKeyAdapter());
         buttonGroup.add(deleteNo);
-        preview.addKeyListener(new TimeTableKeyAdapter());
+        preview.addKeyListener(new TimeTrackKeyAdapter());
         preview.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
@@ -227,7 +227,7 @@ public class ExportFrame extends AbstractFrame {
                 summary.setText(Messages.EXPORT_SUMMARY.getMessage(hours, days.getValue()));
             }
         });
-        export.addKeyListener(new TimeTableKeyAdapter());
+        export.addKeyListener(new TimeTrackKeyAdapter());
         export.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
@@ -395,11 +395,11 @@ public class ExportFrame extends AbstractFrame {
             }
         });
         table.setRowSorter(rowSorter);
-        table.addKeyListener(new TimeTableKeyAdapter());
+        table.addKeyListener(new TimeTrackKeyAdapter());
         table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         table.setTransferHandler(null);
         getContentPane().add(scrollPane, BorderLayout.CENTER);
-        scrollPane.addKeyListener(new TimeTableKeyAdapter());
+        scrollPane.addKeyListener(new TimeTrackKeyAdapter());
 
         getContentPane().add(summaryPane, BorderLayout.SOUTH);
         summaryPane.add(summary);

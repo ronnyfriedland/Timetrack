@@ -19,7 +19,7 @@ public class ConfiguratorTest {
     public void testExportFile() {
         String file = Configurator.CONFIG.getString(ConfiguratorKeys.EXPORT_FILE.getKey());
         Assert.assertNotNull(file);
-        Assert.assertEquals("timetable-export.xlsx", file);
+        Assert.assertEquals("timetrack-export.xlsx", file);
     }
 
     @Test

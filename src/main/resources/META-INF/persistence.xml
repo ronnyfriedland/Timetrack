@@ -2,12 +2,12 @@
 <persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
     version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
-    <persistence-unit name="timetable" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="timetrack" transaction-type="RESOURCE_LOCAL">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver" />
-            <property name="javax.persistence.jdbc.url" value="jdbc:derby:${timetable.path}/database/timetable-database;create=true;dataEncryption=true;bootPassword=${timetable.database.password}" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:derby:${timetrack.path}/database/timetrack-database;create=true;dataEncryption=true;bootPassword=${timetrack.database.password}" />
             <property name="eclipselink.logging.level" value="OFF" />
             <property name="eclipselink.ddl-generation" value="create-tables" />
             <!-- Caching -->

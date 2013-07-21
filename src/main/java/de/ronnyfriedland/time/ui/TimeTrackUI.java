@@ -54,9 +54,9 @@ import de.ronnyfriedland.time.ui.dialog.ShowHelpFrame;
  * 
  * @author Ronny Friedland
  */
-public final class TimeTableUI {
+public final class TimeTrackUI {
 
-    private static final Logger LOG = Logger.getLogger(TimeTableUI.class.getName());
+    private static final Logger LOG = Logger.getLogger(TimeTrackUI.class.getName());
 
     /**
      * The main method.
@@ -75,7 +75,7 @@ public final class TimeTableUI {
             public void run() {
                 boolean initError = true;
                 try {
-                    new TimeTableUI().createAndShowGUI();
+                    new TimeTrackUI().createAndShowGUI();
                     initError = false;
                 } catch (PersistenceException e) {
                     JOptionPane.showMessageDialog(null, Messages.ERROR_DATABASE.getMessage(),
@@ -106,7 +106,7 @@ public final class TimeTableUI {
         });
     }
 
-    private TimeTableUI() {
+    private TimeTrackUI() {
         // empty
     }
 

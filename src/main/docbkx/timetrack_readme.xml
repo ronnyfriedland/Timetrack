@@ -69,7 +69,7 @@
 			<para>Die Dauer kann beim Anlegen des Eintrags eingetragen werden. Es
 				ist aber auch möglich, über die Startfunktion einen Workflow zu
 				initialisieren. Dabei wird die Zeit bis zum Beenden des Workflows
-				gemessen. Die maximale Laufzeit beträgt ${timetable.workflow.stop}
+				gemessen. Die maximale Laufzeit beträgt ${timetrack.workflow.stop}
 				Sekunden.
 			</para>
 			<para>Die letzten 10 erstellten Einträge werden unter dem Menüpunkt
@@ -125,8 +125,8 @@
 			<title>Daten importieren</title>
 			<para>Sofern eine vorher exportierte Datei vorhanden ist, können die
 				Daten in die Anwendung importiert werden. Dazu muss eine gültige
-				Datei mit dem Namen "${timetable.export.file}" in den Ordner
-				"${timetable.path}" abgelegt werden.
+				Datei mit dem Namen "${timetrack.export.file}" in den Ordner
+				"${timetrack.path}" abgelegt werden.
 			</para>
 			<para>Sofern keine Datei zum Import existiert, ist der Menüpunkt
 				nicht auswählbar.
