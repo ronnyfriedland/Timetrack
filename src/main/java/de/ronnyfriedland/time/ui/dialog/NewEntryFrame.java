@@ -232,7 +232,7 @@ public class NewEntryFrame extends AbstractFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (2 == e.getClickCount()) {
-                    datechooserFrame.setBounds(e.getXOnScreen(), e.getYOnScreen(), 200, 250);
+                    datechooserFrame.setBounds(e.getXOnScreen(), e.getYOnScreen(), 200, 255);
                     datechooserFrame.setVisible(true);
                 }
             }
