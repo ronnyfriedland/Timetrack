@@ -1,8 +1,8 @@
 <class-diagram version="1.0.9" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true">  
   <annotation id="1" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.entity.validation.IsFloat" 
-    project="Zeiterfassung (Timetable)" 
-    file="/Zeiterfassung (Timetable)/src/main/java/de/ronnyfriedland/time/entity/validation/IsFloat.java" binary="false">    
+    project="Zeiterfassung (Timetrack)" 
+    file="/Zeiterfassung (Timetrack)/src/main/java/de/ronnyfriedland/time/entity/validation/IsFloat.java" binary="false">    
     <position height="-1" width="-1" x="191" y="433"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="false"/>      
@@ -10,8 +10,8 @@
     </display>  
   </annotation>  
   <class id="2" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.entity.Project" 
-    project="Zeiterfassung (Timetable)" 
-    file="/Zeiterfassung (Timetable)/src/main/java/de/ronnyfriedland/time/entity/Project.java" binary="false">    
+    project="Zeiterfassung (Timetrack)" 
+    file="/Zeiterfassung (Timetrack)/src/main/java/de/ronnyfriedland/time/entity/Project.java" binary="false">    
     <position height="-1" width="-1" x="1147" y="495"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="false"/>      
@@ -19,8 +19,8 @@
     </display>  
   </class>  
   <class id="3" corner="BOTTOM_RIGHT" language="java" 
-    name="de.ronnyfriedland.time.entity.validation.ValidIsFloatValidator" project="Zeiterfassung (Timetable)" 
-    file="/Zeiterfassung (Timetable)/src/main/java/de/ronnyfriedland/time/entity/validation/ValidIsFloatValidator.java" 
+    name="de.ronnyfriedland.time.entity.validation.ValidIsFloatValidator" project="Zeiterfassung (Timetrack)" 
+    file="/Zeiterfassung (Timetrack)/src/main/java/de/ronnyfriedland/time/entity/validation/ValidIsFloatValidator.java" 
     binary="false">    
     <position height="-1" width="-1" x="192" y="615"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
@@ -29,8 +29,8 @@
     </display>  
   </class>  
   <class id="4" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.entity.AbstractEntity" 
-    project="Zeiterfassung (Timetable)" 
-    file="/Zeiterfassung (Timetable)/src/main/java/de/ronnyfriedland/time/entity/AbstractEntity.java" binary="false">    
+    project="Zeiterfassung (Timetrack)" 
+    file="/Zeiterfassung (Timetrack)/src/main/java/de/ronnyfriedland/time/entity/AbstractEntity.java" binary="false">    
     <position height="-1" width="-1" x="842" y="105"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="false"/>      
@@ -38,8 +38,8 @@
     </display>  
   </class>  
   <class id="5" corner="BOTTOM_RIGHT" language="java" 
-    name="de.ronnyfriedland.time.entity.validation.ValidNotBlankValidator" project="Zeiterfassung (Timetable)" 
-    file="/Zeiterfassung (Timetable)/src/main/java/de/ronnyfriedland/time/entity/validation/ValidNotBlankValidator.java" 
+    name="de.ronnyfriedland.time.entity.validation.ValidNotBlankValidator" project="Zeiterfassung (Timetrack)" 
+    file="/Zeiterfassung (Timetrack)/src/main/java/de/ronnyfriedland/time/entity/validation/ValidNotBlankValidator.java" 
     binary="false">    
     <position height="-1" width="-1" x="196" y="280"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
@@ -48,8 +48,8 @@
     </display>  
   </class>  
   <class id="6" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.entity.Entry" 
-    project="Zeiterfassung (Timetable)" 
-    file="/Zeiterfassung (Timetable)/src/main/java/de/ronnyfriedland/time/entity/Entry.java" binary="false">    
+    project="Zeiterfassung (Timetrack)" 
+    file="/Zeiterfassung (Timetrack)/src/main/java/de/ronnyfriedland/time/entity/Entry.java" binary="false">    
     <position height="-1" width="-1" x="843" y="510"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="false"/>      
@@ -57,8 +57,8 @@
     </display>  
   </class>  
   <annotation id="7" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.entity.validation.NotBlank" 
-    project="Zeiterfassung (Timetable)" 
-    file="/Zeiterfassung (Timetable)/src/main/java/de/ronnyfriedland/time/entity/validation/NotBlank.java" 
+    project="Zeiterfassung (Timetrack)" 
+    file="/Zeiterfassung (Timetrack)/src/main/java/de/ronnyfriedland/time/entity/validation/NotBlank.java" 
     binary="false">    
     <position height="-1" width="-1" x="196" y="97"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
@@ -67,8 +67,8 @@
     </display>  
   </annotation>  
   <class id="8" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.entity.EntryState" 
-    project="Zeiterfassung (Timetable)" 
-    file="/Zeiterfassung (Timetable)/src/main/java/de/ronnyfriedland/time/entity/EntryState.java" binary="false">    
+    project="Zeiterfassung (Timetrack)" 
+    file="/Zeiterfassung (Timetrack)/src/main/java/de/ronnyfriedland/time/entity/EntryState.java" binary="false">    
     <position height="-1" width="-1" x="530" y="508"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="false"/>      
