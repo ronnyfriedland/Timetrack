@@ -8,7 +8,7 @@
 			<surname>Friedland</surname>
 		</author>
 		<copyright>
-			<year>2013</year>
+			<year>2014</year>
 			<holder>Open Source Software</holder>
 		</copyright>
 		<abstract>
@@ -24,7 +24,7 @@
 				ein Kommentar angegeben werden.
 			</para>
 			<para>Projekte können deaktiviert werden. Sie sind dann standardmäßig
-				nicht mehr sichtbar.
+				nicht mehr sichtbar, können aber explizit dargestellt werden.
 			</para>
 			<itemizedlist>
 				<listitem>
@@ -33,6 +33,9 @@
 						<itemizedlist>
 							<listitem>
 								<para>Projektnamen müssen eindeutig sein</para>
+							</listitem>
+							<listitem>
+								<para>Die Beschreibung ist optional</para>
 							</listitem>
 						</itemizedlist>
 					</para>
@@ -50,9 +53,10 @@
 						Einschränkungen
 						<itemizedlist>
 							<listitem>
-								<para>Projekte können nicht vollständig gelöscht, sondern nur
-									deaktiviert werden. Die Zuordnung der Einträge zu Projekten
-									bleibt dabei erhalten.
+								<para>Projekte können nur gelöscht werden, sofern es keine
+									zugeordneten Einträge gibt. Ansonsten ist die Funktion
+									deaktivert. Weiterhin können Projekte deaktiviert werden. Die
+									Zuordnung der Einträge zu Projekten bleibt dabei erhalten.
 								</para>
 							</listitem>
 						</itemizedlist>
@@ -66,14 +70,19 @@
 				angegeben werden. Zusätzlich muss dem Eintrag ein Projekt zugeordnet
 				werden.
 			</para>
-			<para>Die Dauer kann beim Anlegen des Eintrags eingetragen werden. Es
-				ist aber auch möglich, über die Startfunktion einen Workflow zu
-				initialisieren. Dabei wird die Zeit bis zum Beenden des Workflows
-				gemessen. Die maximale Laufzeit beträgt ${timetrack.workflow.stop}
+			<para>Die Dauer kann beim Anlegen des Eintrags auf einen festen Wert
+				festgelegt werden. Es
+				ist aber auch möglich, über die Startfunktion
+				einen Workflow zu
+				initialisieren. Dabei wird die Zeit bis zum Beenden
+				des Workflows
+				gemessen. Die maximale Laufzeit beträgt
+				${timetrack.workflow.stop}
 				Sekunden.
 			</para>
 			<para>Die letzten 10 erstellten Einträge werden unter dem Menüpunkt
-				"Zuletzt erstellt" angezeigt.
+				"Zuletzt erstellt" angezeigt. Diese Einträge können darüber direkt
+				wieder geöffnet und ggf. bearbeitet werden.
 			</para>
 			<itemizedlist>
 				<listitem>
@@ -128,6 +137,9 @@
 				Datei mit dem Namen "${timetrack.export.file}" in den Ordner
 				"${timetrack.path}" abgelegt werden.
 			</para>
+			<para>Beim Import werden alle Tabellenblätter außer der Übersicht
+				berücksichtigt.
+			</para>
 			<para>Sofern keine Datei zum Import existiert, ist der Menüpunkt
 				nicht auswählbar.
 			</para>
@@ -136,7 +148,12 @@
 			<title>Datenmigration</title>
 			<para>Ab Version 1.2 können bestehende Daten migriert werden. Die
 				Migration erfolgt über mitgelieferte Skripte (migration.sh bzw.
-				migration.bat).
+				migration.bat). Vor dem ersten Start der Anwendung nach einem Update
+				sollte das Skript zur Datenmigration ausgeführt werden.
+
+				Für ein Update muss das Zip-Archiv in einen neuen Ordner entpackt
+				werden. Danach muss zur Übernahme der Daten das Verzeichnis
+				${timetrack.path} in den neuen Anwendungsordner kopiert werden.
 
 				Das Management der Datenbankänderungen erfolgt über
 				Liquibase.
@@ -159,7 +176,7 @@
 			</para>
 		</sect2>
 		<sect2>
-			<title>Plugins</title>
+			<title>eigene Plugins</title>
 			<para>Die Anwendung kann über Plugins erweitert werden. Das
 				Plugin-Klasse
 				muss mit
