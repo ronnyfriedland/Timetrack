@@ -86,10 +86,10 @@ public class NewEntryFrame extends AbstractFrame {
     private final DateChooserPanel datechooser = new DateChooserPanel();
     private final JButton applyButton = new JButton(Messages.APPLY.getMessage());
 
-    private class MyListCellThing extends JLabel implements ListCellRenderer {
+    private class TimetrackProjectViewCellRenderer extends JLabel implements ListCellRenderer {
         private static final long serialVersionUID = 1L;
 
-        public MyListCellThing() {
+        public TimetrackProjectViewCellRenderer() {
             setOpaque(true);
         }
 
@@ -294,7 +294,7 @@ public class NewEntryFrame extends AbstractFrame {
         });
         scrollPaneProjects.setBounds(10, 85, 300, 100);
         scrollPaneProjects.setViewportView(projects);
-        projects.setCellRenderer(new MyListCellThing());
+        projects.setCellRenderer(new TimetrackProjectViewCellRenderer());
 
         projects.setName("projects");
         projects.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);

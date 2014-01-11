@@ -29,7 +29,7 @@ public abstract class AbstractFrame extends JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(resizeable);
         // setAlwaysOnTop(true);
-        getRootPane().setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        getRootPane().setBorder(BorderFactory.createLineBorder(Color.GRAY));
     }
 
     protected void formatError(final JComponent component) {

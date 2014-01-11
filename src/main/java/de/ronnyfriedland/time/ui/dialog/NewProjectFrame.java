@@ -46,6 +46,7 @@ public class NewProjectFrame extends AbstractFrame {
     private final JLabel labelDisable = new JLabel(Messages.DISABLE.getMessage());
     private final JCheckBox disableProject = new JCheckBox();
     private final JButton save = new JButton(Messages.SAVE.getMessage());
+    private final JButton delete = new JButton(Messages.DELETE.getMessage());
 
     private String uuid = null;
 
@@ -64,6 +65,9 @@ public class NewProjectFrame extends AbstractFrame {
         name.setText(project.getName());
         description.setText(project.getDescription());
         disableProject.setSelected(!project.getEnabled());
+        if (project.getEntries().isEmpty()) {
+            delete.setEnabled(true);
+        }
     }
 
     /**
@@ -77,46 +81,13 @@ public class NewProjectFrame extends AbstractFrame {
 
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[] { 100, 202, 0 };
-        gridBagLayout.rowHeights = new int[] { 28, 28, 23, 29, 0 };
+        gridBagLayout.rowHeights = new int[] { 28, 28, 23, 29, 0, 0, 0 };
         gridBagLayout.columnWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
-        gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+        gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
         getContentPane().setLayout(gridBagLayout);
-        save.addKeyListener(new TimeTrackKeyAdapter());
-        save.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(final ActionEvent e) {
-                Project project;
-                if (null == uuid) {
-                    project = new Project();
-                } else {
-                    project = EntityController.getInstance().findById(Project.class, uuid);
-                }
-                if (!StringUtils.isBlank(name.getText())) {
-                    project.setName(name.getText());
-                }
-                if (!StringUtils.isBlank(description.getText())) {
-                    project.setDescription(description.getText());
-                }
-                project.setEnabled(!disableProject.isSelected());
-                try {
-                    if (null != uuid) {
-                        EntityController.getInstance().update(project);
-                    } else {
-                        EntityController.getInstance().create(project);
-                    }
-                    setVisible(false);
-                } catch (PersistenceException ex) {
-                    LOG.log(Level.SEVERE, "Error saving new project", ex);
-                    formatError(getRootPane());
-                } catch (ConstraintViolationException ex) {
-                    LOG.log(Level.SEVERE, "Error saving new project", ex);
-                    formatError(getRootPane());
-                }
-            }
-        });
         GridBagConstraints gbc_labelName = new GridBagConstraints();
         gbc_labelName.fill = GridBagConstraints.HORIZONTAL;
-        gbc_labelName.insets = new Insets(25, 25, 5, 5);
+        gbc_labelName.insets = new Insets(25, 25, 5, 25);
         gbc_labelName.gridx = 0;
         gbc_labelName.gridy = 0;
         getContentPane().add(labelName, gbc_labelName);
@@ -153,10 +124,9 @@ public class NewProjectFrame extends AbstractFrame {
         getContentPane().add(name, gbc_name);
         GridBagConstraints gbc_labelDescription = new GridBagConstraints();
         gbc_labelDescription.fill = GridBagConstraints.HORIZONTAL;
-        gbc_labelDescription.insets = new Insets(10, 25, 5, 5);
+        gbc_labelDescription.insets = new Insets(10, 25, 5, 25);
         gbc_labelDescription.gridx = 0;
         gbc_labelDescription.gridy = 1;
-        labelDescription.setHorizontalAlignment(SwingConstants.RIGHT);
         getContentPane().add(labelDescription, gbc_labelDescription);
 
         description.setName("description");
@@ -172,7 +142,7 @@ public class NewProjectFrame extends AbstractFrame {
         getContentPane().add(description, gbc_description);
         GridBagConstraints gbc_labelDisable = new GridBagConstraints();
         gbc_labelDisable.fill = GridBagConstraints.HORIZONTAL;
-        gbc_labelDisable.insets = new Insets(10, 25, 5, 5);
+        gbc_labelDisable.insets = new Insets(10, 25, 5, 25);
         gbc_labelDisable.gridx = 0;
         gbc_labelDisable.gridy = 2;
         getContentPane().add(labelDisable, gbc_labelDisable);
@@ -184,14 +154,67 @@ public class NewProjectFrame extends AbstractFrame {
         gbc_disableProject.gridx = 1;
         gbc_disableProject.gridy = 2;
         getContentPane().add(disableProject, gbc_disableProject);
+        save.setHorizontalAlignment(SwingConstants.LEADING);
+        save.addKeyListener(new TimeTrackKeyAdapter());
+        save.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                Project project;
+                if (null == uuid) {
+                    project = new Project();
+                } else {
+                    project = EntityController.getInstance().findById(Project.class, uuid);
+                }
+                if (!StringUtils.isBlank(name.getText())) {
+                    project.setName(name.getText());
+                }
+                if (!StringUtils.isBlank(description.getText())) {
+                    project.setDescription(description.getText());
+                }
+                project.setEnabled(!disableProject.isSelected());
+                try {
+                    if (null != uuid) {
+                        EntityController.getInstance().update(project);
+                    } else {
+                        EntityController.getInstance().create(project);
+                    }
+                    setVisible(false);
+                } catch (PersistenceException ex) {
+                    LOG.log(Level.SEVERE, "Error saving new project", ex);
+                    formatError(getRootPane());
+                } catch (ConstraintViolationException ex) {
+                    LOG.log(Level.SEVERE, "Error saving new project", ex);
+                    formatError(getRootPane());
+                }
+            }
+        });
+        delete.setHorizontalAlignment(SwingConstants.LEADING);
+        delete.setEnabled(false);
+        delete.addKeyListener(new TimeTrackKeyAdapter());
+        delete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                Project project;
+                if (null != uuid) {
+                    project = EntityController.getInstance().findById(Project.class, uuid);
+                    EntityController.getInstance().delete(project);
+                    setVisible(false);
+                }
+            }
+        });
         GridBagConstraints gbc_save = new GridBagConstraints();
-        gbc_save.insets = new Insets(10, 25, 0, 25);
-        gbc_save.anchor = GridBagConstraints.NORTH;
-        gbc_save.fill = GridBagConstraints.HORIZONTAL;
-        gbc_save.gridwidth = 2;
+        gbc_save.insets = new Insets(10, 25, 5, 25);
+        gbc_save.anchor = GridBagConstraints.EAST;
         gbc_save.gridx = 0;
         gbc_save.gridy = 3;
         getContentPane().add(save, gbc_save);
+
+        GridBagConstraints gbc_delete = new GridBagConstraints();
+        gbc_delete.anchor = GridBagConstraints.EAST;
+        gbc_delete.insets = new Insets(10, 10, 5, 25);
+        gbc_delete.gridx = 1;
+        gbc_delete.gridy = 3;
+        getContentPane().add(delete, gbc_delete);
     }
 
     public static void main(final String[] args) {
