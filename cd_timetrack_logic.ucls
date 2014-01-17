@@ -92,16 +92,7 @@
       <operations public="true" package="true" protected="true" private="false"/>    
     </display>  
   </class>  
-  <class id="11" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.ui.dialog.NewEntryFrame.ProjectData" 
-    project="Zeiterfassung (Timetrack)" 
-    file="/Zeiterfassung (Timetrack)/src/main/java/de/ronnyfriedland/time/ui/dialog/NewEntryFrame.java" binary="false">    
-    <position height="-1" width="-1" x="1235" y="657"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="false"/>      
-      <operations public="true" package="true" protected="true" private="false"/>    
-    </display>  
-  </class>  
-  <class id="12" corner="BOTTOM_RIGHT" language="java" 
+  <class id="11" corner="BOTTOM_RIGHT" language="java" 
     name="de.ronnyfriedland.time.ui.dialog.NewEntryFrame.TimetrackProjectViewCellRenderer" 
     project="Zeiterfassung (Timetrack)" 
     file="/Zeiterfassung (Timetrack)/src/main/java/de/ronnyfriedland/time/ui/dialog/NewEntryFrame.java" binary="false">    
@@ -111,7 +102,7 @@
       <operations public="true" package="true" protected="true" private="false"/>    
     </display>  
   </class>  
-  <class id="13" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.ui.TimeTrackUI" 
+  <class id="12" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.ui.TimeTrackUI" 
     project="Zeiterfassung (Timetrack)" 
     file="/Zeiterfassung (Timetrack)/src/main/java/de/ronnyfriedland/time/ui/TimeTrackUI.java" binary="false">    
     <position height="-1" width="-1" x="112" y="70"/>    
@@ -120,7 +111,7 @@
       <operations public="true" package="true" protected="true" private="false"/>    
     </display>  
   </class>  
-  <class id="14" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.ui.dialog.ShowHelpFrame" 
+  <class id="13" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.ui.dialog.ShowHelpFrame" 
     project="Zeiterfassung (Timetrack)" 
     file="/Zeiterfassung (Timetrack)/src/main/java/de/ronnyfriedland/time/ui/dialog/ShowHelpFrame.java" binary="false">    
     <position height="-1" width="-1" x="1218" y="412"/>    
@@ -129,16 +120,16 @@
       <operations public="true" package="true" protected="true" private="false"/>    
     </display>  
   </class>  
-  <class id="15" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.ui.dialog.ExportFrame" 
+  <class id="14" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.ui.dialog.ExportFrame" 
     project="Zeiterfassung (Timetrack)" 
     file="/Zeiterfassung (Timetrack)/src/main/java/de/ronnyfriedland/time/ui/dialog/ExportFrame.java" binary="false">    
-    <position height="-1" width="-1" x="1658" y="395"/>    
+    <position height="-1" width="-1" x="1663" y="395"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="false"/>      
       <operations public="true" package="true" protected="true" private="false"/>    
     </display>  
   </class>  
-  <class id="16" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.ui.adapter.TimeTrackKeyAdapter" 
+  <class id="15" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.ui.adapter.TimeTrackKeyAdapter" 
     project="Zeiterfassung (Timetrack)" 
     file="/Zeiterfassung (Timetrack)/src/main/java/de/ronnyfriedland/time/ui/adapter/TimeTrackKeyAdapter.java" 
     binary="false">    
@@ -148,7 +139,7 @@
       <operations public="true" package="true" protected="true" private="false"/>    
     </display>  
   </class>  
-  <class id="17" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.ui.dialog.NewProjectFrame" 
+  <class id="16" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.ui.dialog.NewProjectFrame" 
     project="Zeiterfassung (Timetrack)" 
     file="/Zeiterfassung (Timetrack)/src/main/java/de/ronnyfriedland/time/ui/dialog/NewProjectFrame.java" binary="false">    
     <position height="-1" width="-1" x="1458" y="412"/>    
@@ -157,7 +148,7 @@
       <operations public="true" package="true" protected="true" private="false"/>    
     </display>  
   </class>  
-  <enumeration id="18" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.sort.SortParam.SortOrder" 
+  <enumeration id="17" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.sort.SortParam.SortOrder" 
     project="Zeiterfassung (Timetrack)" 
     file="/Zeiterfassung (Timetrack)/src/main/java/de/ronnyfriedland/time/sort/SortParam.java" binary="false">    
     <position height="-1" width="-1" x="1108" y="890"/>    
@@ -166,7 +157,7 @@
       <operations public="true" package="true" protected="true" private="false"/>    
     </display>  
   </enumeration>  
-  <class id="19" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.sort.SortParam" 
+  <class id="18" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.sort.SortParam" 
     project="Zeiterfassung (Timetrack)" 
     file="/Zeiterfassung (Timetrack)/src/main/java/de/ronnyfriedland/time/sort/SortParam.java" binary="false">    
     <position height="-1" width="-1" x="828" y="896"/>    
@@ -175,7 +166,7 @@
       <operations public="true" package="true" protected="true" private="false"/>    
     </display>  
   </class>  
-  <annotation id="20" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.logic.plugin.Plugin" 
+  <annotation id="19" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.logic.plugin.Plugin" 
     project="Zeiterfassung (Timetrack)" 
     file="/Zeiterfassung (Timetrack)/src/main/java/de/ronnyfriedland/time/logic/plugin/Plugin.java" binary="false">    
     <position height="-1" width="-1" x="1936" y="261"/>    
@@ -184,7 +175,7 @@
       <operations public="true" package="true" protected="true" private="false"/>    
     </display>  
   </annotation>  
-  <class id="21" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.logic.plugin.PluginException" 
+  <class id="20" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.logic.plugin.PluginException" 
     project="Zeiterfassung (Timetrack)" 
     file="/Zeiterfassung (Timetrack)/src/main/java/de/ronnyfriedland/time/logic/plugin/PluginException.java" 
     binary="false">    
@@ -194,7 +185,7 @@
       <operations public="true" package="true" protected="true" private="false"/>    
     </display>  
   </class>  
-  <class id="22" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.logic.plugin.jmx.JmxPlugin" 
+  <class id="21" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.logic.plugin.jmx.JmxPlugin" 
     project="Zeiterfassung (Timetrack)" 
     file="/Zeiterfassung (Timetrack)/src/main/java/de/ronnyfriedland/time/logic/plugin/jmx/JmxPlugin.java" 
     binary="false">    
@@ -204,7 +195,7 @@
       <operations public="true" package="true" protected="true" private="false"/>    
     </display>  
   </class>  
-  <class id="23" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.logic.plugin.jmx.DataBeanImpl" 
+  <class id="22" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.logic.plugin.jmx.DataBeanImpl" 
     project="Zeiterfassung (Timetrack)" 
     file="/Zeiterfassung (Timetrack)/src/main/java/de/ronnyfriedland/time/logic/plugin/jmx/DataBeanImpl.java" 
     binary="false">    
@@ -214,7 +205,7 @@
       <operations public="true" package="true" protected="true" private="false"/>    
     </display>  
   </class>  
-  <interface id="24" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.logic.plugin.jmx.IConfigBean" 
+  <interface id="23" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.logic.plugin.jmx.IConfigBean" 
     project="Zeiterfassung (Timetrack)" 
     file="/Zeiterfassung (Timetrack)/src/main/java/de/ronnyfriedland/time/logic/plugin/jmx/IConfigBean.java" 
     binary="false">    
@@ -224,7 +215,7 @@
       <operations public="true" package="true" protected="true" private="false"/>    
     </display>  
   </interface>  
-  <class id="25" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.logic.plugin.jmx.ConfigBeanImpl" 
+  <class id="24" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.logic.plugin.jmx.ConfigBeanImpl" 
     project="Zeiterfassung (Timetrack)" 
     file="/Zeiterfassung (Timetrack)/src/main/java/de/ronnyfriedland/time/logic/plugin/jmx/ConfigBeanImpl.java" 
     binary="false">    
@@ -234,7 +225,7 @@
       <operations public="true" package="true" protected="true" private="false"/>    
     </display>  
   </class>  
-  <interface id="26" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.logic.plugin.jmx.IDataBean" 
+  <interface id="25" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.logic.plugin.jmx.IDataBean" 
     project="Zeiterfassung (Timetrack)" 
     file="/Zeiterfassung (Timetrack)/src/main/java/de/ronnyfriedland/time/logic/plugin/jmx/IDataBean.java" 
     binary="false">    
@@ -244,82 +235,78 @@
       <operations public="true" package="true" protected="true" private="false"/>    
     </display>  
   </interface>  
-  <generalization id="27">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="7"/>  
-  </generalization>  
-  <generalization id="28">    
-    <end type="SOURCE" refId="15"/>    
-    <end type="TARGET" refId="9"/>  
-  </generalization>  
-  <nesting id="29">    
-    <end type="SOURCE" refId="19"/>    
-    <end type="TARGET" refId="18"/>  
-  </nesting>  
-  <realization id="30">    
-    <end type="SOURCE" refId="25"/>    
-    <end type="TARGET" refId="24"/>  
+  <realization id="26">    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="23"/>  
   </realization>  
-  <association id="31">    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="32" name="instance"/>      
-      <multiplicity id="33" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="5" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <nesting id="34">    
-    <end type="SOURCE" refId="10"/>    
-    <end type="TARGET" refId="11"/>  
-  </nesting>  
-  <generalization id="35">    
-    <end type="SOURCE" refId="17"/>    
-    <end type="TARGET" refId="9"/>  
-  </generalization>  
-  <association id="36">    
+  <association id="27">    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="37" name="instance"/>      
-      <multiplicity id="38" minimum="0" maximum="1"/>    
+      <attribute id="28" name="instance"/>      
+      <multiplicity id="29" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="39">    
+  <generalization id="30">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="7"/>  
+  </generalization>  
+  <nesting id="31">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="17"/>  
+  </nesting>  
+  <nesting id="32">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="11"/>  
+  </nesting>  
+  <association id="33">    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="40" name="instance"/>      
-      <multiplicity id="41" minimum="0" maximum="1"/>    
+      <attribute id="34" name="instance"/>      
+      <multiplicity id="35" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <realization id="42">    
-    <end type="SOURCE" refId="23"/>    
-    <end type="TARGET" refId="26"/>  
-  </realization>  
-  <nesting id="43">    
-    <end type="SOURCE" refId="10"/>    
-    <end type="TARGET" refId="12"/>  
-  </nesting>  
-  <generalization id="44">    
-    <end type="SOURCE" refId="8"/>    
-    <end type="TARGET" refId="7"/>  
-  </generalization>  
-  <generalization id="45">    
-    <end type="SOURCE" refId="10"/>    
+  <generalization id="36">    
+    <end type="SOURCE" refId="16"/>    
     <end type="TARGET" refId="9"/>  
   </generalization>  
-  <generalization id="46">    
+  <generalization id="37">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="7"/>  
+  </generalization>  
+  <association id="38">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="39" name="order"/>      
+      <multiplicity id="40" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="17" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="41">    
+    <end type="SOURCE" refId="22"/>    
+    <end type="TARGET" refId="25"/>  
+  </realization>  
+  <association id="42">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="43" name="instance"/>      
+      <multiplicity id="44" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="45">    
     <end type="SOURCE" refId="14"/>    
     <end type="TARGET" refId="9"/>  
   </generalization>  
-  <association id="47">    
-    <end type="SOURCE" refId="19" navigable="false">      
-      <attribute id="48" name="order"/>      
-      <multiplicity id="49" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="18" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
+  <generalization id="46">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="9"/>  
+  </generalization>  
+  <generalization id="47">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="9"/>  
+  </generalization>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     visibility="true">    
     <attributes public="true" package="true" protected="true" private="false"/>    

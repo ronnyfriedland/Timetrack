@@ -1,4 +1,4 @@
-<class-diagram version="1.0.9" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+<class-diagram version="1.0.9" icons="true" always-add-relationships="true" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true">  
   <class id="1" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.entity.Entry" 
     project="Zeiterfassung (Timetrack)" 
@@ -21,7 +21,7 @@
   <class id="3" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.entity.Project" 
     project="Zeiterfassung (Timetrack)" 
     file="/Zeiterfassung (Timetrack)/src/main/java/de/ronnyfriedland/time/entity/Project.java" binary="false">    
-    <position height="298" width="209" x="41" y="256"/>    
+    <position height="-1" width="-1" x="111" y="406"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="false"/>      
       <operations public="true" package="true" protected="true" private="false"/>    
@@ -45,19 +45,45 @@
       <operations public="true" package="true" protected="true" private="false"/>    
     </display>  
   </class>  
-  <generalization id="6">    
-    <bendpoint x="760" y="212"/>    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="4"/>  
-  </generalization>  
-  <association id="7">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="8" name="project"/>      
-      <multiplicity id="9" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="3" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
+  <annotation id="6" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.entity.validation.NotBlank" 
+    project="Zeiterfassung (Timetrack)" 
+    file="/Zeiterfassung (Timetrack)/src/main/java/de/ronnyfriedland/time/entity/validation/NotBlank.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="1092" y="280"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="false"/>      
+      <operations public="true" package="true" protected="true" private="false"/>    
+    </display>  
+  </annotation>  
+  <annotation id="7" corner="BOTTOM_RIGHT" language="java" name="de.ronnyfriedland.time.entity.validation.IsFloat" 
+    project="Zeiterfassung (Timetrack)" 
+    file="/Zeiterfassung (Timetrack)/src/main/java/de/ronnyfriedland/time/entity/validation/IsFloat.java" binary="false">    
+    <position height="-1" width="-1" x="1093" y="637"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="false"/>      
+      <operations public="true" package="true" protected="true" private="false"/>    
+    </display>  
+  </annotation>  
+  <class id="8" corner="BOTTOM_RIGHT" language="java" 
+    name="de.ronnyfriedland.time.entity.validation.ValidIsFloatValidator" project="Zeiterfassung (Timetrack)" 
+    file="/Zeiterfassung (Timetrack)/src/main/java/de/ronnyfriedland/time/entity/validation/ValidIsFloatValidator.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="1093" y="459"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="false"/>      
+      <operations public="true" package="true" protected="true" private="false"/>    
+    </display>  
+  </class>  
+  <class id="9" corner="BOTTOM_RIGHT" language="java" 
+    name="de.ronnyfriedland.time.entity.validation.ValidNotBlankValidator" project="Zeiterfassung (Timetrack)" 
+    file="/Zeiterfassung (Timetrack)/src/main/java/de/ronnyfriedland/time/entity/validation/ValidNotBlankValidator.java" 
+    binary="false">    
+    <position height="111" width="299" x="943" y="35"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="false"/>      
+      <operations public="true" package="true" protected="true" private="false"/>    
+    </display>  
+  </class>  
   <generalization id="10">    
     <bendpoint x="155" y="204"/>    
     <end type="SOURCE" refId="3"/>    
@@ -67,22 +93,26 @@
     <end type="SOURCE" refId="5"/>    
     <end type="TARGET" refId="2"/>  
   </nesting>  
-  <association id="12">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="13" name="state"/>      
-      <multiplicity id="14" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="5" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="15">    
+  <generalization id="12">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="4"/>  
+  </generalization>  
+  <association id="13">    
     <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="16" name="entries"/>      
-      <multiplicity id="17" minimum="0" maximum="2147483647"/>    
+      <attribute id="14" name="entries"/>      
+      <multiplicity id="15" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
+  <dependency id="16">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <dependency id="17">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="6"/>  
+  </dependency>  
   <association id="18">    
     <end type="SOURCE" refId="5" navigable="false">      
       <attribute id="19" name="state"/>      
@@ -92,9 +122,26 @@
     <display labels="true" multiplicity="true"/>  
   </association>  
   <generalization id="21">    
-    <end type="SOURCE" refId="1"/>    
+    <bendpoint x="760" y="212"/>    
+    <end type="SOURCE" refId="5"/>    
     <end type="TARGET" refId="4"/>  
   </generalization>  
+  <association id="22">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="23" name="project"/>      
+      <multiplicity id="24" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="25">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="26" name="state"/>      
+      <multiplicity id="27" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     visibility="true">    
     <attributes public="true" package="true" protected="true" private="false"/>    
