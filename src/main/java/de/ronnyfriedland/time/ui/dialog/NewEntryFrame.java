@@ -56,6 +56,7 @@ import de.ronnyfriedland.time.logic.EntityController;
 import de.ronnyfriedland.time.sort.SortParam;
 import de.ronnyfriedland.time.sort.SortParam.SortOrder;
 import de.ronnyfriedland.time.ui.adapter.TimeTrackKeyAdapter;
+import de.ronnyfriedland.time.ui.to.ProjectData;
 
 /**
  * @author Ronny Friedland
@@ -112,25 +113,6 @@ public class NewEntryFrame extends AbstractFrame {
             setText(data.projectName + " (" + data.entryCount + ")");
             setToolTipText(data.projectName + " (" + data.description + ")");
             return this;
-        }
-    }
-
-    private class ProjectData {
-        public final String projectName;
-        public final String description;
-        public final Integer entryCount;
-        public final Boolean enabled;
-
-        public ProjectData(final String projectName, final String description, final boolean enabled,
-                final Integer entryCount) {
-            this.projectName = projectName;
-            this.enabled = enabled;
-            this.entryCount = entryCount;
-            if (!StringUtils.isBlank(description)) {
-                this.description = description;
-            } else {
-                this.description = StringUtils.EMPTY;
-            }
         }
     }
 
