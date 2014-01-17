@@ -81,7 +81,9 @@ public enum Messages {
     /** Meldung beim Zugriff auf Datenbank */
     ERROR_DATABASE("errordatabase"),
     /** Allgemeine Fehlermeldung */
-    ERROR_COMMON("errorcommon");
+    ERROR_COMMON("errorcommon"),
+    /** Filter für Projekte */
+    PROJECT_FILER("projectFilter");
 
     private String message;
     private Object[] properties;

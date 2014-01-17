@@ -32,6 +32,7 @@ import de.ronnyfriedland.time.entity.validation.NotBlank;
 @Entity
 @NamedQueries({
         @NamedQuery(name = Entry.QUERY_FIND_FROM_TO, query = "SELECT e FROM Entry e WHERE e.date >= :from AND e.date < :to ORDER BY e.date"),
+        @NamedQuery(name = Entry.QUERY_FIND_FROM_TO_PROJECT, query = "SELECT e FROM Entry e WHERE e.project = :project AND e.date >= :from AND e.date < :to ORDER BY e.date"),
         @NamedQuery(name = Entry.QUERY_FIND_BY_STATE, query = "SELECT e FROM Entry e WHERE e.state = :state") })
 public class Entry extends AbstractEntity {
 
@@ -39,10 +40,12 @@ public class Entry extends AbstractEntity {
 
     public static final String QUERY_FIND_BY_STATE = "Entry.findByState";
     public static final String QUERY_FIND_FROM_TO = "Entry.findFromTo";
+    public static final String QUERY_FIND_FROM_TO_PROJECT = "Entry.findFromToProject";
 
     public static final String PARAM_DATE_FROM = "from";
     public static final String PARAM_DATE_TO = "to";
     public static final String PARAM_STATE = "state";
+    public static final String PARAM_PROJECT = "project";
 
     private static final long serialVersionUID = -6406081124935463200L;
 
