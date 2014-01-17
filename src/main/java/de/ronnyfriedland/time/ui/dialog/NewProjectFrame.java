@@ -1,21 +1,29 @@
 package de.ronnyfriedland.time.ui.dialog;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collection;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.persistence.PersistenceException;
+import javax.swing.DefaultListSelectionModel;
 import javax.swing.InputVerifier;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ListCellRenderer;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -27,9 +35,11 @@ import org.apache.commons.lang.StringUtils;
 
 import de.ronnyfriedland.time.config.Const;
 import de.ronnyfriedland.time.config.Messages;
+import de.ronnyfriedland.time.entity.Entry;
 import de.ronnyfriedland.time.entity.Project;
 import de.ronnyfriedland.time.logic.EntityController;
 import de.ronnyfriedland.time.ui.adapter.TimeTrackKeyAdapter;
+import de.ronnyfriedland.time.ui.to.EntryData;
 
 /**
  * @author Ronny Friedland
@@ -47,14 +57,34 @@ public class NewProjectFrame extends AbstractFrame {
     private final JCheckBox disableProject = new JCheckBox();
     private final JButton save = new JButton(Messages.SAVE.getMessage());
     private final JButton delete = new JButton(Messages.DELETE.getMessage());
+    private final JScrollPane scrollPaneEntries = new JScrollPane(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+    private final JList entries = new JList();
 
     private String uuid = null;
+
+    private class TimetrackEntryViewCellRenderer extends JLabel implements ListCellRenderer {
+        private static final long serialVersionUID = 1L;
+
+        public TimetrackEntryViewCellRenderer() {
+            setOpaque(true);
+        }
+
+        @Override
+        public Component getListCellRendererComponent(final JList list, final Object value, final int index,
+                final boolean isSelected, final boolean cellHasFocus) {
+            EntryData data = (EntryData) value;
+            setBackground(Color.WHITE);
+            setText(data.description + " (" + data.date + ")");
+            return this;
+        }
+    }
 
     /**
      * Erzeugt eine neue {@link NewProjectFrame} Instanz.
      */
     public NewProjectFrame() {
-        super(Messages.CREATE_NEW_PROJECT.getMessage(), 315, 205, false);
+        super(Messages.CREATE_NEW_PROJECT.getMessage(), 585, 300, false);
         getContentPane().setBackground(Const.COLOR_BACKGROUND);
         createUI();
     }
@@ -68,6 +98,14 @@ public class NewProjectFrame extends AbstractFrame {
         if (project.getEntries().isEmpty()) {
             delete.setEnabled(true);
         }
+        Collection<Entry> entryList = project.getEntries();
+        EntryData[] entryNameList = new EntryData[entryList.size()];
+        int i = 0;
+        for (Entry e : entryList) {
+            entryNameList[i] = new EntryData(e.getDateString(), e.getDescription());
+            i++;
+        }
+        entries.setListData(entryNameList);
     }
 
     /**
@@ -81,9 +119,9 @@ public class NewProjectFrame extends AbstractFrame {
 
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[] { 100, 202, 0 };
-        gridBagLayout.rowHeights = new int[] { 28, 28, 23, 29, 0, 0, 0 };
-        gridBagLayout.columnWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
-        gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+        gridBagLayout.rowHeights = new int[] { 28, 28, 28, 28, 0, 10, 0 };
+        gridBagLayout.columnWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
+        gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 1.0, 0.0 };
         getContentPane().setLayout(gridBagLayout);
         GridBagConstraints gbc_labelName = new GridBagConstraints();
         gbc_labelName.fill = GridBagConstraints.HORIZONTAL;
@@ -154,6 +192,37 @@ public class NewProjectFrame extends AbstractFrame {
         gbc_disableProject.gridx = 1;
         gbc_disableProject.gridy = 2;
         getContentPane().add(disableProject, gbc_disableProject);
+
+        scrollPaneEntries.setViewportView(entries);
+        entries.setCellRenderer(new TimetrackEntryViewCellRenderer());
+
+        entries.setName("entries");
+        entries.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
+        entries.addKeyListener(new TimeTrackKeyAdapter());
+        entries.setEnabled(false);
+
+        GridBagConstraints gbc_entries = new GridBagConstraints();
+        gbc_entries.gridheight = 3;
+        gbc_entries.gridwidth = 2;
+        gbc_entries.insets = new Insets(5, 25, 5, 25);
+        gbc_entries.fill = GridBagConstraints.BOTH;
+        gbc_entries.gridx = 0;
+        gbc_entries.gridy = 3;
+        getContentPane().add(scrollPaneEntries, gbc_entries);
+        delete.setHorizontalAlignment(SwingConstants.LEADING);
+        delete.setEnabled(false);
+        delete.addKeyListener(new TimeTrackKeyAdapter());
+        delete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                Project project;
+                if (null != uuid) {
+                    project = EntityController.getInstance().findById(Project.class, uuid);
+                    EntityController.getInstance().delete(project);
+                    setVisible(false);
+                }
+            }
+        });
         save.setHorizontalAlignment(SwingConstants.LEADING);
         save.addKeyListener(new TimeTrackKeyAdapter());
         save.addActionListener(new ActionListener() {
@@ -188,32 +257,18 @@ public class NewProjectFrame extends AbstractFrame {
                 }
             }
         });
-        delete.setHorizontalAlignment(SwingConstants.LEADING);
-        delete.setEnabled(false);
-        delete.addKeyListener(new TimeTrackKeyAdapter());
-        delete.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(final ActionEvent e) {
-                Project project;
-                if (null != uuid) {
-                    project = EntityController.getInstance().findById(Project.class, uuid);
-                    EntityController.getInstance().delete(project);
-                    setVisible(false);
-                }
-            }
-        });
         GridBagConstraints gbc_save = new GridBagConstraints();
-        gbc_save.insets = new Insets(10, 25, 5, 25);
+        gbc_save.insets = new Insets(10, 25, 10, 25);
         gbc_save.anchor = GridBagConstraints.EAST;
         gbc_save.gridx = 0;
-        gbc_save.gridy = 3;
+        gbc_save.gridy = 6;
         getContentPane().add(save, gbc_save);
 
         GridBagConstraints gbc_delete = new GridBagConstraints();
         gbc_delete.anchor = GridBagConstraints.EAST;
-        gbc_delete.insets = new Insets(10, 10, 5, 25);
+        gbc_delete.insets = new Insets(10, 10, 10, 25);
         gbc_delete.gridx = 1;
-        gbc_delete.gridy = 3;
+        gbc_delete.gridy = 6;
         getContentPane().add(delete, gbc_delete);
     }
 
