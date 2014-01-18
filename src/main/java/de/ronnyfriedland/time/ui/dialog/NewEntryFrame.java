@@ -306,10 +306,8 @@ public class NewEntryFrame extends AbstractFrame {
             @Override
             public void mouseClicked(final MouseEvent e) {
                 if ((e.getClickCount() == 2) && (null != projects.getSelectedValue())) {
-                    Map<String, Object> parameters = new HashMap<String, Object>();
-                    parameters.put(Project.PARAM_NAME, ((ProjectData) projects.getSelectedValue()).projectName);
-                    Project project = EntityController.getInstance().findSingleResultByParameter(Project.class,
-                            Project.QUERY_FINDBYNAME, parameters);
+                    String projectUuid = ((ProjectData) projects.getSelectedValue()).projectUuid;
+                    Project project = EntityController.getInstance().findById(Project.class, projectUuid);
                     new NewProjectFrame(project).setVisible(true);
                 }
             }
@@ -573,8 +571,8 @@ public class NewEntryFrame extends AbstractFrame {
         ProjectData[] projectNameList = new ProjectData[projectList.size()];
         int i = 0;
         for (Project project : projectList) {
-            projectNameList[i] = new ProjectData(project.getName(), project.getDescription(), project.getEnabled(),
-                    project.getEntries().size());
+            projectNameList[i] = new ProjectData(project.getUuid(), project.getName(), project.getDescription(),
+                    project.getEnabled(), project.getEntries().size());
             i++;
         }
         projects.setListData(projectNameList);

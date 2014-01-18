@@ -10,7 +10,7 @@ import java.awt.Color;
 public class Const {
 
     /** Hintergrundfarbe */
-    public static final Color COLOR_BACKGROUND = new Color(248, 248, 255);
+    public static final Color COLOR_BACKGROUND = new Color(250, 250, 250);
 
     /** Farbe zum Markieren von Fehlern */
     public static final Color COLOR_ERROR = Color.RED;

@@ -2,6 +2,7 @@ package de.ronnyfriedland.time.ui.dialog;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -74,8 +75,9 @@ public class NewProjectFrame extends AbstractFrame {
         public Component getListCellRendererComponent(final JList list, final Object value, final int index,
                 final boolean isSelected, final boolean cellHasFocus) {
             EntryData data = (EntryData) value;
+            setFont(new Font(getFont().getName(), Font.PLAIN, getFont().getSize()));
             setBackground(Color.WHITE);
-            setText(data.description + " (" + data.date + ")");
+            setText(data.entryDescription + " (" + data.entryDate + ")");
             return this;
         }
     }
@@ -102,7 +104,7 @@ public class NewProjectFrame extends AbstractFrame {
         EntryData[] entryNameList = new EntryData[entryList.size()];
         int i = 0;
         for (Entry e : entryList) {
-            entryNameList[i] = new EntryData(e.getDateString(), e.getDescription());
+            entryNameList[i] = new EntryData(e.getUuid(), e.getDescription(), e.getDateString());
             i++;
         }
         entries.setListData(entryNameList);
