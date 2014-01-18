@@ -3,6 +3,7 @@ package de.ronnyfriedland.time.ui.dialog;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -176,6 +177,8 @@ public class ExportFrame extends AbstractFrame {
         filterPane.setBackground(Const.COLOR_BACKGROUND);
         getContentPane().add(filterPane, BorderLayout.NORTH);
         filterPane.setBounds(0, 0, 600, 200);
+        projects.setBackground(Const.COLOR_BACKGROUND);
+        projects.setFont(new Font(projects.getFont().getName(), Font.PLAIN, projects.getFont().getSize()));
         days.setBackground(Const.COLOR_BACKGROUND);
         days.setValue(7);
         days.addKeyListener(new TimeTrackKeyAdapter());
