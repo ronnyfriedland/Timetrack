@@ -54,7 +54,7 @@ public final class PluginController {
         }
         // configure classpath entries
         Set<URL> urls = new HashSet<URL>();
-        urls.addAll(ClasspathHelper.forManifest());
+        urls.addAll(ClasspathHelper.forJavaClassPath());
         try {
             Properties availablePlugins = new Properties();
             availablePlugins.load(Thread.currentThread().getContextClassLoader()
