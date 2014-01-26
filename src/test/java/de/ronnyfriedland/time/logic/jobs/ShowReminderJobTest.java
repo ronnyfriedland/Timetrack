@@ -26,7 +26,7 @@ public class ShowReminderJobTest {
         }
 
         @Override
-        public void showPopup(boolean show) {
+        public void showPopup(boolean show, String text) {
             this.show = true;
         }
     }

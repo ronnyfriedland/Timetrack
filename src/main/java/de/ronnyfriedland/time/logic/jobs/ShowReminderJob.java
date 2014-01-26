@@ -1,12 +1,9 @@
 package de.ronnyfriedland.time.logic.jobs;
 
-import java.awt.TrayIcon.MessageType;
 import java.util.Collection;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.swing.JOptionPane;
 
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.JobExecutionContext;
@@ -58,24 +55,10 @@ public class ShowReminderJob extends AbstractJob {
             if (LOG.isLoggable(Level.INFO)) {
                 LOG.info("Show popup ... ");
             }
-            showPopup(showPopup);
+            showPopup(showPopup, Messages.MESSAGE_POPUP.getMessage());
         }
         if (LOG.isLoggable(Level.FINE)) {
             LOG.fine(String.format("Job %s executed successfully.", context.getJobDetail().getKey()));
-        }
-    }
-
-    /**
-     * Darstellung des Popups
-     * 
-     * @param showPopup
-     *            Flag, ob Hinweis als Popup dargestellt werden soll.
-     */
-    protected void showPopup(final boolean showPopup) {
-        if (showPopup || (null == getTrayIcon())) {
-            JOptionPane.showMessageDialog(null, Messages.MESSAGE_POPUP.getMessage());
-        } else {
-            getTrayIcon().displayMessage(null, Messages.MESSAGE_POPUP.getMessage(), MessageType.INFO);
         }
     }
 }

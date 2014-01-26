@@ -1,6 +1,5 @@
 package de.ronnyfriedland.time.logic.jobs;
 
-import java.awt.TrayIcon.MessageType;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
@@ -10,8 +9,6 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.JOptionPane;
-
 import org.apache.commons.lang.StringUtils;
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.JobExecutionContext;
@@ -19,6 +16,7 @@ import org.quartz.JobExecutionException;
 
 import de.ronnyfriedland.time.config.Configurator;
 import de.ronnyfriedland.time.config.Configurator.ConfiguratorKeys;
+import de.ronnyfriedland.time.config.Messages;
 import de.ronnyfriedland.time.entity.Entry;
 import de.ronnyfriedland.time.entity.EntryState;
 import de.ronnyfriedland.time.entity.EntryState.State;
@@ -81,8 +79,8 @@ public class CheckEntryWorkflowStateJob extends AbstractJob {
             if (LOG.isLoggable(Level.INFO)) {
                 LOG.info("Show warn popup ... ");
             }
-            String messageText = "Die folgenden Einträge laufen seit einiger Zeit - bitte prüfen:\n"
-                    + StringUtils.join(warn, "\n") + "\n";
+            String messageText = String.format("%1$s\n%2$s\n", Messages.WORKFLOW_WARN.getMessage(),
+                    StringUtils.join(warn, "\n"));
             showPopup(showPopup, messageText);
         }
         // show stopped entries
@@ -90,24 +88,9 @@ public class CheckEntryWorkflowStateJob extends AbstractJob {
             if (LOG.isLoggable(Level.INFO)) {
                 LOG.info("Show stop popup ... ");
             }
-            String messageText = "Die folgenden Einträge wurden gestoppt:\n" + StringUtils.join(stop, "\n") + "\n";
+            String messageText = String.format("%1$s\n%2$s\n", Messages.WORKFLOW_FINISH.getMessage(),
+                    StringUtils.join(stop, "\n"));
             showPopup(showPopup, messageText);
-        }
-    }
-
-    /**
-     * Darstellung des Popups
-     * 
-     * @param showPopup
-     *            Flag, ob Hinweis als Popup dargestellt werden soll.
-     * @param messageText
-     *            Der darzustellende Text
-     */
-    protected void showPopup(final boolean showPopup, final String messageText) {
-        if (showPopup || (null == getTrayIcon())) {
-            JOptionPane.showMessageDialog(null, messageText);
-        } else {
-            getTrayIcon().displayMessage(null, messageText, MessageType.INFO);
         }
     }
 

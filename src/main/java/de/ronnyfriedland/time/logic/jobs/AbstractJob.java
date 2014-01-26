@@ -1,6 +1,9 @@
 package de.ronnyfriedland.time.logic.jobs;
 
 import java.awt.TrayIcon;
+import java.awt.TrayIcon.MessageType;
+
+import javax.swing.JOptionPane;
 
 import org.quartz.Job;
 
@@ -32,6 +35,22 @@ public abstract class AbstractJob implements Job {
      */
     public void setTrayIcon(TrayIcon trayIcon) {
         this.trayIcon = trayIcon;
+    }
+
+    /**
+     * Darstellung des Popups
+     * 
+     * @param showPopup
+     *            Flag, ob Hinweis als Popup dargestellt werden soll.
+     * @param messageText
+     *            Der darzustellende Text
+     */
+    protected void showPopup(final boolean showPopup, final String messageText) {
+        if (showPopup || (null == getTrayIcon())) {
+            JOptionPane.showMessageDialog(null, messageText);
+        } else {
+            getTrayIcon().displayMessage(null, messageText, MessageType.INFO);
+        }
     }
 
 }

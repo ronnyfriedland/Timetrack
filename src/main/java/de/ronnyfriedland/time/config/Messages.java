@@ -83,7 +83,11 @@ public enum Messages {
     /** Allgemeine Fehlermeldung */
     ERROR_COMMON("errorcommon"),
     /** Filter für Projekte */
-    PROJECT_FILER("projectFilter");
+    PROJECT_FILER("projectFilter"),
+    /** Workflow - Warnung bei langer Laufzeit */
+    WORKFLOW_WARN("workflowwarn"),
+    /** Workflow - Laufzeit beendet */
+    WORKFLOW_FINISH("workflowfinish");
 
     private String message;
     private Object[] properties;
