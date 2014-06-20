@@ -1,9 +1,8 @@
 package de.ronnyfriedland.time.ui.dialog;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -20,22 +19,9 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
-import javax.swing.GroupLayout;
+import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JSlider;
-import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.ListSelectionModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableColumnModel;
@@ -45,6 +31,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 
+import de.ronnyfriedland.time.ui.util.TableUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -86,6 +73,7 @@ public class ExportFrame extends AbstractFrame {
     private final JLabel summary = new JLabel();
     private final JLabel labelProjects = new JLabel(Messages.PROJECT_FILER.getMessage());
     private final JComboBox projects = new JComboBox();
+    private final JPopupMenu popup = new JPopupMenu();
 
     private final DefaultTableModel tableModel = new DefaultTableModel(TABLE_HEADERS, 0) {
         private static final long serialVersionUID = 1L;
@@ -168,6 +156,19 @@ public class ExportFrame extends AbstractFrame {
     @Override
     protected void createUI() {
         getContentPane().addKeyListener(new TimeTrackKeyAdapter());
+
+        JMenuItem itemCopy = new JMenuItem(Messages.COPY.getMessage());
+        itemCopy.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selection = TableUtils.getSelectedValues(table);
+                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                if (null != clipboard) {
+                    clipboard.setContents(new StringSelection(selection), null);
+                }
+            }
+        });
+        popup.add(itemCopy);
 
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.DAY_OF_WEEK, 2);
@@ -446,6 +447,8 @@ public class ExportFrame extends AbstractFrame {
                     String uuid = (String) table.getValueAt(selectedRow, 0);
                     Entry entry = EntityController.getInstance().findById(Entry.class, uuid);
                     new NewEntryFrame(entry).setVisible(true);
+                } else if (MouseEvent.BUTTON3 == e.getButton()) {
+                    popup.show(e.getComponent(), e.getX(), e.getY());
                 }
             }
         });

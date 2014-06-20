@@ -28,6 +28,8 @@ public enum Messages {
     NEW_ENTRY("newentry"),
     /** neuer Eintrag */
     NEW_EXPORT("newexport"),
+    /** kopieren */
+    COPY("copy"),
     /** heute erstelle Einträge */
     LAST_ENTRIES("lastentries"),
     /** Daten importieren */

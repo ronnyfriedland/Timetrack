@@ -12,6 +12,7 @@ import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 
 import de.ronnyfriedland.time.ui.dialog.ShowHelpFrame;
+import de.ronnyfriedland.time.ui.util.TableUtils;
 
 /**
  * {@link KeyAdapter} Implementierung für anwendungsspezifische Shortcuts.
@@ -38,7 +39,11 @@ public class TimeTrackKeyAdapter extends KeyAdapter {
             break;
         case KeyEvent.VK_C:
             if (e.isControlDown() && (e.getComponent() instanceof JTable)) {
-                copySelectedValue((JTable) e.getComponent());
+                String selection = TableUtils.getSelectedValues((JTable) e.getComponent());
+                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                if (null != clipboard) {
+                    clipboard.setContents(new StringSelection(selection), null);
+                }
             }
             break;
         case KeyEvent.VK_H:
@@ -52,28 +57,4 @@ public class TimeTrackKeyAdapter extends KeyAdapter {
             break;
         }
     }
-
-    /**
-     * Kopiert die ausgewählten Daten in die Zwischenablage
-     */
-    private void copySelectedValue(final JTable table) {
-        StringBuilder sbuild = new StringBuilder();
-        if (0 < table.getSelectedRowCount()) {
-            int[] selectedRows = table.getSelectedRows();
-            int[] selectedColumns = table.getSelectedColumns();
-
-            for (int row : selectedRows) {
-                for (int col : selectedColumns) {
-                    sbuild.append(table.getValueAt(row, col)).append(" ");
-                }
-                sbuild.append("\n");
-            }
-
-            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-            if (null != clipboard) {
-                clipboard.setContents(new StringSelection(sbuild.toString()), null);
-            }
-        }
-    }
-
 }
