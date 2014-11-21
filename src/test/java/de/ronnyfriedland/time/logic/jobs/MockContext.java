@@ -9,6 +9,7 @@ import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
 import org.quartz.Scheduler;
 import org.quartz.Trigger;
+import org.quartz.TriggerKey;
 
 class MockContext implements JobExecutionContext {
 
@@ -79,7 +80,7 @@ class MockContext implements JobExecutionContext {
         return previousFireTime;
     }
 
-    public void setPreviousFireTime(Date date) {
+    public void setPreviousFireTime(final Date date) {
         previousFireTime = date;
     }
 
@@ -102,7 +103,7 @@ class MockContext implements JobExecutionContext {
     }
 
     @Override
-    public void setResult(Object result) {
+    public void setResult(final Object result) {
         // TODO Auto-generated method stub
 
     }
@@ -114,13 +115,19 @@ class MockContext implements JobExecutionContext {
     }
 
     @Override
-    public void put(Object key, Object value) {
+    public void put(final Object key, final Object value) {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    public Object get(Object key) {
+    public Object get(final Object key) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public TriggerKey getRecoveringTriggerKey() throws IllegalStateException {
         // TODO Auto-generated method stub
         return null;
     }
