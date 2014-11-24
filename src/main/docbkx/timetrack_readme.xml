@@ -1,213 +1,216 @@
 <article lang="de">
-	<articleinfo>
-		<title>Dokumentation für ${project.name} Version ${project.version}
-			(Builddate: ${build.timestamp})
-		</title>
-		<author>
-			<firstname>Ronny</firstname>
-			<surname>Friedland</surname>
-		</author>
-		<copyright>
-			<year>2014</year>
-			<holder>Open Source Software</holder>
-		</copyright>
-		<abstract>
-			<para>Zeiterfassungssoftware für Linux/Mac/Windows.</para>
-		</abstract>
-	</articleinfo>
-	<sect1>
-		<title>Funktionen</title>
-		<sect2>
-			<title>Projekte erstellen</title>
-			<para>Alle Einträge müssen exakt einem Projekt zugeordnet werden.
-				Diese müssen vor dem Anlegen der Einträge existieren. Optional kann
-				ein Kommentar angegeben werden.
-			</para>
-			<para>Projekte können deaktiviert werden. Sie sind dann standardmäßig
-				nicht mehr sichtbar, können aber explizit dargestellt werden.
-			</para>
-			<itemizedlist>
-				<listitem>
-					<para>
-						Einschränkungen
-						<itemizedlist>
-							<listitem>
-								<para>Projektnamen müssen eindeutig sein</para>
-							</listitem>
-							<listitem>
-								<para>Die Beschreibung ist optional</para>
-							</listitem>
-						</itemizedlist>
-					</para>
-				</listitem>
-			</itemizedlist>
-		</sect2>
-		<sect2>
-			<title>Projekte bearbeiten / löschen</title>
-			<para>Um ein Projekt zu bearbeiten oder zu löschen, muss es per
-				Doppelklick in der Eingabemaske für neue Einträge ausgewählt werden.
-			</para>
-			<itemizedlist>
-				<listitem>
-					<para>
-						Einschränkungen
-						<itemizedlist>
-							<listitem>
-								<para>Projekte können nur gelöscht werden, sofern es keine
-									zugeordneten Einträge gibt. Ansonsten ist die Funktion
-									deaktivert. Weiterhin können Projekte deaktiviert werden. Die
-									Zuordnung der Einträge zu Projekten bleibt dabei erhalten.
-								</para>
-							</listitem>
-						</itemizedlist>
-					</para>
-				</listitem>
-			</itemizedlist>
-		</sect2>
-		<sect2>
-			<title>Einträge erstellen</title>
-			<para>Für jeden Eintrag muss eine Beschreibung und die Dauer
-				angegeben werden. Zusätzlich muss dem Eintrag ein Projekt zugeordnet
-				werden.
-			</para>
-			<para>Die Dauer kann beim Anlegen des Eintrags auf einen festen Wert
-				festgelegt werden. Es
-				ist aber auch möglich, über die Startfunktion
-				einen Workflow zu
-				initialisieren. Dabei wird die Zeit bis zum Beenden
-				des Workflows
-				gemessen. Die maximale Laufzeit beträgt
-				${timetrack.workflow.stop}
-				Sekunden.
-			</para>
-			<para>Die letzten 10 erstellten Einträge werden unter dem Menüpunkt
-				"Zuletzt erstellt" angezeigt. Diese Einträge können darüber direkt
-				wieder geöffnet und ggf. bearbeitet werden.
-			</para>
-			<itemizedlist>
-				<listitem>
-					<para>
-						Einschränkungen
-						<itemizedlist>
-							<listitem>
-								<para>Jedem Eintrag muss ein Projekt zugeordnet werden.</para>
-							</listitem>
-							<listitem>
-								<para>Die Dauer kann Kommawerte enthalten.</para>
-							</listitem>
-						</itemizedlist>
-					</para>
-				</listitem>
-			</itemizedlist>
-		</sect2>
-		<sect2>
-			<title>Einträge bearbeiten</title>
-			<para>Es werden die letzten 10 Einträge dargestellt. Diese können
-				durch Anwählen bearbeitet werden. Ältere Einträge können nicht mehr
-				direkt bearbeitet werden.
-				Um ältere Einträge zu bearbeiten bzw. zu
-				löschen, können diese über den Datenexport gefiltert werden. In der
-				Ergebnisliste können die Einträge per Mausklick selektiert werden.
-				Es öffnet sich die Eingabemaske mit dem geladenen Eintrag.
-			</para>
-		</sect2>
-		<sect2>
-			<title>Einträge löschen</title>
-			<para>Die letzten 10 Einträge können direkt über das Kontextmenü
-				ausgewählt und gelöscht werden. Ältere Einträge können über den
-				Datenexport gefiltert und entweder per Doppelklick einzeln
-				ausgewählt oder durch den Export gelöscht werden.
-			</para>
-		</sect2>
-		<sect2>
-			<title>Daten exportieren</title>
-			<para>Alle gespeicherten Einträge können als Excel Arbeitsmappe
-				exportiert werden. Das Startdatum und die Anzahl der Tage kann für
-				den Export ausgewählt werden.
-			</para>
-			<para>Die zu exportierenden Daten können in einer Vorschau (Tabelle)
-				dargestellt werden. Einzelne Einträge können aus der Tabelle in die
-				Zwischenablage über den Shortcut CTRL + C kopiert werden.
-			</para>
-		</sect2>
-		<sect2>
-			<title>Daten importieren</title>
-			<para>Sofern eine vorher exportierte Datei vorhanden ist, können die
-				Daten in die Anwendung importiert werden. Dazu muss eine gültige
-				Datei mit dem Namen "${timetrack.export.file}" in den Ordner
-				"${timetrack.path}" abgelegt werden.
-			</para>
-			<para>Beim Import werden alle Tabellenblätter außer der Übersicht
-				berücksichtigt.
-			</para>
-			<para>Sofern keine Datei zum Import existiert, ist der Menüpunkt
-				nicht auswählbar.
-			</para>
-		</sect2>
-		<sect2>
-			<title>Datenmigration</title>
-			<para>Ab Version 1.2 können bestehende Daten migriert werden. Die
-				Migration erfolgt über mitgelieferte Skripte (migration.sh bzw.
-				migration.bat). Vor dem ersten Start der Anwendung nach einem Update
-				sollte das Skript zur Datenmigration ausgeführt werden.
+    <articleinfo>
+        <title>Dokumentation für ${project.name} Version ${project.version}
+            (Builddate: ${build.timestamp})
+        </title>
+        <author>
+            <firstname>Ronny</firstname>
+            <surname>Friedland</surname>
+        </author>
+        <copyright>
+            <year>2014</year>
+            <holder>Open Source Software</holder>
+        </copyright>
+        <abstract>
+            <para>Zeiterfassungssoftware für Linux/Mac/Windows.</para>
+        </abstract>
+    </articleinfo>
+    <sect1>
+        <title>Funktionen</title>
+        <sect2>
+            <title>Projekte erstellen</title>
+            <para>Alle Einträge müssen exakt einem Projekt zugeordnet werden.
+                Diese müssen vor dem Anlegen der Einträge existieren. Optional kann
+                ein Kommentar angegeben werden.
+            </para>
+            <para>Projekte können deaktiviert werden. Sie sind dann standardmäßig
+                nicht mehr sichtbar, können aber explizit dargestellt werden.
+            </para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        Einschränkungen
+                        <itemizedlist>
+                            <listitem>
+                                <para>Projektnamen müssen eindeutig sein</para>
+                            </listitem>
+                            <listitem>
+                                <para>Die Beschreibung ist optional</para>
+                            </listitem>
+                        </itemizedlist>
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </sect2>
+        <sect2>
+            <title>Projekte bearbeiten / löschen</title>
+            <para>Um ein Projekt zu bearbeiten oder zu löschen, muss es per
+                Doppelklick in der Eingabemaske für neue Einträge ausgewählt werden.
+            </para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        Einschränkungen
+                        <itemizedlist>
+                            <listitem>
+                                <para>Projekte können nur gelöscht werden, sofern es keine
+                                    zugeordneten Einträge gibt. Ansonsten ist die Funktion
+                                    deaktivert. Weiterhin können Projekte deaktiviert werden. Die
+                                    Zuordnung der Einträge zu Projekten bleibt dabei erhalten.
+                                </para>
+                            </listitem>
+                        </itemizedlist>
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </sect2>
+        <sect2>
+            <title>Einträge erstellen</title>
+            <para>Für jeden Eintrag muss eine Beschreibung und die Dauer
+                angegeben werden. Zusätzlich muss dem Eintrag ein Projekt zugeordnet
+                werden.
+            </para>
+            <para>Die Dauer kann beim Anlegen des Eintrags auf einen festen Wert
+                festgelegt werden. Es
+                ist aber auch möglich, über die Startfunktion
+                einen Workflow zu
+                initialisieren. Dabei wird die Zeit bis zum Beenden
+                des Workflows
+                gemessen. Die maximale Laufzeit beträgt
+                ${timetrack.workflow.stop}
+                Sekunden.
+            </para>
+            <para>Die letzten 10 erstellten Einträge werden unter dem Menüpunkt
+                "Zuletzt erstellt" angezeigt. Diese Einträge können darüber direkt
+                wieder geöffnet und ggf. bearbeitet werden.
+            </para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        Einschränkungen
+                        <itemizedlist>
+                            <listitem>
+                                <para>Jedem Eintrag muss ein Projekt zugeordnet werden.</para>
+                            </listitem>
+                            <listitem>
+                                <para>Die Dauer kann Kommawerte enthalten.</para>
+                            </listitem>
+                        </itemizedlist>
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </sect2>
+        <sect2>
+            <title>Einträge bearbeiten</title>
+            <para>Es werden die letzten 10 Einträge dargestellt. Diese können
+                durch Anwählen bearbeitet werden. Ältere Einträge können nicht mehr
+                direkt bearbeitet werden.
+                Um ältere Einträge zu bearbeiten bzw. zu
+                löschen, können diese über den Datenexport gefiltert werden. In der
+                Ergebnisliste können die Einträge per Mausklick selektiert werden.
+                Es öffnet sich die Eingabemaske mit dem geladenen Eintrag.
+            </para>
+        </sect2>
+        <sect2>
+            <title>Einträge löschen</title>
+            <para>Die letzten 10 Einträge können direkt über das Kontextmenü
+                ausgewählt und gelöscht werden. Ältere Einträge können über den
+                Datenexport gefiltert und entweder per Doppelklick einzeln
+                ausgewählt oder durch den Export gelöscht werden.
+            </para>
+        </sect2>
+        <sect2>
+            <title>Daten exportieren</title>
+            <para>Alle gespeicherten Einträge können als Excel Arbeitsmappe
+                exportiert werden. Das Startdatum und die Anzahl der Tage kann für
+                den Export ausgewählt werden.
+            </para>
+            <para>Die zu exportierenden Daten können in einer Vorschau (Tabelle)
+                dargestellt werden. Einzelne Einträge können aus der Tabelle in die
+                Zwischenablage über den Shortcut <code>CTRL + C</code> kopiert werden.
+            </para>
+        </sect2>
+        <sect2>
+            <title>Daten importieren</title>
+            <para>Sofern eine vorher exportierte Datei vorhanden ist, können die
+                Daten in die Anwendung importiert werden. Dazu muss eine gültige
+                Datei mit dem Namen "${timetrack.export.file}" in den Ordner
+                "${timetrack.path}" abgelegt werden.
+            </para>
+            <para>Beim Import werden alle Tabellenblätter außer der Übersicht
+                berücksichtigt.
+            </para>
+            <para>Sofern keine Datei zum Import existiert, ist der Menüpunkt
+                nicht auswählbar.
+            </para>
+        </sect2>
+        <sect2>
+            <title>Datenmigration</title>
+            <para>Ab Version 1.2 können bestehende Daten migriert werden. Die
+                Migration erfolgt über mitgelieferte Skripte (migration.sh bzw.
+                migration.bat). Vor dem ersten Start der Anwendung nach einem Update
+                sollte das Skript zur Datenmigration ausgeführt werden.
 
-				Für ein Update muss das Zip-Archiv in einen neuen Ordner entpackt
-				werden. Danach muss zur Übernahme der Daten das Verzeichnis
-				${timetrack.path} in den neuen Anwendungsordner kopiert werden.
+                Für ein Update muss das Zip-Archiv in einen neuen Ordner entpackt
+                werden. Danach muss zur Übernahme der Daten das Verzeichnis
+                ${timetrack.path} in den neuen Anwendungsordner kopiert werden.
 
-				Das Management der Datenbankänderungen erfolgt über
-				Liquibase.
-			</para>
-		</sect2>
-		<sect2>
-			<title>Monitoring</title>
-			<para>
-				Es besteht die Möglichkeit, die Konfiguration der Anwendung
-				über JMX
-				auszulesen. Dafür werden die folgenden MBeans bereitgestellt:
-				<itemizedlist>
-					<listitem>
-						<para>de.ronnyfriedland.time:name=Config</para>
-					</listitem>
-					<listitem>
-						<para>de.ronnyfriedland.time:name=Data</para>
-					</listitem>
-				</itemizedlist>
-			</para>
-		</sect2>
-		<sect2>
-			<title>eigene Plugins</title>
-			<para>Die Anwendung kann über Plugins erweitert werden. Das
-				Plugin-Klasse
-				muss mit
-				"de.ronnyfriedland.time.logic.plugin.Plugin"
-				annotiert
-				werden
-				und die Programmlogik zum Starten im Konstruktor
-				enthalten.
-				Sofern
-				sich das Plugin im Classpath (Ordner "plugins") der
-				Anwendung
-				befindet und der Dateiname des Pluginartefakts in die
-				Datei
-				"plugin.properties" enthalten ist, wird dieses automatisch
-				beim
-				Ausführen der Anwendung mit gestartet.
-			</para>
-			<para>
-				Beispielkonfiguration für ein Plugin mit dem Dateinamen
-				"foo.jar"
-				<itemizedlist>
-					<listitem>
-						<para>plugins/plugin.properties anpassen und "foo.jar" dem
-							Property "files" hinzufügen.
-						</para>
-					</listitem>
-					<listitem>
-						<para>Datei "foo.jar" in den Ordner "plugins" kopieren.</para>
-					</listitem>
-				</itemizedlist>
-			</para>
-		</sect2>
-	</sect1>
+                Das Management der Datenbankänderungen erfolgt über
+                Liquibase.
+                
+                Vor jeder Migration wird der aktuelle Datenbestand gesichert. Dieser befindet
+                sich im Ordner "backup" unterhalb von ${timetrack.path}.
+            </para>
+        </sect2>
+        <sect2>
+            <title>Monitoring</title>
+            <para>
+                Es besteht die Möglichkeit, die Konfiguration der Anwendung
+                über JMX
+                auszulesen. Dafür werden die folgenden MBeans bereitgestellt:
+                <itemizedlist>
+                    <listitem>
+                        <para><code>de.ronnyfriedland.time:name=Config</code> zur Abfrage der Konfiguration</para>
+                    </listitem>
+                    <listitem>
+                        <para><code>de.ronnyfriedland.time:name=Data</code> zur Abfrage der Datenstatistik</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+        </sect2>
+        <sect2>
+            <title>eigene Plugins</title>
+            <para>Die Anwendung kann über Plugins erweitert werden. Das
+                Plugin-Klasse
+                muss mit
+                "de.ronnyfriedland.time.logic.plugin.Plugin"
+                annotiert
+                werden
+                und die Programmlogik zum Starten im Konstruktor
+                enthalten.
+                Sofern
+                sich das Plugin im Classpath (Ordner "plugins") der
+                Anwendung
+                befindet und der Dateiname des Pluginartefakts in die
+                Datei
+                "plugin.properties" enthalten ist, wird dieses automatisch
+                beim
+                Ausführen der Anwendung mit gestartet.
+            </para>
+            <para>
+                Beispielkonfiguration für ein Plugin mit dem Dateinamen
+                "foo.jar"
+                <itemizedlist>
+                    <listitem>
+                        <para>plugins/plugin.properties anpassen und "foo.jar" dem
+                            Property "files" hinzufügen.
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>Datei "foo.jar" in den Ordner "plugins" kopieren.</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+        </sect2>
+    </sect1>
 </article>
