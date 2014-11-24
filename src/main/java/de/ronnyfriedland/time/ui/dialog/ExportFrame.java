@@ -1,6 +1,10 @@
 package de.ronnyfriedland.time.ui.dialog;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
@@ -19,9 +23,24 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
+import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JSlider;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableColumnModel;
@@ -31,7 +50,6 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 
-import de.ronnyfriedland.time.ui.util.TableUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -48,6 +66,7 @@ import de.ronnyfriedland.time.logic.ExportController;
 import de.ronnyfriedland.time.sort.SortParam;
 import de.ronnyfriedland.time.sort.SortParam.SortOrder;
 import de.ronnyfriedland.time.ui.adapter.TimeTrackKeyAdapter;
+import de.ronnyfriedland.time.ui.util.TableUtils;
 
 /**
  * @author Ronny Friedland
@@ -91,7 +110,7 @@ public class ExportFrame extends AbstractFrame {
             if ((row % 2) == 0) {
                 component.setBackground(Color.WHITE);
             } else {
-                component.setBackground(Color.LIGHT_GRAY);
+                component.setBackground(new Color(225, 225, 225));
             }
             if (isSelected) {
                 component.setBackground(Const.COLOR_SELECTION);
@@ -120,7 +139,7 @@ public class ExportFrame extends AbstractFrame {
                 col.setMinWidth(0);
                 col.setMaxWidth(0);
             }
-            if (1 == columnIndex || 4 == columnIndex) { // date and duration
+            if ((1 == columnIndex) || (4 == columnIndex)) { // date and duration
                 col.setWidth(200);
                 col.setMinWidth(200);
                 col.setMaxWidth(200);
@@ -160,7 +179,7 @@ public class ExportFrame extends AbstractFrame {
         JMenuItem itemCopy = new JMenuItem(Messages.COPY.getMessage());
         itemCopy.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
                 String selection = TableUtils.getSelectedValues(table);
                 Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
                 if (null != clipboard) {
@@ -270,8 +289,11 @@ public class ExportFrame extends AbstractFrame {
 
                         setVisible(false);
 
-                        JOptionPane.showMessageDialog(null, Messages.EXPORT_SUCCESSFUL.getMessage(Configurator.CONFIG
-                                .getString(ConfiguratorKeys.PATH.getKey())));
+                        JOptionPane.showMessageDialog(
+                                null,
+                                Messages.EXPORT_SUCCESSFUL.getMessage(System.getProperty("user.dir")
+                                        + System.getProperty("file.separator")
+                                        + Configurator.CONFIG.getString(ConfiguratorKeys.PATH.getKey())));
                     }
                 } catch (IOException ex) {
                     LOG.log(Level.SEVERE, "Error exporting data", ex);
@@ -535,7 +557,7 @@ public class ExportFrame extends AbstractFrame {
      * 
      * @return Liste der Einträge
      */
-    private Collection<Entry> getFilteredData(String query, Map<String, Object> params) {
+    private Collection<Entry> getFilteredData(final String query, final Map<String, Object> params) {
         return EntityController.getInstance().findResultlistByParameter(Entry.class, query, params);
     }
 }
