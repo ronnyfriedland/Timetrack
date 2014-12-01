@@ -128,6 +128,7 @@ public final class TimeTrackUI {
             final MenuItem newProject = new MenuItem(Messages.NEW_PROJECT.getMessage());
             final MenuItem newItem = new MenuItem(Messages.NEW_ENTRY.getMessage());
             final Menu lastItems = new Menu(Messages.LAST_ENTRIES.getMessage());
+            final Menu protocolItems = new Menu(Messages.PROTOCOL_ENTRIES.getMessage());
             final MenuItem exportItem = new MenuItem(Messages.EXPORT_DATA.getMessage());
             final MenuItem importItem = new MenuItem(Messages.IMPORT_DATA.getMessage());
             final MenuItem helpItem = new MenuItem(Messages.HELP.getMessage());
@@ -138,6 +139,7 @@ public final class TimeTrackUI {
             popup.add(newItem);
             popup.addSeparator();
             popup.add(lastItems);
+            popup.add(protocolItems);
             popup.addSeparator();
             popup.add(exportItem);
             popup.add(importItem);
@@ -177,6 +179,16 @@ public final class TimeTrackUI {
                         lastItems.add(menuItem);
                     }
 
+                    Collection<Protocol> logEntries = EntityController.getInstance().findAll(Protocol.class,
+                            new SortParam("date", SortOrder.DESC), 20, true);
+                    protocolItems.removeAll();
+
+                    for (final Protocol entry : logEntries) {
+                        MenuItem menuItem = new MenuItem(String.format("%1$s: %3$s",
+                                entry.getDateString(), entry.getDescription()));
+                        protocolItems.add(menuItem);
+                    }
+
                 }
 
                 @Override
@@ -192,9 +204,9 @@ public final class TimeTrackUI {
                 }
             });
 
-            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-
             tray.add(trayIcon);
+
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
 
             newProject.addActionListener(new ActionListener() {
                 @Override

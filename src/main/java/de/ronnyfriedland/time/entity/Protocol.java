@@ -1,9 +1,13 @@
 package de.ronnyfriedland.time.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 
 import de.ronnyfriedland.time.entity.validation.NotBlank;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Entität zum Speichern der Projekte.
@@ -14,9 +18,18 @@ import de.ronnyfriedland.time.entity.validation.NotBlank;
 public class Protocol extends AbstractEntity {
     private static final long serialVersionUID = 7364095843976457542L;
 
+    public static final String DATESTRINGFORMAT = "dd.MM.yyyy";
+
     public enum ProtocolValue {
         APP_STARTED, APP_STOPPED, ENTRY_CREATED, ENTRY_UPDATED, ENTRY_DELETED, ENTRY_STARTED, ENTRY_STOPPED, PROJECT_CREATED, PROJECT_UPDATED, PROJECT_DELETED, EXPORT, IMPORT;
     }
+
+    @Column(name = "DATE", nullable = false)
+    @Temporal(TemporalType.DATE)
+    private Date date;
+    @NotBlank
+    @Pattern(regexp = "[0-9]{2}\\.[0-9]{2}\\.[0-9]{4}")
+    private transient String dateString;
 
     @NotBlank
     @Column(name = "DESCRIPTION", nullable = true)
@@ -46,6 +59,7 @@ public class Protocol extends AbstractEntity {
     public Protocol(final ProtocolValue description) {
         super();
         this.description = description.name();
+        this.date = new Date();
     }
 
     public String getDescription() {
@@ -54,6 +68,34 @@ public class Protocol extends AbstractEntity {
 
     public void setDescription(final String description) {
         this.description = description;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(final Date date) {
+        this.date = date;
+        dateString = new SimpleDateFormat(DATESTRINGFORMAT).format(date);
+    }
+
+    public String getDateString() {
+        return dateString;
+    }
+
+    public void setDateString(final String dateString) {
+        this.dateString = dateString;
+        try {
+            date = new SimpleDateFormat(DATESTRINGFORMAT).parse(dateString);
+        } catch (ParseException e) {
+            date = new Date();
+        }
+    }
+
+    @PostLoad
+    @PostUpdate
+    public void updateDateString() {
+        setDate(getDate());
     }
 
     /**

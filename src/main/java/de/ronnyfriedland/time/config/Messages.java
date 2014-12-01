@@ -30,8 +30,10 @@ public enum Messages {
     NEW_EXPORT("newexport"),
     /** kopieren */
     COPY("copy"),
-    /** heute erstelle Einträge */
+    /** zuletzt erstelle Einträge */
     LAST_ENTRIES("lastentries"),
+    /** Transaktionslog Einträge */
+    PROTOCOL_ENTRIES("protocolentries"),
     /** Daten importieren */
     IMPORT_DATA("importdata"),
     /** Daten exportieren */

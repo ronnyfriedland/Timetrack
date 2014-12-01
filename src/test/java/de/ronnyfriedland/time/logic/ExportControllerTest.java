@@ -5,11 +5,10 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
 
-import junit.framework.Assert;
-
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
