@@ -36,11 +36,14 @@ import de.ronnyfriedland.time.config.Messages;
 import de.ronnyfriedland.time.entity.Entry;
 import de.ronnyfriedland.time.entity.EntryState;
 import de.ronnyfriedland.time.entity.Project;
+import de.ronnyfriedland.time.entity.Protocol;
 import de.ronnyfriedland.time.logic.EntityController;
 import de.ronnyfriedland.time.logic.ImportController;
 import de.ronnyfriedland.time.logic.PluginController;
+import de.ronnyfriedland.time.logic.ProtocolController;
 import de.ronnyfriedland.time.logic.QuartzController;
 import de.ronnyfriedland.time.logic.jobs.CheckEntryWorkflowStateJob;
+import de.ronnyfriedland.time.logic.jobs.ProtocolWriterJob;
 import de.ronnyfriedland.time.logic.jobs.ShowReminderJob;
 import de.ronnyfriedland.time.sort.SortParam;
 import de.ronnyfriedland.time.sort.SortParam.SortOrder;
@@ -61,8 +64,7 @@ public final class TimeTrackUI {
     /**
      * The main method.
      * 
-     * @param args
-     *            Argumente
+     * @param args Argumente
      */
     public static void main(final String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -98,6 +100,7 @@ public final class TimeTrackUI {
             @Override
             public void run() {
                 try {
+                    ProtocolController.getInstance().writeProtocol(new Protocol(Protocol.ProtocolValue.APP_STOPPED));
                     QuartzController.getInstance().shutdownScheduler();
                 } catch (SchedulerException ex) {
                     LOG.log(Level.SEVERE, "Error shutting down scheduler.", ex);
@@ -248,6 +251,7 @@ public final class TimeTrackUI {
                                 entry.setProject(project);
                                 EntityController.getInstance().create(entry);
                             }
+                            ProtocolController.getInstance().writeProtocol(new Protocol(Protocol.ProtocolValue.IMPORT));
                             JOptionPane.showMessageDialog(null,
                                     Messages.IMPORT_SUCCESSFUL.getMessage(String.valueOf(entries.size())));
                         } catch (IOException ex) {
@@ -283,8 +287,6 @@ public final class TimeTrackUI {
             } catch (IOException e) {
                 LOG.log(Level.SEVERE, "Error reading logging.properties to configure logger.", e);
             }
-            // initialize entity controller ...
-            EntityController.getInstance();
             // initialize quartz controller ...
             Map<String, Object> jobData = new HashMap<String, Object>();
             jobData.put("trayIcon", trayIcon);
@@ -292,8 +294,12 @@ public final class TimeTrackUI {
                     Configurator.CONFIG.getString(ConfiguratorKeys.CRON_EXPRESSION_POPUP.getKey()), jobData);
             QuartzController.getInstance().initScheduler(CheckEntryWorkflowStateJob.class,
                     Configurator.CONFIG.getString(ConfiguratorKeys.CRON_EXPRESSION_ENTRYWORKFLOW.getKey()), jobData);
+            QuartzController.getInstance().initScheduler(ProtocolWriterJob.class,
+                    Configurator.CONFIG.getString(ConfiguratorKeys.CRON_EXPRESSION_PROTOCOLWRITER.getKey()), jobData);
             // initialize plugin controller ...
             PluginController.getInstance().executePlugins();
+            // add protocol
+            ProtocolController.getInstance().writeProtocol(new Protocol(Protocol.ProtocolValue.APP_STARTED));
         }
     }
 }

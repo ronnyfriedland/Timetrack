@@ -27,8 +27,7 @@ public class DataBeanImpl extends StandardMBean implements IDataBean {
     /**
      * Erzeugt eine neue {@link DataBeanImpl} - Instanz.
      * 
-     * @throws NotCompliantMBeanException
-     *             Fehler beim Erzeugen
+     * @throws NotCompliantMBeanException Fehler beim Erzeugen
      */
     public DataBeanImpl() throws NotCompliantMBeanException {
         super(IDataBean.class);

@@ -53,21 +53,7 @@ public final class PluginController {
             LOG.info("Retrieving plugins ...");
         }
         // configure classpath entries
-        Set<URL> urls = new HashSet<URL>();
-        urls.addAll(ClasspathHelper.forJavaClassPath());
-        try {
-            Properties availablePlugins = new Properties();
-            availablePlugins.load(Thread.currentThread().getContextClassLoader()
-                    .getResourceAsStream("plugin.properties"));
-            String files = availablePlugins.getProperty("files");
-            if (null != files && files.length() > 2) {
-                for (String file : files.split(";")) {
-                    urls.add(Thread.currentThread().getContextClassLoader().getResource(file));
-                }
-            }
-        } catch (Exception e) {
-            LOG.warning("There are problems starting plugin. Please check configuration.");
-        }
+        Set<URL> urls = findPlugins();
 
         Reflections reflections = new Reflections(new ConfigurationBuilder()
                 .addClassLoader(URLClassLoader.newInstance(urls.toArray(new URL[urls.size()]))).addUrls(urls)
@@ -98,6 +84,30 @@ public final class PluginController {
                 }
             }).start();
         }
+    }
+
+    /**
+     * Scan classpath and plugin.properties for available plugins
+     * 
+     * @return set of urls
+     */
+    private Set<URL> findPlugins() {
+        Set<URL> urls = new HashSet<URL>();
+        urls.addAll(ClasspathHelper.forJavaClassPath());
+        try {
+            Properties availablePlugins = new Properties();
+            availablePlugins.load(Thread.currentThread().getContextClassLoader()
+                    .getResourceAsStream("plugin.properties"));
+            String files = availablePlugins.getProperty("files");
+            if ((null != files) && (files.length() > 2)) {
+                for (final String file : files.split(";")) {
+                    urls.add(Thread.currentThread().getContextClassLoader().getResource(file));
+                }
+            }
+        } catch (Exception e) {
+            LOG.warning("There are problems starting plugin. Please check configuration.");
+        }
+        return urls;
     }
 
 }

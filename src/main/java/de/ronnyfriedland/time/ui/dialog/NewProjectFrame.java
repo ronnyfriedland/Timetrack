@@ -38,7 +38,9 @@ import de.ronnyfriedland.time.config.Const;
 import de.ronnyfriedland.time.config.Messages;
 import de.ronnyfriedland.time.entity.Entry;
 import de.ronnyfriedland.time.entity.Project;
+import de.ronnyfriedland.time.entity.Protocol;
 import de.ronnyfriedland.time.logic.EntityController;
+import de.ronnyfriedland.time.logic.ProtocolController;
 import de.ronnyfriedland.time.ui.adapter.TimeTrackKeyAdapter;
 import de.ronnyfriedland.time.ui.to.EntryData;
 
@@ -221,6 +223,9 @@ public class NewProjectFrame extends AbstractFrame {
                 if (null != uuid) {
                     project = EntityController.getInstance().findById(Project.class, uuid);
                     EntityController.getInstance().delete(project);
+                    ProtocolController.getInstance()
+                            .writeProtocol(new Protocol(Protocol.ProtocolValue.PROJECT_DELETED));
+
                     setVisible(false);
                 }
             }
@@ -246,9 +251,14 @@ public class NewProjectFrame extends AbstractFrame {
                 try {
                     if (null != uuid) {
                         EntityController.getInstance().update(project);
+                        ProtocolController.getInstance().writeProtocol(
+                                new Protocol(Protocol.ProtocolValue.PROJECT_UPDATED));
                     } else {
                         EntityController.getInstance().create(project);
+                        ProtocolController.getInstance().writeProtocol(
+                                new Protocol(Protocol.ProtocolValue.PROJECT_CREATED));
                     }
+
                     setVisible(false);
                 } catch (PersistenceException ex) {
                     LOG.log(Level.SEVERE, "Error saving new project", ex);

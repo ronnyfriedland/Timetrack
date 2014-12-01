@@ -61,8 +61,10 @@ import de.ronnyfriedland.time.config.Const;
 import de.ronnyfriedland.time.config.Messages;
 import de.ronnyfriedland.time.entity.Entry;
 import de.ronnyfriedland.time.entity.Project;
+import de.ronnyfriedland.time.entity.Protocol;
 import de.ronnyfriedland.time.logic.EntityController;
 import de.ronnyfriedland.time.logic.ExportController;
+import de.ronnyfriedland.time.logic.ProtocolController;
 import de.ronnyfriedland.time.sort.SortParam;
 import de.ronnyfriedland.time.sort.SortParam.SortOrder;
 import de.ronnyfriedland.time.ui.adapter.TimeTrackKeyAdapter;
@@ -288,6 +290,8 @@ public class ExportFrame extends AbstractFrame {
                         }
 
                         setVisible(false);
+
+                        ProtocolController.getInstance().writeProtocol(new Protocol(Protocol.ProtocolValue.EXPORT));
 
                         JOptionPane.showMessageDialog(
                                 null,

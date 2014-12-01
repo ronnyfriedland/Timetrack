@@ -32,8 +32,10 @@ public final class EntityController {
      * @return the {@link EntityController}
      */
     public static EntityController getInstance() {
-        if (null == instance) {
-            instance = new EntityController();
+        synchronized (EntityController.class) {
+            if (null == instance) {
+                instance = new EntityController();
+            }
         }
         return instance;
     }
@@ -50,10 +52,8 @@ public final class EntityController {
     /**
      * Ermittelt einen Datensatz anhand der übergebenen UUID.
      * 
-     * @param clazz
-     *            Typ
-     * @param uuid
-     *            eindeutige ID des Datensatz
+     * @param clazz Typ
+     * @param uuid eindeutige ID des Datensatz
      * @return Datensatz
      */
     public <T> T findById(final Class<T> clazz, final String uuid) {
@@ -61,13 +61,11 @@ public final class EntityController {
     }
 
     /**
-     * Ermittelt alle Datensätze. Es kann entschieden werden, ob deaktivierte
-     * Datensätze ebenfalls berücksichtigt werden sollen.
+     * Ermittelt alle Datensätze. Es kann entschieden werden, ob deaktivierte Datensätze ebenfalls berücksichtigt werden
+     * sollen.
      * 
-     * @param clazz
-     *            Typ
-     * @param includeDisabled
-     *            Flag ob deaktiverte Datensätze berücksichtigt werden sollen.
+     * @param clazz Typ
+     * @param includeDisabled Flag ob deaktiverte Datensätze berücksichtigt werden sollen.
      * @return Ergebnisliste
      */
     public <T> Collection<T> findAll(final Class<T> clazz, final boolean includeDisabled) {
@@ -80,18 +78,13 @@ public final class EntityController {
     }
 
     /**
-     * Ermittelt alle Datensätze (sortiert). Die Anzahl der Ergebnisse kann
-     * eingeschränkt werden. Es kann entschieden werden, ob deaktivierte
-     * Datensätze ebenfalls berücksichtigt werden sollen.
+     * Ermittelt alle Datensätze (sortiert). Die Anzahl der Ergebnisse kann eingeschränkt werden. Es kann entschieden
+     * werden, ob deaktivierte Datensätze ebenfalls berücksichtigt werden sollen.
      * 
-     * @param clazz
-     *            Typ
-     * @param sortParam
-     *            Sortierung
-     * @param max
-     *            Anzahl maximaler Einträge
-     * @param includeDisabled
-     *            Flag ob deaktiverte Datensätze berücksichtigt werden sollen.
+     * @param clazz Typ
+     * @param sortParam Sortierung
+     * @param max Anzahl maximaler Einträge
+     * @param includeDisabled Flag ob deaktiverte Datensätze berücksichtigt werden sollen.
      * @return Ergebnisliste
      */
     public <T> Collection<T> findAll(final Class<T> clazz, final SortParam sortParam, final int max,
@@ -109,15 +102,12 @@ public final class EntityController {
     }
 
     /**
-     * Ermittelt alle Datensätze (sortiert). Es kann entschieden werden, ob
-     * deaktivierte Datensätze ebenfalls berücksichtigt werden sollen.
+     * Ermittelt alle Datensätze (sortiert). Es kann entschieden werden, ob deaktivierte Datensätze ebenfalls
+     * berücksichtigt werden sollen.
      * 
-     * @param clazz
-     *            Typ
-     * @param sortParam
-     *            Sortierung
-     * @param includeDisabled
-     *            Flag ob deaktiverte Datensätze berücksichtigt werden sollen.
+     * @param clazz Typ
+     * @param sortParam Sortierung
+     * @param includeDisabled Flag ob deaktiverte Datensätze berücksichtigt werden sollen.
      * @return Ergebnisliste
      */
     public <T> Collection<T> findAll(final Class<T> clazz, final SortParam sortParam, final boolean includeDisabled) {
@@ -135,12 +125,9 @@ public final class EntityController {
     /**
      * Liefert die Ergebnisse einer NamedQuery.
      * 
-     * @param clazz
-     *            Typ
-     * @param namedQuery
-     *            Name der Query
-     * @param parameters
-     *            Abfragekriterien / -parameter
+     * @param clazz Typ
+     * @param namedQuery Name der Query
+     * @param parameters Abfragekriterien / -parameter
      * @return Ergebnisliste
      */
     @SuppressWarnings("unchecked")
@@ -158,12 +145,9 @@ public final class EntityController {
     /**
      * Liefert die Ergebnisse einer NamedQuery.
      * 
-     * @param clazz
-     *            Typ
-     * @param namedQuery
-     *            Name der Query
-     * @param parameters
-     *            Abfragekriterien / -parameter
+     * @param clazz Typ
+     * @param namedQuery Name der Query
+     * @param parameters Abfragekriterien / -parameter
      * @return Datensatz
      */
     @SuppressWarnings("unchecked")
@@ -181,8 +165,7 @@ public final class EntityController {
     /**
      * Löscht alle Datensätze eines Typs.
      * 
-     * @param clazz
-     *            Typ
+     * @param clazz Typ
      * @return Anzahl der gelöschten Datensätze
      */
     public <T> int deleteAll(final Class<T> clazz) {
@@ -203,8 +186,7 @@ public final class EntityController {
     /**
      * Erstellt einen Datesatz.
      * 
-     * @param entity
-     *            {@link AbstractEntity}
+     * @param entity {@link AbstractEntity}
      */
     public <T> void create(final T entity) {
         try {
@@ -219,10 +201,28 @@ public final class EntityController {
     }
 
     /**
+     * Erstellt eine Liste von Datesätzen.
+     * 
+     * @param eentitiesntity list of {@link AbstractEntity}
+     */
+    public <T> void create(final Collection<T> entities) {
+        try {
+            em.getTransaction().begin();
+            for (T entity : entities) {
+                em.persist(entity);
+            }
+            em.getTransaction().commit();
+        } finally {
+            if (em.getTransaction().isActive() && em.getTransaction().getRollbackOnly()) {
+                em.getTransaction().rollback();
+            }
+        }
+    }
+
+    /**
      * Aktualisiert einen Datensatz.
      * 
-     * @param entity
-     *            {@link AbstractEntity}
+     * @param entity {@link AbstractEntity}
      */
     public <T> void update(final T entity) {
         try {
@@ -239,8 +239,7 @@ public final class EntityController {
     /**
      * Löscht einen Datensatz
      * 
-     * @param entity
-     *            {@link AbstractEntity}
+     * @param entity {@link AbstractEntity}
      */
     public <T> void delete(final T entity) {
         try {
@@ -258,8 +257,7 @@ public final class EntityController {
     /**
      * Löscht einen Datesatz.
      * 
-     * @param entity
-     *            {@link AbstractEntity}
+     * @param entity {@link AbstractEntity}
      */
     public <T> void deleteDetached(final T entity) {
         delete(em.merge(entity));

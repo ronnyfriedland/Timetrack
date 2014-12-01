@@ -212,5 +212,45 @@
                 </itemizedlist>
             </para>
         </sect2>
+        <sect2>
+            <title>Transaktionslog</title>
+            <para>Jede Aktion wird in ein Transaktionslog geschrieben.
+            </para>
+            <para>
+                Die folgenden Aktionen werden protokolliert
+                <itemizedlist>
+                    <listitem>
+                        <para>Anwendung gestartet</para>
+                    </listitem>
+                    <listitem>
+                        <para>Anwendung beendet</para>
+                    </listitem>
+                    <listitem>
+                        <para>Eintrag erstellt</para>
+                    </listitem>
+                    <listitem>
+                        <para>Eintrag aktualisiert</para>
+                    </listitem>
+                    <listitem>
+                        <para>Eintrag gelöscht</para>
+                    </listitem>
+                    <listitem>
+                        <para>Projekt erstellt</para>
+                    </listitem>
+                    <listitem>
+                        <para>Projekt aktualisiert</para>
+                    </listitem>
+                    <listitem>
+                        <para>Projekt gelöscht</para>
+                    </listitem>
+                    <listitem>
+                        <para>Daten exportiert</para>
+                    </listitem>
+                    <listitem>
+                        <para>Daten importiert</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+        </sect2>
     </sect1>
 </article>

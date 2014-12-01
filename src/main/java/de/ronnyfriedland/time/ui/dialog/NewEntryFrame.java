@@ -52,7 +52,9 @@ import de.ronnyfriedland.time.entity.Entry;
 import de.ronnyfriedland.time.entity.EntryState;
 import de.ronnyfriedland.time.entity.EntryState.State;
 import de.ronnyfriedland.time.entity.Project;
+import de.ronnyfriedland.time.entity.Protocol;
 import de.ronnyfriedland.time.logic.EntityController;
+import de.ronnyfriedland.time.logic.ProtocolController;
 import de.ronnyfriedland.time.sort.SortParam;
 import de.ronnyfriedland.time.sort.SortParam.SortOrder;
 import de.ronnyfriedland.time.ui.adapter.TimeTrackKeyAdapter;
@@ -176,7 +178,7 @@ public class NewEntryFrame extends AbstractFrame {
 
         applyButton.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mouseClicked(final MouseEvent e) {
                 Date selectedDate = datechooser.getDate();
                 date.setText(new SimpleDateFormat(Entry.DATESTRINGFORMAT).format(selectedDate));
                 datechooserFrame.setVisible(false);
@@ -212,7 +214,7 @@ public class NewEntryFrame extends AbstractFrame {
         });
         date.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mouseClicked(final MouseEvent e) {
                 if (2 == e.getClickCount()) {
                     datechooserFrame.setBounds(e.getXOnScreen(), e.getYOnScreen(), 200, 255);
                     datechooserFrame.setVisible(true);
@@ -328,6 +330,8 @@ public class NewEntryFrame extends AbstractFrame {
                         project.getEntries().remove(entry);
                         EntityController.getInstance().delete(entry);
                         EntityController.getInstance().update(project);
+                        ProtocolController.getInstance().writeProtocol(
+                                new Protocol(Protocol.ProtocolValue.ENTRY_DELETED));
                         setVisible(false);
                     } catch (PersistenceException ex) {
                         LOG.log(Level.SEVERE, "Error removing project", ex);
@@ -346,10 +350,12 @@ public class NewEntryFrame extends AbstractFrame {
                 if (null == uuid) {
                     entry = createEntry(date.getText(), description.getText(), duration.getText(), State.FIXED,
                             (ProjectData) projects.getSelectedValue());
+                    ProtocolController.getInstance().writeProtocol(new Protocol(Protocol.ProtocolValue.ENTRY_CREATED));
                 } else {
                     entry = EntityController.getInstance().findById(Entry.class, uuid);
                     entry = updateEntry(entry, date.getText(), description.getText(), duration.getText(),
                             (ProjectData) projects.getSelectedValue());
+                    ProtocolController.getInstance().writeProtocol(new Protocol(Protocol.ProtocolValue.ENTRY_UPDATED));
                 }
                 if (null != entry) {
                     setVisible(false);
@@ -364,6 +370,7 @@ public class NewEntryFrame extends AbstractFrame {
                 if (null == uuid) {
                     entry = createEntry(date.getText(), description.getText(), duration.getText(), State.OK,
                             (ProjectData) projects.getSelectedValue());
+                    ProtocolController.getInstance().writeProtocol(new Protocol(Protocol.ProtocolValue.ENTRY_STARTED));
                     if (null != entry) {
                         setVisible(false);
                     }
@@ -386,6 +393,8 @@ public class NewEntryFrame extends AbstractFrame {
                         entry.setDuration(EntryState.getDuration(entryState.getStart(), entryState.getEnd(),
                                 entry.getDuration()));
                         EntityController.getInstance().update(entry);
+                        ProtocolController.getInstance().writeProtocol(
+                                new Protocol(Protocol.ProtocolValue.ENTRY_STOPPED));
 
                         setVisible(false);
                     }

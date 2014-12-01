@@ -11,6 +11,7 @@
             <property name="eclipselink.logging.level" value="OFF" />
             <property name="eclipselink.ddl-generation" value="create-tables" />
             <!-- Caching -->
+            <property name="eclipselink.jdbc.cache-statements" value="true" />
             <property name="eclipselink.cache.type.default" value="SoftWeak" />
             <property name="eclipselink.cache.size.default" value="500"/>
         </properties>

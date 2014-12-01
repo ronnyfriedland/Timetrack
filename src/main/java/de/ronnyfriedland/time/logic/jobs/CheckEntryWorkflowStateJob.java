@@ -94,6 +94,16 @@ public class CheckEntryWorkflowStateJob extends AbstractJob {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see de.ronnyfriedland.time.logic.jobs.AbstractJob#runOnShutdown()
+     */
+    @Override
+    public boolean runOnShutdown() {
+        return false;
+    }
+
     private Collection<String> getEntryStatesInStateWarnAndStop(Map<String, Object> params) {
         Set<String> entries = new HashSet<String>();
         Collection<EntryState> entryStates = EntityController.getInstance().findResultlistByParameter(EntryState.class,
@@ -116,7 +126,7 @@ public class CheckEntryWorkflowStateJob extends AbstractJob {
         return entries;
     }
 
-    private Collection<String> setEntryStatesToWarn(Map<String, Object> params) {
+    private Collection<String> setEntryStatesToWarn(final Map<String, Object> params) {
         Set<String> entries = new HashSet<String>();
         Collection<EntryState> entryStates = EntityController.getInstance().findResultlistByParameter(EntryState.class,
                 EntryState.QUERY_FIND_BY_STATE_AND_STARTDATE, params);

@@ -31,6 +31,11 @@ public class ShowHelpFrame extends AbstractFrame implements HyperlinkListener {
         createUI();
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see de.ronnyfriedland.time.ui.dialog.AbstractFrame#createUI()
+     */
     @Override
     protected void createUI() {
         editorPane.setContentType("text/html");
@@ -48,6 +53,11 @@ public class ShowHelpFrame extends AbstractFrame implements HyperlinkListener {
         getContentPane().add(scrollPane);
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see javax.swing.event.HyperlinkListener#hyperlinkUpdate(javax.swing.event.HyperlinkEvent)
+     */
     @Override
     public void hyperlinkUpdate(final HyperlinkEvent event) {
         if (event.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {

@@ -35,9 +35,10 @@ public final class Configurator {
         CRON_EXPRESSION_POPUP("timetrack.popup.cron"),
         /** Cron-Ausdruck für Entry-Workflow */
         CRON_EXPRESSION_ENTRYWORKFLOW("timetrack.entryworkflow.cron"),
+        /** Cron-Ausdruck für Entry-Workflow */
+        CRON_EXPRESSION_PROTOCOLWRITER("timetrack.protocolwriter.cron"),
         /**
-         * Flag, ob Popup anstelle von "Nachrichtenblase" dargestellt werden
-         * soll
+         * Flag, ob Popup anstelle von "Nachrichtenblase" dargestellt werden soll
          */
         SHOW_POPUP("timetrack.popup.show"),
         /** Dauer bis Eintrag im Workflow in Status WARN geht */

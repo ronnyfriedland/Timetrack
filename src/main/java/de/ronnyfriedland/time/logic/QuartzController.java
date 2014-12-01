@@ -30,8 +30,7 @@ public final class QuartzController {
      * Liefert eine Instanz von {@link EntityController}.
      * 
      * @return the {@link EntityController}
-     * @throws SchedulerException
-     *             Fehler beim Initialisieren des Schedulers
+     * @throws SchedulerException Fehler beim Initialisieren des Schedulers
      */
     public static QuartzController getInstance() throws SchedulerException {
         synchronized (QuartzController.class) {
@@ -54,12 +53,9 @@ public final class QuartzController {
     /**
      * Initialisiert den Scheduler.
      * 
-     * @param jobClazz
-     *            Jobklasse
-     * @param cronExpression
-     *            Cron-Ausdruck für Trigger
-     * @param jobData
-     *            optional data
+     * @param jobClazz Jobklasse
+     * @param cronExpression Cron-Ausdruck für Trigger
+     * @param jobData optional data
      */
     public void initScheduler(final Class<? extends AbstractJob> jobClazz, final String cronExpression,
             final Map<? extends String, ? extends Object> jobData) {
@@ -87,10 +83,9 @@ public final class QuartzController {
     /**
      * Beendet den Scheduler.
      * 
-     * @throws SchedulerException
-     *             Fehler während des Shutdown
+     * @throws SchedulerException Fehler während des Shutdown
      */
     public void shutdownScheduler() throws SchedulerException {
-        sched.shutdown();
+        sched.shutdown(true);
     }
 }

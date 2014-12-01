@@ -13,6 +13,14 @@ import org.quartz.Job;
  * @author Ronny Friedland
  */
 public abstract class AbstractJob implements Job {
+
+    /**
+     * Gibt an, ob der Job beim Shutdown explizit getriggert werden soll.
+     * 
+     * @return {@link Boolean#TRUE} falls ja, ansonsten {@link Boolean#FALSE}
+     */
+    public abstract boolean runOnShutdown();
+
     /**
      * The tray icon
      */
@@ -30,20 +38,17 @@ public abstract class AbstractJob implements Job {
     /**
      * Set the tray icon
      * 
-     * @param trayIcon
-     *            tray icon
+     * @param trayIcon tray icon
      */
-    public void setTrayIcon(TrayIcon trayIcon) {
+    public void setTrayIcon(final TrayIcon trayIcon) {
         this.trayIcon = trayIcon;
     }
 
     /**
      * Darstellung des Popups
      * 
-     * @param showPopup
-     *            Flag, ob Hinweis als Popup dargestellt werden soll.
-     * @param messageText
-     *            Der darzustellende Text
+     * @param showPopup Flag, ob Hinweis als Popup dargestellt werden soll.
+     * @param messageText Der darzustellende Text
      */
     protected void showPopup(final boolean showPopup, final String messageText) {
         if (showPopup || (null == getTrayIcon())) {

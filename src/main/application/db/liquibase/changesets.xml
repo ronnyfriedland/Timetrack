@@ -127,5 +127,23 @@
             (ENTRYSTATE_UUID) REFERENCES ENTRYSTATE (UUID);
         </sql>
     </changeSet>
+    
+    <changeSet author="ronnyfriedland" id="update_to_version_1.13">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists schemaName="APP" tableName="PROTOCOL" />
+            </not>
+        </preConditions>
+        <sql>
+            CREATE TABLE PROTOCOL (
+            UUID VARCHAR(255) NOT NULL,
+            DATE DATE NOT NULL,
+            DESCRIPTION VARCHAR(255) NOT NULL,
+            LASTMODIFIEDDATE TIMESTAMP NOT NULL,
+            );
+            
+            CREATE UNIQUE INDEX SQL120820194546521 ON PROTOCOL (UUID ASC);
+        </sql>
+    </changeSet>
 
 </databaseChangeLog>
