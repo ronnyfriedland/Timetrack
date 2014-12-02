@@ -175,10 +175,11 @@ public final class EntityController {
             em.getTransaction().begin();
             query.executeUpdate();
             em.getTransaction().commit();
-        } finally {
-            if (em.getTransaction().isActive() && em.getTransaction().getRollbackOnly()) {
+        } catch (RuntimeException rte) {
+            if (em.getTransaction().isActive() || em.getTransaction().getRollbackOnly()) {
                 em.getTransaction().rollback();
             }
+            throw rte;
         }
         return updatedRows;
     }
@@ -193,10 +194,11 @@ public final class EntityController {
             em.getTransaction().begin();
             em.persist(entity);
             em.getTransaction().commit();
-        } finally {
-            if (em.getTransaction().isActive() && em.getTransaction().getRollbackOnly()) {
+        } catch (RuntimeException rte) {
+            if (em.getTransaction().isActive() || em.getTransaction().getRollbackOnly()) {
                 em.getTransaction().rollback();
             }
+            throw rte;
         }
     }
 
@@ -212,10 +214,11 @@ public final class EntityController {
                 em.persist(entity);
             }
             em.getTransaction().commit();
-        } finally {
-            if (em.getTransaction().isActive() && em.getTransaction().getRollbackOnly()) {
+        } catch (RuntimeException rte) {
+            if (em.getTransaction().isActive() || em.getTransaction().getRollbackOnly()) {
                 em.getTransaction().rollback();
             }
+            throw rte;
         }
     }
 
@@ -229,10 +232,11 @@ public final class EntityController {
             em.getTransaction().begin();
             em.merge(entity);
             em.getTransaction().commit();
-        } finally {
-            if (em.getTransaction().isActive() && em.getTransaction().getRollbackOnly()) {
+        } catch (RuntimeException rte) {
+            if (em.getTransaction().isActive() || em.getTransaction().getRollbackOnly()) {
                 em.getTransaction().rollback();
             }
+            throw rte;
         }
     }
 
@@ -246,12 +250,12 @@ public final class EntityController {
             em.getTransaction().begin();
             em.remove(entity);
             em.getTransaction().commit();
-        } finally {
-            if (em.getTransaction().isActive() && em.getTransaction().getRollbackOnly()) {
+        } catch (RuntimeException rte) {
+            if (em.getTransaction().isActive() || em.getTransaction().getRollbackOnly()) {
                 em.getTransaction().rollback();
             }
+            throw rte;
         }
-
     }
 
     /**
