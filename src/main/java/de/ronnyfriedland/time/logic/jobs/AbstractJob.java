@@ -19,7 +19,9 @@ public abstract class AbstractJob implements Job {
      * 
      * @return {@link Boolean#TRUE} falls ja, ansonsten {@link Boolean#FALSE}
      */
-    public abstract boolean runOnShutdown();
+    public static boolean runOnShutdown() {
+        return false;
+    }
 
     /**
      * The tray icon

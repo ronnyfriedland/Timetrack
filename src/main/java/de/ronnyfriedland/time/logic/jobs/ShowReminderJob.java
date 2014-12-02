@@ -61,14 +61,4 @@ public class ShowReminderJob extends AbstractJob {
             LOG.fine(String.format("Job %s executed successfully.", context.getJobDetail().getKey()));
         }
     }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see de.ronnyfriedland.time.logic.jobs.AbstractJob#runOnShutdown()
-     */
-    @Override
-    public boolean runOnShutdown() {
-        return false;
-    }
 }

@@ -1,5 +1,6 @@
 package de.ronnyfriedland.time.logic;
 
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -7,11 +8,14 @@ import java.util.logging.Logger;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
+import org.quartz.impl.matchers.GroupMatcher;
 
 import de.ronnyfriedland.time.logic.jobs.AbstractJob;
 
@@ -86,6 +90,29 @@ public final class QuartzController {
      * @throws SchedulerException Fehler während des Shutdown
      */
     public void shutdownScheduler() throws SchedulerException {
+        for (String group : sched.getJobGroupNames()) {
+            // enumerate each job in group
+            for (JobKey jobKey : sched.getJobKeys(GroupMatcher.<JobKey> groupEquals(group))) {
+                sched.triggerJob(jobKey);
+            }
+        }
+        waitingForEmptyJobQueue();
         sched.shutdown(true);
+    }
+
+    private void waitingForEmptyJobQueue() throws SchedulerException {
+        int retryCount = 0;
+        do {
+            List<JobExecutionContext> jobs = sched.getCurrentlyExecutingJobs();
+            if (0 == jobs.size()) {
+                break;
+            }
+            retryCount++;
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                // ignore
+            }
+        } while (retryCount < 3);
     }
 }

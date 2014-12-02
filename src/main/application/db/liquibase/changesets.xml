@@ -137,7 +137,7 @@
         <sql>
             CREATE TABLE PROTOCOL (
             UUID VARCHAR(255) NOT NULL,
-            DATE DATE NOT NULL,
+            DATE TIMESTAMP NOT NULL,
             DESCRIPTION VARCHAR(255) NOT NULL,
             LASTMODIFIEDDATE TIMESTAMP NOT NULL,
             );

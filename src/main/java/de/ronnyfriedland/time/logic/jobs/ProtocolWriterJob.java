@@ -50,13 +50,7 @@ public class ProtocolWriterJob extends AbstractJob {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     * 
-     * @see de.ronnyfriedland.time.logic.jobs.AbstractJob#runOnShutdown()
-     */
-    @Override
-    public boolean runOnShutdown() {
+    public static boolean runOnShutdown() {
         return true;
     }
 }

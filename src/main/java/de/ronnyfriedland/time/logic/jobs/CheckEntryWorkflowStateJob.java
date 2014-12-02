@@ -94,16 +94,6 @@ public class CheckEntryWorkflowStateJob extends AbstractJob {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     * 
-     * @see de.ronnyfriedland.time.logic.jobs.AbstractJob#runOnShutdown()
-     */
-    @Override
-    public boolean runOnShutdown() {
-        return false;
-    }
-
     private Collection<String> getEntryStatesInStateWarnAndStop(Map<String, Object> params) {
         Set<String> entries = new HashSet<String>();
         Collection<EntryState> entryStates = EntityController.getInstance().findResultlistByParameter(EntryState.class,

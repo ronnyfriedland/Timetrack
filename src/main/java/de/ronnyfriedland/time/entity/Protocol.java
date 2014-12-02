@@ -30,7 +30,7 @@ public class Protocol extends AbstractEntity {
     }
 
     @Column(name = "DATE", nullable = false)
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date date;
     @NotBlank
     @Pattern(regexp = "[0-9]{2}\\.[0-9]{2}\\.[0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2}")
