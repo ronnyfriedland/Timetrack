@@ -184,8 +184,8 @@ public final class TimeTrackUI {
                     protocolItems.removeAll();
 
                     for (final Protocol entry : logEntries) {
-                        MenuItem menuItem = new MenuItem(String.format("%1$s: %3$s",
-                                entry.getDateString(), entry.getDescription()));
+                        MenuItem menuItem = new MenuItem(String.format("%1$s: %2$s", entry.getDateString(),
+                                entry.getDescription()));
                         protocolItems.add(menuItem);
                     }
 

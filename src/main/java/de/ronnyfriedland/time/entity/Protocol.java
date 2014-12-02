@@ -1,13 +1,18 @@
 package de.ronnyfriedland.time.entity;
 
-import javax.persistence.*;
-import javax.validation.constraints.Pattern;
-
-import de.ronnyfriedland.time.entity.validation.NotBlank;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.PostLoad;
+import javax.persistence.PostUpdate;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.Pattern;
+
+import de.ronnyfriedland.time.entity.validation.NotBlank;
 
 /**
  * Entität zum Speichern der Projekte.
@@ -18,7 +23,7 @@ import java.util.Date;
 public class Protocol extends AbstractEntity {
     private static final long serialVersionUID = 7364095843976457542L;
 
-    public static final String DATESTRINGFORMAT = "dd.MM.yyyy";
+    public static final String DATETIMESTRINGFORMAT = "dd.MM.yyyy HH:mm:ss";
 
     public enum ProtocolValue {
         APP_STARTED, APP_STOPPED, ENTRY_CREATED, ENTRY_UPDATED, ENTRY_DELETED, ENTRY_STARTED, ENTRY_STOPPED, PROJECT_CREATED, PROJECT_UPDATED, PROJECT_DELETED, EXPORT, IMPORT;
@@ -28,7 +33,7 @@ public class Protocol extends AbstractEntity {
     @Temporal(TemporalType.DATE)
     private Date date;
     @NotBlank
-    @Pattern(regexp = "[0-9]{2}\\.[0-9]{2}\\.[0-9]{4}")
+    @Pattern(regexp = "[0-9]{2}\\.[0-9]{2}\\.[0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2}")
     private transient String dateString;
 
     @NotBlank
@@ -58,8 +63,8 @@ public class Protocol extends AbstractEntity {
      */
     public Protocol(final ProtocolValue description) {
         super();
-        this.description = description.name();
-        this.date = new Date();
+        setDescription(description.name());
+        setDate(new Date());
     }
 
     public String getDescription() {
@@ -76,7 +81,7 @@ public class Protocol extends AbstractEntity {
 
     public void setDate(final Date date) {
         this.date = date;
-        dateString = new SimpleDateFormat(DATESTRINGFORMAT).format(date);
+        dateString = new SimpleDateFormat(DATETIMESTRINGFORMAT).format(date);
     }
 
     public String getDateString() {
@@ -86,7 +91,7 @@ public class Protocol extends AbstractEntity {
     public void setDateString(final String dateString) {
         this.dateString = dateString;
         try {
-            date = new SimpleDateFormat(DATESTRINGFORMAT).parse(dateString);
+            date = new SimpleDateFormat(DATETIMESTRINGFORMAT).parse(dateString);
         } catch (ParseException e) {
             date = new Date();
         }
