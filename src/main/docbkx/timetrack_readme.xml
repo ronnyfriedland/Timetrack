@@ -147,19 +147,23 @@
         <sect2>
             <title>Datenmigration</title>
             <para>Ab Version 1.2 können bestehende Daten migriert werden. Die
-                Migration erfolgt über mitgelieferte Skripte (migration.sh bzw.
-                migration.bat). Vor dem ersten Start der Anwendung nach einem Update
-                sollte das Skript zur Datenmigration ausgeführt werden.
+                Migration erfolgt implizit bei jedem Start der Anwendung.
+                Es ist weiterhin möglich, die Migration explizit über mitgelieferte Skripte 
+                (migration.sh bzw. migration.bat) auszuführen. Dabei wird zusätzlich ein 
+                Backup der Datenbank erstellt, welches sich sich im Ordner "backup" unterhalb 
+                von ${timetrack.path} befindet.
+                
+                <emphasis role="strong">Bei einem erstmaligen Update auf eine Version höher 1.11 muss unbedingt 
+                eine Migration per Skript vor der ersten Ausführung durchgeführt werden.</emphasis>
+                
+                Vor dem ersten Start der Anwendung nach einem Update sollte das Skript zur 
+                Datenmigration ausgeführt werden.
 
                 Für ein Update muss das Zip-Archiv in einen neuen Ordner entpackt
                 werden. Danach muss zur Übernahme der Daten das Verzeichnis
                 ${timetrack.path} in den neuen Anwendungsordner kopiert werden.
 
-                Das Management der Datenbankänderungen erfolgt über
-                Liquibase.
-                
-                Vor jeder Migration wird der aktuelle Datenbestand gesichert. Dieser befindet
-                sich im Ordner "backup" unterhalb von ${timetrack.path}.
+                Das Management der Datenbankänderungen erfolgt über Liquibase.
             </para>
         </sect2>
         <sect2>

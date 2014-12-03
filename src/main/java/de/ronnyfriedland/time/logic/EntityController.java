@@ -1,16 +1,18 @@
 package de.ronnyfriedland.time.logic;
 
+import java.sql.Connection;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.FlushModeType;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import liquibase.ClassLoaderFileOpener;
+import liquibase.Liquibase;
 import de.ronnyfriedland.time.entity.AbstractEntity;
 import de.ronnyfriedland.time.sort.SortParam;
 
@@ -46,7 +48,18 @@ public final class EntityController {
     private EntityController() {
         emf = Persistence.createEntityManagerFactory("timetrack");
         em = emf.createEntityManager();
-        em.setFlushMode(FlushModeType.COMMIT);
+
+        em.getTransaction().begin();
+        Connection connection = em.unwrap(Connection.class);
+
+        try {
+            Liquibase lb = new Liquibase("db/liquibase/changesets.xml", new ClassLoaderFileOpener(), connection);
+            lb.update("");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        em.getTransaction().commit();
     }
 
     /**

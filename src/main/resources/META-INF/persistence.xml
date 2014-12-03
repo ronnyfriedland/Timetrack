@@ -10,6 +10,7 @@
             <property name="javax.persistence.jdbc.url" value="jdbc:derby:${timetrack.path}/database/timetrack-database;create=true;dataEncryption=true;bootPassword=${timetrack.database.password}" />
             <property name="eclipselink.logging.level" value="OFF" />
             <property name="eclipselink.ddl-generation" value="create-tables" />
+            <property name="eclipselink.persistence-context.flush-mode" value="COMMIT" />
             <!-- Caching -->
             <property name="eclipselink.jdbc.cache-statements" value="true" />
             <property name="eclipselink.cache.type.default" value="SoftWeak" />

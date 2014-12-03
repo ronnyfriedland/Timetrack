@@ -14,7 +14,7 @@
         <timetrack.export.file>timetrack-export.xlsx</timetrack.export.file>
         <timetrack.popup.cron>0 0 8-18/2 ? * 2-6</timetrack.popup.cron>
         <timetrack.entryworkflow.cron>0 0/2 8-23 ? * 2-6</timetrack.entryworkflow.cron>
-        <timetrack.protocolwriter.cron>0 0/1 * ? * *</timetrack.protocolwriter.cron>
+        <timetrack.protocolwriter.cron>0 0/30 * ? * *</timetrack.protocolwriter.cron>
         <timetrack.popup.show>true</timetrack.popup.show>
         <timetrack.workflow.warn>7200</timetrack.workflow.warn>
         <timetrack.workflow.stop>14400</timetrack.workflow.stop>
