@@ -299,6 +299,8 @@ public final class TimeTrackUI {
             } catch (IOException e) {
                 LOG.log(Level.SEVERE, "Error reading logging.properties to configure logger.", e);
             }
+            // initialize database
+            EntityController.getInstance().migrateDb();
             // initialize quartz controller ...
             Map<String, Object> jobData = new HashMap<String, Object>();
             jobData.put("trayIcon", trayIcon);

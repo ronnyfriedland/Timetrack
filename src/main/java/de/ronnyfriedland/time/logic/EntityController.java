@@ -13,6 +13,8 @@ import javax.persistence.TypedQuery;
 
 import liquibase.ClassLoaderFileOpener;
 import liquibase.Liquibase;
+import liquibase.exception.JDBCException;
+import liquibase.exception.LiquibaseException;
 import de.ronnyfriedland.time.entity.AbstractEntity;
 import de.ronnyfriedland.time.sort.SortParam;
 
@@ -48,15 +50,22 @@ public final class EntityController {
     private EntityController() {
         emf = Persistence.createEntityManagerFactory("timetrack");
         em = emf.createEntityManager();
+    }
 
+    /**
+     * Migriert die Datenbank mit dem aktuellen Stand.
+     */
+    public void migrateDb() {
         em.getTransaction().begin();
         Connection connection = em.unwrap(Connection.class);
 
         try {
             Liquibase lb = new Liquibase("db/liquibase/changesets.xml", new ClassLoaderFileOpener(), connection);
             lb.update("");
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (JDBCException e) {
+            throw new RuntimeException("Error creating liquibase instance", e);
+        } catch (LiquibaseException e) {
+            throw new RuntimeException("Error during db migration", e);
         }
 
         em.getTransaction().commit();
