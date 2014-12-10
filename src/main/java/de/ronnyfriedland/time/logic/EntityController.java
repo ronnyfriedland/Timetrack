@@ -11,6 +11,8 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import liquibase.ClassLoaderFileOpener;
+import liquibase.CompositeFileOpener;
 import liquibase.FileSystemFileOpener;
 import liquibase.Liquibase;
 import liquibase.exception.JDBCException;
@@ -60,7 +62,8 @@ public final class EntityController {
         Connection connection = em.unwrap(Connection.class);
 
         try {
-            Liquibase lb = new Liquibase("db/liquibase/changesets.xml", new FileSystemFileOpener(), connection);
+            Liquibase lb = new Liquibase("db/liquibase/changesets.xml", new CompositeFileOpener(
+                    new ClassLoaderFileOpener(), new FileSystemFileOpener()), connection);
             lb.update("");
         } catch (JDBCException e) {
             throw new RuntimeException("Error creating liquibase instance", e);
