@@ -11,7 +11,7 @@ import de.ronnyfriedland.time.entity.Protocol;
 
 /**
  * Controller für das Erzeugen von {@link Protocol} Einträgen.
- * 
+ *
  * @author Ronny Friedland
  */
 public final class ProtocolController {
@@ -24,7 +24,7 @@ public final class ProtocolController {
 
     /**
      * Liefert eine Instanz von {@link EntityController}.
-     * 
+     *
      * @return the {@link EntityController}
      */
     public static ProtocolController getInstance() {
@@ -42,7 +42,7 @@ public final class ProtocolController {
 
     /**
      * Fügt ein neues {@link Protocol} hinzu.
-     * 
+     *
      * @param protocol die {@link Protocol} Instanz
      */
     public void writeProtocol(final Protocol protocol) {
@@ -54,12 +54,12 @@ public final class ProtocolController {
 
     /**
      * Entfernt die angegebenen {@link Protocol} Einträge.
-     * 
+     *
      * @param protocol die zu entfernenden {@link Protocol} Einträge.
      */
     public void removeProtocol(final Protocol... protocol) {
         if (LOG.isLoggable(Level.FINE)) {
-            LOG.fine("Remove protocol(s): " + protocol);
+            LOG.fine("Remove protocol(s): " + Arrays.toString(protocol));
         }
         if (null != protocol) {
             protocolEntries.removeAll(Arrays.asList(protocol));
@@ -68,7 +68,7 @@ public final class ProtocolController {
 
     /**
      * Liefert alle {@link Protocol} Einträge zurück.
-     * 
+     *
      * @return Liste der {@link Protocol} Einträge.
      */
     public Set<Protocol> getProtocols() {

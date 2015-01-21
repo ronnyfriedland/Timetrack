@@ -14,21 +14,21 @@ import de.ronnyfriedland.time.logic.ProtocolController;
 
 /**
  * Persistiert die vorhandenen {@link Protocol} Einträge.
- * 
+ *
  * @author Ronny Friedland
  */
 @DisallowConcurrentExecution
 public class ProtocolWriterJob extends AbstractJob {
     /** the name of the job */
-    public final static String JOB = "protocolwriterjob";
-    /** the trigger of the job */
-    public final static String TRIGGER = "protocolwritertrigger";
+    public static final String JOB = "protocolwriterjob";
+    /** the trigger of the trigger */
+    public static final String TRIGGER = "protocolwritertrigger";
     /** the logger for {@link ProtocolWriterJob} */
-    private final static Logger LOG = Logger.getLogger(ProtocolWriterJob.class.getName());
+    private static final Logger LOG = Logger.getLogger(ProtocolWriterJob.class.getName());
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
      */
     @Override
@@ -38,7 +38,7 @@ public class ProtocolWriterJob extends AbstractJob {
         }
 
         Set<Protocol> protocols = ProtocolController.getInstance().getProtocols();
-        if ((null != protocols) && (0 < protocols.size())) {
+        if (null != protocols && 0 < protocols.size()) {
             // persist
             EntityController.getInstance().create(protocols);
             // delete
@@ -50,6 +50,11 @@ public class ProtocolWriterJob extends AbstractJob {
         }
     }
 
+    /**
+     * @see de.ronnyfriedland.time.logic.jobs.AbstractJob#runOnShutdown()
+     *
+     * @return Boolean.TRUE falls ja, ansonsten Boolean.FALSE
+     */
     public static boolean runOnShutdown() {
         return true;
     }

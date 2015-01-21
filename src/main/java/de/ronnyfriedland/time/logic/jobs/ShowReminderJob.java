@@ -19,19 +19,21 @@ import de.ronnyfriedland.time.sort.SortParam.SortOrder;
 
 /**
  * Scheduler-Job für die Anzeige eines Hinweistextes.
- * 
+ *
  * @author Ronny Friedland
  */
 @DisallowConcurrentExecution
 public class ShowReminderJob extends AbstractJob {
-    public final static String JOB = "showpopupjob";
-    public final static String TRIGGER = "showpopuptrigger";
-
+    /** the name of the job */
+    public static final String JOB = "showpopupjob";
+    /** the name of the trigger */
+    public static final String TRIGGER = "showpopuptrigger";
+    /** the logger for {@link ShowReminderJob} */
     private static final Logger LOG = Logger.getLogger(ShowReminderJob.class.getName());
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
      */
     @Override
@@ -48,10 +50,10 @@ public class ShowReminderJob extends AbstractJob {
         Collection<Entry> entries = EntityController.getInstance().findAll(Entry.class,
                 new SortParam("date", SortOrder.DESC), 1, true);
         Entry lastEntry = null;
-        if ((null != entries) && (0 < entries.size())) {
+        if (null != entries && 0 < entries.size()) {
             lastEntry = entries.iterator().next();
         }
-        if ((null == lastEntry) || (lastEntry.getLastModifiedDate().before(previousFireTime))) {
+        if (null == lastEntry || lastEntry.getLastModifiedDate().before(previousFireTime)) {
             if (LOG.isLoggable(Level.INFO)) {
                 LOG.info("Show popup ... ");
             }

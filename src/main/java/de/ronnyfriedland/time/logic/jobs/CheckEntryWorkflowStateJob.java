@@ -24,33 +24,36 @@ import de.ronnyfriedland.time.logic.EntityController;
 
 /**
  * Scheduler-Job für die Prüfung des Status.
- * 
+ *
  * @author Ronny Friedland
  */
 @DisallowConcurrentExecution
 public class CheckEntryWorkflowStateJob extends AbstractJob {
 
-    public final static String JOB = "checkentryworkflowstatejob";
-    public final static String TRIGGER = "checkentryworkflowstate";
-
+    /** the name of the job */
+    public static final String JOB = "checkentryworkflowstatejob";
+    /** the name of the trigger */
+    public static final String TRIGGER = "checkentryworkflowstate";
+    /** the logger for {@link CheckEntryWorkflowStateJob} */
     private static final Logger LOG = Logger.getLogger(CheckEntryWorkflowStateJob.class.getName());
 
     /**
      * {@inheritDoc}
-     * 
+     *
+     * <ol>
+     * <li>Statustabelle abfragen, ob es einen Eintrag im Status 'OK' gibt, dessen lastModifiedDate < als x ist.</li>
+     * <li>Status auf WARN stellen</li>
+     * <li>Wenn lastModifiedDate < y ist, dann Hinweis bringen</li>
+     * <li>Wenn Status auf WARN steht und lastModifiedDate < y, dann Status auf STOPPED stellen und Hinweis bringen</li>
+     *
      * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
+     *
      */
     @Override
     public void execute(final JobExecutionContext context) throws JobExecutionException {
         if (LOG.isLoggable(Level.INFO)) {
             LOG.info("Executing ... " + getClass().getSimpleName());
         }
-        // 1. Statustabelle abfragen, ob es einen Eintrag im Status 'OK' gibt,
-        // dessen lastModifiedDate < als x ist.
-        // 2. Status auf WARN stellen
-        // 3. Wenn lastModifiedDate < y ist, dann Hinweis bringen
-        // 4. Wenn Status auf WARN steht und lastModifiedDate < y, dann Status
-        // auf STOPPED stellen und Hinweis bringen
 
         Integer x = Configurator.CONFIG.getInt(ConfiguratorKeys.WORKFLOW_WARN.getKey());
         Integer y = Configurator.CONFIG.getInt(ConfiguratorKeys.WORKFLOW_STOP.getKey());
@@ -94,26 +97,30 @@ public class CheckEntryWorkflowStateJob extends AbstractJob {
         }
     }
 
-    private Collection<String> getEntryStatesInStateWarnAndStop(Map<String, Object> params) {
+    private Collection<String> getEntryStatesInStateWarnAndStop(final Map<String, Object> params) {
         Set<String> entries = new HashSet<String>();
         Collection<EntryState> entryStates = EntityController.getInstance().findResultlistByParameter(EntryState.class,
                 EntryState.QUERY_FIND_BY_STATE_AND_STARTDATE, params);
         for (EntryState entryState : entryStates) {
-            entryState.setEnd(Calendar.getInstance().getTime());
-            entryState.setState(State.STOPPED);
-            EntityController.getInstance().update(entryState);
-
-            params = new HashMap<String, Object>();
-            params.put(Entry.PARAM_STATE, entryState);
-            Entry entry = EntityController.getInstance().findSingleResultByParameter(Entry.class,
-                    Entry.QUERY_FIND_BY_STATE, params);
-            entry.setDuration(EntryState.getDuration(entryState.getStart(), entryState.getEnd(), entry.getDuration()));
-
-            EntityController.getInstance().update(entry);
-
-            entries.add(entry.getDescription());
+            entries.add(stopEntryByEntryState(entryState).getDescription());
         }
         return entries;
+    }
+
+    private Entry stopEntryByEntryState(final EntryState entryState) {
+        entryState.setEnd(Calendar.getInstance().getTime());
+        entryState.setState(State.STOPPED);
+        EntityController.getInstance().update(entryState);
+
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put(Entry.PARAM_STATE, entryState);
+        Entry entry = EntityController.getInstance().findSingleResultByParameter(Entry.class,
+                Entry.QUERY_FIND_BY_STATE, params);
+        entry.setDuration(EntryState.getDuration(entryState.getStart(), entryState.getEnd(), entry.getDuration()));
+
+        EntityController.getInstance().update(entry);
+
+        return entry;
     }
 
     private Collection<String> setEntryStatesToWarn(final Map<String, Object> params) {

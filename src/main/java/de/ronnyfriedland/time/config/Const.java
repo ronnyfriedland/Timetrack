@@ -4,10 +4,16 @@ import java.awt.Color;
 
 /**
  * Allgemeine Konstanten für die Anwendung
- * 
+ *
  * @author Ronny Friedland
  */
-public class Const {
+public final class Const {
+
+    /**
+     * Creates a new {@link Const} instance.
+     */
+    private Const() {
+    }
 
     /** Hintergrundfarbe */
     public static final Color COLOR_BACKGROUND = new Color(250, 250, 250);

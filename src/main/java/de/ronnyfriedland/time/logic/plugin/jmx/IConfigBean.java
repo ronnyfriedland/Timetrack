@@ -6,21 +6,20 @@ import de.ronnyfriedland.time.logic.plugin.PluginException;
 
 /**
  * Interface Definition für die Darstellung der Anwendungskonfiguration.
- * 
+ *
  * @author Ronny Friedland
  */
 public interface IConfigBean {
     /**
      * Liefert die Konfiguration der Anwendung
-     * 
+     *
      * @return Liste der Konfigurationsparameter
-     * @throws PluginException
-     *             bei einem Fehler
+     * @throws PluginException bei einem Fehler
      */
-    public CompositeData getConfiguration() throws PluginException;
+    CompositeData getConfiguration() throws PluginException;
 
     /**
      * Ausführen von GC
      */
-    public void gc();
+    void gc();
 }

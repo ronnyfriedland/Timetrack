@@ -79,7 +79,7 @@ public class ExportFrame extends AbstractFrame {
     private static final long serialVersionUID = -8738367859388084898L;
 
     private static final String[] TABLE_HEADERS = new String[] { null, Messages.DATE.getMessage(),
-            Messages.DESCRIPTION.getMessage(), Messages.PROJECT_NAME.getMessage(), Messages.DURATION.getMessage() };
+        Messages.DESCRIPTION.getMessage(), Messages.PROJECT_NAME.getMessage(), Messages.DURATION.getMessage() };
 
     private final JLabel labelDate = new JLabel(Messages.START_DATE.getMessage());
     private final DateChooserPanel dateChooser = new DateChooserPanel();
@@ -93,7 +93,7 @@ public class ExportFrame extends AbstractFrame {
     private final JButton export = new JButton(Messages.EXPORT.getMessage());
     private final JLabel summary = new JLabel();
     private final JLabel labelProjects = new JLabel(Messages.PROJECT_FILER.getMessage());
-    private final JComboBox projects = new JComboBox();
+    private final JComboBox<String> projects = new JComboBox<String>();
     private final JPopupMenu popup = new JPopupMenu();
 
     private final DefaultTableModel tableModel = new DefaultTableModel(TABLE_HEADERS, 0) {
@@ -109,7 +109,7 @@ public class ExportFrame extends AbstractFrame {
         public Component getTableCellRendererComponent(final JTable table, final Object value,
                 final boolean isSelected, final boolean hasFocus, final int row, final int column) {
             JTextField component = new JTextField();
-            if ((row % 2) == 0) {
+            if (row % 2 == 0) {
                 component.setBackground(Color.WHITE);
             } else {
                 component.setBackground(new Color(225, 225, 225));
@@ -141,7 +141,7 @@ public class ExportFrame extends AbstractFrame {
                 col.setMinWidth(0);
                 col.setMaxWidth(0);
             }
-            if ((1 == columnIndex) || (4 == columnIndex)) { // date and duration
+            if (1 == columnIndex || 4 == columnIndex) { // date and duration
                 col.setWidth(200);
                 col.setMinWidth(200);
                 col.setMaxWidth(200);
@@ -171,7 +171,7 @@ public class ExportFrame extends AbstractFrame {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see de.ronnyfriedland.time.ui.dialog.AbstractFrame#createUI()
      */
     @Override
@@ -309,156 +309,156 @@ public class ExportFrame extends AbstractFrame {
 
         GroupLayout gl_filterPane = new GroupLayout(filterPane);
         gl_filterPane
-                .setHorizontalGroup(gl_filterPane
-                        .createParallelGroup(Alignment.LEADING)
+        .setHorizontalGroup(gl_filterPane
+                .createParallelGroup(Alignment.LEADING)
+                .addGroup(
+                        gl_filterPane
+                        .createSequentialGroup()
+                        .addGap(33)
                         .addGroup(
                                 gl_filterPane
-                                        .createSequentialGroup()
-                                        .addGap(33)
+                                .createParallelGroup(Alignment.LEADING)
+                                .addComponent(labelDate)
+                                .addGroup(
+                                        gl_filterPane
+                                        .createParallelGroup(Alignment.LEADING, false)
                                         .addGroup(
                                                 gl_filterPane
-                                                        .createParallelGroup(Alignment.LEADING)
-                                                        .addComponent(labelDate)
+                                                .createSequentialGroup()
+                                                .addComponent(
+                                                        dateChooser,
+                                                        GroupLayout.PREFERRED_SIZE,
+                                                        185,
+                                                        GroupLayout.PREFERRED_SIZE)
+                                                        .addGap(32)
                                                         .addGroup(
                                                                 gl_filterPane
+                                                                .createParallelGroup(
+                                                                        Alignment.LEADING)
+                                                                        .addComponent(
+                                                                                preview,
+                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                Short.MAX_VALUE)
+                                                                                .addComponent(
+                                                                                        export,
+                                                                                        Alignment.TRAILING,
+                                                                                        GroupLayout.DEFAULT_SIZE,
+                                                                                        331,
+                                                                                        Short.MAX_VALUE)
+                                                                                        .addGroup(
+                                                                                                gl_filterPane
+                                                                                                .createSequentialGroup()
+                                                                                                .addGroup(
+                                                                                                        gl_filterPane
+                                                                                                        .createParallelGroup(
+                                                                                                                Alignment.LEADING)
+                                                                                                                .addComponent(
+                                                                                                                        labelDays,
+                                                                                                                        GroupLayout.PREFERRED_SIZE,
+                                                                                                                        110,
+                                                                                                                        GroupLayout.PREFERRED_SIZE)
+                                                                                                                        .addComponent(
+                                                                                                                                labelSelectedDays,
+                                                                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                                                                129,
+                                                                                                                                GroupLayout.PREFERRED_SIZE)
+                                                                                                                                .addComponent(
+                                                                                                                                        days,
+                                                                                                                                        GroupLayout.PREFERRED_SIZE,
+                                                                                                                                        156,
+                                                                                                                                        GroupLayout.PREFERRED_SIZE))
+                                                                                                                                        .addGap(31)
+                                                                                                                                        .addGroup(
+                                                                                                                                                gl_filterPane
+                                                                                                                                                .createParallelGroup(
+                                                                                                                                                        Alignment.LEADING)
+                                                                                                                                                        .addComponent(
+                                                                                                                                                                labelDelete)
+                                                                                                                                                                .addComponent(
+                                                                                                                                                                        deleteNo)
+                                                                                                                                                                        .addComponent(
+                                                                                                                                                                                deleteYes,
+                                                                                                                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                                                                                                                129,
+                                                                                                                                                                                GroupLayout.PREFERRED_SIZE))
+                                                                                                                                                                                .addGap(9))))
+                                                                                                                                                                                .addGroup(
+                                                                                                                                                                                        gl_filterPane
+                                                                                                                                                                                        .createSequentialGroup()
+                                                                                                                                                                                        .addComponent(labelProjects)
+                                                                                                                                                                                        .addGap(18)
+                                                                                                                                                                                        .addComponent(
+                                                                                                                                                                                                projects,
+                                                                                                                                                                                                0,
+                                                                                                                                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                                                                                                                                Short.MAX_VALUE))))
+                                                                                                                                                                                                .addContainerGap(62, Short.MAX_VALUE)));
+        gl_filterPane
+        .setVerticalGroup(gl_filterPane
+                .createParallelGroup(Alignment.LEADING)
+                .addGroup(
+                        gl_filterPane
+                        .createSequentialGroup()
+                        .addContainerGap(20, Short.MAX_VALUE)
+                        .addGroup(
+                                gl_filterPane
+                                .createParallelGroup(Alignment.BASELINE)
+                                .addComponent(labelProjects)
+                                .addComponent(projects, GroupLayout.PREFERRED_SIZE,
+                                        GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                        .addGap(18)
+                                        .addGroup(
+                                                gl_filterPane
+                                                .createParallelGroup(Alignment.BASELINE)
+                                                .addComponent(labelDate)
+                                                .addComponent(labelDays, GroupLayout.PREFERRED_SIZE, 25,
+                                                        GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(labelDelete, GroupLayout.PREFERRED_SIZE, 25,
+                                                                GroupLayout.PREFERRED_SIZE))
+                                                                .addGap(18)
+                                                                .addGroup(
+                                                                        gl_filterPane
                                                                         .createParallelGroup(Alignment.LEADING, false)
                                                                         .addGroup(
                                                                                 gl_filterPane
-                                                                                        .createSequentialGroup()
-                                                                                        .addComponent(
-                                                                                                dateChooser,
-                                                                                                GroupLayout.PREFERRED_SIZE,
-                                                                                                185,
-                                                                                                GroupLayout.PREFERRED_SIZE)
-                                                                                        .addGap(32)
-                                                                                        .addGroup(
-                                                                                                gl_filterPane
-                                                                                                        .createParallelGroup(
-                                                                                                                Alignment.LEADING)
-                                                                                                        .addComponent(
-                                                                                                                preview,
-                                                                                                                GroupLayout.DEFAULT_SIZE,
-                                                                                                                GroupLayout.DEFAULT_SIZE,
-                                                                                                                Short.MAX_VALUE)
-                                                                                                        .addComponent(
-                                                                                                                export,
-                                                                                                                Alignment.TRAILING,
-                                                                                                                GroupLayout.DEFAULT_SIZE,
-                                                                                                                331,
-                                                                                                                Short.MAX_VALUE)
+                                                                                .createSequentialGroup()
+                                                                                .addGroup(
+                                                                                        gl_filterPane
+                                                                                        .createParallelGroup(
+                                                                                                Alignment.LEADING)
+                                                                                                .addComponent(
+                                                                                                        days,
+                                                                                                        GroupLayout.PREFERRED_SIZE,
+                                                                                                        GroupLayout.DEFAULT_SIZE,
+                                                                                                        GroupLayout.PREFERRED_SIZE)
+                                                                                                        .addComponent(deleteNo))
                                                                                                         .addGroup(
                                                                                                                 gl_filterPane
-                                                                                                                        .createSequentialGroup()
+                                                                                                                .createParallelGroup(
+                                                                                                                        Alignment.LEADING)
                                                                                                                         .addGroup(
                                                                                                                                 gl_filterPane
-                                                                                                                                        .createParallelGroup(
-                                                                                                                                                Alignment.LEADING)
-                                                                                                                                        .addComponent(
-                                                                                                                                                labelDays,
-                                                                                                                                                GroupLayout.PREFERRED_SIZE,
-                                                                                                                                                110,
-                                                                                                                                                GroupLayout.PREFERRED_SIZE)
-                                                                                                                                        .addComponent(
-                                                                                                                                                labelSelectedDays,
-                                                                                                                                                GroupLayout.PREFERRED_SIZE,
-                                                                                                                                                129,
-                                                                                                                                                GroupLayout.PREFERRED_SIZE)
-                                                                                                                                        .addComponent(
-                                                                                                                                                days,
-                                                                                                                                                GroupLayout.PREFERRED_SIZE,
-                                                                                                                                                156,
-                                                                                                                                                GroupLayout.PREFERRED_SIZE))
-                                                                                                                        .addGap(31)
-                                                                                                                        .addGroup(
-                                                                                                                                gl_filterPane
-                                                                                                                                        .createParallelGroup(
-                                                                                                                                                Alignment.LEADING)
-                                                                                                                                        .addComponent(
-                                                                                                                                                labelDelete)
-                                                                                                                                        .addComponent(
-                                                                                                                                                deleteNo)
-                                                                                                                                        .addComponent(
-                                                                                                                                                deleteYes,
-                                                                                                                                                GroupLayout.PREFERRED_SIZE,
-                                                                                                                                                129,
-                                                                                                                                                GroupLayout.PREFERRED_SIZE))
-                                                                                                                        .addGap(9))))
-                                                                        .addGroup(
-                                                                                gl_filterPane
-                                                                                        .createSequentialGroup()
-                                                                                        .addComponent(labelProjects)
-                                                                                        .addGap(18)
-                                                                                        .addComponent(
-                                                                                                projects,
-                                                                                                0,
-                                                                                                GroupLayout.DEFAULT_SIZE,
-                                                                                                Short.MAX_VALUE))))
-                                        .addContainerGap(62, Short.MAX_VALUE)));
-        gl_filterPane
-                .setVerticalGroup(gl_filterPane
-                        .createParallelGroup(Alignment.LEADING)
-                        .addGroup(
-                                gl_filterPane
-                                        .createSequentialGroup()
-                                        .addContainerGap(20, Short.MAX_VALUE)
-                                        .addGroup(
-                                                gl_filterPane
-                                                        .createParallelGroup(Alignment.BASELINE)
-                                                        .addComponent(labelProjects)
-                                                        .addComponent(projects, GroupLayout.PREFERRED_SIZE,
-                                                                GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                        .addGap(18)
-                                        .addGroup(
-                                                gl_filterPane
-                                                        .createParallelGroup(Alignment.BASELINE)
-                                                        .addComponent(labelDate)
-                                                        .addComponent(labelDays, GroupLayout.PREFERRED_SIZE, 25,
-                                                                GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(labelDelete, GroupLayout.PREFERRED_SIZE, 25,
-                                                                GroupLayout.PREFERRED_SIZE))
-                                        .addGap(18)
-                                        .addGroup(
-                                                gl_filterPane
-                                                        .createParallelGroup(Alignment.LEADING, false)
-                                                        .addGroup(
-                                                                gl_filterPane
-                                                                        .createSequentialGroup()
-                                                                        .addGroup(
-                                                                                gl_filterPane
-                                                                                        .createParallelGroup(
-                                                                                                Alignment.LEADING)
-                                                                                        .addComponent(
-                                                                                                days,
-                                                                                                GroupLayout.PREFERRED_SIZE,
-                                                                                                GroupLayout.DEFAULT_SIZE,
-                                                                                                GroupLayout.PREFERRED_SIZE)
-                                                                                        .addComponent(deleteNo))
-                                                                        .addGroup(
-                                                                                gl_filterPane
-                                                                                        .createParallelGroup(
-                                                                                                Alignment.LEADING)
-                                                                                        .addGroup(
-                                                                                                gl_filterPane
-                                                                                                        .createSequentialGroup()
-                                                                                                        .addGap(8)
-                                                                                                        .addComponent(
-                                                                                                                labelSelectedDays,
-                                                                                                                GroupLayout.PREFERRED_SIZE,
-                                                                                                                25,
-                                                                                                                GroupLayout.PREFERRED_SIZE))
-                                                                                        .addGroup(
-                                                                                                gl_filterPane
-                                                                                                        .createSequentialGroup()
-                                                                                                        .addPreferredGap(
-                                                                                                                ComponentPlacement.RELATED)
-                                                                                                        .addComponent(
-                                                                                                                deleteYes)))
-                                                                        .addPreferredGap(ComponentPlacement.RELATED,
-                                                                                24, Short.MAX_VALUE)
-                                                                        .addComponent(preview).addGap(18)
-                                                                        .addComponent(export))
-                                                        .addComponent(dateChooser, GroupLayout.PREFERRED_SIZE, 162,
-                                                                GroupLayout.PREFERRED_SIZE)).addGap(25)));
+                                                                                                                                .createSequentialGroup()
+                                                                                                                                .addGap(8)
+                                                                                                                                .addComponent(
+                                                                                                                                        labelSelectedDays,
+                                                                                                                                        GroupLayout.PREFERRED_SIZE,
+                                                                                                                                        25,
+                                                                                                                                        GroupLayout.PREFERRED_SIZE))
+                                                                                                                                        .addGroup(
+                                                                                                                                                gl_filterPane
+                                                                                                                                                .createSequentialGroup()
+                                                                                                                                                .addPreferredGap(
+                                                                                                                                                        ComponentPlacement.RELATED)
+                                                                                                                                                        .addComponent(
+                                                                                                                                                                deleteYes)))
+                                                                                                                                                                .addPreferredGap(ComponentPlacement.RELATED,
+                                                                                                                                                                        24, Short.MAX_VALUE)
+                                                                                                                                                                        .addComponent(preview).addGap(18)
+                                                                                                                                                                        .addComponent(export))
+                                                                                                                                                                        .addComponent(dateChooser, GroupLayout.PREFERRED_SIZE, 162,
+                                                                                                                                                                                GroupLayout.PREFERRED_SIZE)).addGap(25)));
         filterPane.setLayout(gl_filterPane);
         table.setModel(tableModel);
         table.setDefaultRenderer(Object.class, tableCellRenderer);
@@ -468,7 +468,7 @@ public class ExportFrame extends AbstractFrame {
         table.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(final MouseEvent e) {
-                if ((MouseEvent.BUTTON1 == e.getButton()) && (2 == e.getClickCount())) {
+                if (MouseEvent.BUTTON1 == e.getButton() && 2 == e.getClickCount()) {
                     int selectedRow = table.getSelectedRow();
                     String uuid = (String) table.getValueAt(selectedRow, 0);
                     Entry entry = EntityController.getInstance().findById(Entry.class, uuid);
@@ -491,7 +491,7 @@ public class ExportFrame extends AbstractFrame {
 
     /**
      * Liefert das Anfangsdatum für den Export.
-     * 
+     *
      * @return Calendar
      */
     private Calendar getStartDate() {
@@ -506,7 +506,7 @@ public class ExportFrame extends AbstractFrame {
 
     /**
      * Liefert das Enddatum für den Export.
-     * 
+     *
      * @return Calendar
      */
     private Calendar getEndDate() {
@@ -534,7 +534,7 @@ public class ExportFrame extends AbstractFrame {
 
     /**
      * Liefert die gespeicherten Daten anhand des Filters
-     * 
+     *
      * @return Liste der Einträge
      */
     private Collection<Entry> getFilteredData(final String projectName, final Calendar from, final Calendar to) {
@@ -558,7 +558,7 @@ public class ExportFrame extends AbstractFrame {
 
     /**
      * Liefert die gespeicherten Daten anhand des Filters
-     * 
+     *
      * @return Liste der Einträge
      */
     private Collection<Entry> getFilteredData(final String query, final Map<String, Object> params) {

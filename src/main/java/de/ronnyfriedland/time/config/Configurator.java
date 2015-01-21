@@ -7,12 +7,13 @@ import org.apache.commons.configuration.SystemConfiguration;
 
 /**
  * Zentrale Konfigurationsklasse.
- * 
+ *
  * @author Ronny Friedland
  */
 public final class Configurator {
 
-    public final static CompositeConfiguration CONFIG = new CompositeConfiguration();
+    /** the configuration of the application */
+    public static final CompositeConfiguration CONFIG = new CompositeConfiguration();
     static {
         try {
             CONFIG.addConfiguration(new SystemConfiguration());
@@ -54,7 +55,7 @@ public final class Configurator {
 
         /**
          * Liefert den Schlüssel des Konfigurationsparameters
-         * 
+         *
          * @return Konfigurationsparameter
          */
         public String getKey() {
