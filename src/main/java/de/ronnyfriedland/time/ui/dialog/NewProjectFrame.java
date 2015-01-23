@@ -93,6 +93,11 @@ public class NewProjectFrame extends AbstractFrame {
         createUI();
     }
 
+    /**
+     * Creates a new {@link NewProjectFrame} instance.
+     * 
+     * @param project the project to display
+     */
     public NewProjectFrame(final Project project) {
         this();
         uuid = project.getUuid();
@@ -114,7 +119,7 @@ public class NewProjectFrame extends AbstractFrame {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see de.ronnyfriedland.time.ui.dialog.AbstractFrame#createUI()
      */
     @Override
@@ -139,7 +144,7 @@ public class NewProjectFrame extends AbstractFrame {
         name.setInputVerifier(new InputVerifier() {
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see javax.swing.InputVerifier#verify(javax.swing.JComponent)
              */
             @Override
@@ -284,6 +289,11 @@ public class NewProjectFrame extends AbstractFrame {
         getContentPane().add(delete, gbc_delete);
     }
 
+    /**
+     * The main method
+     *
+     * @param args the arguments
+     */
     public static void main(final String[] args) {
         new NewProjectFrame().setVisible(true);
     }

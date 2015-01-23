@@ -22,7 +22,7 @@ import de.ronnyfriedland.time.sort.SortParam;
 
 /**
  * Controller für den Zugriff auf die Persistenz-Schicht.
- * 
+ *
  * @author Ronny Friedland
  */
 public final class EntityController {
@@ -34,7 +34,7 @@ public final class EntityController {
 
     /**
      * Liefert eine Instanz von {@link EntityController}.
-     * 
+     *
      * @return the {@link EntityController}
      */
     public static EntityController getInstance() {
@@ -76,7 +76,8 @@ public final class EntityController {
 
     /**
      * Ermittelt einen Datensatz anhand der übergebenen UUID.
-     * 
+     *
+     * @param <T> type
      * @param clazz Typ
      * @param uuid eindeutige ID des Datensatz
      * @return Datensatz
@@ -88,7 +89,8 @@ public final class EntityController {
     /**
      * Ermittelt alle Datensätze. Es kann entschieden werden, ob deaktivierte Datensätze ebenfalls berücksichtigt werden
      * sollen.
-     * 
+     *
+     * @param <T> type
      * @param clazz Typ
      * @param includeDisabled Flag ob deaktiverte Datensätze berücksichtigt werden sollen.
      * @return Ergebnisliste
@@ -105,7 +107,8 @@ public final class EntityController {
     /**
      * Ermittelt alle Datensätze (sortiert). Die Anzahl der Ergebnisse kann eingeschränkt werden. Es kann entschieden
      * werden, ob deaktivierte Datensätze ebenfalls berücksichtigt werden sollen.
-     * 
+     *
+     * @param <T> type
      * @param clazz Typ
      * @param sortParam Sortierung
      * @param max Anzahl maximaler Einträge
@@ -129,7 +132,8 @@ public final class EntityController {
     /**
      * Ermittelt alle Datensätze (sortiert). Es kann entschieden werden, ob deaktivierte Datensätze ebenfalls
      * berücksichtigt werden sollen.
-     * 
+     *
+     * @param <T> type
      * @param clazz Typ
      * @param sortParam Sortierung
      * @param includeDisabled Flag ob deaktiverte Datensätze berücksichtigt werden sollen.
@@ -149,7 +153,8 @@ public final class EntityController {
 
     /**
      * Liefert die Ergebnisse einer NamedQuery.
-     * 
+     *
+     * @param <T> type
      * @param clazz Typ
      * @param namedQuery Name der Query
      * @param parameters Abfragekriterien / -parameter
@@ -169,7 +174,8 @@ public final class EntityController {
 
     /**
      * Liefert die Ergebnisse einer NamedQuery.
-     * 
+     *
+     * @param <T> type
      * @param clazz Typ
      * @param namedQuery Name der Query
      * @param parameters Abfragekriterien / -parameter
@@ -189,7 +195,8 @@ public final class EntityController {
 
     /**
      * Löscht alle Datensätze eines Typs.
-     * 
+     *
+     * @param <T> type
      * @param clazz Typ
      * @return Anzahl der gelöschten Datensätze
      */
@@ -211,7 +218,8 @@ public final class EntityController {
 
     /**
      * Erstellt einen Datesatz.
-     * 
+     *
+     * @param <T> type
      * @param entity {@link AbstractEntity}
      */
     public <T> void create(final T entity) {
@@ -229,8 +237,9 @@ public final class EntityController {
 
     /**
      * Erstellt eine Liste von Datesätzen.
-     * 
-     * @param eentitiesntity list of {@link AbstractEntity}
+     *
+     * @param <T> type
+     * @param entities list of {@link AbstractEntity}
      */
     public <T> void create(final Collection<T> entities) {
         try {
@@ -249,7 +258,8 @@ public final class EntityController {
 
     /**
      * Aktualisiert einen Datensatz.
-     * 
+     *
+     * @param <T> type
      * @param entity {@link AbstractEntity}
      */
     public <T> void update(final T entity) {
@@ -267,7 +277,8 @@ public final class EntityController {
 
     /**
      * Löscht einen Datensatz
-     * 
+     *
+     * @param <T> type
      * @param entity {@link AbstractEntity}
      */
     public <T> void delete(final T entity) {
@@ -285,7 +296,8 @@ public final class EntityController {
 
     /**
      * Löscht einen Datesatz.
-     * 
+     *
+     * @param <T> type
      * @param entity {@link AbstractEntity}
      */
     public <T> void deleteDetached(final T entity) {

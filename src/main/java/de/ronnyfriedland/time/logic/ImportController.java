@@ -21,23 +21,21 @@ import de.ronnyfriedland.time.entity.Project;
 
 /**
  * Controller für den Datenimport aus einer XSLS-Arbeitsmappe.
- * 
+ *
  * @author Ronny Friedland
  */
 public final class ImportController {
 
+    /** Name of the first tab */
     public static final String TAB_OVERVIEW = "Überblick";
 
     /**
      * Laden einer Arbeitsmappe
-     * 
-     * @param path
-     *            der Pfad zur Datei
-     * @param file
-     *            Dateiname
+     *
+     * @param path der Pfad zur Datei
+     * @param file Dateiname
      * @return {@link Workbook} Instanz
-     * @throws IOException
-     *             Fehler beim Dateisystemzugriff
+     * @throws IOException Fehler beim Dateisystemzugriff
      */
     public Workbook loadWorkbook(final String path, final String file) throws IOException {
         if (!new File(path).exists()) {
@@ -51,12 +49,10 @@ public final class ImportController {
 
     /**
      * Laden der Daten eines Arbeitsblatts
-     * 
-     * @param wb
-     *            {@link Workbook} Instanz
+     *
+     * @param wb {@link Workbook} Instanz
      * @return die Daten auf dem Arbeitsblatt
-     * @throws IOException
-     *             Fehler beim Dateisystemzugriff
+     * @throws IOException Fehler beim Dateisystemzugriff
      */
     public Collection<Entry> loadSheet(final Workbook wb) throws IOException {
         Collection<Entry> entries = new ArrayList<Entry>();
@@ -65,8 +61,8 @@ public final class ImportController {
         for (int i = 0; i < numberOfSheets; i++) {
             Sheet sheet = wb.getSheetAt(i);
             if (!TAB_OVERVIEW.equalsIgnoreCase(sheet.getSheetName())) { // skip
-                                                                        // overview
-                                                                        // tab
+                // overview
+                // tab
                 Iterator<Row> rowIter = sheet.iterator();
                 while (rowIter.hasNext()) {
                     Row row = rowIter.next();

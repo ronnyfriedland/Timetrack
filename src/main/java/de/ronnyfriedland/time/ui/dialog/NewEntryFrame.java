@@ -131,6 +131,11 @@ public class NewEntryFrame extends AbstractFrame {
         loadProjectListData(false);
     }
 
+    /**
+     * Creates a new {@link NewEntryFrame} instance.
+     *
+     * @param entry the entry to load
+     */
     public NewEntryFrame(final Entry entry) {
         this();
         uuid = entry.getUuid();
@@ -162,7 +167,7 @@ public class NewEntryFrame extends AbstractFrame {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see de.ronnyfriedland.time.ui.dialog.AbstractFrame#createUI()
      */
     @Override
@@ -194,7 +199,7 @@ public class NewEntryFrame extends AbstractFrame {
         date.setInputVerifier(new InputVerifier() {
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see javax.swing.InputVerifier#verify(javax.swing.JComponent)
              */
             @Override
@@ -230,7 +235,7 @@ public class NewEntryFrame extends AbstractFrame {
         description.setInputVerifier(new InputVerifier() {
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see javax.swing.InputVerifier#verify(javax.swing.JComponent)
              */
             @Override
@@ -258,7 +263,7 @@ public class NewEntryFrame extends AbstractFrame {
         duration.setInputVerifier(new InputVerifier() {
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see javax.swing.InputVerifier#verify(javax.swing.JComponent)
              */
             @Override
@@ -286,7 +291,7 @@ public class NewEntryFrame extends AbstractFrame {
         projects.setInputVerifier(new InputVerifier() {
             /**
              * {@inheritDoc}
-             * 
+             *
              * @see javax.swing.InputVerifier#verify(javax.swing.JComponent)
              */
             @Override
@@ -307,7 +312,7 @@ public class NewEntryFrame extends AbstractFrame {
         projects.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(final MouseEvent e) {
-                if ((e.getClickCount() == 2) && (null != projects.getSelectedValue())) {
+                if (e.getClickCount() == 2 && null != projects.getSelectedValue()) {
                     String projectUuid = ((ProjectData) projects.getSelectedValue()).projectUuid;
                     Project project = EntityController.getInstance().findById(Project.class, projectUuid);
                     new NewProjectFrame(project).setVisible(true);
@@ -416,161 +421,161 @@ public class NewEntryFrame extends AbstractFrame {
         });
         GroupLayout groupLayout = new GroupLayout(getContentPane());
         groupLayout
-                .setHorizontalGroup(groupLayout
-                        .createParallelGroup(Alignment.LEADING)
+        .setHorizontalGroup(groupLayout
+                .createParallelGroup(Alignment.LEADING)
+                .addGroup(
+                        groupLayout
+                        .createSequentialGroup()
+                        .addGap(18)
                         .addGroup(
                                 groupLayout
+                                .createParallelGroup(Alignment.LEADING)
+                                .addGroup(
+                                        groupLayout
                                         .createSequentialGroup()
+                                        .addGroup(
+                                                groupLayout
+                                                .createParallelGroup(
+                                                        Alignment.LEADING)
+                                                        .addGroup(
+                                                                groupLayout
+                                                                .createSequentialGroup()
+                                                                .addComponent(
+                                                                        save,
+                                                                        GroupLayout.PREFERRED_SIZE,
+                                                                        192,
+                                                                        GroupLayout.PREFERRED_SIZE)
+                                                                        .addGap(16)
+                                                                        .addComponent(
+                                                                                start,
+                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                24,
+                                                                                GroupLayout.PREFERRED_SIZE)
+                                                                                .addPreferredGap(
+                                                                                        ComponentPlacement.RELATED,
+                                                                                        21,
+                                                                                        Short.MAX_VALUE)
+                                                                                        .addComponent(
+                                                                                                stop,
+                                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                                24,
+                                                                                                GroupLayout.PREFERRED_SIZE))
+                                                                                                .addComponent(
+                                                                                                        delete,
+                                                                                                        Alignment.TRAILING,
+                                                                                                        GroupLayout.DEFAULT_SIZE,
+                                                                                                        277, Short.MAX_VALUE))
+                                                                                                        .addGap(18)
+                                                                                                        .addGroup(
+                                                                                                                groupLayout
+                                                                                                                .createParallelGroup(
+                                                                                                                        Alignment.TRAILING)
+                                                                                                                        .addComponent(
+                                                                                                                                refresh,
+                                                                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                                                                269,
+                                                                                                                                GroupLayout.PREFERRED_SIZE)
+                                                                                                                                .addComponent(
+                                                                                                                                        showDisabledProjects,
+                                                                                                                                        GroupLayout.PREFERRED_SIZE,
+                                                                                                                                        263,
+                                                                                                                                        GroupLayout.PREFERRED_SIZE)))
+                                                                                                                                        .addComponent(scrollPaneProjects, GroupLayout.DEFAULT_SIZE,
+                                                                                                                                                564, Short.MAX_VALUE)
+                                                                                                                                                .addGroup(
+                                                                                                                                                        groupLayout
+                                                                                                                                                        .createSequentialGroup()
+                                                                                                                                                        .addGroup(
+                                                                                                                                                                groupLayout
+                                                                                                                                                                .createParallelGroup(
+                                                                                                                                                                        Alignment.TRAILING,
+                                                                                                                                                                        false)
+                                                                                                                                                                        .addComponent(
+                                                                                                                                                                                labelDescription,
+                                                                                                                                                                                Alignment.LEADING,
+                                                                                                                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                                                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                                                                                                                Short.MAX_VALUE)
+                                                                                                                                                                                .addComponent(
+                                                                                                                                                                                        labelDuration,
+                                                                                                                                                                                        Alignment.LEADING,
+                                                                                                                                                                                        GroupLayout.DEFAULT_SIZE,
+                                                                                                                                                                                        265, Short.MAX_VALUE)
+                                                                                                                                                                                        .addComponent(
+                                                                                                                                                                                                labelDate,
+                                                                                                                                                                                                Alignment.LEADING,
+                                                                                                                                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                                                                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                                                                                                                                Short.MAX_VALUE))
+                                                                                                                                                                                                .addGap(18)
+                                                                                                                                                                                                .addGroup(
+                                                                                                                                                                                                        groupLayout
+                                                                                                                                                                                                        .createParallelGroup(
+                                                                                                                                                                                                                Alignment.TRAILING)
+                                                                                                                                                                                                                .addComponent(description,
+                                                                                                                                                                                                                        Alignment.LEADING, 276,
+                                                                                                                                                                                                                        281, Short.MAX_VALUE)
+                                                                                                                                                                                                                        .addComponent(
+                                                                                                                                                                                                                                date,
+                                                                                                                                                                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                                                                                                                                                                281, Short.MAX_VALUE)
+                                                                                                                                                                                                                                .addComponent(
+                                                                                                                                                                                                                                        duration,
+                                                                                                                                                                                                                                        Alignment.LEADING,
+                                                                                                                                                                                                                                        GroupLayout.DEFAULT_SIZE,
+                                                                                                                                                                                                                                        281, Short.MAX_VALUE))))
+                                                                                                                                                                                                                                        .addContainerGap()));
+        groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(
+                groupLayout
+                .createSequentialGroup()
+                .addGap(20)
+                .addGroup(
+                        groupLayout
+                        .createParallelGroup(Alignment.BASELINE)
+                        .addComponent(labelDate, GroupLayout.PREFERRED_SIZE, 20,
+                                GroupLayout.PREFERRED_SIZE)
+                                .addComponent(date, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+                                        GroupLayout.PREFERRED_SIZE))
                                         .addGap(18)
                                         .addGroup(
                                                 groupLayout
-                                                        .createParallelGroup(Alignment.LEADING)
-                                                        .addGroup(
-                                                                groupLayout
-                                                                        .createSequentialGroup()
-                                                                        .addGroup(
-                                                                                groupLayout
-                                                                                        .createParallelGroup(
-                                                                                                Alignment.LEADING)
-                                                                                        .addGroup(
-                                                                                                groupLayout
-                                                                                                        .createSequentialGroup()
-                                                                                                        .addComponent(
-                                                                                                                save,
-                                                                                                                GroupLayout.PREFERRED_SIZE,
-                                                                                                                192,
-                                                                                                                GroupLayout.PREFERRED_SIZE)
-                                                                                                        .addGap(16)
-                                                                                                        .addComponent(
-                                                                                                                start,
-                                                                                                                GroupLayout.PREFERRED_SIZE,
-                                                                                                                24,
-                                                                                                                GroupLayout.PREFERRED_SIZE)
-                                                                                                        .addPreferredGap(
-                                                                                                                ComponentPlacement.RELATED,
-                                                                                                                21,
-                                                                                                                Short.MAX_VALUE)
-                                                                                                        .addComponent(
-                                                                                                                stop,
-                                                                                                                GroupLayout.PREFERRED_SIZE,
-                                                                                                                24,
-                                                                                                                GroupLayout.PREFERRED_SIZE))
-                                                                                        .addComponent(
-                                                                                                delete,
-                                                                                                Alignment.TRAILING,
-                                                                                                GroupLayout.DEFAULT_SIZE,
-                                                                                                277, Short.MAX_VALUE))
-                                                                        .addGap(18)
-                                                                        .addGroup(
-                                                                                groupLayout
-                                                                                        .createParallelGroup(
-                                                                                                Alignment.TRAILING)
-                                                                                        .addComponent(
-                                                                                                refresh,
-                                                                                                GroupLayout.PREFERRED_SIZE,
-                                                                                                269,
-                                                                                                GroupLayout.PREFERRED_SIZE)
-                                                                                        .addComponent(
-                                                                                                showDisabledProjects,
-                                                                                                GroupLayout.PREFERRED_SIZE,
-                                                                                                263,
-                                                                                                GroupLayout.PREFERRED_SIZE)))
-                                                        .addComponent(scrollPaneProjects, GroupLayout.DEFAULT_SIZE,
-                                                                564, Short.MAX_VALUE)
-                                                        .addGroup(
-                                                                groupLayout
-                                                                        .createSequentialGroup()
-                                                                        .addGroup(
-                                                                                groupLayout
-                                                                                        .createParallelGroup(
-                                                                                                Alignment.TRAILING,
-                                                                                                false)
-                                                                                        .addComponent(
-                                                                                                labelDescription,
-                                                                                                Alignment.LEADING,
-                                                                                                GroupLayout.DEFAULT_SIZE,
-                                                                                                GroupLayout.DEFAULT_SIZE,
+                                                .createParallelGroup(Alignment.BASELINE)
+                                                .addComponent(description, GroupLayout.PREFERRED_SIZE,
+                                                        GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(labelDescription, GroupLayout.PREFERRED_SIZE, 20,
+                                                                GroupLayout.PREFERRED_SIZE))
+                                                                .addGap(18)
+                                                                .addGroup(
+                                                                        groupLayout
+                                                                        .createParallelGroup(Alignment.BASELINE)
+                                                                        .addComponent(labelDuration, GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
+                                                                        .addComponent(duration, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+                                                                                GroupLayout.PREFERRED_SIZE))
+                                                                                .addGap(18)
+                                                                                .addComponent(scrollPaneProjects, GroupLayout.PREFERRED_SIZE, 146, GroupLayout.PREFERRED_SIZE)
+                                                                                .addGap(13)
+                                                                                .addGroup(
+                                                                                        groupLayout
+                                                                                        .createParallelGroup(Alignment.LEADING)
+                                                                                        .addComponent(start, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
                                                                                                 Short.MAX_VALUE)
-                                                                                        .addComponent(
-                                                                                                labelDuration,
-                                                                                                Alignment.LEADING,
-                                                                                                GroupLayout.DEFAULT_SIZE,
-                                                                                                265, Short.MAX_VALUE)
-                                                                                        .addComponent(
-                                                                                                labelDate,
-                                                                                                Alignment.LEADING,
-                                                                                                GroupLayout.DEFAULT_SIZE,
-                                                                                                GroupLayout.DEFAULT_SIZE,
-                                                                                                Short.MAX_VALUE))
-                                                                        .addGap(18)
-                                                                        .addGroup(
-                                                                                groupLayout
-                                                                                        .createParallelGroup(
-                                                                                                Alignment.TRAILING)
-                                                                                        .addComponent(description,
-                                                                                                Alignment.LEADING, 276,
-                                                                                                281, Short.MAX_VALUE)
-                                                                                        .addComponent(
-                                                                                                date,
-                                                                                                GroupLayout.DEFAULT_SIZE,
-                                                                                                281, Short.MAX_VALUE)
-                                                                                        .addComponent(
-                                                                                                duration,
-                                                                                                Alignment.LEADING,
-                                                                                                GroupLayout.DEFAULT_SIZE,
-                                                                                                281, Short.MAX_VALUE))))
-                                        .addContainerGap()));
-        groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(
-                groupLayout
-                        .createSequentialGroup()
-                        .addGap(20)
-                        .addGroup(
-                                groupLayout
-                                        .createParallelGroup(Alignment.BASELINE)
-                                        .addComponent(labelDate, GroupLayout.PREFERRED_SIZE, 20,
-                                                GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(date, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-                                                GroupLayout.PREFERRED_SIZE))
-                        .addGap(18)
-                        .addGroup(
-                                groupLayout
-                                        .createParallelGroup(Alignment.BASELINE)
-                                        .addComponent(description, GroupLayout.PREFERRED_SIZE,
-                                                GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(labelDescription, GroupLayout.PREFERRED_SIZE, 20,
-                                                GroupLayout.PREFERRED_SIZE))
-                        .addGap(18)
-                        .addGroup(
-                                groupLayout
-                                        .createParallelGroup(Alignment.BASELINE)
-                                        .addComponent(labelDuration, GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
-                                        .addComponent(duration, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-                                                GroupLayout.PREFERRED_SIZE))
-                        .addGap(18)
-                        .addComponent(scrollPaneProjects, GroupLayout.PREFERRED_SIZE, 146, GroupLayout.PREFERRED_SIZE)
-                        .addGap(13)
-                        .addGroup(
-                                groupLayout
-                                        .createParallelGroup(Alignment.LEADING)
-                                        .addComponent(start, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
-                                                Short.MAX_VALUE)
-                                        .addGroup(
-                                                groupLayout
-                                                        .createParallelGroup(Alignment.BASELINE, false)
-                                                        .addComponent(save, GroupLayout.PREFERRED_SIZE, 25,
-                                                                Short.MAX_VALUE)
-                                                        .addComponent(showDisabledProjects, GroupLayout.PREFERRED_SIZE,
-                                                                22, GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(stop, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
-                                                Short.MAX_VALUE))
-                        .addGap(9)
-                        .addGroup(
-                                groupLayout
-                                        .createParallelGroup(Alignment.BASELINE)
-                                        .addComponent(delete, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
-                                                Short.MAX_VALUE)
-                                        .addComponent(refresh, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
-                                                Short.MAX_VALUE)).addGap(35)));
+                                                                                                .addGroup(
+                                                                                                        groupLayout
+                                                                                                        .createParallelGroup(Alignment.BASELINE, false)
+                                                                                                        .addComponent(save, GroupLayout.PREFERRED_SIZE, 25,
+                                                                                                                Short.MAX_VALUE)
+                                                                                                                .addComponent(showDisabledProjects, GroupLayout.PREFERRED_SIZE,
+                                                                                                                        22, GroupLayout.PREFERRED_SIZE))
+                                                                                                                        .addComponent(stop, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+                                                                                                                                Short.MAX_VALUE))
+                                                                                                                                .addGap(9)
+                                                                                                                                .addGroup(
+                                                                                                                                        groupLayout
+                                                                                                                                        .createParallelGroup(Alignment.BASELINE)
+                                                                                                                                        .addComponent(delete, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+                                                                                                                                                Short.MAX_VALUE)
+                                                                                                                                                .addComponent(refresh, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+                                                                                                                                                        Short.MAX_VALUE)).addGap(35)));
         getContentPane().setLayout(groupLayout);
     }
 
@@ -659,6 +664,11 @@ public class NewEntryFrame extends AbstractFrame {
         return result;
     }
 
+    /**
+     * The main method
+     *
+     * @param args the arguments
+     */
     public static void main(final String[] args) {
         new NewEntryFrame().setVisible(true);
     }

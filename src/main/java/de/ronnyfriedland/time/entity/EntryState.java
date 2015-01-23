@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  * Entität zum Speichern für den Status der Einträge.
- * 
+ *
  * @author Ronny Friedland
  */
 @Entity
@@ -32,14 +32,14 @@ public class EntryState extends AbstractEntity {
 
     public static String getDuration(final Date start, final Date end, final float duration) {
         // calculate duration
-        return String.format("%.2f", (new Float(end.getTime() - start.getTime()) / 1000 / 60 / 60) + duration);
+        return String.format("%.2f", new Float(end.getTime() - start.getTime()) / 1000 / 60 / 60 + duration);
     }
 
     private static final long serialVersionUID = 4704359592289513635L;
 
     /**
      * Enthält die möglichen Status eines {@link EntryState}.
-     * 
+     *
      * @author Ronny Friedland
      */
     public enum State {
@@ -74,9 +74,8 @@ public class EntryState extends AbstractEntity {
 
     /**
      * Erzeugt eine neue {@link EntryState} Instanz.
-     * 
-     * @param start
-     *            das Startdatum
+     *
+     * @param start das Startdatum
      */
     public EntryState(final Date start) {
         super();
@@ -85,10 +84,9 @@ public class EntryState extends AbstractEntity {
 
     /**
      * Erzeugt eine neue {@link EntryState} Instanz.
-     * 
-     * @param start
-     *            das Startdatum
-     * @üaram state der Status
+     *
+     * @param start das Startdatum
+     * @param state der Status
      */
     public EntryState(final Date start, final State state) {
         this(start);
@@ -97,9 +95,8 @@ public class EntryState extends AbstractEntity {
 
     /**
      * Erzeugt eine neue {@link EntryState} Instanz.
-     * 
-     * @param uuid
-     *            die uuid
+     *
+     * @param uuid die uuid
      */
     public EntryState(final String uuid) {
         super(uuid);
@@ -109,7 +106,7 @@ public class EntryState extends AbstractEntity {
         return state;
     }
 
-    public void setState(State state) {
+    public void setState(final State state) {
         this.state = state;
     }
 
@@ -117,7 +114,7 @@ public class EntryState extends AbstractEntity {
         return start;
     }
 
-    public void setStart(Date start) {
+    public void setStart(final Date start) {
         this.start = start;
     }
 
@@ -125,13 +122,13 @@ public class EntryState extends AbstractEntity {
         return end;
     }
 
-    public void setEnd(Date end) {
+    public void setEnd(final Date end) {
         this.end = end;
     }
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Object#toString()
      */
     @Override

@@ -33,7 +33,7 @@ public class ShowHelpFrame extends AbstractFrame implements HyperlinkListener {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see de.ronnyfriedland.time.ui.dialog.AbstractFrame#createUI()
      */
     @Override
@@ -55,7 +55,7 @@ public class ShowHelpFrame extends AbstractFrame implements HyperlinkListener {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.swing.event.HyperlinkListener#hyperlinkUpdate(javax.swing.event.HyperlinkEvent)
      */
     @Override
@@ -69,6 +69,11 @@ public class ShowHelpFrame extends AbstractFrame implements HyperlinkListener {
         }
     }
 
+    /**
+     * The main method
+     *
+     * @param args the arguments
+     */
     public static void main(final String[] args) {
         new ShowHelpFrame().setVisible(true);
     }

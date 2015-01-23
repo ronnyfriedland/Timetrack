@@ -22,23 +22,21 @@ import de.ronnyfriedland.time.entity.Entry;
 
 /**
  * Controller für den Datenexport in eine XSLS-Arbeitsmappe.
- * 
+ *
  * @author Ronny Friedland
  */
 public final class ExportController {
 
+    /** Name of the first tab */
     public static final String TAB_OVERVIEW = "Überblick";
 
     /**
      * Lädt oder erzeugt eine neue Arbeitsmappe
-     * 
-     * @param path
-     *            der Pfad zur Datei
-     * @param file
-     *            Dateiname
+     *
+     * @param path der Pfad zur Datei
+     * @param file Dateiname
      * @return {@link Workbook} Instanz
-     * @throws IOException
-     *             Fehler beim Dateisystemzugriff
+     * @throws IOException Fehler beim Dateisystemzugriff
      */
     public Workbook loadOrCreateWorkbook(final String path, final String file) throws IOException {
         Workbook wb;
@@ -55,16 +53,12 @@ public final class ExportController {
 
     /**
      * Speichern der Daten in einem Arbeitsblatt
-     * 
-     * @param wb
-     *            {@link Workbook} Instanz
-     * @param sheetName
-     *            Name des Arbeitsblatts
-     * @param entries
-     *            die Daten
+     *
+     * @param wb {@link Workbook} Instanz
+     * @param sheetName Name des Arbeitsblatts
+     * @param entries die Daten
      * @return das erzeugte Arbeitsblatt
-     * @throws IOException
-     *             Fehler beim Dateisystemzugriff
+     * @throws IOException Fehler beim Dateisystemzugriff
      */
     public Sheet loadOrCreateSheet(final Workbook wb, final String sheetName, final Collection<Entry> entries)
             throws IOException {
@@ -112,13 +106,10 @@ public final class ExportController {
 
     /**
      * Fügt ein Arbeitsblatt zur Übersichtsseite hinzu
-     * 
-     * @param wb
-     *            {@link Workbook} Instanz
-     * @param sheetName
-     *            Name des Arbeitsblatts
-     * @throws IOException
-     *             Fehler beim Dateisystemzugriff
+     *
+     * @param wb {@link Workbook} Instanz
+     * @param sheetName Name des Arbeitsblatts
+     * @throws IOException Fehler beim Dateisystemzugriff
      */
     public void addSheetToOverview(final Workbook wb, final String sheetName) throws IOException {
         Sheet overview = wb.getSheet(TAB_OVERVIEW);
@@ -157,15 +148,11 @@ public final class ExportController {
 
     /**
      * Abspeichern einer Arbeitsmappe
-     * 
-     * @param wb
-     *            {@link Workbook} Instanz
-     * @param path
-     *            Pfad zur Datei
-     * @param file
-     *            Dateiname
-     * @throws IOException
-     *             Fehler beim Dateisystemzugriff
+     *
+     * @param wb {@link Workbook} Instanz
+     * @param path Pfad zur Datei
+     * @param file Dateiname
+     * @throws IOException Fehler beim Dateisystemzugriff
      */
     public void persistWorkbook(final Workbook wb, final String path, final String file) throws IOException {
         FileOutputStream fileOut = new FileOutputStream(new File(path, file));
