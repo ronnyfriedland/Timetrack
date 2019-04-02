@@ -3,7 +3,7 @@ package de.ronnyfriedland.time.entity.validation;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Überprüft Zeichenketten ob diese nicht null, nicht leer und mehr als nur

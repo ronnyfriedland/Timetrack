@@ -1,9 +1,14 @@
 package de.ronnyfriedland.time.config;
 
-import org.apache.commons.configuration.CompositeConfiguration;
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.commons.configuration.SystemConfiguration;
+import org.apache.commons.configuration2.CompositeConfiguration;
+import org.apache.commons.configuration2.PropertiesConfiguration;
+import org.apache.commons.configuration2.SystemConfiguration;
+import org.apache.commons.configuration2.ex.ConfigurationException;
+import org.apache.commons.configuration2.io.FileLocator;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 /**
  * Zentrale Konfigurationsklasse.
@@ -16,10 +21,12 @@ public final class Configurator {
     public static final CompositeConfiguration CONFIG = new CompositeConfiguration();
     static {
         try {
+            PropertiesConfiguration props = new PropertiesConfiguration();
+            props.read(new FileReader(Thread.currentThread().getContextClassLoader().getResource("application.properties").getFile()));
+
             CONFIG.addConfiguration(new SystemConfiguration());
-            CONFIG.addConfiguration(new PropertiesConfiguration(Thread.currentThread().getContextClassLoader()
-                    .getResource("application.properties")));
-        } catch (ConfigurationException e) {
+            CONFIG.addConfiguration(props);
+        } catch (ConfigurationException | IOException e) {
             throw new ExceptionInInitializerError(e);
         }
     }

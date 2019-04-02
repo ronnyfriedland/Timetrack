@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Iterator;
 
+import org.apache.poi.common.usermodel.HyperlinkType;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CreationHelper;
@@ -132,7 +133,7 @@ public final class ExportController {
 
         Row row = overview.createRow(lastRow);
 
-        Hyperlink link = wb.getCreationHelper().createHyperlink(Hyperlink.LINK_DOCUMENT);
+        Hyperlink link = wb.getCreationHelper().createHyperlink(HyperlinkType.DOCUMENT);
         link.setAddress(String.format("'%1$s'!A1", sheetName));
         Cell cell0 = row.createCell(0);
         cell0.setCellValue(sheetName);

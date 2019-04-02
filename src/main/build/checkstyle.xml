@@ -19,10 +19,6 @@
         <property name="severity" value="warning" />
         <property name="max" value="1000" />
     </module>
-    <module name="StrictDuplicateCode">
-        <property name="severity" value="info" />
-        <property name="min" value="20" />
-    </module>
     <module name="TreeWalker">
         <module name="FileContentsHolder" />
         <module name="CyclomaticComplexity">

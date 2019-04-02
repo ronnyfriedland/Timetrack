@@ -1,6 +1,6 @@
 package de.ronnyfriedland.time.ui.to;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Transfer object for {@link de.ronnyfriedland.time.entity.Project}.
