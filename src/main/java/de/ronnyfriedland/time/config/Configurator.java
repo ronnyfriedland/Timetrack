@@ -1,14 +1,10 @@
 package de.ronnyfriedland.time.config;
 
-import org.apache.commons.configuration2.CompositeConfiguration;
+import org.apache.commons.configuration2.CombinedConfiguration;
 import org.apache.commons.configuration2.PropertiesConfiguration;
 import org.apache.commons.configuration2.SystemConfiguration;
+import org.apache.commons.configuration2.builder.fluent.Configurations;
 import org.apache.commons.configuration2.ex.ConfigurationException;
-import org.apache.commons.configuration2.io.FileLocator;
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 
 /**
  * Zentrale Konfigurationsklasse.
@@ -18,15 +14,14 @@ import java.io.IOException;
 public final class Configurator {
 
     /** the configuration of the application */
-    public static final CompositeConfiguration CONFIG = new CompositeConfiguration();
+    public static final CombinedConfiguration CONFIG = new CombinedConfiguration();
     static {
         try {
-            PropertiesConfiguration props = new PropertiesConfiguration();
-            props.read(new FileReader(Thread.currentThread().getContextClassLoader().getResource("application.properties").getFile()));
+            PropertiesConfiguration config = new Configurations().properties(Thread.currentThread().getContextClassLoader().getResource("application.properties"));
 
             CONFIG.addConfiguration(new SystemConfiguration());
-            CONFIG.addConfiguration(props);
-        } catch (ConfigurationException | IOException e) {
+            CONFIG.addConfiguration(config);
+        } catch (ConfigurationException e) {
             throw new ExceptionInInitializerError(e);
         }
     }
@@ -56,7 +51,7 @@ public final class Configurator {
 
         private final String key;
 
-        private ConfiguratorKeys(final String aKey) {
+        ConfiguratorKeys(final String aKey) {
             this.key = aKey;
         }
 

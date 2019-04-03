@@ -70,8 +70,6 @@ public final class TimeTrackUI {
         SwingUtilities.invokeLater(new Runnable() {
             /**
              * {@inheritDoc}
-             * 
-             * @see java.lang.Runnable#run()
              */
             @Override
             public void run() {
@@ -94,8 +92,6 @@ public final class TimeTrackUI {
         Runtime.getRuntime().addShutdownHook(new Thread() {
             /**
              * {@inheritDoc}
-             * 
-             * @see java.lang.Thread#run()
              */
             @Override
             public void run() {
