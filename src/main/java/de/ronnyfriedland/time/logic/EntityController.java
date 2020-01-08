@@ -1,24 +1,21 @@
 package de.ronnyfriedland.time.logic;
 
+import de.ronnyfriedland.time.entity.AbstractEntity;
+import de.ronnyfriedland.time.sort.SortParam;
+import liquibase.Liquibase;
+import liquibase.database.Database;
+import liquibase.database.DatabaseFactory;
+import liquibase.database.jvm.JdbcConnection;
+import liquibase.exception.LiquibaseException;
+import liquibase.resource.ClassLoaderResourceAccessor;
+import liquibase.resource.CompositeResourceAccessor;
+import liquibase.resource.FileSystemResourceAccessor;
+
+import javax.persistence.*;
 import java.sql.Connection;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-
-import liquibase.ClassLoaderFileOpener;
-import liquibase.CompositeFileOpener;
-import liquibase.FileSystemFileOpener;
-import liquibase.Liquibase;
-import liquibase.exception.JDBCException;
-import liquibase.exception.LiquibaseException;
-import de.ronnyfriedland.time.entity.AbstractEntity;
-import de.ronnyfriedland.time.sort.SortParam;
 
 /**
  * Controller für den Zugriff auf die Persistenz-Schicht.
@@ -59,14 +56,13 @@ public final class EntityController {
      */
     public void migrateDb() {
         em.getTransaction().begin();
-        Connection connection = em.unwrap(Connection.class);
+        Connection c = em.unwrap(Connection.class);
 
         try {
-            Liquibase lb = new Liquibase("db/liquibase/changesets.xml", new CompositeFileOpener(
-                    new ClassLoaderFileOpener(), new FileSystemFileOpener()), connection);
+            Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(c));
+            Liquibase lb = new Liquibase("db/liquibase/changesets.xml", new CompositeResourceAccessor(
+                    new ClassLoaderResourceAccessor(), new FileSystemResourceAccessor()), database);
             lb.update("");
-        } catch (JDBCException e) {
-            throw new RuntimeException("Error creating liquibase instance", e);
         } catch (LiquibaseException e) {
             throw new RuntimeException("Error during db migration", e);
         }

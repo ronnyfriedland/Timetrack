@@ -1,8 +1,9 @@
 @echo off
 
-IF not exist ${timetrack.path}/database/timetrack-database (
- xcopy ${timetrack.path}\database\timetable-database\* ${timetrack.path}\database\timetrack-database /i/s/q
- rmdir ${timetrack.path}\database\timetable-database /s/q
+IF not exist target/database/timetrack-database (
+ xcopy target\database\timetable-database\* target\database\timetrack-database /i/s/q
+ rmdir target\database\timetable-database /s/q
 )
  
-java -cp lib -jar lib/liquibase-core-1.9.5.jar --classpath="lib/derby-10.14.2.0.jar" --changeLogFile="db/master.xml" --defaultsFile="db/liquibase.properties" --logLevel=info update
+java -classpath "lib/derby-10.14.2.0.jar;lib/logback-core-1.2.3.jar;lib/logback-classic-1.2.3.jar;lib/slf4j-api-2.0.0-alpha1.jar;lib/slf4j-jdk14-2.0.0-alpha1.jar;lib/liquibase-core-3.8.4.jar" liquibase.integration.commandline.Main --changeLogFile="db/master.xml" --defaultsFile="db/liquibase.properties" --logLevel=info update
+
