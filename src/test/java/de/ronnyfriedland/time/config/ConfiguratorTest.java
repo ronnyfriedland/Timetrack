@@ -1,9 +1,13 @@
 package de.ronnyfriedland.time.config;
 
 import de.ronnyfriedland.time.config.Configurator.ConfiguratorKeys;
+import org.apache.commons.configuration2.Configuration;
+import org.apache.commons.configuration2.MapConfiguration;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
+
+import java.util.List;
+import java.util.Properties;
 
 public class ConfiguratorTest {
 
@@ -22,12 +26,22 @@ public class ConfiguratorTest {
     }
 
     @Test
-    @Ignore
     public void testSystemConfiguration() {
-        for (String value : new String[] { "false", "true" }) {
-            System.setProperty(ConfiguratorKeys.SHOW_POPUP.getKey(), value);
-            Assert.assertEquals(Boolean.valueOf(value),
-                    Configurator.CONFIG.getBoolean(ConfiguratorKeys.SHOW_POPUP.getKey()));
+        List<Configuration> configurations = Configurator.CONFIG.getConfigurations();
+        try {
+
+            for (String value : new String[]{"false", "true"}) {
+                Properties props = new Properties();
+                props.put(ConfiguratorKeys.SHOW_POPUP.getKey(), value);
+
+                Configurator.CONFIG.clear();
+                Configurator.CONFIG.addConfiguration(new MapConfiguration(props), "test");
+
+                Assert.assertEquals(Boolean.valueOf(value),
+                        Configurator.CONFIG.getBoolean(ConfiguratorKeys.SHOW_POPUP.getKey()));
+            }
+        } finally {
+            configurations.forEach(Configurator.CONFIG::addConfiguration);
         }
     }
 }

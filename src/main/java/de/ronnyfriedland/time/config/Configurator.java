@@ -19,8 +19,8 @@ public final class Configurator {
         try {
             PropertiesConfiguration config = new Configurations().properties(Thread.currentThread().getContextClassLoader().getResource("application.properties"));
 
-            CONFIG.addConfiguration(new SystemConfiguration());
-            CONFIG.addConfiguration(config);
+            CONFIG.addConfiguration(new SystemConfiguration(), "system");
+            CONFIG.addConfiguration(config, "application");
         } catch (ConfigurationException e) {
             throw new ExceptionInInitializerError(e);
         }
