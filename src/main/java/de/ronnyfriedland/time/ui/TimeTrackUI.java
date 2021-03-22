@@ -1,35 +1,5 @@
 package de.ronnyfriedland.time.ui;
 
-import java.awt.AWTException;
-import java.awt.Menu;
-import java.awt.MenuItem;
-import java.awt.PopupMenu;
-import java.awt.SystemTray;
-import java.awt.TrayIcon;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.io.File;
-import java.io.IOException;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
-
-import javax.persistence.PersistenceException;
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-
-import org.apache.poi.ss.usermodel.Workbook;
-import org.quartz.SchedulerException;
-
 import de.ronnyfriedland.time.config.Configurator;
 import de.ronnyfriedland.time.config.Configurator.ConfiguratorKeys;
 import de.ronnyfriedland.time.config.Messages;
@@ -51,6 +21,25 @@ import de.ronnyfriedland.time.ui.dialog.ExportFrame;
 import de.ronnyfriedland.time.ui.dialog.NewEntryFrame;
 import de.ronnyfriedland.time.ui.dialog.NewProjectFrame;
 import de.ronnyfriedland.time.ui.dialog.ShowHelpFrame;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.quartz.SchedulerException;
+
+import javax.persistence.PersistenceException;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 /**
  * Die Hauptklasse (Grafisches Interface)
@@ -59,6 +48,28 @@ import de.ronnyfriedland.time.ui.dialog.ShowHelpFrame;
  */
 public final class TimeTrackUI {
 
+
+    public static class Test {
+        private Boolean test1 = false;
+        private String test2;
+
+        public Boolean getTest1() {
+            return test1;
+        }
+
+        public void setTest1(Boolean test1) {
+            this.test1 = test1;
+        }
+
+        public String getTest2() {
+            return test2;
+        }
+
+        public void setTest2(String test2) {
+            this.test2 = test2;
+        }
+    }
+
     private static final Logger LOG = Logger.getLogger(TimeTrackUI.class.getName());
 
     /**
@@ -66,7 +77,7 @@ public final class TimeTrackUI {
      * 
      * @param args Argumente
      */
-    public static void main(final String[] args) {
+    public static void main(final String[] args) throws Exception {
         SwingUtilities.invokeLater(new Runnable() {
             /**
              * {@inheritDoc}
@@ -116,8 +127,8 @@ public final class TimeTrackUI {
             LOG.severe("SystemTray not supported!");
         } else {
             final PopupMenu popup = new PopupMenu();
-            final TrayIcon trayIcon = new TrayIcon((new ImageIcon(Thread.currentThread().getContextClassLoader()
-                    .getResource("images/icon.gif"))).getImage());
+            final TrayIcon trayIcon = new TrayIcon(new ImageIcon(Thread.currentThread().getContextClassLoader()
+                    .getResource("images/icon.gif")).getImage());
             final SystemTray tray = SystemTray.getSystemTray();
 
             // Create a popup menu components
@@ -155,7 +166,7 @@ public final class TimeTrackUI {
 
                 @Override
                 public void mousePressed(final MouseEvent e) {
-                    if ((MouseEvent.BUTTON1 == e.getButton()) && (2 == e.getClickCount())) {
+                    if (MouseEvent.BUTTON1 == e.getButton() && 2 == e.getClickCount()) {
                         new NewEntryFrame().setVisible(true);
                     }
                     Collection<Entry> lastEntries = EntityController.getInstance().findAll(Entry.class,

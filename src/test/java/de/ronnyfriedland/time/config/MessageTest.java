@@ -13,10 +13,10 @@ public class MessageTest {
             String formattedMessage = null;
             switch (message) {
             case EXPORT_DURATION:
-                formattedMessage = message.getMessage(new Integer(1), "test");
+                formattedMessage = message.getMessage(1, "test");
                 break;
             case EXPORT_SUMMARY:
-                formattedMessage = message.getMessage(new Float(1), new Integer(2));
+                formattedMessage = message.getMessage(1f, 2);
                 break;
             default:
                 formattedMessage = message.getMessage(TEXT_PROPERTIES);

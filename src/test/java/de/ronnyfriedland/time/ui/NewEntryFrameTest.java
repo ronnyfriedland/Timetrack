@@ -1,23 +1,18 @@
 package de.ronnyfriedland.time.ui;
 
-import java.util.Collection;
-
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.uispec4j.Button;
-import org.uispec4j.ListBox;
-import org.uispec4j.TextBox;
-import org.uispec4j.UISpecTestCase;
-import org.uispec4j.Window;
-import org.uispec4j.interception.MainClassAdapter;
-
 import de.ronnyfriedland.time.config.Messages;
 import de.ronnyfriedland.time.entity.Entry;
 import de.ronnyfriedland.time.entity.Project;
 import de.ronnyfriedland.time.logic.EntityController;
 import de.ronnyfriedland.time.ui.dialog.NewEntryFrame;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.uispec4j.*;
+import org.uispec4j.interception.MainClassAdapter;
+
+import java.util.Collection;
 
 public class NewEntryFrameTest extends UISpecTestCase {
 

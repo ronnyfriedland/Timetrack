@@ -53,7 +53,7 @@ public abstract class AbstractJob implements Job {
      * @param messageText Der darzustellende Text
      */
     protected void showPopup(final boolean showPopup, final String messageText) {
-        if (showPopup || (null == getTrayIcon())) {
+        if (showPopup || null == getTrayIcon()) {
             JOptionPane.showMessageDialog(null, messageText);
         } else {
             getTrayIcon().displayMessage(null, messageText, MessageType.INFO);

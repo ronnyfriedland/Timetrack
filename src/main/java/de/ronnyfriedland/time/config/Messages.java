@@ -96,7 +96,7 @@ public enum Messages {
     private String message;
     private Object[] properties;
 
-    private Messages(final String aMessage, final Object... aProperties) {
+    Messages(final String aMessage, final Object... aProperties) {
         this.message = aMessage;
         this.properties = aProperties;
     }

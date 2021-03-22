@@ -47,7 +47,7 @@ public final class QuartzController {
 
     private QuartzController() throws SchedulerException {
         StdSchedulerFactory schdFact = new StdSchedulerFactory();
-        schdFact.initialize(Thread.currentThread().getContextClassLoader().getResourceAsStream(("quartz.properties")));
+        schdFact.initialize(Thread.currentThread().getContextClassLoader().getResourceAsStream("quartz.properties"));
         sched = schdFact.getScheduler();
         sched.start();
     }

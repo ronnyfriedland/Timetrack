@@ -58,7 +58,7 @@ public class TimeTrackKeyAdapter extends KeyAdapter {
     }
 
     private void handleCopyToClipboard(final KeyEvent e) {
-        if (e.isControlDown() && (e.getComponent() instanceof JTable)) {
+        if (e.isControlDown() && e.getComponent() instanceof JTable) {
             String selection = TableUtils.getSelectedValues((JTable) e.getComponent());
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
             if (null != clipboard) {

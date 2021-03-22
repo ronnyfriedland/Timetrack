@@ -35,8 +35,8 @@ public class ValidIsFloatValidator implements ConstraintValidator<IsFloat, Strin
         if (null != value) {
             String result = value.replaceAll(",", ".").trim();
             try {
-                Float floatResult = Float.valueOf(result);
-                isValid = (0 <= floatResult);
+                float floatResult = Float.parseFloat(result);
+                isValid = 0 <= floatResult;
             } catch (NumberFormatException e) {
                 isValid = false;
             }

@@ -89,7 +89,7 @@ public class NewEntryFrame extends AbstractFrame {
     private final DateChooserPanel datechooser = new DateChooserPanel();
     private final JButton applyButton = new JButton(Messages.APPLY.getMessage());
 
-    private class TimetrackProjectViewCellRenderer extends JLabel implements ListCellRenderer {
+    private static class TimetrackProjectViewCellRenderer extends JLabel implements ListCellRenderer {
         private static final long serialVersionUID = 1L;
 
         public TimetrackProjectViewCellRenderer() {
@@ -617,10 +617,7 @@ public class NewEntryFrame extends AbstractFrame {
             }
             EntityController.getInstance().create(entry);
             result = entry;
-        } catch (PersistenceException ex) {
-            LOG.log(Level.SEVERE, "Error creating new entry", ex);
-            formatError(getRootPane());
-        } catch (ConstraintViolationException ex) {
+        } catch (PersistenceException | ConstraintViolationException ex) {
             LOG.log(Level.SEVERE, "Error creating new entry", ex);
             formatError(getRootPane());
         }
@@ -654,10 +651,7 @@ public class NewEntryFrame extends AbstractFrame {
             }
             EntityController.getInstance().update(entry);
             result = entry;
-        } catch (PersistenceException ex) {
-            LOG.log(Level.SEVERE, "Error updating entry", ex);
-            formatError(getRootPane());
-        } catch (ConstraintViolationException ex) {
+        } catch (PersistenceException | ConstraintViolationException ex) {
             LOG.log(Level.SEVERE, "Error updating entry", ex);
             formatError(getRootPane());
         }

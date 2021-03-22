@@ -27,12 +27,12 @@ public class EntryState extends AbstractEntity {
     public static final String PARAM_STATE = "state";
 
     public static String getDuration(final Date start, final Date end, final String duration) {
-        return getDuration(start, end, Float.valueOf(duration));
+        return getDuration(start, end, Float.parseFloat(duration));
     }
 
     public static String getDuration(final Date start, final Date end, final float duration) {
         // calculate duration
-        return String.format("%.2f", new Float(end.getTime() - start.getTime()) / 1000 / 60 / 60 + duration);
+        return String.format("%.2f", (float) (end.getTime() - start.getTime()) / 1000 / 60 / 60 + duration);
     }
 
     private static final long serialVersionUID = 4704359592289513635L;

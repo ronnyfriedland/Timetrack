@@ -147,7 +147,7 @@
                 <version>3.11.0</version>
                 <configuration>
                     <sourceEncoding>utf-8</sourceEncoding>
-                    <targetJdk>1.6</targetJdk>
+                    <targetJdk>1.8</targetJdk>
                     <minimumTokens>100</minimumTokens>
                     <failOnViolation>false</failOnViolation>
                     <lineLength>150</lineLength>
@@ -169,7 +169,7 @@
                     <plugin>
                         <groupId>com.akathist.maven.plugins.launch4j</groupId>
                         <artifactId>launch4j-maven-plugin</artifactId>
-                        <version>1.7.25</version>
+                        <version>2.0.1</version>
                         <executions>
                             <execution>
                                 <id>l4j-gui</id>
@@ -189,7 +189,7 @@
                                         <addDependencies>true</addDependencies>
                                     </classPath>
                                     <jre>
-                                        <minVersion>1.6.0</minVersion>
+                                        <minVersion>1.8.0</minVersion>
                                         <opts>
                                             <opt>-Dtimetrack.popup.show=false</opt>
                                             <opt>-Xms32m</opt>

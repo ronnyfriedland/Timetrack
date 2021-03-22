@@ -92,14 +92,14 @@ public final class PluginController {
      * @return set of urls
      */
     private Set<URL> findPlugins() {
-        Set<URL> urls = new HashSet<URL>();
+        Set<URL> urls = new HashSet<>();
         urls.addAll(ClasspathHelper.forJavaClassPath());
         try {
             Properties availablePlugins = new Properties();
             availablePlugins.load(Thread.currentThread().getContextClassLoader()
                     .getResourceAsStream("plugin.properties"));
             String files = availablePlugins.getProperty("files");
-            if ((null != files) && (files.length() > 2)) {
+            if (null != files && files.length() > 2) {
                 for (final String file : files.split(";")) {
                     urls.add(Thread.currentThread().getContextClassLoader().getResource(file));
                 }
